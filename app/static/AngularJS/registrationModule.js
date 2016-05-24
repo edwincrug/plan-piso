@@ -13,6 +13,10 @@ var registrationModule = angular.module("registrationModule", ["ngRoute"])
             templateUrl: 'AngularJS/Templates/example.html', //example 1
             controller: 'interestsController'
         });
+         $routeProvider.when('/interes', {
+            templateUrl: 'AngularJS/Templates/interes.html', 
+            controller: 'interestsController'
+        });
 
         $locationProvider.html5Mode({
             enabled: true,

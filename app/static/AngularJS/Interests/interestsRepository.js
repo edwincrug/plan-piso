@@ -10,6 +10,13 @@ registrationModule.factory('interestsRepository', function($http) {
                 url: interestsURL + 'freedays/',
                 method: "GET"
             });
+        },
+        
+        getInterest: function() {
+            return $http({
+                url: interestsURL + 'interest/',
+                method: "GET"
+            });
         }
 
     };

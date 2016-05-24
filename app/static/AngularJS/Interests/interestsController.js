@@ -13,10 +13,20 @@ registrationModule.controller('interestsController', function($scope, alertFacto
         }, function(error) {
             alertFactory.error("Error al cargar clientes");
         });
+    };
+ $scope.getInterest = function() {
+        //console.log(interestsRepository.getCliente());
 
-
-
-        //interestsRepository.getCliente()
-
+        interestsRepository.getInterest().then(function(result) {
+            if (result.data.length > 0) {
+                console.log(result.data);
+                $scope.clientes = result.data;
+                alertFactory.success("Clientes cargados");
+            } else {
+                alertFactory.info("No se encontraron clientes");
+            }
+        }, function(error) {
+            alertFactory.error("Error al cargar clientes");
+        });
     };
 });

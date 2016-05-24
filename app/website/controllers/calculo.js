@@ -36,6 +36,19 @@ Calculo.prototype.get_freedays = function(req, res, next) {
     });
 };
 
+Calculo.prototype.get_interest = function(req,res,next){
+    var self = this;
+    
+    var params = [];
+    
+    this.model.query('SEL_INTEREST_SP', params, function(error, result){
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 
 
 
