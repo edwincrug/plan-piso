@@ -11,7 +11,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute"])
         /*cheange the routes*/
         $routeProvider.when('/', {
             templateUrl: 'AngularJS/Templates/example.html', //example 1
-            controller: 'interestsController'
+            controller: 'freeDaysController'
         });
 
         $locationProvider.html5Mode({
