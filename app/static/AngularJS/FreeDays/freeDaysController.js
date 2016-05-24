@@ -7,8 +7,7 @@ registrationModule.controller('freeDaysController', function($scope, alertFactor
 
         freeDaysRepository.getFreeDays().then(function(result) {
             if (result.data.length > 0) {                
-                $scope.allDays = result.data;
-                console.log($scope.allDays);
+                $scope.allDays = result.data;                
                 alertFactory.success("Clientes cargados");
             } else {
                 alertFactory.info("No se encontraron datos");
