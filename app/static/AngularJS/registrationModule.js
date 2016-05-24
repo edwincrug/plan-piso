@@ -12,10 +12,12 @@ var registrationModule = angular.module("registrationModule", ["ngRoute"])
         $routeProvider.when('/', {
             templateUrl: 'AngularJS/Templates/example.html', //example 1
             controller: 'interestsController'
-        });
-         $routeProvider.when('/interes', {
-            templateUrl: 'AngularJS/Templates/interes.html', 
+        }).when('/interes', {
+            templateUrl: 'AngularJS/Templates/interest.html',
             controller: 'interestsController'
+        }).when('/freedays', {
+            templateUrl: 'AngularJS/Templates/freedays.html',
+            controller: 'freeDaysController'
         });
 
         $locationProvider.html5Mode({
