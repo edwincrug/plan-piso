@@ -1,4 +1,32 @@
-<div ng-init="init()"> 
-	
-	 <button type="button" class="btn btn-primary" ng-click="getInterest()">interes</button>
+<div ng-init="getInterest()">
+    <div class="ibox-content">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+                <thead>
+                    <tr>
+                        <th>Id Unidad</th>
+                        <th>VIN</th>
+                        <th>Marca</th>
+                        <th>Costo</th>
+                        <th>Interes Total</th>
+                        <th>Interes Costo</th>
+                        <th>Limite Ganancia</th>
+                        <th>Margen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="intereses in interes">
+                        <td>{{intereses.idUnidad}}</td>
+                        <td>{{intereses.vin}}</td>
+                        <td>{{intereses.marca}}</td>
+                        <td>{{intereses.costo}}</td>
+                         <td>{{intereses.interesTotal}}</td>
+                        <td>{{intereses.interesTotalCosto}}</td>
+                        <td>{{intereses.limiteGanancia}}</td>  
+                        <td>{{intereses.margen}}</td>         
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

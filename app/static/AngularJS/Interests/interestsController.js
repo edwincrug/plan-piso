@@ -19,7 +19,7 @@ registrationModule.controller('interestsController', function($scope, alertFacto
 
         interestsRepository.getInterest().then(function(result) {
             if (result.data.length > 0) {
-                $scope.clientes = result.data;
+                $scope.interes = result.data;
                 alertFactory.success("Clientes cargados");
             } else {
                 alertFactory.info("No se encontraron clientes");
