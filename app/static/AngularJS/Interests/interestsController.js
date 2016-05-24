@@ -19,7 +19,6 @@ registrationModule.controller('interestsController', function($scope, alertFacto
 
         interestsRepository.getInterest().then(function(result) {
             if (result.data.length > 0) {
-                console.log(result.data);
                 $scope.clientes = result.data;
                 alertFactory.success("Clientes cargados");
             } else {
