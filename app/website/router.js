@@ -1,3 +1,3 @@
  module.exports = {
-     cita: require('./controllers/cita')
+     calculo: require('./controllers/calculo')
  }

@@ -1,4 +1,4 @@
-var Cita = function(conf){
+var Calculo = function(conf){
 	conf = conf || {};
 }
 
@@ -8,7 +8,7 @@ function logError(err, res) {
     res.end("");
 }
 
-Cita.prototype.see = function(res, object){
+Calculo.prototype.see = function(res, object){
 	//Estándar de implementación de errores
 	if (object.error) { logError(object.error, res); return; }
 	
@@ -20,4 +20,4 @@ Cita.prototype.see = function(res, object){
 }
 
 
-module.exports = Cita; 
+module.exports = Calculo; 

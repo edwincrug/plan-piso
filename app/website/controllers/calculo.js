@@ -1,12 +1,12 @@
-var CitaView = require('../views/cita'),
-	CitaModel = require('../models/dataAccess'),
+var CalculoView = require('../views/calculo'),
+	CalculoModel = require('../models/dataAccess'),
 	moment = require('moment');
 
-var Cita = function(conf){
+var Calculo = function(conf){
 	this.conf = conf || {};
 
-	this.view = new CitaView();
-	this.model = new CitaModel({ parameters : this.conf.parameters});
+	this.view = new CalculoView();
+	this.model = new CalculoModel({ parameters : this.conf.parameters});
 
 	this.response = function(){
 		this[this.conf.funcionalidad](this.conf.req,this.conf.res,this.conf.next);
@@ -14,7 +14,7 @@ var Cita = function(conf){
 }
 
 //obtiene el trabajo de la cita
-Cita.prototype.get_trabajo_data = function(req, res, next){
+/*Calculo.prototype.get_trabajo_data = function(req, res, next){
 	//Objeto que almacena la respuesta
 	var object = {};
 	//Objeto que envía los parámetros
@@ -34,6 +34,6 @@ Cita.prototype.get_trabajo_data = function(req, res, next){
 		
 		self.view.see(res, object);
 	});
-}
+}*/
 
-module.exports = Cita;
+module.exports = Calculo;

@@ -50,7 +50,7 @@ DataAccess.prototype.get = function(stored,params,callback){
 };
 
 //método post
-DataAccess.prototype.post = function (objParams, callback) {
+/*DataAccess.prototype.post = function (objParams, callback) {
     var self = this.connection;
     this.connection.connect(function (err) {
         // Stored Procedure 
@@ -70,7 +70,7 @@ DataAccess.prototype.post = function (objParams, callback) {
         });
 
     });
-};
+};*/
 
 
 module.exports = DataAccess; 
