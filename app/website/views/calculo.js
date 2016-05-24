@@ -8,7 +8,7 @@ function logError(err, res) {
     res.end("");
 }
 
-Calculo.prototype.see = function(res, object){
+Calculo.prototype.expositor = function(res, object){
 	//Estándar de implementación de errores
 	if (object.error) { logError(object.error, res); return; }
 	
