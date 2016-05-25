@@ -1,26 +1,37 @@
 <div ng-init="getFreeDays()">
-    <div class="ibox-content">
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover dataTables-example">
-                <thead>
-                    <tr>
-                        <th>idUnidad</th>
-                        <th>fechainicio</th>
-                        <th>fechaVencimiento</th>
-                        <th>diasGracia</th>
-                        <th>estatus</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="days in allDays">
-                        <td>{{days.idUnidad}}</td>
-                        <td>{{days.fechainicio}}</td>
-                        <td>{{days.fechaVencimiento}}</td>
-                        <td>{{days.diasGracia}}</td>
-                        <td>{{days.estatus}}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="headTitleTallerCita">
+        <span class="title"> Nueva Cita<span class="subtitle">Call Center</span></span>
+    </div>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>idUnidad</th>
+                                        <th>fechainicio</th>
+                                        <th>fechaVencimiento</th>
+                                        <th>diasGracia</th>
+                                        <th>estatus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="days in allDays">
+                                        <td>{{days.idUnidad}}</td>
+                                        <td>{{days.fechainicio}}</td>
+                                        <td>{{days.fechaVencimiento}}</td>
+                                        <td>{{days.diasGracia}}</td>
+                                        <td>{{days.estatus}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
