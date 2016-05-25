@@ -1,8 +1,10 @@
 registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository) {
+    
+    // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
         $scope.getInterest();
     }
-    // Se obtiene los intereses de las unidades
+    // Metodo para obtiener todos los intereses
     $scope.getInterest = function () {
         interestsRepository.getInterest().then(function (result) {
             if (result.data.length > 0) {

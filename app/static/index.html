@@ -20,95 +20,78 @@
     <script src="js/libs/jQuery/jquery-2.1.4.min.js"></script>
     <script src="js/libs/bootstrap/bootstrap.js"></script>
     <script src="js/libs/jQuery/jquery.js"></script>
-    <!--Admin CSS-->
-    <link href="css/Layout/sb-admin.css" rel="stylesheet">
-    <!--CSS Morris-->
-    <link href="css/Layout/plugins/morris.css" rel="stylesheet">
-    <link href="css/Inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
     <!--CSS Inspinia-->
     <link href="css/Inspinia/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="css/Inspinia/css/style.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="css/Layout/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/Inspinia/css/animate.css" rel="stylesheet">
 </head>
 
 <body ng-app="registrationModule">
     <div id="wrapper">
-        <!-- Navegación -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">Plan Piso</a>
-            </div>
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu message-dropdown">
-                        <li class="message-footer">
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-
-                        <li class="divider"></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Usuario <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Perfil</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Bandeja</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Opciones</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Salir </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element"> <span>
+                            <h2>Plan Piso</h2>
+                             </span>
+                        </div>
+                    </li>
                     <li class="active">
-                        <a href="#"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
+                        <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">Inicio</span> <span class="fa arrow"></span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-bar-chart-o"></i> Datos</a>
+                        <a href="/freedays"><i class="fa fa-diamond"></i> <span class="nav-label">Días Gracia</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-table"></i> Tablas</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-edit"></i> Formularios</a>
-                    </li>
-                    <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i>Otros</a>
-                    </li>
+                        <a href="/interest"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Intereses</span><span class="fa arrow"></span></a>
                 </ul>
+
             </div>
         </nav>
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom">
+                            <div class="form-group">
+                                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Bienvenidos a Plan Piso</span>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/">
+                                <i class="fa fa-sign-out"></i> Cerrar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="right-sidebar-toggle">
+                                <i class="fa fa-tasks"></i>
+                            </a>
+                        </li>
+                    </ul>
 
-        <div id="page-wrapper">
-
+                </nav>
+            </div>
             <div ng-view></div>
-
         </div>
     </div>
+
     <!--Interface de usuario-->
     <script src="js/libs/toastr/toastr.min.js"></script>
     <!-- Librerias Angular-->
@@ -123,10 +106,6 @@
     <script src="AngularJS/registrationModule.js"></script>
     <!--librerias de componenetes-->
     <script src="AngularJS/alertFactory.js"></script>
-    <!--Librerias sd-admin -->
-    <script src="js/libs/sb-admin/plugins/morris/raphael.min.js"></script>
-    <script src="js/libs/sb-admin/plugins/morris/morris.min.js"></script>
-    <script src="js/libs/sb-admin/plugins/morris/morris-data.js"></script>
     <!--Controllers-->
     <script src="AngularJS/Example/exampleController.js"></script>
     <script src="AngularJS/Interests/interestsRepository.js"></script>
@@ -139,6 +118,7 @@
     <!-- Custom and plugin javascript -->
     <script src="js/libs/inspinia/js/inspinia.js"></script>
     <script src="js/libs/inspinia/js/plugins/pace/pace.min.js"></script>
+    
 </body>
 
 </html>
