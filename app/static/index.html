@@ -24,6 +24,7 @@
     <link href="css/Inspinia/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="css/Inspinia/css/style.css" rel="stylesheet">
     <link href="css/Inspinia/css/animate.css" rel="stylesheet">
+    <link href="css/Inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
 </head>
 
 <body ng-app="registrationModule">
@@ -33,45 +34,52 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element"> <span>
-                            <h2>Plan Piso</h2>
+                            <img alt="image" class="img-circle" src="image/usuario.png" />
                              </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Administrador</strong>
+                             </span> <span class="text-muted text-xs block">Admin <b class="caret"></b></span> </span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="profile.html">Profile</a></li>
+                                <li><a href="contacts.html">Contacts</a></li>
+                                <li><a href="mailbox.html">Mailbox</a></li>
+                                <li class="divider"></li>
+                                <li><a href="login.html">Logout</a></li>
+                            </ul>
                         </div>
-                    </li>
-                    <li class="active">
-                        <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">Inicio</span> <span class="fa arrow"></span></a>
-                    </li>
-                    <li>
-                        <a href="/freedays"><i class="fa fa-diamond"></i> <span class="nav-label">Días Gracia</span></a>
-                    </li>
-                    <li>
-                        <a href="/interest"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Intereses</span><span class="fa arrow"></span></a>
+                        <div class="logo-element">
+                            GA+
+                        </div>
+                        <li class="active">
+                            <a href="/"><i class="fa fa-th-large"></i> Inicio</a>
+                        </li>
+                        <li>
+                            <a href="/freedays"><i class="fa fa-diamond"></i> <span class="nav-label">Días Gracia</span></a>
+                        </li>
+                        <li>
+                            <a href="/interest"><i class="fa fa-bar-chart-o"></i>Intereses</a>
                 </ul>
-
             </div>
         </nav>
-        <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                        <form role="search" class="navbar-form-custom">
-                            <div class="form-group">
-                                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                            </div>
-                        </form>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span class="m-r-sm text-muted welcome-message">Bienvenidos a Plan Piso</span>
+                            <span class="m-r-sm text-muted welcome-message">GRUPO ANDRADE | PLAN PISO</span>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                                <i class="fa fa-envelope"></i>
                             </a>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                                <i class="fa fa-bell"></i>
                             </a>
                         </li>
                         <li>
@@ -116,10 +124,21 @@
     <!--Script Inspinia-->
     <script src="js/libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="js/libs/inspinia/js/plugins/dataTables/datatables.min.js"></script>
-    <!-- Custom and plugin javascript -->
     <script src="js/libs/inspinia/js/inspinia.js"></script>
     <script src="js/libs/inspinia/js/plugins/pace/pace.min.js"></script>
-    
+
+    <!-- Flot -->
+    <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.js"></script>
+    <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.symbol.js"></script>
+    <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.time.js"></script>
+
+
+
+
 </body>
 
 </html>

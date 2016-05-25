@@ -275,24 +275,24 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   color: white;
 }
 .navbar-default .special_link a:hover {
-  background: #17987e !important;
+  background: #000 !important;
   color: white;
 }
 .navbar-default .special_link a span.label {
-  background: #fff;
-  color: #1ab394;
+  background: #000;
+  color: #000;
 }
 .navbar-default .landing_link a {
-  background: #1cc09f;
+  background: #000;
   color: white;
 }
 .navbar-default .landing_link a:hover {
-  background: #1ab394 !important;
+  background: #000 !important;
   color: white;
 }
 .navbar-default .landing_link a span.label {
   background: #fff;
-  color: #1cc09f;
+  color: #000;
 }
 .logo-element {
   text-align: center;
@@ -466,7 +466,7 @@ body.canvas-menu.mini-navbar .navbar-default .nav li .profile-element a span {
 }
 body.canvas-menu nav.navbar-static-side {
   z-index: 2001;
-  background: #2f4050;
+  background: #000;
   height: 100%;
   position: fixed;
   display: none;
@@ -1574,7 +1574,90 @@ a.list-group-item.active:focus {
   margin-top: 15px;
   position: relative;
 }
-
+/* DATATABLES */
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+  background: transparent;
+}
+.dataTables_wrapper {
+  padding-bottom: 30px;
+}
+.dataTables_length {
+  float: left;
+}
+.dataTables_filter label {
+  margin-right: 5px;
+}
+.html5buttons {
+  float: right;
+}
+.html5buttons a {
+  border: 1px solid #e7eaec;
+  background: #fff;
+  color: #676a6c;
+  box-shadow: none;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+.html5buttons a:hover,
+.html5buttons a:focus:active {
+  background-color: #eee;
+  color: inherit;
+  border-color: #d2d2d2;
+}
+div.dt-button-info {
+  z-index: 100;
+}
+@media (max-width: 768px) {
+  .html5buttons {
+    float: none;
+    margin-top: 10px;
+  }
+  .dataTables_length {
+    float: none;
+  }
+}
+/* CIRCLE */
+.img-circle {
+  border-radius: 50%;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.428571429;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  border-radius: 25px;
+  font-size: 18px;
+  line-height: 1.33;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+.show-grid [class^="col-"] {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid #ddd;
+  background-color: #eee !important;
+}
+.show-grid {
+  margin: 15px 0;
+}
 /* ANIMATION */
 .css-animation-box h1 {
   font-size: 44px;
@@ -3148,10 +3231,10 @@ body.tour-open .animated {
   padding: 12px 10px;
   margin: 0;
   border-radius: 0;
-  background: #2f4050;
+  background: #000;
   color: #fff;
   text-align: center;
-  border-right: 1px solid #334556;
+  border-right: 1px solid #000;
 }
 .sidebar-container ul.nav-tabs li.active a {
   border: none;
@@ -4232,7 +4315,35 @@ a.close-canvas-menu:hover {
 .space-30 {
   margin: 30px 0;
 }
-
+.fullscreen-ibox-mode .animated {
+  animation: none;
+}
+body.fullscreen-ibox-mode {
+  overflow-y: hidden;
+}
+.ibox.fullscreen {
+  z-index: 2030;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  margin-bottom: 0;
+}
+.ibox.fullscreen .collapse-link {
+  display: none;
+}
+.ibox.fullscreen .ibox-content {
+  min-height: calc(100% - 48px);
+}
+body.modal-open {
+  padding-right: inherit !important;
+}
+body.modal-open .animated {
+  animation-fill-mode: initial;
+  z-index: inherit;
+}
 /* Show profile dropdown on fixed sidebar */
 body.mini-navbar.fixed-sidebar .profile-element,
 .block {
@@ -6494,8 +6605,8 @@ body.landing-page {
   padding-left: 15px;
 }
 .landing-page .navbar-default.navbar-scroll {
-  background-color: #fff;
-  border-color: #fff;
+  background-color: #000;
+  border-color: #000;
   padding: 15px 0;
 }
 .landing-page .navbar-default {
@@ -6504,7 +6615,7 @@ body.landing-page {
   transition: all 0.3s ease-in-out 0s;
 }
 .landing-page .navbar-default .nav li a {
-  color: #fff;
+  color: #  fff;
   font-family: 'Open Sans', helvetica, arial, sans-serif;
   font-weight: 700;
   letter-spacing: 1px;
@@ -6532,7 +6643,7 @@ body.landing-page {
 }
 .landing-page .navbar-default .navbar-nav > .active > a:focus {
   background: transparent;
-  color: #ffffff;
+  color: #000;
 }
 .landing-page .navbar-default.navbar-scroll .navbar-nav > .active > a:focus {
   background: transparent;

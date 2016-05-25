@@ -6,7 +6,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
     // Metodo para obtiener todos los intereses
     $scope.getInterest = function () {
-        interestsRepository.getInterest().then(function (result) {
+        $scope.promise  =  interestsRepository.getInterest().then(function (result) {
             if (result.data.length > 0) {
                 $scope.interes = result.data;
                 setTimeout(function () {
