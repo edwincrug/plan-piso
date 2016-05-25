@@ -1,10 +1,13 @@
 registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository) {
+    
+      $scope.message = 'Buscando...';
+
     $scope.init = function () {
         $scope.getInterest();
     }
     // Se obtiene los intereses de las unidades
     $scope.getInterest = function () {
-        interestsRepository.getInterest().then(function (result) {
+      $scope.promise  =  interestsRepository.getInterest().then(function (result) {
             if (result.data.length > 0) {
                 $scope.interes = result.data;
                 setTimeout(function () {
