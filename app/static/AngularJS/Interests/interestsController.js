@@ -1,22 +1,9 @@
 registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository) {
-    $scope.getFreeDays = function () {
-        //console.log(interestsRepository.getCliente());
-
-        interestsRepository.getFreeDays().then(function (result) {
-            if (result.data.length > 0) {
-                console.log(result.data);
-                $scope.clientes = result.data;
-                alertFactory.success("Clientes cargados");
-            } else {
-                alertFactory.info("No se encontraron clientes");
-            }
-        }, function (error) {
-            alertFactory.error("Error al cargar clientes");
-        });
-    };
+    $scope.init = function () {
+        $scope.getInterest();
+    }
+    // Se obtiene los intereses de las unidades
     $scope.getInterest = function () {
-        //console.log(interestsRepository.getCliente());
-
         interestsRepository.getInterest().then(function (result) {
             if (result.data.length > 0) {
                 $scope.interes = result.data;
@@ -47,7 +34,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                 }
                             }
                         ]
-
                     });
                 }, 1000);
                 alertFactory.success("Clientes cargados");

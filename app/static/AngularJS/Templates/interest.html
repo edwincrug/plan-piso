@@ -1,6 +1,6 @@
-<div ng-init="getInterest()">
+<div ng-init="init()">
     <div class="headTitleTallerCita">
-        <span class="title"> Intereses<span class="subtitle"></span></span>
+        <h2> Intereses</h2>
     </div>
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -26,10 +26,10 @@
                                         <td>{{intereses.idUnidad}}</td>
                                         <td>{{intereses.vin}}</td>
                                         <td>{{intereses.marca}}</td>
-                                        <td>{{intereses.costo}}</td>
-                                        <td>{{intereses.interesTotal}}</td>
-                                        <td>{{intereses.interesTotalCosto}}</td>
-                                        <td>{{intereses.limiteGanancia}}</td>
+                                        <td>{{intereses.costo | currency}}</td>
+                                        <td>{{intereses.interesTotal | currency}}</td>
+                                        <td>{{intereses.interesTotalCosto | currency}}</td>
+                                        <td>{{intereses.limiteGanancia | currency}}</td>
                                         <td>{{intereses.margen}}</td>
                                     </tr>
                                 </tbody>
