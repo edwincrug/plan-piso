@@ -1,9 +1,16 @@
 registrationModule.controller('freeDaysController', function($scope, alertFactory, freeDaysRepository) {
 
+    //store an array of free days getting by getFreeDays function
     $scope.allDays = {};
 
-    $scope.getFreeDays = function() {
 
+    //first method called when page load
+    $scope.init = function() {
+        $scope.getFreeDays();
+    };
+
+    //retrive data from a sp to get freedays of a unit
+    $scope.getFreeDays = function() {
 
         freeDaysRepository.getFreeDays().then(function(result) {
             if (result.data.length > 0) {
@@ -49,4 +56,8 @@ registrationModule.controller('freeDaysController', function($scope, alertFactor
         });
 
     };
+
+
+
+
 });

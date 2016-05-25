@@ -1,6 +1,6 @@
-<div ng-init="getFreeDays()">
+<div ng-init="init()">
     <div class="headTitleTallerCita">
-        <span class="title"> Nueva Cita<span class="subtitle">Call Center</span></span>
+        <h2>Días de Gracia</h2>
     </div>
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -21,8 +21,8 @@
                                 <tbody>
                                     <tr ng-repeat="days in allDays">
                                         <td>{{days.idUnidad}}</td>
-                                        <td>{{days.fechainicio}}</td>
-                                        <td>{{days.fechaVencimiento}}</td>
+                                        <td>{{days.fechainicio | date:'yyyy-MM-dd'}}</td>
+                                        <td>{{days.fechaVencimiento | date:'yyyy-MM-dd'}}</td>
                                         <td>{{days.diasGracia}}</td>
                                         <td>{{days.estatus}}</td>
                                     </tr>
