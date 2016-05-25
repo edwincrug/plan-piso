@@ -38,7 +38,7 @@ h5 {
   margin-top: 5px;
   font-weight: 600;
 }
-.nav > li > a {
+/*.nav > li > a {
   color: #a7b1c2;
   font-weight: 600;
   padding: 14px 20px 14px 25px;
@@ -3298,6 +3298,7 @@ body.tour-open .animated {
   padding: 15px 20px;
   border-bottom: 1px solid #e7eaec;
 }
+/*
 body {
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #2f4050;
@@ -3308,7 +3309,7 @@ body {
 html,
 body {
   height: 100%;
-}
+}/*
 body.full-height-layout #wrapper,
 body.full-height-layout #page-wrapper {
   height: 100%;
@@ -3434,7 +3435,7 @@ video {
 .modal-footer {
   margin-top: 0;
 }
-/* WRAPPERS */
+/* WRAPPERS 
 #wrapper {
   width: 100%;
   overflow-x: hidden;
@@ -3527,7 +3528,7 @@ body.fixed-sidebar.body-small.mini-navbar .footer.fixed {
 body.body-small .footer.fixed {
   margin-left: 0;
 }
-/* PANELS */
+/* PANELS 
 .page-heading {
   border-top: 0;
   padding: 0 10px 20px 10px;
@@ -3568,7 +3569,7 @@ body.body-small .footer.fixed {
   padding: 8px;
   vertical-align: top;
 }
-/* PANELS */
+/* PANELS 
 .panel.blank-panel {
   background: none;
   margin: 0;
@@ -3609,7 +3610,7 @@ body.body-small .footer.fixed {
 .ui-tab .tab-content {
   padding: 20px 0;
 }
-/* GLOBAL  */
+/* GLOBAL  
 .no-padding {
   padding: 0 !important;
 }
@@ -3839,7 +3840,7 @@ table.table-mail tr td {
   left: auto;
   right: 0;
 }
-/* BACKGROUNDS */
+/* BACKGROUNDS 
 .gray-bg {
   background-color: #f3f3f4;
 }
@@ -7126,7 +7127,7 @@ body.landing-page {
   }
 }
 body.rtls {
-  /* Theme config */
+  /* Theme config 
 }
 body.rtls #page-wrapper {
   margin: 0 220px 0 0;
@@ -7352,7 +7353,7 @@ body.rtls.top-navigation .footer.fixed {
  *   This is style for skin config
  *   Use only in demo theme
  *
-*/
+
 .theme-config {
   position: absolute;
   top: 90px;
@@ -7449,7 +7450,7 @@ body.rtls.top-navigation .footer.fixed {
  *   SKIN 1 - INSPINIA - Responsive Admin Theme
  *   NAME - Blue light
  *
-*/
+
 .skin-1 .minimalize-styl-2 {
   margin: 14px 5px 5px 30px;
 }
@@ -7552,7 +7553,7 @@ body.skin-1 {
  *   SKIN 2 - INSPINIA - Responsive Admin Theme
  *   NAME - Inspinia Ultra
  *
-*/
+
 body.skin-2 {
   color: #565758 !important;
 }
@@ -7699,7 +7700,7 @@ body.skin-2 #wrapper {
  *   SKIN 3 - INSPINIA - Responsive Admin Theme
  *   NAME - Yellow/purple
  *
-*/
+
 .skin-3 .minimalize-styl-2 {
   margin: 14px 5px 5px 30px;
 }
