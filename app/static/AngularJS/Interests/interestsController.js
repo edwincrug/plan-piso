@@ -38,12 +38,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         ]
                     });
                 }, 1000);
-                alertFactory.success("Clientes cargados");
+                alertFactory.success("Intereses cargados");
             } else {
-                alertFactory.info("No se encontraron clientes");
+                alertFactory.info("No se encontraron Intereses");
             }
         }, function (error) {
-            alertFactory.error("Error al cargar clientes");
+            alertFactory.error("Error al cargar Intereses");
         });
     };
 });
