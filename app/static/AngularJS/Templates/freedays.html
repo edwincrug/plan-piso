@@ -14,20 +14,22 @@
                             <table class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}" >
                                 <thead>
                                     <tr>
-                                        <th>Unidad ID</th>
+                                        <th>Vin</th>
                                         <th>Fecha Inicio</th>
-                                        <th>Fecha Vencimiento</th>
                                         <th>Días Gracia</th>
+                                        <th>Días Transcurridos</th>
+                                        <th>Días Restantes</th>
                                         <th>Estatus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="days in allDays">
-                                        <td>{{days.idUnidad}}</td>
-                                        <td>{{days.fechainicio | date:'yyyy-MM-dd'}}</td>
-                                        <td>{{days.fechaVencimiento | date:'yyyy-MM-dd'}}</td>
-                                        <td>{{days.diasGracia}}</td>
-                                        <td>{{days.estatus}}</td>
+                                       <td>{{days.vin}}</td>
+                                       <td>{{days.fechainicio}}</td>
+                                       <td>{{days.diasGracia}}</td>
+                                       <td>{{days.diasTranscurridos}}</td>
+                                       <td>{{days.diasRestantes}}</td>
+                                       <td>{{days.estatus}}</td>
                                     </tr>
                                 </tbody>
                             </table>
