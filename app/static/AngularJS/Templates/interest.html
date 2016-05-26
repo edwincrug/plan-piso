@@ -29,14 +29,14 @@
                                     <tr ng-repeat="intereses in interes">                                        
                                         <td>{{intereses.vin}}</td>
                                         <td>{{intereses.marca}}</td>
-                                        <td>{{intereses.precioCompra}}</td>
-                                        <td>{{intereses.precioVenta}}</td>
-                                        <td>{{intereses.interesAcumulado}}</td>
-                                        <td>{{intereses.interesPagado}}</td>
-                                        <td>{{intereses.interesTotal}}</td>
-                                        <td>{{intereses.precioCompraMasInteres}}</td>
-                                        <td>{{intereses.margenGanancia}}</td>
-                                        <td>{{intereses.diasPlanPiso}}</td>
+                                        <td>{{intereses.precioCompra | currency}}</td>
+                                        <td>{{intereses.precioVenta | currency}}</td>
+                                        <td>{{intereses.interesAcumulado | currency}}</td>
+                                        <td>{{intereses.interesPagado | currency}}</td>
+                                        <td>{{intereses.interesTotal | currency}}</td>
+                                        <td>{{intereses.precioCompraMasInteres | currency}}</td>
+                                        <td>{{intereses.margenGanancia | currency}}</td>
+                                        <td>{{intereses.diasPlanPiso | currency}}</td>
                                         <td>{{intereses.esquema}}</td>
                                         <td>{{intereses.estatus}}</td>
 

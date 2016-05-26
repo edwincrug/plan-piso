@@ -1,5 +1,7 @@
 registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository) {
-    
+    //store an array of free days getting by getFreeDays function  
+    $scope.allDays = {};
+    $scope.message = 'Buscando...';
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
         $scope.getInterest();
