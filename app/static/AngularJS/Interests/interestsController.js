@@ -40,10 +40,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 }, 1000);
                 alertFactory.success("Intereses cargados");
             } else {
-                alertFactory.info("No se encontraron Intereses");
+                alertFactory.info("No se encontraron intereses");
             }
         }, function (error) {
-            alertFactory.error("Error al cargar Intereses");
+            alertFactory.error("Error al cargar intereses");
         });
     };
 });

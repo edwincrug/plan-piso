@@ -18,6 +18,9 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         }).when('/freedays', {
             templateUrl: 'AngularJS/Templates/freedays.html',
             controller: 'freeDaysController'
+        }).when('/scheme',{
+            templateUrl: 'AngularJS/Templates/scheme.html',
+            controller: 'schemeController'
         });
 
         $locationProvider.html5Mode({
