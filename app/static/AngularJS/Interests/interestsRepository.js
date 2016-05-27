@@ -12,5 +12,4 @@ registrationModule.factory('interestsRepository', function($http) {
         }
 
     };
-
 });

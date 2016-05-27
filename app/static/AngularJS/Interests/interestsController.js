@@ -5,7 +5,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
         $scope.getInterest();
-        //$scope.Detalle();
+
     }
     // Metodo para obtiener todos los intereses
     $scope.getInterest = function () {
@@ -13,6 +13,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             if (result.data.length > 0) {
                 $scope.interes = result.data;
                 $scope.unidades = result.data.length;
+                $scope.unidadesVencidas = 0;
+                $scope.interesUnidadesVencidas = 0;
+                $scope.interesUnidadesPorVencidas = 0;
+                $scope.unidadesPorVencer = 0;
+                $scope.porcentajeTotalUnidades = 0;
+                $scope.porcentajePorVencer = 0;
+                $scope.porcentajeVencido = 0;
                 $scope.total = 0;
                 setTimeout(function () {
                     $('.dataTables-example').DataTable({
@@ -44,8 +51,22 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     });
                 }, 1000);
                 for (var i = 0; i < result.data.length; i++) {
+                    
+                    if(result.data[i].diasPlanPiso >= 180){
+                         $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado) +(result.data[i].precioCompra)
+                         $scope.unidadesVencidas +=  1
+                    }
+                    else
+                        if(result.data[i].diasPlanPiso < 174 && result.data[i].diasPlanPiso > 170){
+                         $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
+                         $scope.unidadesPorVencer +=  1
+                        }
                     $scope.total += (result.data[i].interesAcumulado)
+                    $scope.porcentajeTotalUnidades = 100
+                    $scope.porcentajeVencido = ($scope.unidadesVencidas * 100 ) /$scope.unidades
+                    $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100 ) /$scope.unidades
                 }
+                
                 alertFactory.success("Intereses cargados");
             } else {
                 alertFactory.info("No se encontraron intereses");
@@ -54,6 +75,27 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             alertFactory.error("Error al cargar intereses");
         });
     }
+    
+     $scope.setClass = function(status) {
+        switch (status) {
+            case 'OK':
+                return 'gridFontGreen';
+            case 'CHECK':
+                return 'gridFontYellow';
+            case 'EXCEEDED':
+                return 'gridFontRed';
+            default:
+                return 'gridFontGreen';
+        }
+    };
+        $scope.setClassDias = function(dias) {
+            if(dias == 180){
+                return 'gridFontRed';
+            }else{
+                return 'gridFontGreen';
+            }
+    };
+    
 });
 
 

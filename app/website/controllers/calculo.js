@@ -76,5 +76,23 @@ Calculo.prototype.get_scheme = function (req, res, next) {
     });
 };
 
+Calculo.prototype.get_financingdays = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [];
+
+    this.model.query('FINANCING_DAYS_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 module.exports = Calculo;

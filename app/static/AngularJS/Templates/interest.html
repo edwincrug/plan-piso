@@ -11,7 +11,7 @@
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{total | currency }}</h1>
-                    <div class="stat-percent font-bold text-success">100% <i class="fa fa-bolt"></i></div>
+                    <div class="stat-percent font-bold text-success">{{porcentajeTotalUnidades}}% <i class="fa fa-bolt"></i></div>
                     <small>Unidades: {{unidades}}</small>
                     <br/>
                     <small><a href="/interest">Ver detalles</a></small>
@@ -25,9 +25,9 @@
                     <h5>Por Vencer</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">$275,800.00</h1>
-                    <div class="stat-percent font-bold text-warning">25% <i class="fa fa-level-down"></i></div>
-                    <small>Unidades: 500</small>
+                    <h1 class="no-margins">{{interesUnidadesPorVencidas | currency}}</h1>
+                    <div class="stat-percent font-bold text-warning">{{porcentajePorVencer | number:2}}% <i class="fa fa-level-down"></i></div>
+                    <small>Unidades: {{unidadesPorVencer}}</small>
                     <br/>
                     <small><a href="/interest">Ver detalles</a></small>
                 </div>
@@ -40,9 +40,9 @@
                     <h5>Vencidos</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">$706,120.00</h1>
-                    <div class="stat-percent font-bold text-danger">10% <i class="fa fa-level-down"></i></div>
-                    <small>Unidades: 200</small>
+                    <h1 class="no-margins">{{interesUnidadesVencidas | currency}}</h1>
+                    <div class="stat-percent font-bold text-danger">{{porcentajeVencido | number:2}}% <i class="fa fa-level-down"></i></div>
+                    <small>Unidades: {{unidadesVencidas}}</small>
                     <br/>
                     <small><a href="/freedays">Ver detalles</a></small>
                 </div>
@@ -76,14 +76,15 @@
                                         <td>{{intereses.VEH_NUMSERIE}}</td>
                                         <td>{{intereses.marca}}</td>
                                         <td>{{intereses.modelo}}</td>
-                                        <td>{{intereses.diasPlanPiso}}</td>
+                                        <td ng-class="setClassDias(intereses.diasPlanPiso)">{{intereses.diasPlanPiso}}</td>
                                         <td>{{intereses.precioCompra | currency}}</td>
                                         <td>{{intereses.precioVenta | currency}}</td>
                                         <td>{{intereses.interesAcumulado | currency}}</td>
                                         <td>{{intereses.interesPagado | currency}}</td>
                                         <td>{{intereses.interesTotal | currency}}</td>
-                                        <td>{{intereses.margenGanancia | currency}}</td>
+                                        <td  ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
                                         <td>{{intereses.esquema}}</td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
