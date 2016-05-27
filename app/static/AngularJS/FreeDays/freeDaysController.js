@@ -10,10 +10,23 @@ registrationModule.controller('freeDaysController', function($scope, alertFactor
         $scope.getFreeDays();
     };
 
+    $scope.setClass = function(status) {
+        switch (status) {
+            case 'OK':
+                return 'gridFontGreen';
+            case 'CHECK':
+                return 'gridFontYellow';
+            case 'OUTDATE':
+                return 'gridFontRed';
+            default:
+                return 'gridFontGreen';
+        }
+    };
+
     //retrive data from a sp to get freedays of a unit
     $scope.getFreeDays = function() {
 
-      $scope.promise  = freeDaysRepository.getFreeDays().then(function(result) {
+        $scope.promise = freeDaysRepository.getFreeDays().then(function(result) {
             if (result.data.length > 0) {
                 $scope.allDays = result.data;
                 // $('#btnTest').button('buscando');
