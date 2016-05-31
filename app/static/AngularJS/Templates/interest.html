@@ -7,7 +7,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-success pull-right">HOY</span>
-                    <h5>Interes Total</h5>
+                    <h5>Interés Total</h5>
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{total | currency }}</h1>
@@ -22,7 +22,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-warning pull-right">HOY</span>
-                    <h5>Por Vencer</h5>
+                    <h5>Interés Por Vencer</h5>
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{interesUnidadesPorVencidas | currency}}</h1>
@@ -37,14 +37,14 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-danger pull-right">HOY</span>
-                    <h5>Vencidos</h5>
+                    <h5>Interés Vencido</h5>
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{interesUnidadesVencidas | currency}}</h1>
                     <div class="stat-percent font-bold text-danger">{{porcentajeVencido | number:2}}% <i class="fa fa-level-down"></i></div>
                     <small>Unidades: {{unidadesVencidas}}</small>
                     <br/>
-                    <small><a href="/freedays">Ver detalles</a></small>
+                    <small><a href="/interest">Ver detalles</a></small>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="intereses in interes">     
+                                    <tr ng-repeat="intereses in interes">
                                         <td>{{intereses.VEH_NUMSERIE}}</td>
                                         <td>{{intereses.marca}}</td>
                                         <td>{{intereses.modelo}}</td>
@@ -82,9 +82,8 @@
                                         <td>{{intereses.interesAcumulado | currency}}</td>
                                         <td>{{intereses.interesPagado | currency}}</td>
                                         <td>{{intereses.interesTotal | currency}}</td>
-                                        <td  ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
+                                        <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
                                         <td>{{intereses.esquema}}</td>
-                                        
                                     </tr>
                                 </tbody>
                             </table>

@@ -15,8 +15,6 @@ var Calculo = function (conf) {
     };
 };
 
-
-
 // Se obtine los días de gracia
 Calculo.prototype.get_freedays = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
@@ -57,6 +55,7 @@ Calculo.prototype.get_interest = function (req, res, next) {
     });
 };
 
+//Se obtiene los esquemas 
 Calculo.prototype.get_scheme = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -76,7 +75,8 @@ Calculo.prototype.get_scheme = function (req, res, next) {
     });
 };
 
-Calculo.prototype.get_financingdays = function (req, res, next) {
+// Seleccionar los TIIE
+Calculo.prototype.get_tiie = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
     //Retorna {p1:'a',p2:'b'}
@@ -87,12 +87,14 @@ Calculo.prototype.get_financingdays = function (req, res, next) {
     //asignación de valores mediante parámetros del request
     var params = [];
 
-    this.model.query('FINANCING_DAYS_SP', params, function (error, result) {
+    this.model.query('SEL_TIIE_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
         });
     });
 };
+
+//Se agrega una nueva TIIE
 
 module.exports = Calculo;

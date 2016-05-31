@@ -4,12 +4,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.message = 'Buscando...';
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
-        $scope.getInterest();
+            $scope.getInterest();
 
-    }
-    // Metodo para obtiener todos los intereses
+        }
+    
+    // Metodo para obtiener todos los intereses y los datos para llenar los dashboards
     $scope.getInterest = function () {
-        $scope.promise  =  interestsRepository.getInterest().then(function (result) {
+        $scope.promise = interestsRepository.getInterest().then(function (result) {
             if (result.data.length > 0) {
                 $scope.interes = result.data;
                 $scope.unidades = result.data.length;
@@ -51,22 +52,21 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     });
                 }, 1000);
                 for (var i = 0; i < result.data.length; i++) {
-                    
-                    if(result.data[i].diasPlanPiso >= 180){
-                         $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado) +(result.data[i].precioCompra)
-                         $scope.unidadesVencidas +=  1
+
+                    if (result.data[i].diasPlanPiso >= 180) {
+                        $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado) + (result.data[i].precioCompra)
+                        $scope.unidadesVencidas += 1
+                        $scope.interesUnidadesPorVencidas =  (result.data[i].interesAcumulado)
+                    } else
+                    if (result.data[i].diasPlanPiso < 174 && result.data[i].diasPlanPiso > 170) {
+                       // $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
+                        $scope.unidadesPorVencer += 1
                     }
-                    else
-                        if(result.data[i].diasPlanPiso < 174 && result.data[i].diasPlanPiso > 170){
-                         $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
-                         $scope.unidadesPorVencer +=  1
-                        }
                     $scope.total += (result.data[i].interesAcumulado)
                     $scope.porcentajeTotalUnidades = 100
-                    $scope.porcentajeVencido = ($scope.unidadesVencidas * 100 ) /$scope.unidades
-                    $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100 ) /$scope.unidades
+                    $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
+                    $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
                 }
-                
                 alertFactory.success("Intereses cargados");
             } else {
                 alertFactory.info("No se encontraron intereses");
@@ -75,27 +75,24 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             alertFactory.error("Error al cargar intereses");
         });
     }
-    
-     $scope.setClass = function(status) {
+
+    $scope.setClass = function (status) {
         switch (status) {
-            case 'OK':
-                return 'gridFontGreen';
-            case 'CHECK':
-                return 'gridFontYellow';
-            case 'EXCEEDED':
-                return 'gridFontRed';
-            default:
-                return 'gridFontGreen';
+        case 'OK':
+            return 'gridFontGreen';
+        case 'CHECK':
+            return 'gridFontYellow';
+        case 'EXCEEDED':
+            return 'gridFontRed';
+        default:
+            return 'gridFontGreen';
         }
     };
-        $scope.setClassDias = function(dias) {
-            if(dias == 180){
-                return 'gridFontRed';
-            }else{
-                return 'gridFontGreen';
-            }
+    $scope.setClassDias = function (dias) {
+        if (dias == 180) {
+            return 'gridFontRed';
+        } else {
+            return 'gridFontGreen';
+        }
     };
-    
 });
-
-
