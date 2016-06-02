@@ -53,12 +53,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 for (var i = 0; i < result.data.length; i++) {
 
                     if (result.data[i].diasPlanPiso >= 180) {
-                        $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado) + (result.data[i].precioCompra)
+                        $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado)
                         $scope.unidadesVencidas += 1
-                        $scope.interesUnidadesPorVencidas = (result.data[i].interesAcumulado)
+                       // $scope.interesUnidadesPorVencidas = (result.data[i].interesAcumulado)
                     } else
                     if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
-                        // $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
+                        $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
                         $scope.unidadesPorVencer += 1
                     }
                     $scope.total += (result.data[i].interesAcumulado)

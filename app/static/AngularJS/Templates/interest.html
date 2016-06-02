@@ -13,7 +13,7 @@
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{total | currency }}</h1>
-                    <div class="stat-percent font-bold text-success">{{porcentajeTotalUnidades}}% <i class="fa fa-bolt"></i></div>
+                    <div class="stat-percent font-bold text-success">{{porcentajeTotalUnidades}}% <i class="fa"></i></div>
                     <small>Unidades: {{unidades}}</small>
                     <br/>
                     <small><a ng-click="getTotalInterest()">Ver detalles</a></small>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{interesUnidadesPorVencidas | currency}}</h1>
-                    <div class="stat-percent font-bold text-warning">{{porcentajePorVencer | number:2}}% <i class="fa fa-level-down"></i></div>
+                    <div class="stat-percent font-bold text-success">{{porcentajePorVencer | number:2}}% <i class="fa"></i></div>
                     <small>Unidades: {{unidadesPorVencer}}</small>
                     <br/>
                     <small><a ng-click="getAlmostEndingInterest()">Ver detalles</a></small>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{interesUnidadesVencidas | currency}}</h1>
-                    <div class="stat-percent font-bold text-danger">{{porcentajeVencido | number:2}}% <i class="fa fa-level-down"></i></div>
+                    <div class="stat-percent font-bold text-success">{{porcentajeVencido | number:2}}% <i class="fa"></i></div>
                     <small>Unidades: {{unidadesVencidas}}</small>
                     <br/>
                     <small><a ng-click="getEndingInterest()">Ver detalles</a></small>

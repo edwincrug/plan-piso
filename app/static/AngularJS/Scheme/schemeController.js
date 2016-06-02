@@ -20,7 +20,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             alertFactory.error("Error al cargar Esquemas");
         });
     }
-
+    // Función para pintar los datos de la grafica
     $scope.grafica = function () {
          var d1 = [[1262304000000, 6], [1264982400000, 3057], [1267401600000, 20434], [1270080000000, 31982], [1272672000000, 26602], [1275350400000, 27826], [1277942400000, 24302]];
          var d2 = [[1262304000000, 5], [1264982400000, 200], [1267401600000, 1605], [1270080000000, 6129], [1272672000000, 11643], [1275350400000, 19055], [1277942400000, 30062]];
@@ -108,9 +108,11 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
              var ctx = document.getElementById("lineChart").getContext("2d");
              var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
     };
+    // Función para llamar la modal
      $scope.inicia = function () {
         $('#inicioModal').modal('show');
     };
+    // Función para cerrar la modal
     $scope.cerrar = function () {
         $('#inicioModal').modal('toggle');
     };
