@@ -7,7 +7,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             $scope.getScheme();
             $scope.grafica(); 
         }
-        // Metodo para obtiener todos los intereses
+    // Metodo para obtiener todos los intereses
     $scope.getScheme = function () {
         $scope.promise = schemeRepository.getScheme().then(function (result) {
             if (result.data.length > 0) {

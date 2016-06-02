@@ -6,7 +6,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.init = function () {
         $scope.getInterest();
     }
-
     // Metodo para obtiener todos los intereses y los datos para llenar los dashboards
     $scope.getInterest = function () {
         $scope.promise = interestsRepository.getInterest().then(function (result) {
@@ -80,7 +79,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             alertFactory.error("Error al cargar intereses");
         });
     }
-
+    // Función para el ng-class en el campo status
     $scope.setClass = function (status) {
         switch (status) {
         case 'OK':
@@ -93,7 +92,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }
     };
-    
+    // Función para el ng-class en el campo días
     $scope.setClassDias = function (dias) {
         if (dias == 180) {
             return 'gridFontRed';
@@ -101,10 +100,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }
     };
-
-
+    // Función Principal para los filtros
     $scope.rangeFilter = function() {
-
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex) {
                 var min = parseInt($('#min').val(), 10);
@@ -123,14 +120,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         );
 
     };
-
+    // Función para filtro de todas las unidades
     $scope.getTotalInterest = function() {
         $('#min').val('');
         $('#max').val('');
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
     };
-
+    // Función para filtro unidades por vencer
     $scope.getAlmostEndingInterest = function() {
         $('#min').val(170);
         $('#max').val(179);
@@ -138,13 +135,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('#interestTable').DataTable().draw();
 
     };
-
+    // Función para filtro unidades vencidas
     $scope.getEndingInterest = function() {
         $('#min').val(180);
         $('#max').val(180);
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
     };
+    // Función para filtro unidades restantes
      $scope.getNormalInterest = function() {
         $('#min').val(30);
         $('#max').val(169);

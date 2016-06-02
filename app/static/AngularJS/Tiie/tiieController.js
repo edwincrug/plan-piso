@@ -5,7 +5,7 @@ registrationModule.controller('tiieController', function ($scope, alertFactory, 
             $scope.getTiie();
 
         }
-        // Metodo para obtiener todos los intereses
+    // Metodo para obtiener todos los intereses
     $scope.getTiie = function () {
         $scope.promise = tiieRepository.getTiie().then(function (result) {
             if (result.data.length > 0) {
@@ -18,9 +18,11 @@ registrationModule.controller('tiieController', function ($scope, alertFactory, 
             alertFactory.error("Error al cargar Tiie");
         });
     };
+    // Función para iniciar la modal
     $scope.inicia = function () {
         $('#inicioModal').modal('show');
     };
+    // Función para cerrar la modal
     $scope.cerrar = function () {
         $('#inicioModal').modal('toggle');
     };

@@ -1,8 +1,20 @@
 <div ng-init="init()">
     <input id="min" name="min" type="hidden">
     <input id="max" name="max" type="hidden">
-    <div class="headTitleTallerCita">
-        <h2> Intereses</h2>
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>Intereses</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li class="active">
+                    <strong>Intereses</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-3">
@@ -58,7 +70,7 @@
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{interesRestante | currency}}</h1>
-                    <div class="stat-percent font-bold text-info">{{ porcentajeRestante| number:2}}% <i class="fa"></i></div>
+                    <div class="stat-percent font-bold text-success">{{ porcentajeRestante| number:2}}% <i class="fa"></i></div>
                     <small>Unidades: {{unidadesRestantes}}</small>
                     <br/>
                     <small><a ng-click="getNormalInterest()">Ver detalles</a></small>
