@@ -23,7 +23,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="days in allDays" >
                                     <tr ng-repeat="days in allDays  | orderBy:days.diasRestantes" >
                                        <td>{{days.vin}}</td>
                                        <td>{{days.marca}}</td>
