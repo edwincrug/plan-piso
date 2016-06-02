@@ -108,4 +108,10 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
              var ctx = document.getElementById("lineChart").getContext("2d");
              var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
     };
+     $scope.inicia = function () {
+        $('#inicioModal').modal('show');
+    };
+    $scope.cerrar = function () {
+        $('#inicioModal').modal('toggle');
+    };
 });

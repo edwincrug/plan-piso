@@ -1,13 +1,13 @@
-registrationModule.controller('tiieController', function($scope, alertFactory, tiieRepository){
-    
-  // Primer metodo llamado al cargar la pagína
+registrationModule.controller('tiieController', function ($scope, alertFactory, tiieRepository) {
+
+    // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
-        $scope.getTiie();
-        
-    }
-    // Metodo para obtiener todos los intereses
+            $scope.getTiie();
+
+        }
+        // Metodo para obtiener todos los intereses
     $scope.getTiie = function () {
-        $scope.promise  =  tiieRepository.getTiie().then(function (result) {
+        $scope.promise = tiieRepository.getTiie().then(function (result) {
             if (result.data.length > 0) {
                 $scope.tiies = result.data;
                 alertFactory.success("Tiie cargado");
@@ -18,7 +18,10 @@ registrationModule.controller('tiieController', function($scope, alertFactory, t
             alertFactory.error("Error al cargar Tiie");
         });
     };
-    $scope.inicia = function(){
+    $scope.inicia = function () {
         $('#inicioModal').modal('show');
+    };
+    $scope.cerrar = function () {
+        $('#inicioModal').modal('toggle');
     };
 });

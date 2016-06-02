@@ -40,16 +40,19 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="memberModalLabel">Nuevo TIIE</h4>
-            </div>
-                    <h1>TIIE</h1>
+                <h4 class="modal-title" id="memberModalLabel"></h4>
+                    <h1>Nueva TIIE</h1>
                     <form class="form-signin">
                         Plazo:
-                        <input type="text" id="txtPlazo" class="form-control" placeholder="Plazo"> Monto:
-                        <input type="text" id="txtMonto" class="form-control" placeholder="Monto">
+                        <input type="text" id="txtPlazo" class="form-control col-md-2" placeholder="Plazo"> 
+                        <br/>
+                        Monto:
+                        <input type="text" id="txtMonto" class="form-control col-md-2" placeholder="Monto">
                         <br>
                         <button class="btn btn-primary" ng-click="">Guardar</button>
+                        <button class="btn btn-info" ng-click="cerrar()">Cancelar</button>
                     </form>
+            </div>
             </div>
         </div>
     </div>
