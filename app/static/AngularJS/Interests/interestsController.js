@@ -20,6 +20,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 $scope.porcentajeTotalUnidades = 0;
                 $scope.porcentajePorVencer = 0;
                 $scope.porcentajeVencido = 0;
+                $scope.unidadesRestantes = 0;
+                $scope.interesRestante = 0;
+                $scope.porcentajeRestante = 0;
                 $scope.total = 0;
                 setTimeout(function () {
                     $('.dataTables-example').DataTable({
@@ -65,6 +68,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.porcentajeTotalUnidades = 100
                     $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
                     $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
+                    $scope.porcentajeRestante =  ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer
+                    $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer -$scope.unidadesVencidas
+                    $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas -  $scope.interesUnidadesVencidas
                 }
                 alertFactory.success("Intereses cargados");
             } else {
@@ -87,6 +93,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }
     };
+    
     $scope.setClassDias = function (dias) {
         if (dias == 180) {
             return 'gridFontRed';
@@ -96,7 +103,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     };
 
 
-        $scope.rangeFilter = function() {
+    $scope.rangeFilter = function() {
 
         $.fn.dataTable.ext.search.push(
             function(settings, data, dataIndex) {
@@ -137,13 +144,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('#max').val(180);
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
-
     };
-
-
-
-
-
-
+     $scope.getNormalInterest = function() {
+        $('#min').val(30);
+        $('#max').val(169);
+        $scope.rangeFilter();
+        $('#interestTable').DataTable().draw();
+    };
 
 });
