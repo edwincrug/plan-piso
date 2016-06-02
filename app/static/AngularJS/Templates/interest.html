@@ -1,11 +1,11 @@
 <div ng-init="init()">
     <input id="min" name="min" type="hidden">
-    <input id="max" name="max" type="hidden">    
+    <input id="max" name="max" type="hidden">
     <div class="headTitleTallerCita">
         <h2> Intereses</h2>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-success pull-right">HOY</span>
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-warning pull-right">HOY</span>
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-danger pull-right">HOY</span>
@@ -47,6 +47,21 @@
                     <small>Unidades: {{unidadesVencidas}}</small>
                     <br/>
                     <small><a ng-click="getEndingInterest()">Ver detalles</a></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-info pull-right">HOY</span>
+                    <h5>Interés Restante</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">{{interesRestante | currency}}</h1>
+                    <div class="stat-percent font-bold text-info">{{ porcentajeRestante| number:2}}% <i class="fa"></i></div>
+                    <small>Unidades: {{unidadesRestantes}}</small>
+                    <br/>
+                    <small><a ng-click="getNormalInterest()">Ver detalles</a></small>
                 </div>
             </div>
         </div>
