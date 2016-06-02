@@ -57,7 +57,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         $scope.unidadesVencidas += 1
                         $scope.interesUnidadesPorVencidas = (result.data[i].interesAcumulado)
                     } else
-                    if (result.data[i].diasPlanPiso < 180 && result.data[i].diasPlanPiso > 170) {
+                    if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
                         // $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
                         $scope.unidadesPorVencer += 1
                     }
@@ -94,4 +94,56 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }
     };
+
+
+        $scope.rangeFilter = function() {
+
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = parseInt($('#min').val(), 10);
+                var max = parseInt($('#max').val(), 10);
+                var age = parseFloat(data[3]) || 0;
+
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) && age <= max) ||
+                    (min <= age && isNaN(max)) ||
+                    (min <= age && age <= max)) {
+                    return true;
+                }
+
+                return false;
+            }
+        );
+
+    };
+
+    $scope.getTotalInterest = function() {
+        $('#min').val('');
+        $('#max').val('');
+        $scope.rangeFilter();
+        $('#interestTable').DataTable().draw();
+    };
+
+    $scope.getAlmostEndingInterest = function() {
+        $('#min').val(170);
+        $('#max').val(179);
+        $scope.rangeFilter();
+        $('#interestTable').DataTable().draw();
+
+    };
+
+    $scope.getEndingInterest = function() {
+        $('#min').val(180);
+        $('#max').val(180);
+        $scope.rangeFilter();
+        $('#interestTable').DataTable().draw();
+
+    };
+
+
+
+
+
+
+
 });
