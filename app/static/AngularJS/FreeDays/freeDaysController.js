@@ -29,6 +29,8 @@ registrationModule.controller('freeDaysController', function($scope, alertFactor
         $scope.promise = freeDaysRepository.getFreeDays().then(function(result) {
             if (result.data.length > 0) {
                 $scope.allDays = result.data;
+                $scope.freeOk = 0;
+                $scope.freeOut = 1;
                 // $('#btnTest').button('buscando');
                 setTimeout(function() {
                     $('.dataTables-example').DataTable({
