@@ -1,13 +1,12 @@
 registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository) {
     //store an array of free days getting by getFreeDays function  
-    $scope.allDays = {};
+    $scope.interes = {};
     $scope.message = 'Buscando...';
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
-            $scope.getInterest();
+        $scope.getInterest();
+    }
 
-        }
-    
     // Metodo para obtiener todos los intereses y los datos para llenar los dashboards
     $scope.getInterest = function () {
         $scope.promise = interestsRepository.getInterest().then(function (result) {
@@ -24,22 +23,22 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 $scope.total = 0;
                 setTimeout(function () {
                     $('.dataTables-example').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp',
-                        buttons: [{
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , buttons: [{
                                 extend: 'copy'
                             }, {
                                 extend: 'csv'
                             }, {
-                                extend: 'excel',
-                                title: 'ExampleFile'
+                                extend: 'excel'
+                                , title: 'ExampleFile'
                             }, {
-                                extend: 'pdf',
-                                title: 'ExampleFile'
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
                             },
 
                             {
-                                extend: 'print',
-                                customize: function (win) {
+                                extend: 'print'
+                                , customize: function (win) {
                                     $(win.document.body).addClass('white-bg');
                                     $(win.document.body).css('font-size', '10px');
 
@@ -56,10 +55,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     if (result.data[i].diasPlanPiso >= 180) {
                         $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado) + (result.data[i].precioCompra)
                         $scope.unidadesVencidas += 1
-                        $scope.interesUnidadesPorVencidas =  (result.data[i].interesAcumulado)
+                        $scope.interesUnidadesPorVencidas = (result.data[i].interesAcumulado)
                     } else
-                    if (result.data[i].diasPlanPiso < 174 && result.data[i].diasPlanPiso > 170) {
-                       // $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
+                    if (result.data[i].diasPlanPiso < 180 && result.data[i].diasPlanPiso > 170) {
+                        // $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
                         $scope.unidadesPorVencer += 1
                     }
                     $scope.total += (result.data[i].interesAcumulado)

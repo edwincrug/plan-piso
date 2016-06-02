@@ -95,6 +95,30 @@ Calculo.prototype.get_tiie = function (req, res, next) {
     });
 };
 
-//Se agrega una nueva TIIE
+//Se agrega una nueva 
+Calculo.prototype.get_detailsScheme_data = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var object = {};
+    //asignación de valores mediante parámetros del request
+    var params = {};
+    var self = this;
+    
+    params.name = 'idEsquema';
+	params.value = req.params.data;
+	params.type = 1;
+    
+    this.model.get('SEL_DETALLE_ESQUEMA_BY_ID_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 
 module.exports = Calculo;

@@ -11,7 +11,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         /*cheange the routes*/
         $routeProvider.when('/', {
             templateUrl: 'AngularJS/Templates/example.html', //example 1
-            controller: 'interestsController'
+            controller: 'exampleController'
         }).when('/interest', {
             templateUrl: 'AngularJS/Templates/interest.html',
             controller: 'interestsController'

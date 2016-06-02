@@ -9,8 +9,10 @@ registrationModule.factory('schemeRepository', function($http) {
                 url: interestsURL + 'scheme/',
                 method: "GET"
             });
+        },
+        getDetailsScheme: function(idEsquema){
+            return $http.get(schemeURL+'details/'+idEsquema);
         }
-
     };
 
 });

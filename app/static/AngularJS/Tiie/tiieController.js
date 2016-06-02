@@ -3,6 +3,7 @@ registrationModule.controller('tiieController', function($scope, alertFactory, t
   // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
         $scope.getTiie();
+        
     }
     // Metodo para obtiener todos los intereses
     $scope.getTiie = function () {
@@ -16,5 +17,8 @@ registrationModule.controller('tiieController', function($scope, alertFactory, t
         }, function (error) {
             alertFactory.error("Error al cargar Tiie");
         });
+    };
+    $scope.inicia = function(){
+        $('#inicioModal').modal('show');
     };
 });
