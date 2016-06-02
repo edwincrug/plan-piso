@@ -11,7 +11,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         /*cheange the routes*/
         $routeProvider.when('/', {
             templateUrl: 'AngularJS/Templates/example.html', //example 1
-            controller: 'interestsController'
+            controller: 'exampleController'
         }).when('/interest', {
             templateUrl: 'AngularJS/Templates/interest.html',
             controller: 'interestsController'
@@ -21,6 +21,9 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         }).when('/scheme',{
             templateUrl: 'AngularJS/Templates/scheme.html',
             controller: 'schemeController'
+        }).when('/tiie',{
+            templateUrl: 'AngularJS/Templates/tiie.html',
+            controller: 'tiieController'
         });
 
         $locationProvider.html5Mode({

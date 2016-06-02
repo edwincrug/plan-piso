@@ -18,14 +18,15 @@
     <link href="css/angular-busy.css" rel="stylesheet" />
     <link href="css/custom-style.css" rel="stylesheet" />
     <!--Librearias JQuery y Bootstrap-->
+    <script src="js/libs/jQuery/jquery.js"></script>
     <script src="js/libs/jQuery/jquery-2.1.4.min.js"></script>
     <script src="js/libs/bootstrap/bootstrap.js"></script>
-    <script src="js/libs/jQuery/jquery.js"></script>
     <!--CSS Inspinia-->
     <link href="css/Inspinia/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="css/Inspinia/css/style.css" rel="stylesheet">
     <link href="css/Inspinia/css/animate.css" rel="stylesheet">
     <link href="css/Inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+    
 </head>
 
 <body ng-app="registrationModule">
@@ -64,12 +65,15 @@
                         <li>
                             <a href="/scheme"><i class="glyphicon glyphicon-stats"></i>Esquemas</a>
                         </li>
+                          <li>
+                            <a href="/tiie"><i class="glyphicon glyphicon-usd"></i>Tiie</a>
+                        </li>
                 </ul>
             </div>
         </nav>
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
-                <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                     </div>
@@ -104,13 +108,13 @@
             <div ng-view></div>
         </div>
     </div>
-
     <!--Interface de usuario-->
     <script src="js/libs/toastr/toastr.min.js"></script>
     <!-- Librerias Angular-->
     <script src="js/libs/angular/angular.min.js"></script>
     <script src="js/libs/angular/angular-route.min.js"></script>
     <script src="js/libs/angular/ui-bootstrap-tpls.min.js"></script>
+    
     <!--Funciones Comunes-->
     <script src="confront.js"></script>
     <!--Angular Busy-->
@@ -128,13 +132,17 @@
     <script src="AngularJS/FreeDays/freeDaysController.js"></script>
     <script src="AngularJS/Scheme/schemeRepository.js"></script>
     <script src="AngularJS/Scheme/schemeController.js"></script>
+    <script src="AngularJS/Tiie/tiieRepository.js"></script>
+    <script src="AngularJS/Tiie/tiieController.js"></script>
     <!--Script Inspinia-->
+    <script src="js/libs/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="js/libs/inspinia/js/plugins/dataTables/datatables.min.js"></script>
     <script src="js/libs/inspinia/js/plugins/pace/pace.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/dataTables/datatables.min.js"></script>
     <!-- Scripts Graficas -->
     <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.js"></script>
     <script src="js/libs/inspinia/js/plugins/flot/jquery.flot.time.js"></script>
+    <script src="js/libs/inspinia/js/plugins/chartJs/Chart.min.js"></script>
 
 </body>
 
