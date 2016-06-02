@@ -1,6 +1,7 @@
 registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository) {
     //store an array of free days getting by getFreeDays function  
     $scope.allDays = {};
+    $scope.interes = {};
     $scope.message = 'Buscando...';
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
@@ -8,8 +9,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     }
     // Metodo para obtiener todos los intereses
+
+    // Metodo para obtiener todos los intereses y los datos para llenar los dashboards
     $scope.getInterest = function () {
         $scope.promise  =  interestsRepository.getInterest().then(function (result) {
+        $scope.promise = interestsRepository.getInterest().then(function (result) {
             if (result.data.length > 0) {
                 $scope.interes = result.data;
                 $scope.unidades = result.data.length;
@@ -25,20 +29,28 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $('.dataTables-example').DataTable({
                         dom: '<"html5buttons"B>lTfgitp',
                         buttons: [{
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , buttons: [{
                                 extend: 'copy'
                             }, {
                                 extend: 'csv'
                             }, {
                                 extend: 'excel',
                                 title: 'ExampleFile'
+                                extend: 'excel'
+                                , title: 'ExampleFile'
                             }, {
                                 extend: 'pdf',
                                 title: 'ExampleFile'
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
                             },
 
                             {
                                 extend: 'print',
                                 customize: function (win) {
+                                extend: 'print'
+                                , customize: function (win) {
                                     $(win.document.body).addClass('white-bg');
                                     $(win.document.body).css('font-size', '10px');
 
@@ -55,6 +67,15 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     if(result.data[i].diasPlanPiso >= 180){
                          $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado) +(result.data[i].precioCompra)
                          $scope.unidadesVencidas +=  1
+
+                    if (result.data[i].diasPlanPiso >= 180) {
+                        $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado) + (result.data[i].precioCompra)
+                        $scope.unidadesVencidas += 1
+                        $scope.interesUnidadesPorVencidas = (result.data[i].interesAcumulado)
+                    } else
+                    if (result.data[i].diasPlanPiso < 180 && result.data[i].diasPlanPiso > 170) {
+                        // $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
+                        $scope.unidadesPorVencer += 1
                     }
                     else
                         if(result.data[i].diasPlanPiso < 174 && result.data[i].diasPlanPiso > 170){
@@ -65,6 +86,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.porcentajeTotalUnidades = 100
                     $scope.porcentajeVencido = ($scope.unidadesVencidas * 100 ) /$scope.unidades
                     $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100 ) /$scope.unidades
+                    $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
+                    $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
                 }
                 
                 alertFactory.success("Intereses cargados");
@@ -77,6 +100,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
     
      $scope.setClass = function(status) {
+
+    $scope.setClass = function (status) {
         switch (status) {
             case 'OK':
                 return 'gridFontGreen';
@@ -86,6 +111,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 return 'gridFontRed';
             default:
                 return 'gridFontGreen';
+        case 'OK':
+            return 'gridFontGreen';
+        case 'CHECK':
+            return 'gridFontYellow';
+        case 'EXCEEDED':
+            return 'gridFontRed';
+        default:
+            return 'gridFontGreen';
         }
     };
         $scope.setClassDias = function(dias) {
@@ -94,8 +127,15 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             }else{
                 return 'gridFontGreen';
             }
+    $scope.setClassDias = function (dias) {
+        if (dias == 180) {
+            return 'gridFontRed';
+        } else {
+            return 'gridFontGreen';
+        }
     };
     
 });
 
 
+});
