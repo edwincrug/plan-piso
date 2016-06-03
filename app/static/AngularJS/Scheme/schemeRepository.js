@@ -13,6 +13,5 @@ registrationModule.factory('schemeRepository', function($http) {
         getDetailsScheme: function(idEsquema){
             return $http.get(schemeURL+'details/'+idEsquema);
         }
-    };
-
+};      
 });

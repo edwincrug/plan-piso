@@ -9,7 +9,20 @@ registrationModule.factory('tiieRepository', function($http) {
                 url: tiieURL + 'tiie/',
                 method: "GET"
             });
+        },
+        addTiie: function(fecha, plazo, monto){
+            return $http({
+                url: tiieUrl + 'tiie/',
+                method: "POST",
+                data: {fecha:fecha,
+                      plazo: plazo,
+                      monto: monto},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
         }
 
     };
 });
+

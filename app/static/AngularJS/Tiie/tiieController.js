@@ -1,9 +1,10 @@
 registrationModule.controller('tiieController', function ($scope, alertFactory, tiieRepository) {
 
+    
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
             $scope.getTiie();
-
+            
         }
     // Metodo para obtiener todos los intereses
     $scope.getTiie = function () {
@@ -26,4 +27,12 @@ registrationModule.controller('tiieController', function ($scope, alertFactory, 
     $scope.cerrar = function () {
         $('#inicioModal').modal('toggle');
     };
+    
+   /* $scope.addTiie = function (){
+        tiieRepository.addTiie(fecha, plazo, monto).then(function(tiie){
+            fecha: datetime.now;
+            plazo : tiie.data.plazo;
+            monto : tiie.data.monto;
+        })
+    }*/
 });

@@ -1,7 +1,7 @@
 registrationModule.controller('schemeController', function ($scope, alertFactory, schemeRepository) {
     
     $scope.message = 'Buscando...';
-     $scope.esquemas = {};
+     //$scope.diasGracias = $scope.diasGracia ;
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
             $scope.getScheme();
@@ -12,6 +12,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
         $scope.promise = schemeRepository.getScheme().then(function (result) {
             if (result.data.length > 0) {
                 $scope.esquemas = result.data;
+                //$scope.diasGracia = result.data.diasGracia;
                 alertFactory.success("Esquemas cargados");
             } else {
                 alertFactory.info("No se encontraron Esquemas");
@@ -66,7 +67,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             , }
         });
          var lineData = {
-            labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre"]
+            labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"]
             , datasets: [
                 {
                     label: "Example dataset"
@@ -76,7 +77,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
                     , pointStrokeColor: "#fff"
                     , pointHighlightFill: "#fff"
                     , pointHighlightStroke: "rgba(220,220,220,1)"
-                    , data:[15, 40, 23, 45] // modificar para tener datos desde la base de datos
+                    , data:[15,10,35] // modificar para tener datos desde la base de datos
                     }
                 , {
                     label: "Example dataset"
@@ -86,7 +87,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
                     , pointStrokeColor: "#fff"
                     , pointHighlightFill: "#fff"
                     , pointHighlightStroke: "rgba(26,179,148,1)"
-                    , data: [10, 55, 56, 45]// modificar para tener datos desde la base de datos
+                    , data: [5,10,15]// modificar para tener datos desde la base de datos
                     }
                 ]
         };
@@ -116,4 +117,5 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
     $scope.cerrar = function () {
         $('#inicioModal').modal('toggle');
     };
+    
 });
