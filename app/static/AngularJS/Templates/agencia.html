@@ -1,0 +1,124 @@
+<div ng-init="init()">
+    <input id="max" name="max" type="hidden">    
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>Intereses</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li class="active">
+                    <strong>Intereses</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-success pull-right">HOY</span>
+                    <h5>Interés Total</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">{{total | currency }}</h1>
+                    <div class="stat-percent font-bold text-success">{{porcentajeTotalUnidades}}% <i class="fa"></i></div>
+                    <small>Unidades: {{unidades}}</small>
+                    <br/>
+                    <small><a ng-click="getTotalInterest()">Ver detalles</a></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-warning pull-right">HOY</span>
+                    <h5>Interés Por Vencer</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">{{interesUnidadesPorVencidas | currency}}</h1>
+                    <div class="stat-percent font-bold text-success">{{porcentajePorVencer | number:2}}% <i class="fa"></i></div>
+                    <small>Unidades: {{unidadesPorVencer}}</small>
+                    <br/>
+                    <small><a ng-click="getAlmostEndingInterest()">Ver detalles</a></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-danger pull-right">HOY</span>
+                    <h5>Interés Vencido</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">{{interesUnidadesVencidas | currency}}</h1>
+                    <div class="stat-percent font-bold text-success">{{porcentajeVencido | number:2}}% <i class="fa"></i></div>
+                    <small>Unidades: {{unidadesVencidas}}</small>
+                    <br/>
+                    <small><a ng-click="getEndingInterest()">Ver detalles</a></small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-info pull-right">HOY</span>
+                    <h5>Interés Restante</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">{{interesRestante | currency}}</h1>
+                    <div class="stat-percent font-bold text-success">{{ porcentajeRestante| number:2}}% <i class="fa"></i></div>
+                    <small>Unidades: {{unidadesRestantes}}</small>
+                    <br/>
+                    <small><a ng-click="getNormalInterest()">Ver detalles</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table id="interestTable" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
+                                <thead>
+                                    <tr>
+                                        <th>VIN</th>
+                                        <th>Marca</th>
+                                        <th>Modelo</th>
+                                        <th>Días plan piso</th>
+                                        <th>Precio compra</th>
+                                        <th>Precio venta</th>
+                                        <th>Interés acumulado</th>
+                                        <th>Interés pagado</th>
+                                        <th>Saldo total</th>
+                                        <th>Margen ganancia</th>
+                                        <th>Esquema</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="intereses in interes">
+                                        <td>{{intereses.VEH_NUMSERIE}}</td>
+                                        <td>{{intereses.marca}}</td>
+                                        <td>{{intereses.modelo}}</td>
+                                        <td ng-class="setClassDias(intereses.diasPlanPiso)">{{intereses.diasPlanPiso}}</td>
+                                        <td>{{intereses.precioCompra | currency}}</td>
+                                        <td>{{intereses.precioVenta | currency}}</td>
+                                        <td>{{intereses.interesAcumulado | currency}}</td>
+                                        <td>{{intereses.interesPagado | currency}}</td>
+                                        <td>{{intereses.interesTotal | currency}}</td>
+                                        <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
+                                        <td>{{intereses.esquema}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

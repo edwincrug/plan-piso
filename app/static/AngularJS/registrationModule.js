@@ -21,6 +21,9 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         }).when('/scheme',{
             templateUrl: 'AngularJS/Templates/scheme.html',
             controller: 'schemeController'
+        }).when('/agencia',{
+            templateUrl: 'AngularJS/Templates/agencia.html',
+            controller: 'agenciaController'
         }).when('/tiie',{
             templateUrl: 'AngularJS/Templates/tiie.html',
             controller: 'tiieController'
