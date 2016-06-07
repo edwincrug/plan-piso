@@ -1,5 +1,5 @@
 <div ng-init="init()">
-    <input id="max" name="max" type="hidden">    
+    <input id="max" name="max" type="hidden">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>Intereses</h2>
@@ -65,7 +65,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-info pull-right">HOY</span>
-                    <h5>Interés Restante</h5>
+                    <h5>Interés Vigente</h5>
                 </div>
                 <div class="ibox-content">
                     <h1 class="no-margins">{{interesRestante | currency}}</h1>
@@ -77,6 +77,23 @@
             </div>
         </div>
     </div>
+    <!--select  ng-model="selectedAgencia" style="width: 10%;">
+    <option ng-repeat="agencia in Agencias" value="{{agencia.model}}">{{agencia.model}}</option>
+    </select>
+    <h1>Intereses  {{selectedAgencia}}</h1> <button class="btn btn-primary btn-xs" ng-click="update(agencia.model)">Buscar</button-->
+     <div class="input-group">
+                                <input type="text" class="form-control" ng-model='selectedAgencia' aria-label="...">
+                                <div class="input-group-btn">
+                                    <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Seleccione marca <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li ng-repeat="agencia in Agencias">
+                                            <a href="#" ng-click="update(agencia.model)">{{agencia.model}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                            </div>
+                             <h1>Intereses  {{agencia.model}}</h1>
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-12">
@@ -95,12 +112,12 @@
                                         <th>Interés acumulado</th>
                                         <th>Interés pagado</th>
                                         <th>Saldo total</th>
-                                        <th>Margen ganancia</th>
+                                        <th>Margen</th>
                                         <th>Esquema</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="intereses in interes">
+                                    <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.VEH_NUMSERIE)">
                                         <td>{{intereses.VEH_NUMSERIE}}</td>
                                         <td>{{intereses.marca}}</td>
                                         <td>{{intereses.modelo}}</td>
@@ -122,3 +139,46 @@
         </div>
     </div>
 </div>
+
+<div class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Detalle Unidades</h4>
+            </div>
+            <div class="modal-body">
+                <div id="detailsUnit" class="detailsUnitScope">
+                    <form class="form-signin">
+                        <div>
+                            Fecha ingreso inventario:
+                            <p><span class="label label-primary">{{detailsUnit.VEH_NUMSERIE}}</span></p>
+                            Financiera:
+                            <p><span class="label label-primary">{{detailsUnit.diasGracia}}</span></p>
+                            Tasa interés:
+                            <p><span class="label label-primary">{{detailsUnit.plazo}}</span></p>
+                            Tipo unidad:
+                            <p><span class="label label-primary">{{detailsUnit.TipoUnidad}}</span></p>
+                            <p><span class="label label-primary">{{detailsUnit.Ubicacion}}</span></p>
+                            <p><span class="label label-primary">{{detailsUnit.fechaInventario}}</span></p>
+                            <p><span class="label label-primary">{{detailsUnit.financiera}}</span></p>
+                        </div>s
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ***maxima prioridad poner vista de detalles de la unidad con financieras con un boton
+    en los  help campos poner la formula de los datos
+    query de interes pagao con javier,
+    segundo punto imnportantre es la programación de la poliza
+    tercero reportes
+    
+    **** Interés pagado por marcas
+    **** Interés por marcas
+    **** Crear modal para los detalles de las unidades
+    **** Crear modal para mostrar los detalles de las unidades
+    **** Terminar el query para mostrar las agencias
+    -->

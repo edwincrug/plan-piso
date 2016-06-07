@@ -1,0 +1,30 @@
+<div ng-init="init(VEH_NUMSERIE=12345678900000005)">
+       <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                    <h1>Detalles Unidad</h1>
+                    <form class="form-signin">
+                       <div>
+                        Fecha ingreso inventario:
+                        <p><span class="label label-primary">{{detailsUnit.VEH_NUMSERIE}}</span></p>
+                        Financiera:
+                        <p><span class="label label-primary">{{detailsUnit.diasGracia}}</span></p>
+                        Tasa interés:
+                       <p><span class="label label-primary">{{detailsUnit.plazo}}</span></p>
+                         Tipo unidad:
+                        <p><span class="label label-primary">{{detailsUnit.TipoUnidad}}</span></p>
+                        <p><span class="label label-primary">{{detailsUnit.Ubicacion}}</span></p>
+                           <p><span class="label label-primary">{{detailsUnit.fechaInventario}}</span></p>
+                           <p><span class="label label-primary">{{detailsUnit.financiera}}</span></p>
+                        </div>
+                        <button class="btn btn-info" ng-click="cerrar() ">Cerrar</button>
+                        
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

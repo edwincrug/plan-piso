@@ -36,6 +36,26 @@ Calculo.prototype.get_freedays = function (req, res, next) {
     });
 };
 
+Calculo.prototype.get_detailsUnit = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+
+    //asignación de valores mediante parámetros del request
+    var params = [{name: 'VEH_NUMSERIE', value: req.query.VEH_NUMSERIE, type: self.model.types.STRING}];
+
+    this.model.query('SEL_DETALLE_UNIDAD_BY_ID_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 //insertar nueva tiie
 Calculo.prototype.post_addtiie = function (req, res, next) {
     //Referencia a la clase para callback
@@ -63,7 +83,7 @@ Calculo.prototype.get_interest = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //asignación de valores mediante parámetros del request
-    var params = [];
+     var params = [{name: 'Marca', value: req.query.Marca, type: self.model.types.STRING}];
     this.model.query('SEL_INTEREST_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,

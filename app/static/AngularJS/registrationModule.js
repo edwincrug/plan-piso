@@ -24,6 +24,9 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         }).when('/tiie',{
             templateUrl: 'AngularJS/Templates/tiie.html',
             controller: 'tiieController'
+        }).when('/detailsUnit',{
+            templateUrl: 'AngularJS/Templates/detailsUnit.html',
+            controller: 'interestsController'
         });
 
         $locationProvider.html5Mode({
