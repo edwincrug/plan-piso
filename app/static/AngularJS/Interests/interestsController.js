@@ -2,14 +2,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     //store an array of free days getting by getFreeDays function  
    // $scope.interes = {};
     $scope.message = 'Buscando...';
-    $scope.detailsUnit = [];
     $scope.Marca ={};
+    $scope.VEH_NUMSERIE = {};
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
           
-         //$scope.Marca = $scope.update.Marca;
         }
-    
      $scope.Agencias = [
         {model : "NISSAN"},
         {model : "FORD"},
@@ -17,11 +15,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     ];
     
     $scope.update = function (model){
-        console.log(model);
         $scope.Marca = model;
-        console.log($scope.Marca);
         $scope.getInterest();
-        //location.href = '/interest';
        
     }
     
@@ -178,6 +173,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     $scope.inicia = function (VEH_NUMSERIE) {
         $('#DetallesUnidadModal').appendTo("body").modal('show');
+        $scope.VEH_NUMSERIE = VEH_NUMSERIE;
+        console.log(VEH_NUMSERIE);
         $scope.getDetailsUnit();
     }
     // Función para cerrar la modal
@@ -185,9 +182,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('#inicioModal').modal('toggle');
     };
 
-     $scope.getDetailsUnit = function (VEH_NUMSERIE) {
+     $scope.getDetailsUnit = function () {
         
-       $scope.promise = interestsRepository.getDetailsUnit(VEH_NUMSERIE).then(function (result) {
+       $scope.promise = interestsRepository.getDetailsUnit($scope.VEH_NUMSERIE).then(function (result) {
             console.log(result.data.length);
                    $scope.detailsUnit = result.data;
             })

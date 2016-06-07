@@ -15,6 +15,18 @@
         <div class="col-lg-2">
         </div>
     </div>
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model='selectedAgencia' aria-label="...">
+        <div class="input-group-btn">
+            <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Seleccione una marca <span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li ng-repeat="agencia in Agencias">
+                    <a href="#" ng-click="update(agencia.model)">{{agencia.model}}</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /btn-group -->
+    </div>
     <div class="row">
         <div class="col-lg-3">
             <div class="ibox float-e-margins">
@@ -77,23 +89,7 @@
             </div>
         </div>
     </div>
-    <!--select  ng-model="selectedAgencia" style="width: 10%;">
-    <option ng-repeat="agencia in Agencias" value="{{agencia.model}}">{{agencia.model}}</option>
-    </select>
-    <h1>Intereses  {{selectedAgencia}}</h1> <button class="btn btn-primary btn-xs" ng-click="update(agencia.model)">Buscar</button-->
-     <div class="input-group">
-                                <input type="text" class="form-control" ng-model='selectedAgencia' aria-label="...">
-                                <div class="input-group-btn">
-                                    <button id="btnTotalxEmpresa" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Seleccione marca <span class="caret"></span></button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li ng-repeat="agencia in Agencias">
-                                            <a href="#" ng-click="update(agencia.model)">{{agencia.model}}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- /btn-group -->
-                            </div>
-                             <h1>Intereses  {{agencia.model}}</h1>
+    <h1>Intereses  {{agencia.model}}</h1>
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-12">
@@ -152,7 +148,7 @@
                     <form class="form-signin">
                         <div>
                             Fecha ingreso inventario:
-                            <p><span class="label label-primary">{{detailsUnit.VEH_NUMSERIE}}</span></p>
+                            <p ng-repeat="detailsUnit in detailsUnit"><span class="label label-primary">{{detailsUnit.VEH_NUMSERIE}}</span></p>
                             Financiera:
                             <p><span class="label label-primary">{{detailsUnit.diasGracia}}</span></p>
                             Tasa interés:
@@ -162,7 +158,7 @@
                             <p><span class="label label-primary">{{detailsUnit.Ubicacion}}</span></p>
                             <p><span class="label label-primary">{{detailsUnit.fechaInventario}}</span></p>
                             <p><span class="label label-primary">{{detailsUnit.financiera}}</span></p>
-                        </div>s
+                        </div>
                     </form>
                 </div>
             </div>
