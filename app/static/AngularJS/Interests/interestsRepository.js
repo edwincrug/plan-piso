@@ -30,11 +30,13 @@ registrationModule.factory('interestsRepository', function($http) {
                 method: "GET"
             });
         }, 
-        getInterestSucursal: function(nombreCorto) {
+        getInterestSucursal: function(empresa,sucursal) {
             return $http({
                 url: interestsURL + 'interestSucursal/',
                 method: "GET",
-                 params: {nombreCorto: nombreCorto},
+                 params: {empresa:empresa ,
+                          sucursal: sucursal
+                          },
                 headers: {
                 'Content-Type': 'application/json'
                 }

@@ -178,7 +178,9 @@ Calculo.prototype.get_interestsucursal = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //asignación de valores mediante parámetros del request
-     var params = [{name: 'nombreCorto', value: req.query.nombreCorto, type: self.model.types.STRING}];
+     var params = [{name: 'empresa', value: req.query.empresa, type: self.model.types.STRING},
+                   {name: 'sucursal', value: req.query.sucursal, type: self.model.types.STRING}
+                  ];
     this.model.query('SEL_INTEREST_SUCURSAL_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,

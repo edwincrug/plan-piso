@@ -9,10 +9,10 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
     .config(function($routeProvider, $locationProvider) {
 
         /*cheange the routes*/
-        $routeProvider.when('/', {
+        $routeProvider.when('/in', {
             templateUrl: 'AngularJS/Templates/example.html', //example 1
             controller: 'exampleController'
-        }).when('/interest', {
+        }).when('/', {
             templateUrl: 'AngularJS/Templates/interest.html',
             controller: 'interestsController'
         }).when('/freedays', {

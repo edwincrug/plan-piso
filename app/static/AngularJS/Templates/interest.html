@@ -2,8 +2,7 @@
     <input id="max" name="max" type="hidden">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Intereses {{nombre}}</h2>
-            <h2>Sucursal {{sucursal}}</h2>
+            <h2>Intereses {{nombre}} - Sucursal {{nombreSucursal}}</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="/">Home</a>
@@ -31,7 +30,7 @@
             <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Sucursal <span class="caret"></span></button>
             <ul class="dropdown-menu col-xs-1 col-sm-2">
                 <li ng-repeat="sucursales in sucursales">
-                    <a href="#" ng-click="seleccionarSucursal(sucursales.catsuc_nombrecto,sucursales.nombre_sucursal)">{{sucursales.nombre_sucursal}}</a>
+                    <a href="#" ng-click="seleccionarSucursal(sucursales.catsuc_nombrecto,sucursales.catemp_nombrecto,sucursales.nombre_sucursal)">{{sucursales.nombre_sucursal}}</a>
                 </li>
             </ul>
         </div>
@@ -154,7 +153,7 @@
         <div class="modal-content animated flipInY">
             <div class="modal-header" style="padding:15px 15px;">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 style="color:red;"><span class="glyphicon glyphicon-folder-open"></span> Detalles unidad <br/>VIN: {{vehNumserie}}</h4>
+                <h4 style="color:red;"><span class="glyphicon glyphicon-folder-open"></span> Detalles unidad - VIN: {{vehNumserie}}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -237,3 +236,12 @@
     </div>
 </div>
 <!--Fin Modal-->
+
+
+
+
+<!-- el margen se calcula con porcentaje
+utilidad despues de impuesto
+quitar esquema
+todas las unidades que generan intereses despues de 30 dias o 60 tener filtros
+intereses del mes anterior-->

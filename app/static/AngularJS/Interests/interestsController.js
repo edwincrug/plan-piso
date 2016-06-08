@@ -23,13 +23,16 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.seleccionarSucursal.show = true;
     }
 
-    // Función para filtrar por sucursal
-    $scope.seleccionarSucursal = function (nombreCorto, sucursal) {
-            $scope.nombreCorto = nombreCorto;
-            $scope.sucursal = sucursal;
+        // Función para filtrar por sucursal
+    $scope.seleccionarSucursal = function (sucursal, empresa, nombre) {
+            $scope.nombreCorto = sucursal;
+        console.log($scope.nombreCorto);
+            $scope.sucursal = empresa;
+         console.log($scope.sucursal);
+        $scope.nombreSucursal = nombre;
             $scope.getInterestSucursal();
         }
-        //
+        // Función para filtrar compañias
     $scope.getCompany = function () {
             $scope.promise = interestsRepository.getCompany().then(function (result) {
                 if (result.data.length > 0) {
@@ -136,7 +139,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.getInterestSucursal = function () {
             $('#interestTable').DataTable().destroy();
             $scope.promise =
-                interestsRepository.getInterestSucursal($scope.nombreCorto).then(function (result) {
+                interestsRepository.getInterestSucursal($scope.Marca, $scope.nombreCorto).then(function (result) {
                     if (result.data.length > 0) {
                         console.log(result.data);
                         $scope.interes = result.data;
@@ -166,7 +169,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                         extend: 'pdf'
                                         , title: 'ExampleFile'
                             },
-
                                     {
                                         extend: 'print'
                                         , customize: function (win) {
@@ -202,7 +204,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         }
                         alertFactory.success("Intereses cargados");
                     } else {
-                        alertFactory.info("No se encontraron intereses");
+                        alertFactory.info("Intereses cargados");
                     }
                 }, function (error) {
                     alertFactory.error("Error al cargar intereses");
@@ -223,7 +225,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     };
     // Función para el ng-class en el campo días
     $scope.setClassDias = function (dias) {
-        if (dias == 180) {
+        if (dias >= 180) {
             return 'gridFontRed';
         } else {
             return 'gridFontGreen';
