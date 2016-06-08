@@ -3,34 +3,142 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // $scope.interes = {};
     $scope.message = 'Buscando...';
     $scope.Marca = {};
-    $scope.VEH_NUMSERIE = {};
+    $scope.vehNumserie = {};
+    $scope.detailsUnit = {};
+    $scope.nombreCorto = {};
+
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
-
-    }
-    // Lista de agencias
-    $scope.Agencias = [
-        {
-            agencia: "NISSAN"
+            $scope.getCompany();
+            $scope.seleccionarSucursal.show = false;
+            //$scope.getSucursal();
         }
-        , {
-            agencia: "FORD"
-        }
-        , {
-            agencia: "CHEVROLET"
-        }
-    ];
-   // Función para seleccionar agencia
-    $scope.seleccionarAgencia = function (agencia) {
-        $scope.Marca = agencia;
+        // Función para filtrar por empresa
+    $scope.seleccionarEmpresa = function (empresa, nombre) {
+        $scope.Marca = empresa;
+        $scope.nombreCorto = empresa;
+        $scope.nombre = nombre;
         $scope.getInterest();
-
+        $scope.getSucursal();
+        $scope.seleccionarSucursal.show = true;
     }
-    // Metodo para obtiener todos los intereses y los datos para llenar los dashboards
+
+    // Función para filtrar por sucursal
+    $scope.seleccionarSucursal = function (nombreCorto, sucursal) {
+            $scope.nombreCorto = nombreCorto;
+            $scope.sucursal = sucursal;
+            $scope.getInterestSucursal();
+        }
+        //
+    $scope.getCompany = function () {
+            $scope.promise = interestsRepository.getCompany().then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.empresas = result.data;
+                    alertFactory.success("Empresas cargados");
+                } else {
+                    alertFactory.info("No se encontraron Empresas");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar Empresas");
+            });
+        }
+        // Función para obtener las sucursales por empresa
+    $scope.getSucursal = function (nombreCorto) {
+            $scope.promise = interestsRepository.getSucursal($scope.nombreCorto).then(function (result) {
+                if (result.data.length > 0) {
+                    console.log(result.data)
+                    $scope.sucursales = result.data;
+                    alertFactory.success("Sucursales cargados");
+                } else {
+                    alertFactory.info("No se encontraron Sucursales");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar Sucursales");
+            });
+        }
+        // Metodo para obtiener todos los intereses y los datos para llenar los dashboards
     $scope.getInterest = function () {
+         $('#interestTable').DataTable().destroy();
+        $scope.promise =
+            interestsRepository.getInterest($scope.Marca).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.interes = result.data;
+                    $scope.unidades = result.data.length;
+                    $scope.unidadesVencidas = 0;
+                    $scope.interesUnidadesVencidas = 0;
+                    $scope.interesUnidadesPorVencidas = 0;
+                    $scope.unidadesPorVencer = 0;
+                    $scope.porcentajeTotalUnidades = 0;
+                    $scope.porcentajePorVencer = 0;
+                    $scope.porcentajeVencido = 0;
+                    $scope.unidadesRestantes = 0;
+                    $scope.interesRestante = 0;
+                    $scope.porcentajeRestante = 0;
+                    $scope.total = 0;
+                    setTimeout(function () {
+                        $('#interestTable').DataTable({
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , buttons: [{
+                                    extend: 'copy'
+                            }, {
+                                    extend: 'csv'
+                            }, {
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
+                            }, {
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
+                            },
+
+                                {
+                                    extend: 'print'
+                                    , customize: function (win) {
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+
+                                        $(win.document.body).find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                            }
+                        ]
+                        });
+                    }, 1000);
+                    for (var i = 0; i < result.data.length; i++) {
+
+                        if (result.data[i].diasPlanPiso >= 180) {
+                            $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado)
+                            $scope.unidadesVencidas += 1
+                                // $scope.interesUnidadesPorVencidas = (result.data[i].interesAcumulado)
+                        } else
+                        if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
+                            $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
+                            $scope.unidadesPorVencer += 1
+                        }
+                        $scope.total += (result.data[i].interesAcumulado)
+                        $scope.porcentajeTotalUnidades = 100
+                        $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
+                        $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
+                        $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer
+                        $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
+                        $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas - $scope.interesUnidadesVencidas
+                    }
+                    alertFactory.success("Intereses cargados");
+                } else {
+                    alertFactory.info("No se encontraron intereses");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar intereses");
+            });
+    }
+
+    // Funcion para obtener los intereses por sucursal
+    $scope.getInterestSucursal = function () {
+            $('#interestTable').DataTable().destroy();
             $scope.promise =
-                interestsRepository.getInterest($scope.Marca).then(function (result) {
+                interestsRepository.getInterestSucursal($scope.nombreCorto).then(function (result) {
                     if (result.data.length > 0) {
+                        console.log(result.data);
                         $scope.interes = result.data;
                         $scope.unidades = result.data.length;
                         $scope.unidadesVencidas = 0;
@@ -45,7 +153,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         $scope.porcentajeRestante = 0;
                         $scope.total = 0;
                         setTimeout(function () {
-                            $('.dataTables-example').DataTable({
+                            $('#interestTable').DataTable({
                                 dom: '<"html5buttons"B>lTfgitp'
                                 , buttons: [{
                                         extend: 'copy'
@@ -100,7 +208,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     alertFactory.error("Error al cargar intereses");
                 });
         }
-    // Función para el ng-class en el campo status
+        // Función para el ng-class en el campo status
     $scope.setClass = function (status) {
         switch (status) {
         case 'OK':
@@ -171,24 +279,27 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('#interestTable').DataTable().draw();
     };
     // Función para llamar modal
-    $scope.inicia = function (VEH_NUMSERIE) {
+    $scope.inicia = function (vehNumserie) {
             $('#DetallesUnidadModal').appendTo("body").modal('show');
-            $scope.VEH_NUMSERIE = VEH_NUMSERIE;
-            console.log(VEH_NUMSERIE);
+            $scope.vehNumserie = vehNumserie;
+            console.log(vehNumserie);
             $scope.getDetailsUnit();
+            $scope.detailsUnit = $scope.detailsUnit;
+            console.log($scope.detailsUnit);
         }
-    // Función para cerrar la modal
+        // Función para cerrar la modal
     $scope.cerrar = function () {
         $('#inicioModal').modal('toggle');
     };
     // Función para traer detalles de las unidades
     $scope.getDetailsUnit = function () {
-        $scope.promise = interestsRepository.getDetailsUnit($scope.VEH_NUMSERIE).then(function (result) {
+        $scope.promise = interestsRepository.getDetailsUnit($scope.vehNumserie).then(function (result) {
             if (result.data.length > 0) {
-                console.log(result.data);
+                //console.log(result.data);
                 $scope.detailsUnit = result.data;
             }
         });
-    }
 
+
+    }
 });

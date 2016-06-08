@@ -2,7 +2,8 @@
     <input id="max" name="max" type="hidden">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Intereses</h2>
+            <h2>Intereses {{nombre}}</h2>
+            <h2>Sucursal {{sucursal}}</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="/">Home</a>
@@ -16,19 +17,27 @@
         </div>
     </div>
     <!--DropDownList-->
-    <div class="input-group">
-        <input type="text" class="form-control" ng-model='selectedAgencia' aria-label="...">
+    <br/>
+    <div class="input-group col-xs-6 col-sm-2">
         <div class="input-group-btn">
-            <button id="btnAgencias" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Seleccione una marca <span class="caret"></span></button>
-            <ul class="dropdown-menu dropdown-menu-right">
-                <li ng-repeat="agencias in Agencias">
-                    <a href="#" ng-click="seleccionarAgencia(agencias.agencia)">{{agencias.agencia}}</a>
+            <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Empresa <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li ng-repeat="empresa in empresas">
+                    <a href="#" ng-click="seleccionarEmpresa(empresa.emp_nombrecto, empresa.emp_nombre)">{{empresa.emp_nombre}}</a>
+                </li>
+            </ul>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="input-group-btn" ng-show="seleccionarSucursal.show">
+            <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Sucursal <span class="caret"></span></button>
+            <ul class="dropdown-menu col-xs-1 col-sm-2">
+                <li ng-repeat="sucursales in sucursales">
+                    <a href="#" ng-click="seleccionarSucursal(sucursales.catsuc_nombrecto,sucursales.nombre_sucursal)">{{sucursales.nombre_sucursal}}</a>
                 </li>
             </ul>
         </div>
     </div>
-     <!--Fin DropDownList-->
-     <!--Dashboards-->
+    <!--Fin DropDownList-->
+    <!--Dashboards-->
     <div class="row">
         <div class="col-lg-3">
             <div class="ibox float-e-margins">
@@ -92,7 +101,6 @@
         </div>
     </div>
     <!--Fin Dashboard-->
-    <h1>Intereses  {{Marca}}</h1>
     <!--Tabla-->
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -117,8 +125,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.VEH_NUMSERIE)">
-                                        <td>{{intereses.VEH_NUMSERIE}}</td>
+                                    <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.vehNumserie)">
+                                        <td>{{intereses.vehNumserie}}</td>
                                         <td>{{intereses.marca}}</td>
                                         <td>{{intereses.modelo}}</td>
                                         <td ng-class="setClassDias(intereses.diasPlanPiso)">{{intereses.diasPlanPiso}}</td>
@@ -144,21 +152,36 @@
 <div class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
-            <div class="modal-header">
+            <div class="modal-header" style="padding:15px 15px;">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Detalle Unidades</h4>
+                <h4 style="color:red;"><span class="glyphicon glyphicon-folder-open"></span> Detalles unidad <br/>VIN: {{vehNumserie}}</h4>
             </div>
             <div class="modal-body">
-                <div id="detailsUnit" class="detailsUnitScope">
-                    <div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-4">
+                        <h2><span class="glyphicon glyphicon-list"></span> Ficha Técnica</h2>
+                        <br/> Marca:
+                        <label>{{detailsUnit[0].marca}}</label>
+                        <br/> Modelo:
+                        <label>{{detailsUnit[0].descModelo}}</label>
+                        <br/> Color:
+                        <label>{{detailsUnit[0].colorExterior}}</label>
+                        <br/> Año:
+                        <label>{{detailsUnit[0].modelo}}</label>
+                        <br/> Transmisión:
+                        <label>{{detailsUnit[0].transmision}}</label>
+                        <br/> Tipo Unidad
+                        <label>{{detailsUnit[0].tipoUnidad}}</label>
+
+                    </div>
+                    <br/>
+                    <div class="col-xs-7 col-sm-8">
+                        <h2><span class="glyphicon glyphicon-stats"></span> Detalle Esquema</h2>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>VIN:</th>
-                                    <th>Fecha Inventario:</th>
                                     <th>Días gracia:</th>
                                     <th>Plazo:</th>
-                                    <th>Tipo Unidad</th>
                                     <th>Ubicación</th>
                                     <th>Financiera</th>
                                     <th>Tasa Interes</th>
@@ -166,12 +189,9 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="detailsUnit in detailsUnit">
-                                    <td>{{VEH_NUMSERIE}}</td>
-                                    <td>{{detailsUnit.fechaInventario}}</td>
                                     <td>{{detailsUnit.diasGracia}}</td>
                                     <td>{{detailsUnit.plazo}}</td>
-                                    <td>{{detailsUnit.TipoUnidad}}</td>
-                                    <td>{{detailsUnit.Ubicacion}}</td>
+                                    <td>{{detailsUnit.ubicacion}}</td>
                                     <td>{{detailsUnit.financiera}}</td>
                                     <td>{{detailsUnit.tasaInteres | number:2}}%</td>
                                 </tr>
@@ -179,8 +199,41 @@
                         </table>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-4">
+                        <h2><span class="glyphicon glyphicon-calendar"></span> Ingreso al Inventario</h2> Fecha Ingreso:
+                        <label>{{detailsUnit[0].vehFecrecibo}}</label>
+                        <br/> Ubicación:
+                        <label>{{detailsUnit[0].ubicacion}}</label>
+                        <br/>Valor Inventario:
+                        <label>{{detailsUnit[0].valorInventario | currency}}</label>
+                        <br/> Factura:
+                        <label>{{detailsUnit[0].vehNofactplan}}</label>
+                        <br/> Situación:
+                        <label>{{detailsUnit[0].situacion}}</label>
+                        <br/>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-4">
+                        <h2><span class="glyphicon glyphicon-eye-open"></span> Datos Plan Piso</h2>
+                        <br/> Fecha Ingreso:
+                        <label>{{detailsUnit[0].vehFecrecibo}}</label>
+                        <br/>Financiera:
+                        <label>{{detailsUnit[0].financiera}}</label>
+                        <br/> Esquema:
+                        <label>{{detailsUnit[0].nombre}}</label>
+                        <br/> Días Inventario:
+                        <label>{{detailsUnit[0].diasInventa}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn  btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
             </div>
         </div>
+
     </div>
 </div>
 <!--Fin Modal-->

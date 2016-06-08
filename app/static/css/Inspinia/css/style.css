@@ -8227,3 +8227,16 @@ body.md-skin {
     margin: 0;
   }
 }
+
+.modal-header,
+    h4,
+    .close {
+        background-color: #1ab394;
+        color: white !important;
+        /*text-align: center;*/
+        font-size: 20px;
+        height: 70px;
+    }
+    .modal-footer {
+        background-color: #fff;
+    }

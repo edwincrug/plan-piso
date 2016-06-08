@@ -35,7 +35,7 @@ Calculo.prototype.get_freedays = function (req, res, next) {
         });
     });
 };
-
+// Se optiene los detalles de la unidad
 Calculo.prototype.get_detailsUnit = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -46,7 +46,7 @@ Calculo.prototype.get_detailsUnit = function (req, res, next) {
     var self = this;
 
     //asignación de valores mediante parámetros del request
-    var params = [{name: 'VEH_NUMSERIE', value: req.query.VEH_NUMSERIE, type: self.model.types.STRING}];
+    var params = [{name: 'vehNumserie', value: req.query.vehNumserie, type: self.model.types.STRING}];
 
     this.model.query('SEL_DETALLE_UNIDAD_BY_ID_SP', params, function (error, result) {
         self.view.expositor(res, {
@@ -73,7 +73,7 @@ Calculo.prototype.post_addtiie = function (req, res, next) {
     });
 }
 
-// Se obtine los intereses de las unidades
+// Se obtine los intereses de las unidades por empresa
 Calculo.prototype.get_interest = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -111,7 +111,6 @@ Calculo.prototype.get_scheme = function (req, res, next) {
         });
     });
 };
-
 // Seleccionar los TIIE
 Calculo.prototype.get_tiie = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
@@ -131,6 +130,60 @@ Calculo.prototype.get_tiie = function (req, res, next) {
         });
     });
 };
+// Mostrar empresas
+Calculo.prototype.get_company = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
 
+    //asignación de valores mediante parámetros del request
+    var params = [];
 
+    this.model.query('SEL_EMPRESA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+// Se obtiene la lista de sucursales por empresa
+Calculo.prototype.get_sucursal = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+    //asignación de valores mediante parámetros del request
+     var params = [{name: 'nombreCorto', value: req.query.nombreCorto, type: self.model.types.STRING}];
+    this.model.query('SEL_SUCURSALES_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+// Se optiene los intereses por sucursal
+Calculo.prototype.get_interestsucursal = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+    //asignación de valores mediante parámetros del request
+     var params = [{name: 'nombreCorto', value: req.query.nombreCorto, type: self.model.types.STRING}];
+    this.model.query('SEL_INTEREST_SUCURSAL_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 module.exports = Calculo;

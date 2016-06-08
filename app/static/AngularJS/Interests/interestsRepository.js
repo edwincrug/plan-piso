@@ -14,15 +14,42 @@ registrationModule.factory('interestsRepository', function($http) {
                 }
             });
         },
-        getDetailsUnit: function(VEH_NUMSERIE){
+        getDetailsUnit: function(vehNumserie){
             return $http({
                 url: interestsURL + 'detailsUnit/',
                 method: "GET",
-                params: {VEH_NUMSERIE: VEH_NUMSERIE},
+                params: {vehNumserie: vehNumserie},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+        }, 
+        getCompany: function(){
+            return $http({
+                url: interestsURL + 'company/',
+                method: "GET"
+            });
+        }, 
+        getInterestSucursal: function(nombreCorto) {
+            return $http({
+                url: interestsURL + 'interestSucursal/',
+                method: "GET",
+                 params: {nombreCorto: nombreCorto},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+        },
+        getSucursal: function(nombreCorto) {
+            return $http({
+                url: interestsURL + 'sucursal/',
+                method: "GET",
+                 params: {nombreCorto: nombreCorto},
                 headers: {
                 'Content-Type': 'application/json'
                 }
             });
         }
+        
     };
 });
