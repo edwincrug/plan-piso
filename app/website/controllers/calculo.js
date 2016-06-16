@@ -55,7 +55,6 @@ Calculo.prototype.get_detailsUnit = function (req, res, next) {
         });
     });
 };
-
 //insertar nueva tiie
 Calculo.prototype.post_addtiie = function (req, res, next) {
     //Referencia a la clase para callback
@@ -72,7 +71,6 @@ Calculo.prototype.post_addtiie = function (req, res, next) {
         });
     });
 }
-
 // Se obtine los intereses de las unidades por empresa
 Calculo.prototype.get_interest = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
@@ -91,7 +89,6 @@ Calculo.prototype.get_interest = function (req, res, next) {
         });
     });
 };
-
 //Se obtiene los esquemas 
 Calculo.prototype.get_scheme = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
@@ -182,6 +179,47 @@ Calculo.prototype.get_interestsucursal = function (req, res, next) {
                    {name: 'sucursal', value: req.query.sucursal, type: self.model.types.STRING}
                   ];
     this.model.query('SEL_INTEREST_SUCURSAL_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+// Mostrar financieras por empresa
+Calculo.prototype.get_financial = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+
+    //asignación de valores mediante parámetros del request
+    var params = [{name: 'empresa', value: req.query.empresa, type: self.model.types.STRING}];
+
+    this.model.query('SEL_FINANCIERA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+// Se optiene los detalles de las financieras por empresa
+Calculo.prototype.get_financialForUnit = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+    //asignación de valores mediante parámetros del request
+     var params = [{name: 'empresa', value: req.query.empresa , type: self.model.types.STRING},
+                   {name: 'financiera', value: req.query.financiera, type: self.model.types.STRING}
+                  ];
+    this.model.query('SEL_INTEREST_FINANCIERA_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result

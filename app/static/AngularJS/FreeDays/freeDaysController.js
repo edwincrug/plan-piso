@@ -3,13 +3,11 @@ registrationModule.controller('freeDaysController', function($scope, alertFactor
     //store an array of free days getting by getFreeDays function
     $scope.allDays = {};
     $scope.message = 'Buscando...';
-
-
-    //first method called when page load
+    //Primer metodo inicial
     $scope.init = function() {
         $scope.getFreeDays();
     };
-
+    // Función para pintar los estatus de los días
     $scope.setClass = function(status) {
         switch (status) {
             case 'OK':
@@ -23,15 +21,13 @@ registrationModule.controller('freeDaysController', function($scope, alertFactor
         }
     };
 
-    //retrive data from a sp to get freedays of a unit
+    //Función para mostrar las unidades en pla piso
     $scope.getFreeDays = function() {
-
         $scope.promise = freeDaysRepository.getFreeDays().then(function(result) {
             if (result.data.length > 0) {
                 $scope.allDays = result.data;
                 $scope.freeOk = 0;
                 $scope.freeOut = 1;
-                // $('#btnTest').button('buscando');
                 setTimeout(function() {
                     $('.dataTables-example').DataTable({
                         dom: '<"html5buttons"B>lTfgitp',
@@ -72,10 +68,5 @@ registrationModule.controller('freeDaysController', function($scope, alertFactor
             // $('#btnTest').button('buscando');
             alertFactory.error("Error al cargar datos");
         });
-
     };
-
-
-
-
 });

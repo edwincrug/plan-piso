@@ -1,5 +1,6 @@
-<div ng-init="init()"  cg-busy="{promise:promise,message:message}">
+<div ng-init="init()" cg-busy="{promise:promise,message:message}">
     <input id="max" name="max" type="hidden">
+    <!--Dashboard Filtro Financiera-->
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>Intereses {{nombre}} - Sucursal {{nombreSucursal}}</h2>
@@ -15,6 +16,7 @@
         <div class="col-lg-2">
         </div>
     </div>
+    <!--Fin Dashboard Filtro Financiera-->
     <!--DropDownList-->
     <br/>
     <div class="input-group col-xs-6 col-sm-2">
@@ -37,65 +39,107 @@
     </div>
     <br/>
     <!--Fin DropDownList-->
+    <!--Inico Dashboard Financiera-->
+    <div class="col-lg-4" ng-repeat="financiera in financieras">
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-warning pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
+                <h3>{{financiera.financiera}}</h3>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <small class="stats-label">Adeudo Total</small>
+                        <h2>{{adeudoTotal | currency}}</h2>
+                    </div>
+                    <div class="col-xs-6">
+                        <small class="stats-label">Intereses</small>
+                        <h2>{{totalInteresFinanciera | currency}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <small class="stats-label">Unidades</small>
+                        <h4>{{unidadesFinanciera}}</h4>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <small class="stats-label">Esquemas</small>
+                        <h4>9</h4>
+                    </div>
+                    <div class="col-xs-4">
+                        <small class="stats-label">Tasa</small>
+                        <h4>8%</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fin Dashboard Financiera-->
     <!--Dashboards-->
-    <div class="row">
-        <div class="col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">HOY</span>
-                    <h5>Interés Total</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">{{total | currency }}</h1>
-                    <div class="stat-percent font-bold text-success">{{porcentajeTotalUnidades}}% <i class="fa"></i></div>
-                    <small>Unidades: {{unidades}}</small>
-                    <br/>
-                    <small><a ng-click="getTotalInterest()">Ver detalles</a></small>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-warning pull-right">HOY</span>
-                    <h5>Interés Por Vencer</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">{{interesUnidadesPorVencidas | currency}}</h1>
-                    <div class="stat-percent font-bold text-success">{{porcentajePorVencer | number:2}}% <i class="fa"></i></div>
-                    <small>Unidades: {{unidadesPorVencer}}</small>
-                    <br/>
-                    <small><a ng-click="getAlmostEndingInterest()">Ver detalles</a></small>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-success pull-right">HOY</span>
+                        <h5>Interés Total</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{{total | currency }}</h1>
+                        <div class="stat-percent font-bold text-success">{{porcentajeTotalUnidades}}% <i class="fa"></i></div>
+                        <small>Unidades: {{unidades}}</small>
+                        <br/>
+                        <small><a ng-click="getTotalInterest()">Ver detalles</a></small>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-danger pull-right">HOY</span>
-                    <h5>Interés Vencido</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">{{interesUnidadesVencidas | currency}}</h1>
-                    <div class="stat-percent font-bold text-success">{{porcentajeVencido | number:2}}% <i class="fa"></i></div>
-                    <small>Unidades: {{unidadesVencidas}}</small>
-                    <br/>
-                    <small><a ng-click="getEndingInterest()">Ver detalles</a></small>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-warning pull-right">HOY</span>
+                        <h5>Interés Por Vencer</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{{interesUnidadesPorVencidas | currency}}</h1>
+                        <div class="stat-percent font-bold text-success">{{porcentajePorVencer | number:2}}% <i class="fa"></i></div>
+                        <small>Unidades: {{unidadesPorVencer}}</small>
+                        <br/>
+                        <small><a ng-click="getAlmostEndingInterest()">Ver detalles</a></small>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-info pull-right">HOY</span>
-                    <h5>Interés Vigente</h5>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-danger pull-right">HOY</span>
+                        <h5>Interés Vencido</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{{interesUnidadesVencidas | currency}}</h1>
+                        <div class="stat-percent font-bold text-success">{{porcentajeVencido | number:2}}% <i class="fa"></i></div>
+                        <small>Unidades: {{unidadesVencidas}}</small>
+                        <br/>
+                        <small><a ng-click="getEndingInterest()">Ver detalles</a></small>
+                    </div>
                 </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">{{interesRestante | currency}}</h1>
-                    <div class="stat-percent font-bold text-success">{{ porcentajeRestante| number:2}}% <i class="fa"></i></div>
-                    <small>Unidades: {{unidadesRestantes}}</small>
-                    <br/>
-                    <small><a ng-click="getNormalInterest()">Ver detalles</a></small>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-info pull-right">HOY</span>
+                        <h5>Interés Vigente</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{{interesRestante | currency}}</h1>
+                        <div class="stat-percent font-bold text-success">{{ porcentajeRestante| number:2}}% <i class="fa"></i></div>
+                        <small>Unidades: {{unidadesRestantes}}</small>
+                        <br/>
+                        <small><a ng-click="getNormalInterest()">Ver detalles</a></small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,22 +152,35 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="interestTable" class="table table-striped table-bordered table-hover dataTables-example">
+                            <table id="interestTable" class="table table-striped table-bordered table-hover dataTables-example" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>VIN</th>
                                         <th>Marca</th>
                                         <th>Modelo</th>
-                                        <th>Días plan piso</th>
+                                        <th>Días financiamiento </th>
                                         <th>Precio compra</th>
                                         <th>Precio venta</th>
                                         <th>Interés acumulado</th>
                                         <th>Interés pagado</th>
                                         <th>Saldo total</th>
                                         <th>Margen</th>
-                                        <th>Esquema</th>
                                     </tr>
                                 </thead>
+                                <tfoot ng-show="seleccionarSucursal.show">
+                                    <tr>
+                                        <th>VIN</th>
+                                        <th>Marca</th>
+                                        <th>Modelo</th>
+                                        <th>Días</th>
+                                        <th>Precio compra</th>
+                                        <th>Precio venta</th>
+                                        <th>Int. acumulado</th>
+                                        <th>Int. pagado</th>
+                                        <th>Saldo total</th>
+                                        <th>Margen</th>
+                                    </tr>
+                                </tfoot>
                                 <tbody>
                                     <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.vehNumserie)">
                                         <td>{{intereses.vehNumserie}}</td>
@@ -136,7 +193,6 @@
                                         <td>{{intereses.interesPagado | currency}}</td>
                                         <td>{{intereses.interesTotal | currency}}</td>
                                         <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
-                                        <td>{{intereses.esquema}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -152,9 +208,9 @@
 <div class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
-            <div class="modal-header" style="padding:15px 15px;">
+            <div class="modal-header" style="padding:20px 20px;">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 style="color:red;"><span class="glyphicon glyphicon-folder-open"></span> Detalles unidad - VIN: {{vehNumserie}}</h4>
+                <h4><span class="glyphicon glyphicon-folder-open"></span> Detalles unidad - VIN: {{vehNumserie}}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -172,33 +228,7 @@
                         <label>{{detailsUnit[0].transmision}}</label>
                         <br/> Tipo Unidad
                         <label>{{detailsUnit[0].tipoUnidad}}</label>
-
                     </div>
-                    <br/>
-                    <div class="col-xs-7 col-sm-8">
-                        <h2><span class="glyphicon glyphicon-stats"></span> Detalle Esquema</h2>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Días gracia:</th>
-                                    <th>Plazo:</th>
-                                    <th>Financiera</th>
-                                    <th>Tasa Interes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="detailsUnit in detailsUnit">
-                                    <td>{{detailsUnit.diasGracia}}</td>
-                                    <td>{{detailsUnit.plazo}}</td>
-                                    <td>{{detailsUnit.ubicacion}}</td>
-                                    <td>{{detailsUnit.financiera}}</td>
-                                    <td>{{detailsUnit.tasaInteres | number:2}}%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-xs-6 col-sm-4">
                         <h2><span class="glyphicon glyphicon-calendar"></span> Ingreso al Inventario</h2> Fecha Ingreso:
                         <label>{{detailsUnit[0].vehFecrecibo}}</label>
@@ -210,11 +240,8 @@
                         <label>{{detailsUnit[0].situacion}}</label>
                         <br/>
                     </div>
-                </div>
-                <br/>
-                <div class="row">
                     <div class="col-xs-6 col-sm-4">
-                        <h2><span class="glyphicon glyphicon-eye-open"></span> Datos Plan Piso</h2>
+                        <h2><span class="glyphicon glyphicon-eye-open"></span>  Datos Plan Piso</h2>
                         <br/> Fecha Ingreso:
                         <label>{{detailsUnit[0].vehFecrecibo}}</label>
                         <br/>Financiera:
@@ -223,6 +250,43 @@
                         <label>{{detailsUnit[0].nombre}}</label>
                         <br/> Días Inventario:
                         <label>{{detailsUnit[0].diasInventa}}</label>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-4">
+                        <h2><span class="glyphicon glyphicon-eye-open"></span>Esquema</h2>
+                        <br/> Fecha Ingreso:
+                        <label>{{detailsUnit[0].vehFecrecibo}}</label>
+                        <br/>Financiera:
+                        <label>{{detailsUnit[0].financiera}}</label>
+                        <br/> Esquema:
+                        <label>{{detailsUnit[0].nombre}}</label>
+                        <br/> Días Inventario:
+                        <label>{{detailsUnit[0].diasInventa}}</label>
+                    </div>
+                    <div class="col-xs-7 col-sm-8">
+                        <h2><span class="glyphicon glyphicon-stats"></span> Detalle Esquema</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tasa Interés:</th>
+                                    <th>Rango:</th>
+                                    <th>Precedencia</th>
+                                    <th>Porcentaje Penetración</th>
+                                    <th>Tipo Tiie</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="detailsUnit in detailsUnit">
+                                    <td>{{detailsUnit.tasaInteres | number:2}}%</td>
+                                    <td>{{detailsUnit.rango}}</td>
+                                    <td>{{detailsUnit.precedencia}}</td>
+                                    <td>{{detailsUnit.porcentajePenetracion | number:2}}%</td>
+                                    <td>{{detailsUnit.descripcion}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -234,9 +298,3 @@
     </div>
 </div>
 <!--Fin Modal-->
-
-<!-- el margen se calcula con porcentaje
-utilidad despues de impuesto
-quitar esquema
-todas las unidades que generan intereses despues de 30 dias o 60 tener filtros
-intereses del mes anterior-->

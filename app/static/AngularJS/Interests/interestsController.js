@@ -5,31 +5,31 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.vehNumserie = {};
     $scope.detailsUnit = {};
     $scope.nombreCorto = {};
+    $scope.fechaHoy = new Date();
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
             $scope.getCompany();
             $scope.seleccionarSucursal.show = false;
         }
-    // Función para filtrar por empresa
+        // Función para filtrar por empresa
     $scope.seleccionarEmpresa = function (empresa, nombre) {
-        $scope.Marca = empresa;
-        $scope.nombreCorto = empresa;
-        $scope.nombre = nombre;
-        $scope.getInterest();
-        $scope.getSucursal();
-        $scope.seleccionarSucursal.show = true;
-    }
-    // Función para filtrar por sucursal
+            $scope.Marca = empresa;
+            $scope.nombreCorto = empresa;
+            $scope.nombre = nombre;
+            $scope.getInterest();
+            $scope.getSucursal();
+            $scope.getFinancial();
+            $scope.seleccionarSucursal.show = true;
+        }
+        // Función para filtrar por sucursal
     $scope.seleccionarSucursal = function (sucursal, empresa, nombre) {
             $scope.nombreCorto = sucursal;
-        console.log($scope.nombreCorto);
             $scope.sucursal = empresa;
-         console.log($scope.sucursal);
-        $scope.nombreSucursal = nombre;
+            $scope.nombreSucursal = nombre;
             $scope.getInterestSucursal();
         }
-    // Función para filtrar compañias
+        // Función para filtrar compañias
     $scope.getCompany = function () {
             $scope.promise = interestsRepository.getCompany().then(function (result) {
                 if (result.data.length > 0) {
@@ -42,11 +42,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 alertFactory.error("Error al cargar Empresas");
             });
         }
-    // Función para obtener las sucursales por empresa
+        // Función para obtener las sucursales por empresa
     $scope.getSucursal = function (nombreCorto) {
             $scope.promise = interestsRepository.getSucursal($scope.nombreCorto).then(function (result) {
                 if (result.data.length > 0) {
-                    console.log(result.data)
                     $scope.sucursales = result.data;
                     alertFactory.success("Sucursales cargados");
                 } else {
@@ -56,87 +55,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 alertFactory.error("Error al cargar Sucursales");
             });
         }
-    // Metodo para obtiener todos los intereses y los datos para llenar los dashboards
+        // Metodo para obtiener todos los intereses y los datos para llenar los dashboards
     $scope.getInterest = function () {
-         $('#interestTable').DataTable().destroy();
-        $scope.promise =
-            interestsRepository.getInterest($scope.Marca).then(function (result) {
-                if (result.data.length > 0) {
-                    $scope.interes = result.data;
-                    $scope.unidades = result.data.length;
-                    $scope.unidadesVencidas = 0;
-                    $scope.interesUnidadesVencidas = 0;
-                    $scope.interesUnidadesPorVencidas = 0;
-                    $scope.unidadesPorVencer = 0;
-                    $scope.porcentajeTotalUnidades = 0;
-                    $scope.porcentajePorVencer = 0;
-                    $scope.porcentajeVencido = 0;
-                    $scope.unidadesRestantes = 0;
-                    $scope.interesRestante = 0;
-                    $scope.porcentajeRestante = 0;
-                    $scope.total = 0;
-                    setTimeout(function () {
-                        $('#interestTable').DataTable({
-                            dom: '<"html5buttons"B>lTfgitp'
-                            , buttons: [{
-                                    extend: 'copy'
-                            }, {
-                                    extend: 'csv'
-                            }, {
-                                    extend: 'excel'
-                                    , title: 'ExampleFile'
-                            }, {
-                                    extend: 'pdf'
-                                    , title: 'ExampleFile'
-                            },
-
-                                {
-                                    extend: 'print'
-                                    , customize: function (win) {
-                                        $(win.document.body).addClass('white-bg');
-                                        $(win.document.body).css('font-size', '10px');
-
-                                        $(win.document.body).find('table')
-                                            .addClass('compact')
-                                            .css('font-size', 'inherit');
-                                    }
-                            }
-                        ]
-                        });
-                    }, 1000);
-                    for (var i = 0; i < result.data.length; i++) {
-
-                        if (result.data[i].diasPlanPiso >= 180) {
-                            $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado)
-                            $scope.unidadesVencidas += 1
-                        } else
-                        if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
-                            $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
-                            $scope.unidadesPorVencer += 1
-                        }
-                        $scope.total += (result.data[i].interesAcumulado)
-                        $scope.porcentajeTotalUnidades = 100
-                        $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
-                        $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
-                        $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer
-                        $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
-                        $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas - $scope.interesUnidadesVencidas
-                    }
-                    alertFactory.success("Intereses cargados");
-                } else {
-                    alertFactory.info("No se encontraron intereses");
-                }
-            }, function (error) {
-                alertFactory.error("Error al cargar intereses");
-            });
-    }
-    // Funcion para obtener los intereses por sucursal
-    $scope.getInterestSucursal = function () {
-         $('#interestTable').DataTable().destroy();
+            $('#interestTable').DataTable().destroy();
+            $scope.interes = {};
             $scope.promise =
-                interestsRepository.getInterestSucursal($scope.Marca, $scope.nombreCorto).then(function (result) {
+                interestsRepository.getInterest($scope.Marca).then(function (result) {
                     if (result.data.length > 0) {
-                        console.log(result.data);
                         $scope.interes = result.data;
                         $scope.unidades = result.data.length;
                         $scope.unidadesVencidas = 0;
@@ -164,11 +89,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                         extend: 'pdf'
                                         , title: 'ExampleFile'
                             },
+
                                     {
                                         extend: 'print'
                                         , customize: function (win) {
                                             $(win.document.body).addClass('white-bg');
                                             $(win.document.body).css('font-size', '10px');
+
                                             $(win.document.body).find('table')
                                                 .addClass('compact')
                                                 .css('font-size', 'inherit');
@@ -176,8 +103,29 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             }
                         ]
                             });
+                            $('#interestTable tfoot th').each(function () {
+                                var title = $(this).text();
+                                $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
+                            });
+
+                            // DataTable
+                            var table = $('#interestTable').DataTable();
+
+                            // Apply the search
+                            table.columns().every(function () {
+                                var that = this;
+
+                                $('input', this.footer()).on('keyup change', function () {
+                                    if (that.search() !== this.value) {
+                                        that
+                                            .search(this.value)
+                                            .draw();
+                                    }
+                                });
+                            });
                         }, 1000);
                         for (var i = 0; i < result.data.length; i++) {
+
                             if (result.data[i].diasPlanPiso >= 180) {
                                 $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado)
                                 $scope.unidadesVencidas += 1
@@ -194,15 +142,138 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
                             $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas - $scope.interesUnidadesVencidas
                         }
-                        alertFactory.success("Intereses no Encontrados");
+                        alertFactory.success("Intereses cargados");
                     } else {
-                        alertFactory.info("Intereses cargados");
+                        alertFactory.info("No se encontraron intereses");
                     }
                 }, function (error) {
                     alertFactory.error("Error al cargar intereses");
                 });
         }
-    // Función para el ng-class en el campo status
+        // Funcion para obtener los intereses por sucursal
+    $scope.getInterestSucursal = function () {
+        $('#interestTable').DataTable().destroy();
+        $scope.interes = {};
+        $scope.promise =
+            interestsRepository.getInterestSucursal($scope.Marca, $scope.nombreCorto).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.interes = result.data;
+                    $scope.unidades = result.data.length;
+                    $scope.unidadesVencidas = 0;
+                    $scope.interesUnidadesVencidas = 0;
+                    $scope.interesUnidadesPorVencidas = 0;
+                    $scope.unidadesPorVencer = 0;
+                    $scope.porcentajeTotalUnidades = 0;
+                    $scope.porcentajePorVencer = 0;
+                    $scope.porcentajeVencido = 0;
+                    $scope.unidadesRestantes = 0;
+                    $scope.interesRestante = 0;
+                    $scope.porcentajeRestante = 0;
+                    $scope.total = 0;
+                    setTimeout(function () {
+                        $('#interestTable').DataTable({
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , buttons: [{
+                                    extend: 'copy'
+                            }, {
+                                    extend: 'csv'
+                            }, {
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
+                            }, {
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
+                            }       
+                                , {
+                                    extend: 'print'
+                                    , customize: function (win) {
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+                                        $(win.document.body).find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                            }
+                        ]
+                        });
+                    }, 1000);
+                    for (var i = 0; i < result.data.length; i++) {
+                        if (result.data[i].diasPlanPiso >= 180) {
+                            $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado)
+                            $scope.unidadesVencidas += 1
+                        } else
+                        if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
+                            $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
+                            $scope.unidadesPorVencer += 1
+                        }
+                        $scope.total += (result.data[i].interesAcumulado)
+                        $scope.porcentajeTotalUnidades = 100
+                        $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
+                        $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
+                        $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer
+                        $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
+                        $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas - $scope.interesUnidadesVencidas
+                    }
+                    alertFactory.success("Intereses Encontrados");
+                } else {
+                    alertFactory.info("Intereses no encontrados");
+                    $scope.unidades  = 0;
+                    $scope.unidadesVencidas = 0;
+                    $scope.interesUnidadesVencidas = 0;
+                    $scope.interesUnidadesPorVencidas = 0;
+                    $scope.unidadesPorVencer = 0;
+                    $scope.porcentajeTotalUnidades = 0;
+                    $scope.porcentajePorVencer = 0;
+                    $scope.porcentajeVencido = 0;
+                    $scope.unidadesRestantes = 0;
+                    $scope.interesRestante = 0;
+                    $scope.porcentajeRestante = 0;
+                    $scope.total = 0;
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar intereses");
+            });
+    }
+
+    // Función para trar las financieras por empresa
+    $scope.getFinancial = function () {
+            $scope.unidadesFinanciera1 = 0;
+            $scope.totalInteresFinanciera1 = 0;
+            $scope.adeudoTotal1 = 0;
+            $scope.info = [];
+            $scope.promise = interestsRepository.getFinancial($scope.nombreCorto).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.financieras = result.data;
+                    $scope.empresa = $scope.nombreCorto;
+                    $scope.info = [{unidadesFinanciera: $scope.unidadesFinanciera},{adeudoTotal : $scope.adeudoTotal},{totalInteresFinanciera : $scope.totalInteresFinanciera}];
+                    for (var i = 0; i < result.data.length; i++) {
+                        $scope.financiera = result.data[i].financiera;
+                        interestsRepository.getFinancialForUnit($scope.empresa, $scope.financiera).then(function (detalles) {
+                            if (detalles.data.length > 0) {
+                                for (var j = 0; j < detalles.data.length; j++) {
+                                    $scope.detalles1 = detalles.data;
+                                    $scope.unidadesFinanciera1 = detalles.data.length
+                                    $scope.adeudoTotal1 += (detalles.data[j].precioCompra)
+                                    $scope.totalInteresFinanciera1 += (detalles.data[j].interesAcumulado)
+                                }
+                                    $scope.detalles = $scope.detalles1;
+                                    $scope.unidadesFinanciera = $scope.unidadesFinanciera1;
+                                    $scope.adeudoTotal = $scope.adeudoTotal1;
+                                    $scope.totalInteresFinanciera = $scope.totalInteresFinanciera1;
+                                console.log($scope.unidadesFinanciera + "Unidades", $scope.totalInteresFinanciera + "TotalIntereses", $scope.adeudoTotal + " adeudototal")
+                                alertFactory.success("Detalles de Financieras cargadas");
+                            }
+                        });
+                    }
+                    alertFactory.success("Financieras cargadas");
+                } else {
+                    alertFactory.info("No se encontraron Financieras");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar Financieras");
+            });
+        }
+    // Función para traer la información de unidades por financiera
     $scope.setClass = function (status) {
         switch (status) {
         case 'OK':
@@ -274,10 +345,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.inicia = function (vehNumserie) {
             $('#DetallesUnidadModal').appendTo("body").modal('show');
             $scope.vehNumserie = vehNumserie;
-            console.log(vehNumserie);
             $scope.getDetailsUnit();
             $scope.detailsUnit = $scope.detailsUnit;
-            console.log($scope.detailsUnit);
         }
     // Función para cerrar la modal
     $scope.cerrar = function () {

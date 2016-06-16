@@ -51,6 +51,27 @@ registrationModule.factory('interestsRepository', function($http) {
                 'Content-Type': 'application/json'
                 }
             });
+        },
+        getFinancial: function(empresa) {
+            return $http({
+                url: interestsURL + 'financial/',
+                method: "GET",
+                 params: {empresa: empresa},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+        },
+        getFinancialForUnit: function(empresa,financiera) {
+            return $http({
+                url: interestsURL + 'financialForUnit/',
+                method: "GET",
+                 params: {empresa: empresa,
+                         financiera:financiera},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
         }
         
     };
