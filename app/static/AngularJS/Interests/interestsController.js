@@ -11,6 +11,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.init = function () {
             $scope.getCompany();
             $scope.seleccionarSucursal.show = false;
+            $scope.mostrarDetalles.show = false;
         }
         // Función para filtrar por empresa
     $scope.seleccionarEmpresa = function (empresa, nombre) {
@@ -21,6 +22,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             $scope.getSucursal();
             $scope.getFinancial();
             $scope.seleccionarSucursal.show = true;
+         $scope.getFinancial.show = true;
+            
         }
         // Función para filtrar por sucursal
     $scope.seleccionarSucursal = function (sucursal, empresa, nombre) {
@@ -359,5 +362,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 $scope.detailsUnit = result.data;
             }
         });
+    }
+    
+    $scope.mostrarDetalles = function(){
+        $scope.mostrarDetalles.show = true;
+        $scope.getFinancial.show = false;
     }
 });

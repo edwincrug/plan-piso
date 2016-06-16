@@ -1,7 +1,6 @@
 <div ng-init="init()" cg-busy="{promise:promise,message:message}">
     <input id="max" name="max" type="hidden">
-    <!--Dashboard Filtro Financiera-->
-    <div class="row wrapper border-bottom white-bg page-heading">
+         <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>Intereses {{nombre}} - Sucursal {{nombreSucursal}}</h2>
             <ol class="breadcrumb">
@@ -13,73 +12,8 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2">
-        </div>
     </div>
-    <!--Fin Dashboard Filtro Financiera-->
-    <!--DropDownList-->
-    <br/>
-    <div class="input-group col-xs-6 col-sm-2">
-        <div class="input-group-btn">
-            <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Empresa <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li ng-repeat="empresa in empresas">
-                    <a href="#" ng-click="seleccionarEmpresa(empresa.emp_nombrecto, empresa.emp_nombre)">{{empresa.emp_nombre}}</a>
-                </li>
-            </ul>
-        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="input-group-btn" ng-show="seleccionarSucursal.show">
-            <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Sucursal <span class="caret"></span></button>
-            <ul class="dropdown-menu col-xs-1 col-sm-2">
-                <li ng-repeat="sucursales in sucursales">
-                    <a href="#" ng-click="seleccionarSucursal(sucursales.catsuc_nombrecto,sucursales.catemp_nombrecto,sucursales.nombre_sucursal)">{{sucursales.nombre_sucursal}}</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <br/>
-    <!--Fin DropDownList-->
-    <!--Inico Dashboard Financiera-->
-    <div class="col-lg-4" ng-repeat="financiera in financieras" ng-show="getFinancial.show">
-        <div class="ibox float-e-margins" ng-click="mostrarDetalles()">
-            <div class="ibox-title">
-                <span class="label label-warning pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
-                <h3>{{financiera.financiera}}</h3>
-            </div>
-            <div class="ibox-content">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <small class="stats-label">Adeudo Total</small>
-                        <h2>{{adeudoTotal | currency}}</h2>
-                    </div>
-                    <div class="col-xs-6">
-                        <small class="stats-label">Intereses</small>
-                        <h2>{{totalInteresFinanciera | currency}}</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <small class="stats-label">Unidades</small>
-                        <h4>{{unidadesFinanciera}}</h4>
-                    </div>
-
-                    <div class="col-xs-4">
-                        <small class="stats-label">Esquemas</small>
-                        <h4>9</h4>
-                    </div>
-                    <div class="col-xs-4">
-                        <small class="stats-label">Tasa</small>
-                        <h4>8%</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Fin Dashboard Financiera-->
-    <!--Dashboards-->
-    <div class="" ng-show="mostrarDetalles.show">
+        <!--Dashboards-->
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-3">
@@ -145,50 +79,6 @@
         </div>
     </div>
     <!--Fin Dashboard-->
-    <div ng-show="seleccionarSucursal.show">
-    <div class="col-lg-2">
-    </div>
-    <div class="col-lg-2">
-    </div>
-    <div class="col-lg-2">
-    </div>
-    <div class="col-lg-2">
-                    <div class="widget style1 lazur-bg" ng-click="">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort fa-3x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <h2 class="font-bold">30</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                  <div class="col-lg-2">
-                    <div class="widget style1 lazur-bg">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort fa-3x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <h2 class="font-bold">60</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                  <div class="col-lg-2">
-                    <div class="widget style1 lazur-bg">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort fa-3x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <h2 class="font-bold">90</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>    
-    </div>
     <!--Tabla-->
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -247,7 +137,6 @@
         </div>
     </div>
     <!--Fin Tabla-->
-</div>
 </div>
 <!--Modal-->
 <div class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true">
