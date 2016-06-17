@@ -68,16 +68,17 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         $scope.interes = result.data;
                         $scope.unidades = result.data.length;
                         $scope.unidadesVencidas = 0;
-                        $scope.interesUnidadesVencidas = 0;
-                        $scope.interesUnidadesPorVencidas = 0;
+                        $scope.interesTotal = 0;
+                        $scope.interesActual = 0;
                         $scope.unidadesPorVencer = 0;
                         $scope.porcentajeTotalUnidades = 0;
-                        $scope.porcentajePorVencer = 0;
+                        /*$scope.porcentajePorVencer = 0;
                         $scope.porcentajeVencido = 0;
                         $scope.unidadesRestantes = 0;
                         $scope.interesRestante = 0;
-                        $scope.porcentajeRestante = 0;
+                        $scope.porcentajeRestante = 0;*/
                         $scope.interesmespasado  = 0;
+                         $scope.interespagado = 0;
                         $scope.total = 0;
                         setTimeout(function () {
                             $('#interestTable').DataTable({
@@ -133,27 +134,38 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             if (result.data[i].diasPlanPiso >= 180) {
                                 //$scope.unidadesVencidas += 1
                             } else
-                            if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
+                            if (result.data[i].interesAcumulado == result.data[i].interesPagado) {
                                
-                                //$scope.unidadesPorVencer += 1
+                                $scope.unidadesPorVencer += 1
                             }
+                            $scope.unidadesPorVencer += 1
                             $scope.total += (result.data[i].interesAcumulado)
                             $scope.porcentajeTotalUnidades = 100
-                            $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
+                            /*$scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
                             $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
-                            $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer 
+                            $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer */
                             $scope.interesmespasado += (result.data[i].interesAcumulado);
                             $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
                             $scope.interespagado += (result.data[i].interesPagado);
-                            $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumuladoActual)
-                           // $scope.interesUnidadesVencidas += $scope.interesUnidadesPorVencidas +$scope.total
-                            $scope.interesUnidadesVencidas = $scope.interesUnidadesPorVencidas + $scope.interesmespasado 
-                         $scope.interesnopagados =  $scope.interesUnidadesVencidas - $scope.interespagado
+                            $scope.interesActual += (result.data[i].interesAcumuladoActual)
+                            $scope.interesTotal = $scope.interesActual + $scope.interesmespasado 
                          
                         }
-                         
+                         $scope.interesnopagados = $scope.interesTotal - $scope.interespagado
                         alertFactory.success("Intereses cargados");
                     } else {
+                    $scope.unidades  = 0;
+                    $scope.unidadesVencidas = 0;
+                    $scope.interesTotal = 0;
+                    $scope.interesActual = 0;
+                    $scope.unidadesPorVencer = 0;
+                    /*$scope.porcentajeTotalUnidades = 0;
+                    $scope.porcentajePorVencer = 0;
+                    $scope.porcentajeVencido = 0;*/
+                    $scope.unidadesRestantes = 0;
+                    $scope.interesRestante = 0;
+                    $scope.porcentajeRestante = 0;
+                    $scope.total = 0;
                         alertFactory.info("No se encontraron intereses");
                     }
                 }, function (error) {
@@ -170,16 +182,18 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.interes = result.data;
                     $scope.unidades = result.data.length;
                     $scope.unidadesVencidas = 0;
-                    $scope.interesUnidadesVencidas = 0;
-                    $scope.interesUnidadesPorVencidas = 0;
+                    $scope.interesTotal = 0;
+                    $scope.interesActual = 0;
                     $scope.unidadesPorVencer = 0;
-                    $scope.porcentajeTotalUnidades = 0;
+                    /*$scope.porcentajeTotalUnidades = 0;
                     $scope.porcentajePorVencer = 0;
                     $scope.porcentajeVencido = 0;
                     $scope.unidadesRestantes = 0;
                     $scope.interesRestante = 0;
-                    $scope.porcentajeRestante = 0;
+                    $scope.porcentajeRestante = 0;*/
                     $scope.interesnopagados = 0;
+                    $scope.interespagado = 0;
+                    $scope.interesmespasado = 0;
                     $scope.total = 0;
                     setTimeout(function () {
                         $('#interestTable').DataTable({
@@ -208,43 +222,41 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         ]
                         });
                     }, 1000);
-                    for (var i = 0; i < result.data.length; i++) {
-                        if (result.data[i].diasPlanPiso >= 180) {
-                            //$scope.interesUnidadesVencidas += (result.data[i].interesTotal)
-                            $scope.unidadesVencidas += 1
-                        } else
-                        if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
-                            //$scope.interesUnidadesPorVencidas += (result.data[i].interesTotal)
+                   for (var i = 0; i < result.data.length; i++) {
+
+                            /*if (result.data[i].diasPlanPiso >= 180) {
+                            } else
+                            if (result.data[i].interesAcumulado == result.data[i].interesPagado) {
+                               
+                                $scope.unidadesPorVencer += 1
+                            }*/
                             $scope.unidadesPorVencer += 1
+                            $scope.total += (result.data[i].interesAcumulado)
+                            $scope.porcentajeTotalUnidades = 100
+                            /*$scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
+                            $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
+                            $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer */
+                            $scope.interesmespasado += (result.data[i].interesAcumulado);
+                            //$scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
+                            $scope.interespagado += (result.data[i].interesPagado);
+                            $scope.interesActual += (result.data[i].interesAcumuladoActual)
                         }
-                        $scope.total += (result.data[i].interesAcumulado)
-                        $scope.porcentajeTotalUnidades = 100
-                        $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
-                        $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
-                        $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer
-                        $scope.interesmespasad += (result.data[i].interesAcumulado);
-                        $scope.interespagado += (result.data[i].interesPagado);
-                            $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
-                            $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas - $scope.interesUnidadesVencidas
-                            $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumuladoActual)
-                            $scope.interesUnidadesVencidas = $scope.interesUnidadesPorVencidas + $scope.interesmespasado 
-                      $scope.interesnopagados =  $scope.interesUnidadesVencidas - $scope.interespagado
-                           
-                    }
-                    alertFactory.success("Intereses Encontrados");
-                     
+                    $scope.interesTotal = $scope.interesActual + $scope.interesmespasado 
+                         $scope.interesnopagados = $scope.interesTotal - $scope.interespagado
+                        alertFactory.success("Intereses cargados");
                       
                 } else {
                     alertFactory.info("Intereses no encontrados");
+                    $scope.interesmespasado = 0;
                     $scope.unidades  = 0;
                     $scope.unidadesVencidas = 0;
-                    $scope.interesUnidadesVencidas = 0;
-                    $scope.interesUnidadesPorVencidas = 0;
+                    $scope.interesTotal = 0;
+                    $scope.interesActual = 0;
                     $scope.unidadesPorVencer = 0;
-                    $scope.porcentajeTotalUnidades = 0;
-                    $scope.porcentajePorVencer = 0;
-                    $scope.porcentajeVencido = 0;
-                    $scope.unidadesRestantes = 0;
+                   //$scope.porcentajeTotalUnidades = 0;
+                    //$scope.porcentajePorVencer = 0;
+                    //$scope.porcentajeVencido = 0;
+                    //$scope.unidadesRestantes = 0;
                     $scope.interesRestante = 0;
                     $scope.porcentajeRestante = 0;
                     $scope.total = 0;
