@@ -86,10 +86,10 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-success pull-right">HOY</span>
-                        <h5>Interés Total</h5>
+                        <h5>Intereses Pasados</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">{{total | currency }}</h1>
+                        <h1 class="no-margins">{{interesmespasado  | currency }}</h1>
                         <div class="stat-percent font-bold text-success">{{porcentajeTotalUnidades}}% <i class="fa"></i></div>
                         <small>Unidades: {{unidades}}</small>
                         <br/>
@@ -101,12 +101,12 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-warning pull-right">HOY</span>
-                        <h5>Interés Por Vencer</h5>
+                        <h5>Interés Actual</h5>
                     </div>
                     <div class="ibox-content">
                         <h1 class="no-margins">{{interesUnidadesPorVencidas | currency}}</h1>
                         <div class="stat-percent font-bold text-success">{{porcentajePorVencer | number:2}}% <i class="fa"></i></div>
-                        <small>Unidades: {{unidadesPorVencer}}</small>
+                        <!--small>Unidades: {{unidadesPorVencer}}</small-->
                         <br/>
                         <small><a ng-click="getAlmostEndingInterest()">Ver detalles</a></small>
                     </div>
@@ -116,12 +116,12 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-danger pull-right">HOY</span>
-                        <h5>Interés Vencido</h5>
+                        <h5>Interés Total</h5>
                     </div>
                     <div class="ibox-content">
                         <h1 class="no-margins">{{interesUnidadesVencidas | currency}}</h1>
                         <div class="stat-percent font-bold text-success">{{porcentajeVencido | number:2}}% <i class="fa"></i></div>
-                        <small>Unidades: {{unidadesVencidas}}</small>
+                        <!--small>Unidades: {{unidadesVencidas}}</small-->
                         <br/>
                         <small><a ng-click="getEndingInterest()">Ver detalles</a></small>
                     </div>
@@ -131,12 +131,12 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-info pull-right">HOY</span>
-                        <h5>Interés Vigente</h5>
+                        <h5>Interés no pagado</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">{{interesRestante | currency}}</h1>
+                        <h1 class="no-margins">{{interesnopagados | currency}}</h1>
                         <div class="stat-percent font-bold text-success">{{ porcentajeRestante| number:2}}% <i class="fa"></i></div>
-                        <small>Unidades: {{unidadesRestantes}}</small>
+                        <!--small>Unidades: {{unidadesRestantes}}</small-->
                         <br/>
                         <small><a ng-click="getNormalInterest()">Ver detalles</a></small>
                     </div>
@@ -146,48 +146,56 @@
     </div>
     <!--Fin Dashboard-->
     <div ng-show="seleccionarSucursal.show">
-    <div class="col-lg-2">
+    <div class="col-lg-8">
     </div>
-    <div class="col-lg-2">
-    </div>
-    <div class="col-lg-2">
-    </div>
-    <div class="col-lg-2">
-                    <div class="widget style1 lazur-bg" ng-click="">
+    <div class="col-lg-1" >
+                    <div class="widget style1 lazur-bg" ng-click="set30days()" style="padding: 5px 5px">
                         <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort fa-3x"></i>
+                            <div class="col-xs-1">
+                                <i class="glyphicon glyphicon-sort"></i>
                             </div>
-                            <div class="col-xs-9 text-right">
+                            <div class="col-xs-1 text-right">
                                 <h2 class="font-bold">30</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                  <div class="col-lg-2">
-                    <div class="widget style1 lazur-bg">
+                  <div class="col-lg-1">
+                    <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set60days()">
                         <div class="row vertical-align">
                             <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort fa-3x"></i>
+                                <i class="glyphicon glyphicon-sort "></i>
                             </div>
-                            <div class="col-xs-9 text-right">
+                            <div class="col-xs-1 text-right">
                                 <h2 class="font-bold">60</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                  <div class="col-lg-2">
-                    <div class="widget style1 lazur-bg">
+                  <div class="col-lg-1">
+                    <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set90days()">
                         <div class="row vertical-align">
                             <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort fa-3x"></i>
+                                <i class="glyphicon glyphicon-sort"></i>
                             </div>
-                            <div class="col-xs-9 text-right">
+                            <div class="col-xs-1 text-right">
                                 <h2 class="font-bold">90</h2>
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>  
+                <div class="col-lg-1">
+                    <div class="widget style1 lazur-bg" style="padding: 5px 0px" ng-click="set90Masdays()">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="glyphicon glyphicon-sort"></i>
+                            </div>
+                            <div class="col-xs-1 text-right">
+                                <h2 class="font-bold">90+</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
     </div>
     <!--Tabla-->
     <div class="wrapper wrapper-content">
@@ -205,8 +213,9 @@
                                         <th>Días financiamiento </th>
                                         <th>Precio compra</th>
                                         <th>Precio venta</th>
-                                        <th>Interés acumulado</th>
-                                        <th>Interés pagado</th>
+                                        <th>Int. al corte</th> 
+                                        <th>Int. actual</th>    
+                                        <th>Int. pagado</th>
                                         <th>Saldo total</th>
                                         <th>Margen</th>
                                     </tr>
@@ -219,7 +228,8 @@
                                         <th>Días</th>
                                         <th>Precio compra</th>
                                         <th>Precio venta</th>
-                                        <th>Int. acumulado</th>
+                                        <th>Int. mes</th> 
+                                        <th>Int. actual</th>    
                                         <th>Int. pagado</th>
                                         <th>Saldo total</th>
                                         <th>Margen</th>
@@ -234,6 +244,7 @@
                                         <td>{{intereses.precioCompra | currency}}</td>
                                         <td>{{intereses.precioVenta | currency}}</td>
                                         <td>{{intereses.interesAcumulado | currency}}</td>
+                                        <td>{{intereses.interesAcumuladoActual | currency}}</td>
                                         <td>{{intereses.interesPagado | currency}}</td>
                                         <td>{{intereses.interesTotal | currency}}</td>
                                         <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>

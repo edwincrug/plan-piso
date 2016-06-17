@@ -77,6 +77,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         $scope.unidadesRestantes = 0;
                         $scope.interesRestante = 0;
                         $scope.porcentajeRestante = 0;
+                        $scope.interesmespasado  = 0;
                         $scope.total = 0;
                         setTimeout(function () {
                             $('#interestTable').DataTable({
@@ -130,21 +131,27 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         for (var i = 0; i < result.data.length; i++) {
 
                             if (result.data[i].diasPlanPiso >= 180) {
-                                $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado)
-                                $scope.unidadesVencidas += 1
+                                //$scope.unidadesVencidas += 1
                             } else
                             if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
-                                $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
-                                $scope.unidadesPorVencer += 1
+                               
+                                //$scope.unidadesPorVencer += 1
                             }
                             $scope.total += (result.data[i].interesAcumulado)
                             $scope.porcentajeTotalUnidades = 100
                             $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
                             $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
-                            $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer
+                            $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer 
+                            $scope.interesmespasado += (result.data[i].interesAcumulado);
                             $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
-                            $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas - $scope.interesUnidadesVencidas
+                            $scope.interespagado += (result.data[i].interesPagado);
+                            $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumuladoActual)
+                           // $scope.interesUnidadesVencidas += $scope.interesUnidadesPorVencidas +$scope.total
+                            $scope.interesUnidadesVencidas = $scope.interesUnidadesPorVencidas + $scope.interesmespasado 
+                         $scope.interesnopagados =  $scope.interesUnidadesVencidas - $scope.interespagado
+                         
                         }
+                         
                         alertFactory.success("Intereses cargados");
                     } else {
                         alertFactory.info("No se encontraron intereses");
@@ -172,6 +179,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.unidadesRestantes = 0;
                     $scope.interesRestante = 0;
                     $scope.porcentajeRestante = 0;
+                    $scope.interesnopagados = 0;
                     $scope.total = 0;
                     setTimeout(function () {
                         $('#interestTable').DataTable({
@@ -202,11 +210,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     }, 1000);
                     for (var i = 0; i < result.data.length; i++) {
                         if (result.data[i].diasPlanPiso >= 180) {
-                            $scope.interesUnidadesVencidas += (result.data[i].interesAcumulado)
+                            //$scope.interesUnidadesVencidas += (result.data[i].interesTotal)
                             $scope.unidadesVencidas += 1
                         } else
                         if (result.data[i].diasPlanPiso <= 179 && result.data[i].diasPlanPiso >= 170) {
-                            $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumulado)
+                            //$scope.interesUnidadesPorVencidas += (result.data[i].interesTotal)
                             $scope.unidadesPorVencer += 1
                         }
                         $scope.total += (result.data[i].interesAcumulado)
@@ -214,10 +222,18 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         $scope.porcentajeVencido = ($scope.unidadesVencidas * 100) / $scope.unidades
                         $scope.porcentajePorVencer = ($scope.unidadesPorVencer * 100) / $scope.unidades
                         $scope.porcentajeRestante = ($scope.porcentajeTotalUnidades - $scope.porcentajeVencido) - $scope.porcentajePorVencer
-                        $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
-                        $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas - $scope.interesUnidadesVencidas
+                        $scope.interesmespasad += (result.data[i].interesAcumulado);
+                        $scope.interespagado += (result.data[i].interesPagado);
+                            $scope.unidadesRestantes = $scope.unidades - $scope.unidadesPorVencer - $scope.unidadesVencidas
+                            $scope.interesRestante = $scope.total - $scope.interesUnidadesPorVencidas - $scope.interesUnidadesVencidas
+                            $scope.interesUnidadesPorVencidas += (result.data[i].interesAcumuladoActual)
+                            $scope.interesUnidadesVencidas = $scope.interesUnidadesPorVencidas + $scope.interesmespasado 
+                      $scope.interesnopagados =  $scope.interesUnidadesVencidas - $scope.interespagado
+                           
                     }
                     alertFactory.success("Intereses Encontrados");
+                     
+                      
                 } else {
                     alertFactory.info("Intereses no encontrados");
                     $scope.unidades  = 0;
@@ -257,7 +273,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     $scope.detalles1 = detalles.data;
                                     $scope.unidadesFinanciera1 = detalles.data.length
                                     $scope.adeudoTotal1 += (detalles.data[j].precioCompra)
-                                    $scope.totalInteresFinanciera1 += (detalles.data[j].interesAcumulado)
+                                    $scope.totalInteresFinanciera1 += (detalles.data[j].interesAcumuladoActual)
                                 }
                                     $scope.detalles = $scope.detalles1;
                                     $scope.unidadesFinanciera = $scope.unidadesFinanciera1;
@@ -297,6 +313,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }
     };
+
     // Función Principal para los filtros
     $scope.rangeFilter = function () {
         $.fn.dataTable.ext.search.push(
@@ -330,6 +347,26 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
     };
+    
+        
+    $scope.set30days = function (){
+        $('#min').val(0);
+        $('#max').val(30);
+        $scope.rangeFilter();
+        $('#interestTable').DataTable().draw();
+    };
+     $scope.set60days = function (){
+        $('#min').val(0);
+        $('#max').val(60);
+        $scope.rangeFilter();
+        $('#interestTable').DataTable().draw();
+    };
+     $scope.set90days = function (){
+        $('#min').val(0);
+        $('#max').val(90);
+        $scope.rangeFilter();
+        $('#interestTable').DataTable().draw();
+    };
     // Función para filtro unidades vencidas
     $scope.getEndingInterest = function () {
         $('#min').val(180);
@@ -337,6 +374,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
     };
+    
+    $scope.set90Masdays = function (){
+        $('#min').val(91);
+        $('#max').val(360);
+        $scope.rangeFilter();
+        $('#interestTable').DataTable().draw();
+    };
+    
     // Función para filtro unidades restantes
     $scope.getNormalInterest = function () {
         $('#min').val(30);
