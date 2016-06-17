@@ -254,6 +254,16 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             });
     }
 
+
+    $scope.financierasNombre = [];
+
+    //       var fin = {
+    //             id: oldObject[i].id,
+    //             initDate: oldObject[i].fecha,
+    //             finalDate: nextDate,
+    //             days: i
+    //         };
+
     // Función para trar las financieras por empresa
     $scope.getFinancial = function () {
             $scope.unidadesFinanciera1 = 0;
@@ -265,8 +275,15 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.financieras = result.data;
                     $scope.empresa = $scope.nombreCorto;
                     $scope.info = [{unidadesFinanciera: $scope.unidadesFinanciera},{adeudoTotal : $scope.adeudoTotal},{totalInteresFinanciera : $scope.totalInteresFinanciera}];
+                    
+
+
                     for (var i = 0; i < result.data.length; i++) {
                         $scope.financiera = result.data[i].financiera;
+                        console.log($scope.financiera);
+
+
+
                         interestsRepository.getFinancialForUnit($scope.empresa, $scope.financiera).then(function (detalles) {
                             if (detalles.data.length > 0) {
                                 for (var j = 0; j < detalles.data.length; j++) {
@@ -278,10 +295,35 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     $scope.detalles = $scope.detalles1;
                                     $scope.unidadesFinanciera = $scope.unidadesFinanciera1;
                                     $scope.adeudoTotal = $scope.adeudoTotal1;
-                                    $scope.totalInteresFinanciera = $scope.totalInteresFinanciera1;
-                                console.log($scope.unidadesFinanciera + "Unidades", $scope.totalInteresFinanciera + "TotalIntereses", $scope.adeudoTotal + " adeudototal")
+                                    $scope.totalInteresFinanciera = $scope.totalInteresFinanciera1;  
+
+
+                                    var itemFinanciera = {
+                                        finNombre :  detalles.data[0].financiera ,
+                                        detalles : $scope.detalles1,
+                                        unidadesFinanciera : $scope.unidadesFinanciera1,
+                                        adeudoTotal : $scope.adeudoTotal1,
+                                        totalInteresFinanciera : $scope.totalInteresFinanciera1
+                                    };
+                                            
+
+                                    $scope.financierasNombre.push(itemFinanciera);
+                                    console.log($scope.financierasNombre);                      
+
+                               // console.log($scope.unidadesFinanciera + "Unidades", $scope.totalInteresFinanciera + "TotalIntereses", $scope.adeudoTotal + " adeudototal")
                                 alertFactory.success("Detalles de Financieras cargadas");
+
+
                             }
+
+                                //console.log($scope.totalInteresFinanciera1);
+
+
+
+                         
+
+
+
                         });
                     }
                     alertFactory.success("Financieras cargadas");

@@ -40,21 +40,21 @@
     <br/>
     <!--Fin DropDownList-->
     <!--Inico Dashboard Financiera-->
-    <div class="col-lg-4" ng-repeat="financiera in financieras" ng-show="getFinancial.show">
+    <div class="col-lg-4" ng-repeat="financiera in financierasNombre" ng-show="getFinancial.show">
         <div class="ibox float-e-margins" ng-click="mostrarDetalles()">
             <div class="ibox-title">
                 <span class="label label-warning pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
-                <h3>{{financiera.financiera}}</h3>
+                <h3>{{financiera.finNombre}}</h3>
             </div>
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-xs-6">
                         <small class="stats-label">Adeudo Total</small>
-                        <h2>{{adeudoTotal | currency}}</h2>
+                        <h2>{{financiera.adeudoTotal | currency}}</h2>
                     </div>
                     <div class="col-xs-6">
                         <small class="stats-label">Intereses</small>
-                        <h2>{{totalInteresFinanciera | currency}}</h2>
+                        <h2>{{financiera.totalInteresFinanciera | currency}}</h2>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                 <div class="row">
                     <div class="col-xs-4">
                         <small class="stats-label">Unidades</small>
-                        <h4>{{unidadesFinanciera}}</h4>
+                        <h4>{{financiera.unidadesFinanciera}}</h4>
                     </div>
 
                     <div class="col-xs-4">
