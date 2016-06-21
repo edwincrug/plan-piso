@@ -30,12 +30,13 @@ registrationModule.factory('interestsRepository', function($http) {
                 method: "GET"
             });
         }, 
-        getInterestSucursal: function(empresa,sucursal) {
+        getInterestSucursal: function(empresa,sucursal,financiera) {
             return $http({
                 url: interestsURL + 'interestSucursal/',
                 method: "GET",
                  params: {empresa:empresa ,
-                          sucursal: sucursal
+                          sucursal: sucursal,
+                          financiera:financiera
                           },
                 headers: {
                 'Content-Type': 'application/json'
@@ -72,7 +73,19 @@ registrationModule.factory('interestsRepository', function($http) {
                 'Content-Type': 'application/json'
                 }
             });
+        },
+          getInterestFinanciera: function(empresa, financiera) {
+            return $http({
+                url: interestsURL + 'financialForUnit/',
+                method: "GET",
+                 params: {empresa: empresa,
+                         financiera:financiera},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
         }
+        
         
     };
 });
