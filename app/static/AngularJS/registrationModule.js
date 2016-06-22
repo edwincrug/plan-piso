@@ -12,7 +12,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         $routeProvider.when('/in', {
             templateUrl: 'AngularJS/Templates/example.html', //example 1
             controller: 'exampleController'
-        }).when('/', {
+        }).when('/interest', {
             templateUrl: 'AngularJS/Templates/interest.html',
             controller: 'interestsController'
         }).when('/freedays', {
@@ -33,6 +33,9 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         }).when('/interestDetails',{
             templateUrl: 'AngularJS/Templates/interestDetails.html',
             controller: 'interestsController'
+        }).when('/',{
+            templateUrl: 'AngularJS/Templates/login.html',
+            controller: 'loginController'
         });
 
         $locationProvider.html5Mode({

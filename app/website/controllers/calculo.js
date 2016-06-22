@@ -245,7 +245,6 @@ Calculo.prototype.get_financial = function (req, res, next) {
         });
     });
 };
-
 // Se optiene los detalles de las financieras por empresa
 Calculo.prototype.get_financialForUnit = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
@@ -266,4 +265,24 @@ Calculo.prototype.get_financialForUnit = function (req, res, next) {
         });
     });
 };
+Calculo.prototype.get_validaUsuario = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+    //asignación de valores mediante parámetros del request
+     var params = [{name: 'usuario', value: req.query.usuario, type: self.model.types.STRING},
+                  {name: 'password', value: req.query.password, type: self.model.types.STRING}];
+    this.model.query('SEL_VALIDA_USUARIO_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
 module.exports = Calculo;

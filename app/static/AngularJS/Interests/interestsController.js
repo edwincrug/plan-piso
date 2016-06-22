@@ -12,6 +12,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.getCompany();
                     $scope.seleccionarSucursal.show = false;
                     $scope.mostrarDetalles.show = false;
+                $scope.checkbox();
                 }
                 // Función para filtrar por empresa
             $scope.seleccionarEmpresa = function (empresa, nombre) {
@@ -500,5 +501,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 $scope.mostrarDetalles.show = true;
                 $scope.getFinancial.show = false;
             }
+            
+        $scope.checkbox =  (function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+   
+            
 
             });
