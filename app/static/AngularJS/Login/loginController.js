@@ -1,16 +1,17 @@
 registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository) {
     $scope.init = function () {
-          
+          $("nav").remove(".navbar");
+        console.log('ENTRA');
         }
+    
     
     
         $scope.getValidaUsuario = function () {
         $scope.promise = loginRepository.getValidaUsuario($scope.usuario, $scope.password).then(function (result) {
             if (result.data.length > 0) {
+                alertFactory.success("Bienvenido a Plan Piso"+ result.data[0].usuario);
                 $scope.login = result.data;
-                location.href = '/';
-                //$scope.diasGracia = result.data.diasGracia;
-                alertFactory.success("Datos Correctos");
+                location.href = '/interest';
             } else {
                 alertFactory.info("Datos Incorrectos");
             }
