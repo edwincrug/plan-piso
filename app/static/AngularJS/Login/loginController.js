@@ -1,11 +1,8 @@
 registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository) {
+    $scope.message = 'Buscando...';
     $scope.init = function () {
           $("nav").remove(".navbar");
-        console.log('ENTRA');
         }
-    
-    
-    
         $scope.getValidaUsuario = function () {
         $scope.promise = loginRepository.getValidaUsuario($scope.usuario, $scope.password).then(function (result) {
             if (result.data.length > 0) {
@@ -25,5 +22,4 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
             $scope.password = password;
              $scope.getValidaUsuario();
         }
-    
 });

@@ -168,7 +168,7 @@
                                 <i class="glyphicon glyphicon-sort"></i>
                             </div>
                             <div class="col-xs-1 text-right pointer">
-                                <h2 class="font-bold">90+</h2>
+                                <h2 class="font-bold">91+</h2>
                             </div>
                         </div>
                     </div>
@@ -198,7 +198,7 @@
                                          <!--th></th-->
                                     </tr>
                                 </thead>
-                                <tfoot ng-show="seleccionarSucursal.show">
+                                <!--tfoot ng-show="seleccionarSucursal.show">
                                     <tr>
                                        
                                         <th>VIN</th>
@@ -210,10 +210,10 @@
                                         <th>Interés al corte (Pagado)</th> 
                                         <th>Interés mes actual</th>    
                                         <th>Interés acumulado</th>
-                                        <!--th>Intereses por pagar</th-->
+                                        <!--th>Intereses por pagar</th>
                                         <th>Utilidad</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot-->
                                 <tbody>
                                     <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.vehNumserie)">
                                         <td>{{intereses.vehNumserie}}</td>
@@ -281,8 +281,8 @@
                         <h2><span class="glyphicon glyphicon-eye-open"></span> Datos Plan Piso</h2>
                         <br/> Fecha Ingreso:
                         <label>{{detailsUnit[0].vehFecrecibo}}</label>
-                        <br/>Días Gracia:
-                        <label>{{detailsUnit[0].diasGracia}}</label>
+                        <!--br/>Días Gracia:
+                        <label>{{detailsUnit[0].diasGracia}}</label-->
                         <br/> Esquema:
                         <label>{{detailsUnit[0].nombre}}</label>
                         <br/> Días Inventario:
