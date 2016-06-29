@@ -30,40 +30,40 @@ registrationModule.factory('interestsRepository', function($http) {
                 method: "GET"
             });
         }, 
-        getInterestSucursal: function(empresa,sucursal,financiera) {
+        getInterestSucursal: function(idEmpresa,idSucursal,idFinanciera) {
             return $http({
                 url: interestsURL + 'interestSucursal/',
                 method: "GET",
-                 params: {empresa:empresa ,
-                          sucursal: sucursal,
-                          financiera:financiera
+                 params: {idEmpresa:idEmpresa ,
+                          idSucursal: idSucursal,
+                          idFinanciera:idFinanciera
                           },
                 headers: {
                 'Content-Type': 'application/json'
                 }
             });
         },
-        getSucursal: function(nombreCorto) {
+        getSucursal: function(idEmpresa) {
             return $http({
                 url: interestsURL + 'sucursal/',
                 method: "GET",
-                 params: {nombreCorto: nombreCorto},
+                 params: {idEmpresa: idEmpresa },
                 headers: {
                 'Content-Type': 'application/json'
                 }
             });
         },
-        getFinancial: function(empresa) {
+        getFinancial: function(idEmpresa) {
             return $http({
                 url: interestsURL + 'financial/',
                 method: "GET",
-                 params: {empresa: empresa},
+                 params: {idEmpresa : idEmpresa },
                 headers: {
                 'Content-Type': 'application/json'
                 }
             });
         },
-        getFinancialForUnit: function(empresa,financiera) {
+        /*getFinancialForUnit: function(empresa,financiera) {
             return $http({
                 url: interestsURL + 'financialForUnit/',
                 method: "GET",
@@ -73,19 +73,17 @@ registrationModule.factory('interestsRepository', function($http) {
                 'Content-Type': 'application/json'
                 }
             });
-        },
-          getInterestFinanciera: function(empresa, financiera) {
+        },*/
+        getInterestFinanciera: function(idEmpresa, idFinanciera) {
             return $http({
                 url: interestsURL + 'financialForUnit/',
                 method: "GET",
-                 params: {empresa: empresa,
-                         financiera:financiera},
+                 params: {idEmpresa: idEmpresa,
+                         idFinanciera:idFinanciera},
                 headers: {
                 'Content-Type': 'application/json'
                 }
             });
-        }
-        
-        
+        }     
     };
 });

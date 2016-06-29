@@ -16,7 +16,6 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
             alertFactory.error("Datos no correctos");
         });
     }
-        
         $scope.login = function(usuario, password){
             $scope.usuario = usuario;
             $scope.password = password;

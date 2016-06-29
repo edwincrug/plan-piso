@@ -1,18 +1,98 @@
 registrationModule.controller('schemeController', function ($scope, alertFactory, schemeRepository) {
-    
+
     $scope.message = 'Buscando...';
-     //$scope.diasGracias = $scope.diasGracia ;
+    $scope.tasaFecha = '';
+    $scope.tasaRango = '';
+     $scope.esquema = [];
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
-            $scope.getScheme();
-            $scope.grafica(); 
+            $scope.getFinanciera();
+            $scope.getEsquemaFinanciera.show = false;
         }
-    // Metodo para obtiener todos los intereses
-    $scope.getScheme = function () {
-        $scope.promise = schemeRepository.getScheme().then(function (result) {
+        // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
+    $scope.seleccionarFinanciera = function (idFinanciera, nombreFinanciera) {
+            $scope.idFinanciera = idFinanciera;
+            $scope.nombreFinanciera = nombreFinanciera;
+            $scope.getEsquemaFinanciera();
+            $scope.getEsquemaFinanciera.show = true;
+        }
+        // Función para mostrar las financieras disponibles
+    $scope.getFinanciera = function () {
+        $scope.promise = schemeRepository.getFinanciera().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.financieras = result.data;
+                //$scope.diasGracia = result.data.diasGracia;
+                alertFactory.success("financieras cargados");
+            } else {
+                alertFactory.info("No se encontraron financieras");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar financieras");
+        });
+    }
+
+    // Funcion para llamar modal con detalles de esquemas
+    $scope.seleccionarEsquema = function (idEsquema, esFijo) {
+        $('#detallesEsquemas').appendTo("body").modal('show');
+        $scope.idEsquema = idEsquema;
+        $scope.esFijo = esFijo;
+        $scope.getDetalleEsquema();
+        $scope.nombreEsquema = '';
+        if ($scope.esFijo == 1) {
+            console.log($scope.esFijo);
+            $scope.nombreEsquema = 'Tasa por Fechas';
+            $scope.tasaRango.show = false;
+            $scope.tasaFecha.show = true;
+        } else {
+            $scope.nombreEsquema = 'Tasa por Rango';
+            $scope.tasaFecha.show = false;
+            $scope.tasaRango.show = true;
+            console.log($scope.esFijo);
+        }
+    }
+
+    $scope.tasaFecha = function () {
+
+    }
+    $scope.tasaRango = function () {
+
+    }
+
+    // Metodo para mostrar los esquemas por financiera
+    $scope.getEsquemaFinanciera = function () {
+        $('#esquemasFinanciera').DataTable().destroy();
+        $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinanciera).then(function (result) {
             if (result.data.length > 0) {
                 $scope.esquemas = result.data;
-                //$scope.diasGracia = result.data.diasGracia;
+                setTimeout(function () {
+                    $('#esquemasFinanciera').DataTable({
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , buttons: [{
+                                extend: 'copy'
+                            }, {
+                                extend: 'csv'
+                            }, {
+                                extend: 'excel'
+                                , title: 'ExampleFile'
+                            }, {
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
+                            }
+
+                            
+                            , {
+                                extend: 'print'
+                                , customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);
                 alertFactory.success("Esquemas cargados");
             } else {
                 alertFactory.info("No se encontraron Esquemas");
@@ -21,101 +101,80 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             alertFactory.error("Error al cargar Esquemas");
         });
     }
-    // Función para pintar los datos de la grafica
-    $scope.grafica = function () {
-         var d1 = [[1262304000000, 6], [1264982400000, 3057], [1267401600000, 20434], [1270080000000, 31982], [1272672000000, 26602], [1275350400000, 27826], [1277942400000, 24302]];
-         var d2 = [[1262304000000, 5], [1264982400000, 200], [1267401600000, 1605], [1270080000000, 6129], [1272672000000, 11643], [1275350400000, 19055], [1277942400000, 30062]];
-         var data1 = [
-            {
-                label: "Data 1"
-                , data: d1
-                , color: '#17a084'
+
+    // Función para mostrar detalles del esquema
+    $scope.getDetalleEsquema = function () {
+        $scope.promise = schemeRepository.getDetalleEsquema($scope.idEsquema, $scope.esFijo).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.detalleEsquema = result.data;
+                alertFactory.success("destalles cargados");
+            } else {
+                alertFactory.info("No se encontraron destalles");
             }
-            , {
-                label: "Data 2"
-                , data: d2
-                , color: '#127e68'
-            }
-            ];
-        $.plot($("#flot-chart1"), data1, {
-            xaxis: {
-                tickDecimals: 0
-            }
-            , series: {
-                lines: {
-                    show: true
-                    , fill: true
-                    , fillColor: {
-                        colors: [{
-                            opacity: 1
-                            }, {
-                            opacity: 1
-                            }]
-                    }
-                , }
-                , points: {
-                    width: 0.1
-                    , show: false
-                }
-            , }
-            , grid: {
-                show: false
-                , borderWidth: 0
-            }
-            , legend: {
-                show: false
-            , }
+        }, function (error) {
+            alertFactory.error("Error al cargar destalles");
         });
-         var lineData = {
-            labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"]
-            , datasets: [
-                {
-                    label: "Example dataset"
-                    , fillColor: "rgba(220,220,220,0.5)"
-                    , strokeColor: "rgba(220,220,220,1)"
-                    , pointColor: "rgba(220,220,220,1)"
-                    , pointStrokeColor: "#fff"
-                    , pointHighlightFill: "#fff"
-                    , pointHighlightStroke: "rgba(220,220,220,1)"
-                    , data:[15,10,35] // modificar para tener datos desde la base de datos
-                    }
-                , {
-                    label: "Example dataset"
-                    , fillColor: "rgba(26,179,148,0.5)"
-                    , strokeColor: "rgba(26,179,148,0.7)"
-                    , pointColor: "rgba(26,179,148,1)"
-                    , pointStrokeColor: "#fff"
-                    , pointHighlightFill: "#fff"
-                    , pointHighlightStroke: "rgba(26,179,148,1)"
-                    , data: [5,10,15]// modificar para tener datos desde la base de datos
-                    }
-                ]
-        };
-        var  lineOptions = {
-            scaleShowGridLines: true
-            , scaleGridLineColor: "rgba(0,0,0,.05)"
-            , scaleGridLineWidth: 1
-            , bezierCurve: true
-            , bezierCurveTension: 0.4
-            , pointDot: true
-            , pointDotRadius: 4
-            , pointDotStrokeWidth: 1
-            , pointHitDetectionRadius: 20
-            , datasetStroke: true
-            , datasetStrokeWidth: 2
-            , datasetFill: true
-            , responsive: true
-         };
-             var ctx = document.getElementById("lineChart").getContext("2d");
-             var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
-    };
+    }
+
     // Función para llamar la modal
-     $scope.inicia = function () {
-        $('#inicioModal').modal('show');
+    $scope.nuevoEsquema = function () {
+        $('#agregarNuevoEsquema').appendTo("body").modal('show');
+        $scope.calendario();
     };
     // Función para cerrar la modal
     $scope.cerrar = function () {
         $('#inicioModal').modal('toggle');
     };
-    
+    // Función para cargar calendario
+    $scope.calendario = function () {
+            $('#calendar .input-group.date').datepicker({
+                todayBtn: "linked"
+                , keyboardNavigation: true
+                , forceParse: false
+                , calendarWeeks: true
+                , autoclose: true
+                , todayHighlight: true
+            });
+        }
+        // Función para habilitar campos
+        /*$scope.tasaFecha = function(){
+            $scope.tasaRango.show = false;
+            $scope.tasaFecha.show = true;
+        }*/
+
+    $scope.insertEsquemas = function () {
+        $scope.esquema.push({
+            diasGracia: $scope.esquema.diasGracia
+            , plazo: $scope.esquema.plazo
+            , idFinanciera: $scope.idFinanciera
+            , nombre: $scope.esquema.nombre
+            , descripcion: $scope.esquema.descripcion
+            , esFijo: $scope.esquema.interesFecha
+            , tasaInteres: $scope.esquema.tasaInteres
+            , rango: $scope.esquema.rango
+            , precedencia:$scope.esquema.precedencia
+            , porcentajePenetracion: $scope.esquema.porcentajePenetracion
+            , idTiieTipo: $scope.esquema.idTiieTipo
+            , fechaInicio: $scope.esquema.fechaInicio
+            , fechaFin: $scope.esquema.fechaFin
+            , tiie: $scope.esquema.tiie
+        });
+        $scope.esquema.forEach(function (esquema, i) {
+            schemeRepository.insertEsquema(esquema.diasGracia, esquema.plazo, esquema.idFinanciera
+                , esquema.nombre, esquema.descripcion, esquema.esFijo
+                , esquema.tasaInteres, esquema.rango,esquema.precedencia, esquema.porcentajePenetracion
+                , esquema.idTiieTipo, esquema.fechaInicio, esquema.fechaFin
+                , esquema.tiie).then(function (result) {
+                //esquema.idEsquema = result.data[0].idEsquema;
+                if (result.data.length > 0) {
+                    consola.log('Hola');
+                    alertFactory.success("Esquema Agregado");
+                } else {
+                    alertFactory.info("Esquema No Agregado");
+                }
+            }, function (error) {
+                alertFactory.error("Error al guardar Esquema");
+            });
+        });
+    }
 });

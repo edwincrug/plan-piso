@@ -3,7 +3,7 @@
     <!--Dashboard Filtro Financiera-->
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>Empresa {{nombre}}</h2>
+            <h2>Empresa {{nombreEmpresa}}</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="/interest" ng-click="reloadPage()">Home</a>
@@ -11,10 +11,10 @@
                 <li class="active">
                     <strong>Intereses</strong>
                 </li>
-                <li class="active" ng-show="mostrarDetalles.show">
-                    <strong>{{financieraselected}}</strong>
+                <li class="active" ng-show="seleccionarFinanciera.show">
+                    <strong>{{nombreFinanciera}}</strong>
                 </li>
-                <li class="active" ng-show="mostrarDetalles.show">
+                <li class="active" ng-show="seleccionarFinanciera.show">
                     <strong>{{nombreSucursal}}</strong>
                 </li>
             </ol>
@@ -30,7 +30,7 @@
             <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Empresa <span class="caret"></span></button>
             <ul class="dropdown-menu">
                 <li ng-repeat="empresa in empresas">
-                    <a href="#" ng-click="seleccionarEmpresa(empresa.emp_nombrecto, empresa.emp_nombre)">{{empresa.emp_nombre}}</a>
+                    <a href="#" ng-click="seleccionarEmpresa(empresa.idEmpresa, empresa.nombre)">{{empresa.nombre}}</a>
                 </li>
             </ul>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -38,7 +38,7 @@
             <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Sucursal <span class="caret"></span></button>
             <ul class="dropdown-menu col-xs-1 col-sm-2">
                 <li ng-repeat="sucursales in sucursales">
-                    <a href="#" ng-click="seleccionarSucursal(sucursales.catsuc_nombrecto,sucursales.catemp_nombrecto,sucursales.nombre_sucursal)">{{sucursales.nombre_sucursal}}</a>
+                    <a href="#" ng-click="seleccionarSucursal(sucursales.idSucursal,sucursales.nombreSucursal)">{{sucursales.nombreSucursal}}</a>
                 </li>
             </ul>
         </div>
@@ -46,21 +46,21 @@
     <br/>
     <!--Fin DropDownList-->
     <!--Inico Dashboard Financiera-->
-    <div id="financieraee" class="col-lg-4 pointer" ng-repeat="financiera in financierasNombre" ng-show="getFinancial.show">
-        <div class="ibox float-e-margins" ng-click="mostrarDetalles(financiera.finNombre)">
+    <div id="financieraee" class="col-lg-4 pointer" ng-repeat="financiera in financieras" ng-show="getFinancial.show">
+        <div class="ibox float-e-margins" ng-click="seleccionarFinanciera(financiera.idFinanciera,financiera.financiera)">
             <div class="ibox-title">
                 <span class="label label-warning pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
-                <h3>{{financiera.finNombre}}</h3>
+                <h3>{{financiera.financiera}}</h3>
             </div>
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-xs-6">
                         <small class="stats-label">Adeudo Total</small>
-                        <h2>{{financiera.adeudoTotal | currency}}</h2>
+                        <h2>{{financiera.adeudo | currency}}</h2>
                     </div>
                     <div class="col-xs-6">
                         <small class="stats-label">Intereses</small>
-                        <h2>{{financiera.totalInteresFinanciera | currency}}</h2>
+                        <h2>{{financiera.interes | currency}}</h2>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-xs-4">
                         <small class="stats-label">Unidades</small>
-                        <h4>{{financiera.unidadesFinanciera}}</h4>
+                        <h4>{{financiera.unidades}}</h4>
                     </div>
                 </div>
             </div>
@@ -76,172 +76,158 @@
     </div>
     <!--Fin Dashboard Financiera-->
     <!--Dashboards-->
-    <div class="" ng-show="mostrarDetalles.show">
-    <div class="col-lg-12">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-success pull-right"></span>
-                        <h5>Interés Pagado</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{interesmespasado  | currency }}</h1>
-                        <small>Unidades: {{unidades}}</small>
-                        <br/>
-                        <!--small><a ng-click="getTotalInterest()">Ver detalles</a></small-->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-warning pull-right">HOY</span>
-                        <h5>Interés Mes Actual</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{interesActual | currency}}</h1>
-                        <br/>
-                        <!--small><a ng-click="getAlmostEndingInterest()">Ver detalles</a></small-->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-danger pull-right">HOY</span>
-                        <h5>Interés Acumulado</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">{{interesTotal | currency}}</h1>
-                        <br/>
-                        <!--small><a ng-click="getEndingInterest()">Ver detalles</a></small-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Fin Dashboard-->
-    <div ng-show="seleccionarSucursal.show">
-    <div class="col-lg-8">
-    </div>
-    <div class="col-lg-1" >
-                    <div class="widget style1 lazur-bg pointer" ng-click="set30days()" style="padding: 5px 5px">
-                        <div class="row vertical-align">
-                            <div class="col-xs-1">
-                                <i class="glyphicon glyphicon-sort"></i>
-                            </div>
-                            <div class="col-xs-1 text-right">
-                                <h2 class="font-bold">30</h2>
-                            </div>
+    <div class="" ng-show="seleccionarFinanciera.show">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-success pull-right"></span>
+                            <h5>Interés Pagado</h5>
                         </div>
-                    </div> 
-                </div>
-                  <div class="col-lg-1">
-                    <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set60days()">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort "></i>
-                            </div>
-                            <div class="col-xs-1 text-right pointer">
-                                <h2 class="font-bold">60</h2>
-                            </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">{{interesmespasado  | currency }}</h1>
+                            <small>Unidades: {{unidades}}</small>
+                            <br/>
                         </div>
                     </div>
                 </div>
-                  <div class="col-lg-1 pointer">
-                    <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set90days()">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort"></i>
-                            </div>
-                            <div class="col-xs-1 text-right">
-                                <h2 class="font-bold">90</h2>
-                            </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-warning pull-right">HOY</span>
+                            <h5>Interés Mes Actual</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">{{interesActual | currency}}</h1>
+                            <br/>
                         </div>
                     </div>
-                </div>  
-                <div class="col-lg-1">
-                    <div class="widget style1 lazur-bg" style="padding: 5px 0px" ng-click="set90Masdays()">
-                        <div class="row vertical-align">
-                            <div class="col-xs-3">
-                                <i class="glyphicon glyphicon-sort"></i>
-                            </div>
-                            <div class="col-xs-1 text-right pointer">
-                                <h2 class="font-bold">91+</h2>
-                            </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-danger pull-right">HOY</span>
+                            <h5>Interés Acumulado</h5>
                         </div>
-                    </div>
-                </div>   
-    </div>
-    <!--Tabla-->
-    <!--Boton para mostrar traspasos-->
-    <div class="wrapper wrapper-content">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table id="interestTable" class="table table-striped" >
-                                <thead>
-                                    <tr>
-                                        <th>VIN</th>
-                                        <th>Marca</th>
-                                        <th>Modelo</th>
-                                        <th>Días financiamiento </th>
-                                        <th>Precio compra</th>
-                                        <th>Precio venta</th>
-                                        <th>Interés al corte (Pagado)</th> 
-                                        <th>Interés mes actual</th>    
-                                        <th>Interés acumulado</th>
-                                        <th>Utilidad</th>
-                                         <!--th></th-->
-                                    </tr>
-                                </thead>
-                                <!--tfoot ng-show="seleccionarSucursal.show">
-                                    <tr>
-                                       
-                                        <th>VIN</th>
-                                        <th>Marca</th>
-                                        <th>Modelo</th>
-                                        <th>Días</th>
-                                        <th>Precio compra</th>
-                                        <th>Precio venta</th>
-                                        <th>Interés al corte (Pagado)</th> 
-                                        <th>Interés mes actual</th>    
-                                        <th>Interés acumulado</th>
-                                        <!--th>Intereses por pagar</th>
-                                        <th>Utilidad</th>
-                                    </tr>
-                                </tfoot-->
-                                <tbody>
-                                    <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.vehNumserie)">
-                                        <td>{{intereses.vehNumserie}}</td>
-                                        <td>{{intereses.marca}}</td>
-                                        <td>{{intereses.modelo}}</td>
-                                        <td ng-class="setClassDias(intereses.diasPlanPiso)">{{intereses.diasPlanPiso}}</td>
-                                        <td>{{intereses.precioCompra | currency}}</td>
-                                        <td>{{intereses.precioVenta | currency}}</td>
-                                        <td>{{intereses.interesAcumulado | currency}}</td>
-                                        <td>{{intereses.interesAcumuladoActual | currency}}</td>
-                                        <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual  | currency}}</td>
-                                        <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
-                                        <!--td><input type="checkbox" class="i-checks" name="input[]"></td-->
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">{{interesTotal | currency}}</h1>
+                            <br/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-               <!--button class="btn btn-primary">Transpaso de Financiera</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="btn btn-primary">Transpaso de Financiera</button-->
+        <!--Fin Dashboard-->
+        <div ng-show="seleccionarSucursal.show">
+            <div class="col-lg-8">
+            </div>
+            <div class="col-lg-1">
+                <div class="widget style1 lazur-bg pointer" ng-click="set30days()" style="padding: 5px 5px">
+                    <div class="row vertical-align">
+                        <div class="col-xs-1">
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </div>
+                        <div class="col-xs-1 text-right">
+                            <h2 class="font-bold">30</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set60days()">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="glyphicon glyphicon-sort "></i>
+                        </div>
+                        <div class="col-xs-1 text-right pointer">
+                            <h2 class="font-bold">60</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 pointer">
+                <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set90days()">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </div>
+                        <div class="col-xs-1 text-right">
+                            <h2 class="font-bold">90</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <div class="widget style1 lazur-bg" style="padding: 5px 0px" ng-click="set90Masdays()">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </div>
+                        <div class="col-xs-1 text-right pointer">
+                            <h2 class="font-bold">91+</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Tabla-->
+        <!--Boton para mostrar traspasos-->
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table id="interestTable" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>VIN</th>
+                                            <th>Marca</th>
+                                            <th>Modelo</th>
+                                            <th>Días financiamiento </th>
+                                            <th>Precio compra</th>
+                                            <th>Precio venta</th>
+                                            <th>Interés al corte (Pagado)</th>
+                                            <th>Interés mes actual</th>
+                                            <th>Interés acumulado</th>
+                                            <th>Utilidad</th>
+                                            <th ng-show="modalTraspasoFinanciera.show"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.vehNumserie)">
+                                            <td>{{intereses.vehNumserie}}</td>
+                                            <td>{{intereses.marca}}</td>
+                                            <td>{{intereses.modelo}}</td>
+                                            <td ng-class="setClassDias(intereses.diasPlanPiso)">{{intereses.diasPlanPiso}}</td>
+                                            <td>{{intereses.precioCompra | currency}}</td>
+                                            <td>{{intereses.precioVenta | currency}}</td>
+                                            <td>{{intereses.interesAcumulado | currency}}</td>
+                                            <td>{{intereses.interesAcumuladoActual | currency}}</td>
+                                            <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual | currency}}</td>
+                                            <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
+                                            <td ng-show="modalTraspasoFinanciera.show">
+                                                <input type="checkbox" class="i-checks" name="input[]" ng-model="idUnidad">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-primary" ng-show="transpasoFinanciera.show" ng-click="transpasoFinanciera()">Transpaso de Financiera</button>
+                            <button class="btn btn-success" ng-show="modalTraspasoFinanciera.show" ng-click="cancelarTranspasoModal()">Cancelar</button>
+                            <button class="btn btn-warning" ng-click="modalTraspasoFinanciera()" ng-show="modalTraspasoFinanciera.show">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--button class="btn btn-primary">Transpaso de Financiera</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button class="btn btn-primary">Transpaso de Financiera</button-->
+        </div>
+        <!--Fin Tabla-->
     </div>
-    <!--Fin Tabla-->
 </div>
-</div>
-<!--Modal-->
-<div class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true">
+<!--Modal Detalle Unidades-->
+<strong><div class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
             <div class="modal-header" style="padding:20px 20px;">
@@ -330,6 +316,146 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn  btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div></strong>
+<!--Fin Modal-->
+<!--Modal Transpaso Financiera-->
+<strong><div class="modal inmodal fade " id="transpasoFinancieroModal" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated flipInY">
+            <div class="modal-body">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h2>Transferir Unidades</h2>
+                    </div>
+                </div>
+                <!--div class="ibox-content"-->
+                    <p>
+                        Configuración para el cambio de financiera
+                    </p>
+                    <div id="wizard">
+                        <h1>Financiera</h1>
+                        <div class="step-content">
+                            <div class="text-center m-t-md">
+                                <h3>Seleccionar la financiera</h3>
+    <div id="financieraee" class="col-lg-4 pointer" ng-repeat="financiera in financierasNombre" ng-click="seleccionarFinanciera(financiera.finNombre)">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <span class="label label-warning pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
+                <h3>{{financiera.finNombre}}</h3>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <small class="stats-label">Adeudo Total</small>
+                        <h2>{{financiera.adeudoTotal | currency}}</h2>
+                    </div>
+                    <!--div class="col-xs-6">
+                        <small class="stats-label">Intereses</small>
+                        <h2>{{financiera.totalInteresFinanciera | currency}}</h2>
+                    </div-->
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <small class="stats-label">Unidades</small>
+                        <h4>{{financiera.unidadesFinanciera}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                            </div>
+                        </div>
+                        <h1>Esquema</h1>
+                        <div class="step-content">
+                            <div class="text-center m-t-md">
+                                <h3>Seleccionar la esquema</h3>
+                                <div>
+                                <div class="col-lg-10 col-sm-2">
+                                </div>
+                                <div class="input-group col-xs-2 col-sm-2">
+                                    <button class="btn btn-primary btn-xs" ng-click="modalAgregarNuevoEsquemas()">Agregar</button>
+                                </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
+                                        <thead>
+                                    <tr>
+                                        <th>N° Esquema</th>
+                                        <th>Días gracia</th>
+                                        <th>Plazo</th>
+                                        <th>Financiera</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="esquema in esquemas">
+                                        <td>{{esquema.idEsquema}}</td>
+                                        <td>{{esquema.diasGracia}}</td>
+                                        <td>{{esquema.plazo}}</td>
+                                        <td>{{esquema.nombre}}</td>
+                                        <td><input type="checkbox" class="i-checks" name="input[]"></td>
+                                    </tr>
+                                </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <h1>Finalizar</h1>
+                        <div class="step-content">
+                            <div class="text-center m-t-md">
+                                <h3>Detalles</h3>
+                                <p>
+                                    This is last content.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                <!--/div-->
+                 <button class="btn btn-primary btn-xs" ng-click="modalAgregarNuevoEsquemas()">Agregar</button>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn  btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div></strong>
+<!--Fin Modal-->
+
+<!-- Modal Cambiar Esquema-->
+<div id="modalAgregarNuevoEsquema" class="modal inmodal fade " href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated flipInY">
+            <div class="modal-body">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h2>Nuevo Esquema</h2>
+                    </div>
+                </div>
+                <!--form class="form-signin"-->
+                Taza interés:
+                <input type="text" id="txtPlazo" class="form-control col-md-2" placeholder="Taza interés">
+                <br/> Rango:
+                <input type="text" id="txtMonto" class="form-control col-md-2" placeholder="Rango">
+                <br> Precedencia:
+                <input type="text" id="txtMonto" class="form-control col-md-2" placeholder="Precedencia">
+                <br> Porcentaje P:
+                <input type="text" id="txtMonto" class="form-control col-md-2" placeholder="Porcentaje P">
+                <br> Tipo Tiie:
+                <input type="text" id="txtMonto" class="form-control col-md-2" placeholder="Tipo Tiie">
+                <!--/form-->
+                <br/>
+                <button class="btn btn-primary" ng-click="">Guardar</button>
+                <button class="btn btn-info" ng-click="cerrar()">Cancelar</button>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn  btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
