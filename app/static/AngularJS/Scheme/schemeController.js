@@ -142,18 +142,37 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             $scope.tasaFecha.show = true;
         }*/
 
+
+
+$scope.clearControls = function (){
+                $scope.esquema.diasGracia = null;
+                $scope.esquema.plazo = null;
+                $scope.idFinanciera = null;
+                $scope.esquema.nombre = null;
+                $scope.esquema.descripcion = null;
+                $scope.checked = false;
+                $scope.esquema.tasaInteres = null;
+                $scope.esquema.rango = null;
+                $scope.esquema.precedencia = null;
+                $scope.esquema.porcentajePenetracion = null;
+                $scope.esquema.idTiieTipo = null;
+                $scope.esquema.fechaInicio = null;
+                $scope.esquema.fechaFin = null;
+                $scope.esquema.tiie = null;
+
+
+};
+
+
     $scope.insertEsquemas = function () {
-
-        console.log('PARTE PARA INSERTAR');
-
-                        
+     
                 schemeRepository.insertEsquema( 
                 $scope.esquema.diasGracia,
                 $scope.esquema.plazo,
                 $scope.idFinanciera,
                 $scope.esquema.nombre,
                 $scope.esquema.descripcion,
-                $scope.esquema.interesFecha,
+                $scope.checked,
                 $scope.esquema.tasaInteres,
                 $scope.esquema.rango,
                 $scope.esquema.precedencia,
@@ -165,11 +184,9 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             ).then(function (result)
                  {
 
-                    console.log(result);
-                //esquema.idEsquema = result.data[0].idEsquema;
-                if (result.data.length > 0) {
-                    console.log('pasa por aqui');
+                if (result.data.length > 0) {                    
                     alertFactory.success("Esquema Agregado");
+                    $scope.clearControls();
                 } else {
                     alertFactory.info("Esquema No Agregado");
                 }
