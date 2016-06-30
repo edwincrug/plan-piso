@@ -53,30 +53,19 @@ registrationModule.factory('interestsRepository', function($http) {
                 }
             });
         },
-        getFinancial: function(idEmpresa) {
+        getFinancieraSelect: function(idEmpresa) {
             return $http({
-                url: interestsURL + 'financial/',
+                url: interestsURL + 'financieraselect/',
                 method: "GET",
-                 params: {idEmpresa : idEmpresa },
+                params: {idEmpresa: idEmpresa },
                 headers: {
                 'Content-Type': 'application/json'
                 }
             });
         },
-        /*getFinancialForUnit: function(empresa,financiera) {
-            return $http({
-                url: interestsURL + 'financialForUnit/',
-                method: "GET",
-                 params: {empresa: empresa,
-                         financiera:financiera},
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            });
-        },*/
         getInterestFinanciera: function(idEmpresa, idFinanciera) {
             return $http({
-                url: interestsURL + 'financialForUnit/',
+                url: interestsURL + 'interestfinanciera/',
                 method: "GET",
                  params: {idEmpresa: idEmpresa,
                          idFinanciera:idFinanciera},
@@ -87,3 +76,5 @@ registrationModule.factory('interestsRepository', function($http) {
         }     
     };
 });
+
+

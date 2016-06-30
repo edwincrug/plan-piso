@@ -190,13 +190,13 @@ Calculo.prototype.get_interestsucursal = function (req, res, next) {
     //Ejemplo: ?p1=a&p2=b
     //Retorna {p1:'a',p2:'b'}
     //Objeto que envía los parámetros
-    //var params = [];
+    var params = [];
     //Referencia a la clase para callback
     var self = this;
     //asignación de valores mediante parámetros del request
-     var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING},
-                   {name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.STRING},
-                   {name: 'idFinanciera', value: req.query.idFinanciera, type: self.model.types.STRING}
+     var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT},
+                   {name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT},
+                   {name: 'idFinanciera', value: req.query.idFinanciera, type: self.model.types.INT}
                   ];
     this.model.query('SEL_INTERES_SUCURSAL_SP', params, function (error, result) {
         self.view.expositor(res, {
@@ -205,28 +205,9 @@ Calculo.prototype.get_interestsucursal = function (req, res, next) {
         });
     });
 };
-//se optione los intereses Cambiada
-Calculo.prototype.get_interestFinanciera = function (req, res, next) {
-    //Con req.query se obtienen los parametros de la url
-    //Ejemplo: ?p1=a&p2=b
-    //Retorna {p1:'a',p2:'b'}
-    //Objeto que envía los parámetros
-    //var params = [];
-    //Referencia a la clase para callback
-    var self = this;
-    //asignación de valores mediante parámetros del request
-     var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT},
-                   {name: 'idFinanciera', value: req.query.idFinanciera, type: self.model.types.INT}
-                  ];
-    this.model.query('SEL_INTERES_FINANCIERA_SP', params, function (error, result) {
-        self.view.expositor(res, {
-            error: error,
-            result: result
-        });
-    });
-};
+
 // Mostrar financieras por empresa Cambiada
-Calculo.prototype.get_financial = function (req, res, next) {
+Calculo.prototype.get_financieraselect = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
     //Retorna {p1:'a',p2:'b'}
@@ -234,10 +215,8 @@ Calculo.prototype.get_financial = function (req, res, next) {
     //var params = [];
     //Referencia a la clase para callback
     var self = this;
-
     //asignación de valores mediante parámetros del request
-    var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
-
+     var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
     this.model.query('SEL_RESUMEN_FINANCIERA_SP', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
@@ -245,8 +224,9 @@ Calculo.prototype.get_financial = function (req, res, next) {
         });
     });
 };
+
 // Se optiene los detalles de las financieras por empresa
-/*Calculo.prototype.get_financialForUnit = function (req, res, next) {
+Calculo.prototype.get_interestfinanciera = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
     //Retorna {p1:'a',p2:'b'}
@@ -255,16 +235,20 @@ Calculo.prototype.get_financial = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //asignación de valores mediante parámetros del request
-     var params = [{name: 'empresa', value: req.query.empresa , type: self.model.types.STRING},
-                   {name: 'financiera', value: req.query.financiera, type: self.model.types.STRING}
+     var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING},
+                   {name: 'idFinanciera', value: req.query.idFinanciera, type: self.model.types.STRING}
                   ];
-    this.model.query('SEL_INTEREST_FINANCIERA_SP', params, function (error, result) {
+    console.log(params)
+    this.model.query('SEL_INTERES_FINANCIERA_SP', params, function (error, result) {
+        console.log(error, result)
         self.view.expositor(res, {
             error: error,
             result: result
         });
     });
-};*/
+};
+
+
 Calculo.prototype.get_validaUsuario = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -343,16 +327,18 @@ Calculo.prototype.post_insertesquema = function(req, res, next){
                   {name: 'precedencia', value: req.body.precedencia, type: self.model.types.DECIMAL},
                   {name: 'porcentajePenetracion', value: req.body.porcentajePenetracion, type: self.model.types.DECIMAL},
                   {name: 'idTiieTipo', value: req.body.idTiieTipo, type: self.model.types.INT},
-                  {name: 'fechaInicio', value: req.body.fechaInicio, type: self.model.types.DATE},
-                  {name: 'fechaFin', value: req.body.fechaFin, type: self.model.types.DATE},
-                  {name: 'tiie', value: req.body.tiie, type: self.model.types.INT}
+                  {name: 'fechaInicio', value: req.body.fechaInicio, type: self.model.types.STRING},
+                  {name: 'fechaFin', value: req.body.fechaFin, type: self.model.types.STRING},
+                  {name: 'tiie', value: req.body.tiie, type: self.model.types.INT},
+                  {name: 'idEsquema', value: req.body.idEsquema, type: self.model.types.INT}
                  ];
-	
  this.model.post('INS_ESQUEMA_SP', params, function (error, result) {
         //Callback
-     error: error;
-    result: result;
-        self.view.expositor(res, object); 
+     console.log(result, error)
+     self.view.expositor(res, {
+           error: error,
+           result: result
+       });
  });
 } 
 
