@@ -267,9 +267,9 @@
                         <h2><span class="glyphicon glyphicon-eye-open"></span> Datos Plan Piso</h2>
                         <br/> Fecha Ingreso:
                         <label>{{detailsUnit[0].vehFecrecibo}}</label>
-                        <!--br/>Días Gracia:
-                        <label>{{detailsUnit[0].diasGracia}}</label-->
-                        <br/> Esquema:
+                        <br/>Esquema:
+                        <label>{{detailsUnit[0].idEsquema}}</label>
+                        <br/> Nombre Esquema:
                         <label>{{detailsUnit[0].nombre}}</label>
                         <br/> Días Inventario:
                         <label>{{detailsUnit[0].diasInventa}}</label>
@@ -327,14 +327,13 @@
 <!--Fin Modal-->
 <!--Modal Transpaso Financiera-->
 <strong><div class="modal inmodal fade " id="transpasoCambioEsquema" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
+       <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
-            <div class="modal-body">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h2>Actualizar Esquema - {{nombreFinanciera}}</h2>
-                    </div>
-                </div>
+            <div class="modal-header" style="padding:20px 20px;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h1>Actualizar Esquema - {{nombreFinanciera}}</h1>
+            </div>
+                <div class="modal-body">
                 <div ng-show="idEsquemaNuevo.show">
                 <h2>Seleccione el nuevo esquema</h2>
                 <div class="table-responsive" >

@@ -323,7 +323,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.inicia = function (vehNumserie) {
         $('#DetallesUnidadModal').appendTo("body").modal('show');
         $scope.vehNumserie = vehNumserie;
-        //$scope.getDetailsUnit();
+        $scope.getDetailsUnit();
         //$scope.detailsUnit = $scope.detailsUnit;
     }
 
@@ -333,13 +333,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
 
     // Función para traer detalles de las unidades
-    /*$scope.getDetailsUnit = function () {
+    $scope.getDetailsUnit = function () {
         $scope.promise = interestsRepository.getDetailsUnit($scope.vehNumserie).then(function (result) {
-            if (result.data.length > 0) {f
+            if (result.data.length > 0) {
                 $scope.detailsUnit = result.data;
             }
         });
-    }*/
+    }
 
     //Estilo de checkbox
     $scope.checkbox = (function () {
@@ -520,20 +520,26 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         });
     }
     
-  $scope.idEsquemaNuevo = function(idEsquema){
+  $scope.idEsquemaNuevo = function(idEsquema,nombre){
       $scope.idESquemaNueva = idEsquema;
-      console.log(idEsquema, 'hola');
+      $scope.nombreEsquemaNueva = nombre;
+      console.log(idEsquema, 'hola',$scope.nombreEsquemaNueva);
   }
    
   $scope.hacerCambioEsquema = function(){
       $scope.idEsquemaNuevo.show = false;
       $scope.hacerCambioEsquema.show = true;
+     $('input[type=checkbox]').attr('checked',false);
+      $scope.modalTraspasoFinanciera.show = false;
+      $scope.transpasoFinanciera.show = true;
       $scope.updateScheme();
   }
         // Función para mostrar la modal del wizard de transpaso de financiera
     $scope.transpasoFinanciera = function () {
         $scope.modalTraspasoFinanciera.show = true;
         $scope.transpasoFinanciera.show = false;
+        $scope.updateEsquemaUnidad = [];
+        $scope.idESquemaNueva = 0;
     }
 
     // Función para mostrar botones de modal de transpasos
