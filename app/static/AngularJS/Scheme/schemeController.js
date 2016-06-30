@@ -143,31 +143,32 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
         }*/
 
     $scope.insertEsquemas = function () {
-        $scope.esquema.push({
-            diasGracia: $scope.esquema.diasGracia
-            , plazo: $scope.esquema.plazo
-            , idFinanciera: $scope.idFinanciera
-            , nombre: $scope.esquema.nombre
-            , descripcion: $scope.esquema.descripcion
-            , esFijo: $scope.esquema.interesFecha
-            , tasaInteres: $scope.esquema.tasaInteres
-            , rango: $scope.esquema.rango
-            , precedencia:$scope.esquema.precedencia
-            , porcentajePenetracion: $scope.esquema.porcentajePenetracion
-            , idTiieTipo: $scope.esquema.idTiieTipo
-            , fechaInicio: $scope.esquema.fechaInicio
-            , fechaFin: $scope.esquema.fechaFin
-            , tiie: $scope.esquema.tiie
-        });
-        $scope.esquema.forEach(function (esquema, i) {
-            schemeRepository.insertEsquema(esquema.diasGracia, esquema.plazo, esquema.idFinanciera
-                , esquema.nombre, esquema.descripcion, esquema.esFijo
-                , esquema.tasaInteres, esquema.rango,esquema.precedencia, esquema.porcentajePenetracion
-                , esquema.idTiieTipo, esquema.fechaInicio, esquema.fechaFin
-                , esquema.tiie).then(function (result) {
+
+        console.log('PARTE PARA INSERTAR');
+
+                        
+                schemeRepository.insertEsquema( 
+                $scope.esquema.diasGracia,
+                $scope.esquema.plazo,
+                $scope.idFinanciera,
+                $scope.esquema.nombre,
+                $scope.esquema.descripcion,
+                $scope.esquema.interesFecha,
+                $scope.esquema.tasaInteres,
+                $scope.esquema.rango,
+                $scope.esquema.precedencia,
+                $scope.esquema.porcentajePenetracion,
+                $scope.esquema.idTiieTipo,
+                $scope.esquema.fechaInicio,
+                $scope.esquema.fechaFin,
+                $scope.esquema.tiie
+            ).then(function (result)
+                 {
+
+                    console.log(result);
                 //esquema.idEsquema = result.data[0].idEsquema;
                 if (result.data.length > 0) {
-                    consola.log('Hola');
+                    console.log('pasa por aqui');
                     alertFactory.success("Esquema Agregado");
                 } else {
                     alertFactory.info("Esquema No Agregado");
@@ -175,6 +176,10 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             }, function (error) {
                 alertFactory.error("Error al guardar Esquema");
             });
-        });
-    }
+
+    };
+
+
+
+
 });

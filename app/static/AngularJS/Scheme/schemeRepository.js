@@ -37,21 +37,39 @@ registrationModule.factory('schemeRepository', function($http) {
             });
         },
 
-        insertEsquema: function(diasGracia,plazo,idFinanciera,nombre,descripcion,esFijo,tasaInteres,rango,precedencia,porcentajePenetracion
-                                ,idTiieTipo,fechaInicio,fechaFin,tiie) {
-            var esquema ={
-                diasGracia:diasGracia,
-                plazo:plazo, 
-                idFinanciera:idFinanciera
-                , nombre:nombre, descripcion:descripcion, esFijo:esFijo
-                , tasaInteres:tasaInteres, rango:rango,precedencia:precedencia, porcentajePenetracion:porcentajePenetracion
-                , idTiieTipo:idTiieTipo, fechaInicio:fechaInicio, fechaFin:fechaFin
-                , tiie:tiie
-            }
+        insertEsquema: function(diasGracia,
+                                plazo,
+                                idFinanciera,
+                                nombre,
+                                descripcion,
+                                interesFecha,
+                                tasaInteres,
+                                rango,
+                                precedencia,
+                                porcentajePenetracion,
+                                idTiieTipo,
+                                fechaInicio,
+                                fechaFin,
+                                tiie) {
+    
             return $http({
                 url: schemeURL + 'insertesquema/',
                 method: "POST",
-                 data: esquema,
+                    data: 
+                            {diasGracia:diasGracia,
+                            plazo:plazo,
+                            idFinanciera:idFinanciera,
+                            nombre:nombre,
+                            descripcion:descripcion,
+                            interesFecha:interesFecha,
+                            tasaInteres:tasaInteres,
+                            rango:rango,
+                            precedencia:precedencia,
+                            porcentajePenetracion:porcentajePenetracion,
+                            idTiieTipo:idTiieTipo,
+                            fechaInicio:fechaInicio,
+                            fechaFin:fechaFin,
+                            tiie:tiie},
                 headers: {
                 'Content-Type': 'application/json'
                 }

@@ -125,156 +125,164 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h1>Agregar Nuevo Esquema</h1>
             </div>
-            <div class="modal-body">
-                        <!--div class="row"-->
+
+
+                <div class="modal-body">
+
+
+                    <div class="row">
                             
-                                  <div class="col-md-4">
-                                   <div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Días Gracia</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.diasGracia" placeholder="Días Gracia">
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="col-sm-6">
+                                    
                                     <div>
                                         <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Plazo</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.plazo" placeholder="Plazo">
-                                            </div>
+                                        <label for="eDiasGracia">Días Gracia:</label>
+                                        <input type="text" class="form-control" id="eDiasGracia" 
+                                        ng-model="esquema.diasGracia" placeholder="Días Gracia">
                                         </div>
-                                    </div>
-                                    <div>
+
                                         <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Nombre</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.nombre" placeholder="Nombre">
-                                            </div>
+                                        <label for="ePlazo">Plazo:</label>
+                                        <input type="text" class="form-control" id="ePlazo" 
+                                        ng-model="esquema.plazo" placeholder="Plazo">
                                         </div>
-                                    </div>
-                                    <div>
+
                                         <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Descripción</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.descripcion" placeholder="Descripción">
-                                            </div>
+                                        <label for="eNombre">Nombre:</label>
+                                        <input type="text" class="form-control" id="eNombre"
+                                         ng-model="esquema.nombre" placeholder="Nombre">
                                         </div>
-                                    </div>
-                                    <div>
+
                                         <div class="form-group">
-                                            <label >Intereses por Fecha</label>
-                                            <div class="input-group">
-                                                <input type="checkbox" class="i-checks" name="input[]" ng-model="esquema.interesFecha" ng-click="tasaFecha()" data-off="success">
-                                            </div>
+                                        <label for="eDescripcion">Descripción:</label>
+                                        <input type="text" class="form-control" id="eDescripcion" 
+                                        ng-model="esquema.descripcion" placeholder="Descripción">
                                         </div>
-                                    </div>
-                                </div>
-                                   <div class="col-md-4">
-                                    <div>
+
                                         <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Tasa Intéres</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.tasaInteres" placeholder="Tasa Intéres">
-                                                <div class="input-group-addon">%</div>
-                                            </div>
-                                        </div>
+                                        <input type="checkbox" ng-model="checked" ng-init="checked=false">Intereses por Fecha</input>
+                                        </div>                                            
                                     </div>
-                                    <div>
-                                        <label class="font-noraml">Fecha Inicio</label>
-                                        <div class="form-group" id="calendar">
+
+                            </div>
+
+                            <div class="col-sm-6">
+
+                                      <div ng-show="checked">
+                                            <div class="form-group">
+                                            <label for="fTasa">Tasa Intéres:</label>
+                                            <div class="input-group">                                            
+                                            <input type="text" class="form-control" id="fTasa" 
+                                            ng-model="esquema.tasaInteres" placeholder="Tasa Intéres">
+                                            <div class="input-group-addon">%</div>
+                                            </div>
+                                            </div>
+
+                                            <div class="form-group" id="calendar">
+                                            <label for="fInicio">Fecha Inicio:</label>                                                
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input type="text" class="form-control" ng-model="esquema.fechaInicio" value={{fechaInicio}} style="width:150px">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" class="form-control" id="fInicio" 
+                                            ng-model="esquema.fechaInicio" value={{fechaInicio}} >
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="font-noraml">Fecha Fin</label>
-                                        <div class="form-group" id="calendar">
+                                            </div>
+
+
+                                            <div class="form-group" id="calendar">
+                                                <label for="fFin">Fecha Fin:</label>
                                             <div class="input-group date">
-                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                <input type="text" class="form-control" ng-model="esquema.fechaFin" value={{fechaFin}} style="width:150px">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" class="form-control" id="fFin" 
+                                            ng-model="esquema.fechaFin" value={{fechaFin}} >
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Tiie</label>
+                                            </div>
+
+
+                                            <div class="form-group">                    
+                                            <label for="fTiie">Tiie:</label>                        
                                             <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.tiie" placeholder="Tiie">
+                                            <input type="text" class="form-control" id="fTiie" 
+                                            ng-model="esquema.tiie" placeholder="Tiie">
+                                            <div class="input-group-addon">%</div>
+                                            </div>
+                                            </div>
+
+
+                                            <div class="form-group">                
+                                            <label for="fPorcentaje">Porcentaje Penetración:</label>    
+                                            <div class="input-group">
+                                            <input type="text" class="form-control" id="fPorcentaje" 
+                                            ng-model="esquema.Porcentaje" placeholder="Porcentaje Penetración">
+                                            <div class="input-group-addon">%</div>
+                                            </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div ng-hide="checked">
+
+                                                <div class="form-group">
+                                                <label for="tasaInteres">Tasa Intéres:</label> 
+                                                <div class="input-group">
+                                                <input type="text" class="form-control" id="tasaInteres" 
+                                                ng-model="esquema.tasaInteres" placeholder="Tasa Intéres">
                                                 <div class="input-group-addon">%</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Porcentaje Penetración</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.Porcentaje" placeholder="Porcentaje Penetración">
+                                                </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                <label for="rangoDias">Rango Días:</label> 
+                                                <input type="text" class="form-control" id="rangoDias" 
+                                                ng-model="esquema.rango" placeholder="Rango Días">
+                                                
+                                                </div>
+
+
+
+                                                <div class="form-group">                                 
+                                                <label for="precedencia">Precedencia:</label>                
+                                                <input type="text" class="form-control" id="precedencia" 
+                                                ng-model="esquema.precedencia" placeholder="Precedencia">                                                    
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                <label for="porcentaje">Porcentaje Penetración:</label> 
+                                                <div class="input-group">
+                                                <input type="text" class="form-control" id="porcentaje" 
+                                                ng-model="esquema.porcentajePenetracion" placeholder="Porcentaje de Penetración">
                                                 <div class="input-group-addon">%</div>
-                                            </div>
+                                                </div>
+                                                </div>
+
+
+                                                <div class="form-group">                            
+                                                <label for="tipoTiie">Tipo Tiie:</label> 
+                                                <input type="text" class="form-control" id="tipoTiie" 
+                                                ng-model="esquema.idTiieTipo" placeholder="Tipo Tiie">                            
+                                                </div>
                                         </div>
-                                    </div>
-                                </div>
-                                   <div class="col-md-4">
-                                   <div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Tasa Intéres</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.tasaInteres" placeholder="Tasa Intéres">
-                                                <div class="input-group-addon">%</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Rango</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.rango" placeholder="Rango Días">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Precedencia</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.precedencia" placeholder="Precedencia">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Porcentaje de Penetración</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.porcentajePenetracion" placeholder="Porcentaje de Penetración">
-                                                <div class="input-group-addon">%</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="form-group">
-                                            <label class="sr-only" for="exampleInputAmount">Tipo Tiie</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="exampleInputAmount" ng-model="esquema.idTiieTipo" placeholder="Tipo Tiie">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  
-                           
-                            <div>
-                                        <div>
-                                            <button class="btn" ng-click=""></button>
-                                        </div>
-                                    </div>
-                        <!--/div-->
+
+                                
+                            </div>
                     </div>
+
+
+
+
+  
+                
+                </div>
+
+
             <div class="modal-footer">
                 <button type="submit" class="btn  btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
                 <button class="btn btn-primary" ng-click="insertEsquemas()">Guardar</button>
             </div>
         </div>
 
-    </div>
+    </div>  
 </div>
 <!---->

@@ -332,27 +332,29 @@ Calculo.prototype.post_insertesquema = function(req, res, next){
 	var self = this;
     //Objeto que envía los parámetros
     //Asigno a params el valor de mis variables
-    var params = [{name: 'diasGracia', value: req.body.diasGracia, type: self.model.types.DECIMAL},
+ 
+            var params = [{name: 'diasGracia', value: req.body.diasGracia, type: self.model.types.DECIMAL},
                  {name: 'plazo', value: req.body.plazo, type: self.model.types.DECIMAL},
                  {name: 'idFinanciera', value: req.body.idFinanciera, type: self.model.types.INT},
                  {name: 'nombre', value: req.body.nombre, type: self.model.types.STRING},
                  {name: 'descripcion', value: req.body.descripcion, type: self.model.types.STRING},
-                 {name: 'esFijo', value: req.body.esFijo, type: self.model.types.STRING},
+                 {name: 'esFijo', value: req.body.interesFecha, type: self.model.types.STRING},
                  {name: 'tasaInteres', value: req.body.idFinanciera, type: self.model.types.DECIMAL},
                   {name: 'rango', value: req.body.rango, type: self.model.types.DECIMAL},
                   {name: 'precedencia', value: req.body.precedencia, type: self.model.types.DECIMAL},
                   {name: 'porcentajePenetracion', value: req.body.porcentajePenetracion, type: self.model.types.DECIMAL},
                   {name: 'idTiieTipo', value: req.body.idTiieTipo, type: self.model.types.INT},
-                  {name: 'fechaInicio', value: req.body.fechaInicio, type: self.model.types.DATE},
-                  {name: 'fechaFin', value: req.body.fechaFin, type: self.model.types.DATE},
+                  {name: 'fechaInicio', value: req.body.fechaInicio, type: self.model.types.STRING},
+                  {name: 'fechaFin', value: req.body.fechaFin, type: self.model.types.STRING},
                   {name: 'tiie', value: req.body.tiie, type: self.model.types.INT}
                  ];
 	
  this.model.post('INS_ESQUEMA_SP', params, function (error, result) {
         //Callback
-     error: error;
-    result: result;
-        self.view.expositor(res, object); 
+   self.view.expositor(res, {
+            error: error,
+            result: result
+        });
  });
 } 
 
