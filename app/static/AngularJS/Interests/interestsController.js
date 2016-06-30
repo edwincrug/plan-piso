@@ -6,41 +6,42 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.detailsUnit = {};
     $scope.fechaHoy = new Date();
     $scope.idEmpresa = {};
-    //$scope.updateEsquemaUnidad={};
+    $scope.updateEsquemaUnidad = [];
+    $scope.idESquemaNueva = 0;
+    
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
-            $scope.getCompany();
-            $scope.seleccionarSucursal.show = false;
-            $scope.seleccionarFinanciera.show = false;
-            $scope.checkbox();
-            $scope.transpasoFinanciera.show = false;
-            $scope.modalTraspasoFinanciera.show = false;
-            $scope.getFinanciera();
-            $scope.getEsquemaFinanciera();
-        $scope.idFinancieraNueva = 1;
-        }
-    
-        // Función para filtrar por empresa
+        $scope.getCompany();
+        $scope.seleccionarSucursal.show = false;
+        $scope.seleccionarFinanciera.show = false;
+        $scope.checkbox();
+        $scope.transpasoFinanciera.show = false;
+        $scope.modalTraspasoFinanciera.show = false;
+        $scope.getFinanciera();
+        $scope.getEsquemaFinanciera();
+    }
+
+    // Función para filtrar por empresa
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
-            $scope.seleccionarSucursal.show = false;
-            $scope.idEmpresa = idEmpresa;
-            console.log($scope.idEmpresa)
-            $scope.nombreEmpresa = nombreEmpresa;
-            $scope.getFinancial();
-            $scope.getSucursal();
-            $scope.getFinancial.show = true;
-            $scope.seleccionarFinanciera.show = false;
-            $scope.transpasoFinanciera.show = false;
-            $scope.modalTraspasoFinanciera.show = false;
-        }
-    
-        // Función para filtrar por sucursal
+        $scope.seleccionarSucursal.show = false;
+        $scope.idEmpresa = idEmpresa;
+        console.log($scope.idEmpresa)
+        $scope.nombreEmpresa = nombreEmpresa;
+        $scope.getFinancial();
+        $scope.getSucursal();
+        $scope.getFinancial.show = true;
+        $scope.seleccionarFinanciera.show = false;
+        $scope.transpasoFinanciera.show = false;
+        $scope.modalTraspasoFinanciera.show = false;
+    }
+
+    // Función para filtrar por sucursal
     $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {
-            $scope.idSucursal = idSucursal;
-            $scope.nombreSucursal = nombreSucursal;
-            $scope.getInterestSucursal();
-        }
-    
+        $scope.idSucursal = idSucursal;
+        $scope.nombreSucursal = nombreSucursal;
+        $scope.getInterestSucursal();
+    }
+
     // Muestra los detalles de la financiera
     $scope.seleccionarFinanciera = function (idFinanciera, nombreFinanciera) {
         $scope.idFinanciera = idFinanciera;
@@ -53,8 +54,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.getFinancial.show = false;
         $scope.transpasoFinanciera.show = true;
     }
-    
-        // Función para filtrar compañias
+
+    // Función para filtrar compañias
     $scope.getCompany = function () {
             $scope.promise = interestsRepository.getCompany().then(function (result) {
                 if (result.data.length > 0) {
@@ -67,37 +68,37 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 alertFactory.error("Error al cargar Empresas");
             });
         }
-     // Función para trar las financieras por empresa
+        // Función para trar las financieras por empresa
     $scope.getFinancial = function () {
-         $scope.financieras = {};   
-            $scope.promise = interestsRepository.getFinancieraSelect($scope.idEmpresa).then(function (result) {
-                if (result.data.length > 0) {
-                    $scope.financieras = result.data;
-                    console.log($scope.financieras)
-                    alertFactory.success("Financieras cargadas");
-                } else {
-                    alertFactory.info("No se encontraron Financieras");
-                }
-            }, function (error) {
-                alertFactory.error("Error al cargar Financieras");
-            });
-        }
-    
+        $scope.financieras = {};
+        $scope.promise = interestsRepository.getFinancieraSelect($scope.idEmpresa).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.financieras = result.data;
+                console.log($scope.financieras)
+                alertFactory.success("Financieras cargadas");
+            } else {
+                alertFactory.info("No se encontraron Financieras");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar Financieras");
+        });
+    }
+
     // Función para obtener las sucursales por empresa
     $scope.getSucursal = function (idEmpresa) {
-            $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
-                if (result.data.length > 0) {
-                    $scope.sucursales = result.data;
-                    console.log(result.data);
-                    alertFactory.success("Sucursales cargados");
-                } else {
-                    alertFactory.info("No se encontraron Sucursales");
-                }
-            }, function (error) {
-                alertFactory.error("Error al cargar Sucursales");
-            });
-        }
-    
+        $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.sucursales = result.data;
+                console.log(result.data);
+                alertFactory.success("Sucursales cargados");
+            } else {
+                alertFactory.info("No se encontraron Sucursales");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar Sucursales");
+        });
+    }
+
     // Función para mostrar intereses por financiera
     $scope.getInterestFinanciera = function () {
         $('#interestTable').DataTable().destroy();
@@ -170,7 +171,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 alertFactory.error("Error al cargar intereses");
             });
     }
-    
+
     // Funcion para obtener los intereses por sucursal
     $scope.getInterestSucursal = function () {
         $('#interestTable').DataTable().destroy();
@@ -242,7 +243,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 alertFactory.error("Error al cargar intereses");
             });
     }
-    
+
     // Función para pintar 
     $scope.setClass = function (status) {
         switch (status) {
@@ -256,7 +257,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }
     }
-   
+
     // Función para el ng-class en el campo días
     $scope.setClassDias = function (dias) {
         if (dias >= 180) {
@@ -265,7 +266,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }
     }
-    
+
     // Función Principal para los filtros
     $scope.rangeFilter = function () {
         $.fn.dataTable.ext.search.push(
@@ -285,7 +286,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         );
 
     }
-  
+
     // Filtro para mostras unidades a 30 días de financiamiento
     $scope.set30days = function () {
         $('#min').val(0);
@@ -293,7 +294,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
     }
-    
+
     // Filtro para mostras unidades a 60 días de financiamiento
     $scope.set60days = function () {
         $('#min').val(0);
@@ -301,7 +302,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
     }
-    
+
     // Filtro para mostras unidades a 90 días de financiamiento
     $scope.set90days = function () {
         $('#min').val(0);
@@ -317,7 +318,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
     }
-    
+
     // Función para llamar modal
     $scope.inicia = function (vehNumserie) {
         $('#DetallesUnidadModal').appendTo("body").modal('show');
@@ -325,12 +326,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         //$scope.getDetailsUnit();
         //$scope.detailsUnit = $scope.detailsUnit;
     }
-    
+
     // Función para cerrar la modal
     $scope.cerrar = function () {
         $('#inicioModal').modal('toggle');
     }
-    
+
     // Función para traer detalles de las unidades
     /*$scope.getDetailsUnit = function () {
         $scope.promise = interestsRepository.getDetailsUnit($scope.vehNumserie).then(function (result) {
@@ -339,7 +340,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             }
         });
     }*/
-    
+
     //Estilo de checkbox
     $scope.checkbox = (function () {
         $('.i-checks').iCheck({
@@ -347,10 +348,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             radioClass: 'iradio_square-green',
         });
     })
-    
+
     // Función para iniciar wizard
     $scope.wizard = function () {
-        $("#wizard").steps();
+            $("#wizard").steps();
         $("#form").steps({
             bodyTag: "fieldset",
             onStepChanging: function (event, currentIndex, newIndex) {
@@ -358,10 +359,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 if (currentIndex > newIndex) {
                     return true;
                 }
+
                 // Forbid suppressing "Warning" step if the user is to young
                 if (newIndex === 3 && Number($("#age").val()) < 18) {
                     return false;
                 }
+
                 var form = $(this);
 
                 // Clean up if user went backward before
@@ -370,6 +373,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $(".body:eq(" + newIndex + ") label.error", form).remove();
                     $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
                 }
+
                 // Disable validation on fields that are disabled or hidden.
                 form.validate().settings.ignore = ":disabled,:hidden";
 
@@ -379,23 +383,28 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             onStepChanged: function (event, currentIndex, priorIndex) {
                 // Suppress (skip) "Warning" step if the user is old enough.
                 if (currentIndex === 2 && Number($("#age").val()) >= 18) {
-                    $(this).steps("Siguiente");
+                    $(this).steps("next");
+                    console.log('Hola');
                 }
+
                 // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
                 if (currentIndex === 2 && priorIndex === 3) {
-                    $(this).steps("Anterior");
+                    $(this).steps("previous");
                 }
             },
             onFinishing: function (event, currentIndex) {
                 var form = $(this);
+
                 // Disable validation on fields that are disabled.
                 // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
                 form.validate().settings.ignore = ":disabled";
+
                 // Start validation; Prevent form submission if false
                 return form.valid();
             },
             onFinished: function (event, currentIndex) {
                 var form = $(this);
+
                 // Submit form input
                 form.submit();
             }
@@ -411,51 +420,29 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         });
     }
 
-    // Función para mostrar la modal del wizard de transpaso de financiera
-    $scope.transpasoFinanciera = function () {
-        $scope.modalTraspasoFinanciera.show = true;
-        $scope.transpasoFinanciera.show = false;
-    }
-    
-    // Función para mostrar botones de modal de transpasos
-    $scope.modalTraspasoFinanciera = function (modal) {
-        $scope.modal = modal;
-         console.log('hola', $scope.modal)
-        $('#transpasoFinancieroModal').appendTo("body").modal('show');
-        $scope.wizard();
-    }
-    
-    // oculta los botones para transpaso de financiera
-    $scope.cancelarTranspasoModal = function () {
-        $scope.modalTraspasoFinanciera.show = false;
-        $scope.transpasoFinanciera.show = true;
-    }
-    
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function () {
         $('#esquemasFinanciera').DataTable().destroy();
-        $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinancieraNueva).then(function (result) {
+        $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinanciera).then(function (result) {
             if (result.data.length > 0) {
                 $scope.esquemas = result.data;
                 setTimeout(function () {
                     $('#esquemasFinanciera').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp'
-                        , buttons: [{
+                        dom: '<"html5buttons"B>lTfgitp',
+                        buttons: [{
                                 extend: 'copy'
                             }, {
                                 extend: 'csv'
                             }, {
-                                extend: 'excel'
-                                , title: 'ExampleFile'
+                                extend: 'excel',
+                                title: 'ExampleFile'
                             }, {
-                                extend: 'pdf'
-                                , title: 'ExampleFile'
+                                extend: 'pdf',
+                                title: 'ExampleFile'
                             }
-
-                            
                             , {
-                                extend: 'print'
-                                , customize: function (win) {
+                                extend: 'print',
+                                customize: function (win) {
                                     $(win.document.body).addClass('white-bg');
                                     $(win.document.body).css('font-size', '10px');
                                     $(win.document.body).find('table')
@@ -474,29 +461,28 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             alertFactory.error("Error al cargar Esquemas");
         });
     }
-    
-     $scope.modalAgregarNuevoEsquemas = function () {      
-         
-        $('#modalAgregarNuevoEsquema').appendTo("body").modal('show');
+
+    $scope.modalAgregarNuevoEsquemas = function () {
+            $('#modalAgregarNuevoEsquema').appendTo("body").modal('show');
+        }
+        // funcion de prueba para mostrar nombre de las financieras
+    $scope.seleccionarFinancieraTranspaso = function (idFinanciera, nombreFinanciera) {
+        $scope.nombreFinancieraNueva = nombreFinanciera;
+        $scope.getEsquemaFinanciera();
     }
-     // funcion de prueba para mostrar nombre de las financieras
-     $scope.seleccionarFinancieraTranspaso = function(idFinanciera,nombreFinanciera){
-         $scope.idFinancieraNueva = 1;
-         $scope.nombreFinancieraNueva = nombreFinanciera;
-         $scope.getEsquemaFinanciera();
-     }
-    
+
     // Función para llamar el datepicker
-    $scope.calendario = function(){
-    $('#calendar .input-group.date').datepicker({
-           todayBtn: "linked",
-           keyboardNavigation: true,
-           forceParse: false,
-           calendarWeeks: true,
-           autoclose: true,
-           todayHighlight: true
-       });
+    $scope.calendario = function () {
+        $('#calendar .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: true,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
+        });
     }
+
     $scope.getFinanciera = function () {
         $scope.promise = schemeRepository.getFinanciera().then(function (result) {
             if (result.data.length > 0) {
@@ -510,10 +496,60 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             alertFactory.error("Error al cargar financieras");
         });
     }
-    
-    $scope.valorCheckBoxTabla = function(idUnidad){
-        $scope.updateEsquemaUnidad = idUnidad;
-        console.log( $scope.updateEsquemaUnidad);
+
+    $scope.valorCheckBoxTabla = function (idUnidad) {
+        $scope.updateEsquemaUnidad.push({
+            vehNumserie: idUnidad
+        });
+        console.log($scope.updateEsquemaUnidad);
+    }
+
+    $scope.updateScheme = function () {
+        $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
+            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
+                console.log(result);
+                if (result.data.length > 0) {
+                    console.log('pasa por aqui');
+                    alertFactory.success("Esquema Agregado");
+                } else {
+                    alertFactory.info("Esquema No Agregado");
+                }
+            }, function (error) {
+                alertFactory.error("Error al guardar Esquema");
+            });
+        });
     }
     
+  $scope.idEsquemaNuevo = function(idEsquema){
+      $scope.idESquemaNueva = idEsquema;
+      console.log(idEsquema, 'hola');
+  }
+   
+  $scope.hacerCambioEsquema = function(){
+      $scope.idEsquemaNuevo.show = false;
+      $scope.hacerCambioEsquema.show = true;
+      $scope.updateScheme();
+  }
+        // Función para mostrar la modal del wizard de transpaso de financiera
+    $scope.transpasoFinanciera = function () {
+        $scope.modalTraspasoFinanciera.show = true;
+        $scope.transpasoFinanciera.show = false;
+    }
+
+    // Función para mostrar botones de modal de transpasos
+    $scope.modalTraspasoFinanciera = function (modal) {
+        $scope.wizard();
+        $scope.hacerCambioEsquema.show = false;
+        $scope.idEsquemaNuevo.show = true;
+        //$scope.valorCheckBoxTabla();
+        $scope.modal = modal;
+        $('#transpasoCambioEsquema').appendTo("body").modal('show');
+    }
+
+    // oculta los botones para transpaso de financiera
+    $scope.cancelarTranspasoModal = function () {
+        $scope.modalTraspasoFinanciera.show = false;
+        $scope.transpasoFinanciera.show = true;
+    }
+
 });
