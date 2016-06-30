@@ -143,6 +143,43 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
         }*/
 
 
+        $scope.validate = function(){
+
+            var controles =[
+                { value:$scope.esquema.diasGracia,name: 'diasGracia', regExp:'^\d{1,3}$'},
+                { value:$scope.esquema.plazo,name: 'plazo', regExp:'^\d{1,3}$'},
+                { value:$scope.idFinanciera,name: 'idFinanciera', regExp:'*'},
+                { value:$scope.esquema.nombre,name: 'nombre', regExp:'*'},
+                { value:$scope.esquema.descripcion,name: 'descripcion', regExp:'*'},
+                { value:$scope.esquema.tasaInteres,name: 'tasaInteres', regExp:'*'},
+                { value:$scope.esquema.rango,name: 'rango', regExp:'*'},
+                { value:$scope.esquema.precedencia,name: 'precedencia', regExp:'*'},
+                { value:$scope.esquema.porcentajePenetracion,name: 'porcentajePenetracion', regExp:'*'},
+                { value:$scope.esquema.idTiieTipo,name: 'idTiieTipo', regExp:'*'},
+                { value:$scope.esquema.fechaInicio,name: 'fechaInicio', regExp:'*'},
+                { value:$scope.esquema.fechaFin,name: 'fechaFin', regExp:'*'},
+                { value:$scope.esquema.tiie,name: 'tiiename', regExp:'*'}
+            ];
+            
+            for (i = 0; i < controles.length; i++) {
+                if(controles[i].value == null || controles[i].value == ''){
+                alertFactory.info(controles[i].name +  ' es requerio');
+                break;
+                }
+
+/*
+                var pattern =  new RegExp(controles[i].regExp);
+                if(pattern.test(controles[i].value) ){
+                alertFactory.info(controles[i].name +  ' formato no correcto');
+                break;
+                }
+
+*/
+            }
+
+        }
+
+
 
 $scope.clearControls = function (){
                 $scope.esquema.diasGracia = null;
@@ -165,7 +202,9 @@ $scope.clearControls = function (){
 
 
     $scope.insertEsquemas = function () {
+        $scope.validate();
      
+     /*
                 schemeRepository.insertEsquema( 
                 $scope.esquema.diasGracia,
                 $scope.esquema.plazo,
@@ -192,7 +231,7 @@ $scope.clearControls = function (){
                 }
             }, function (error) {
                 alertFactory.error("Error al guardar Esquema");
-            });
+            });*/
 
     };
 
