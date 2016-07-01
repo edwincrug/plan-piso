@@ -85,13 +85,14 @@ registrationModule.factory('interestsRepository', function ($http) {
                 }
             });
         },
-        updateScheme: function (idEsquema,vehNumserie) {
+        updateScheme: function (idEsquema,vehNumserie,idFinanciera) {
             return $http({
                 url: interestsURL + 'updatescheme/',
                 method: "POST",
                 data: {
                     idEsquema: idEsquema,
-                    vehNumserie: vehNumserie
+                    vehNumserie: vehNumserie,
+                    idFinanciera:idFinanciera
                 },
                 headers: {
                     'Content-Type': 'application/json'
