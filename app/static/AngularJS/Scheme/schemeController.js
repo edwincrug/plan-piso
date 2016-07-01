@@ -136,50 +136,63 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
                 , todayHighlight: true
             });
         }
-        // Función para habilitar campos
-        /*$scope.tasaFecha = function(){
-            $scope.tasaRango.show = false;
-            $scope.tasaFecha.show = true;
-        }*/
 
 
-        $scope.validate = function(){
+        //Expresiones Regulares 
+        var expresion =
+        {
+            todo:'.',
+            entero:'^\\d+$',
+            entero1:'^\\d{1,3}$',
+            decimal:'^-?[0-9]+([,\\.][0-9]*)?$',
+            decimal1:'^\\d{1,2}(\\.\\d{1,4})?$'
 
+        };
+
+
+
+
+        $scope.formIsValid = function(){
+
+
+            var esValido =  true;
 
 
             var controles =[
-                { value:$scope.esquema.diasGracia,name: 'Días de gracia', regExp:'^\\d{1,3}$'},
-                { value:$scope.esquema.plazo,name: 'Plazo', regExp:'^\\d{1,3}$'},                
-                { value:$scope.esquema.nombre,name: 'Nombre', regExp:'*'},
-                { value:$scope.esquema.descripcion,name: 'Descripción', regExp:'*'},
-                { value:$scope.esquema.tasaInteres,name: 'Tasa interes', regExp:'^\\d{1,2}(\\.\\d{1,4})?$'},
-                { value:$scope.esquema.rango,name: 'Rango', regExp:'^\\d{1,3}$'},
-                { value:$scope.esquema.precedencia,name: 'Precedencia', regExp:'^\\d{1,3}$'},
-                { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:'^\\d{1,2}(\\.\\d{1,4})?$'},
-                { value:$scope.esquema.idTiieTipo,name: 'TIIE tipo', regExp:'^\\d{1,3}$'},
-                { value:$scope.esquema.fechaInicio,name: 'Fecha inicio', regExp:'*'},
-                { value:$scope.esquema.fechaFin,name: 'Fecha fin', regExp:'*'},
-                { value:$scope.esquema.tiie,name: 'TIIE', regExp:'*'}
+                { value:$scope.esquema.diasGracia,name: 'Días de gracia', regExp:expresion.entero1},
+                { value:$scope.esquema.plazo,name: 'Plazo', regExp:expresion.entero1},
+                { value:$scope.esquema.nombre,name: 'Nombre', regExp: expresion.todo},
+                { value:$scope.esquema.descripcion,name: 'Descripción', regExp:expresion.todo},
+                { value:$scope.esquema.tasaInteres,name: 'Tasa interes', regExp:expresion.decimal1},
+                { value:$scope.esquema.rango,name: 'Rango', regExp:expresion.entero1},
+                { value:$scope.esquema.precedencia,name: 'Precedencia', regExp:expresion.entero1},
+                { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:expresion.decimal1},
+                { value:$scope.esquema.idTiieTipo,name: 'TIIE tipo', regExp:expresion.entero1},
+                { value:$scope.esquema.fechaInicio,name: 'Fecha inicio', regExp:expresion.todo},
+                { value:$scope.esquema.fechaFin,name: 'Fecha fin', regExp:expresion.todo},
+                { value:$scope.esquema.tiie,name: 'TIIE', regExp:expresion.todo}
             ];
             
             for (i = 0; i < controles.length; i++) {
 
                 if(controles[i].value == null || controles[i].value == ''){
                 alertFactory.info(controles[i].name +  ' es requerido');
+                esValido = false;
                 break;
                 }
 
                 var pattern =  new RegExp(controles[i].regExp);   
-                console.log(pattern,controles[i].value, pattern.test(controles[i].value));             
+                //console.log(pattern,controles[i].value, pattern.test(controles[i].value)); 
                 if(pattern.test(controles[i].value) == false ){
                 alertFactory.info(controles[i].name +  ' formato no correcto');
+                esValido = false;
                 break;
                 }
-
-
             }
 
-        }
+            return esValido;
+
+        };
 
 
 
@@ -204,8 +217,8 @@ $scope.clearControls = function (){
 
 
     $scope.insertEsquemas = function () {
-        $scope.validate();
      
+       if($scope.formIsValid()){
      
                 schemeRepository.insertEsquema( 
                 $scope.esquema.diasGracia,
@@ -234,6 +247,7 @@ $scope.clearControls = function (){
             }, function (error) {
                 alertFactory.error("Error al guardar Esquema");
             });
+        }
 
     };
 
