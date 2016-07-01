@@ -210,7 +210,9 @@
                                             <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual | currency}}</td>
                                             <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
                                             <td ng-show="modalTraspasoFinanciera.show">
-                                                <input type="checkbox" class="i-checks" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" ng-click="valorCheckBoxTabla(ck.id)">
+                        <input type="checkbox"  ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id)">
+                                        <label for="{{intereses.vehNumserie}}" class="css-label"></label>                                                                                    
+            <!--input type="checkbox" class="i-checks" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" ng-click="valorCheckBoxTabla(ck.id)"-->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -364,7 +366,11 @@
                                                                 <td>{{esquema.plazo}}</td>
                                                                 <td>{{esquema.nombre}}</td>
                                                                 <td>
-                                                                    <input type="checkbox" class="i-checks" ng-model="ck.Esquema" ng-true-value="'{{esquema.idEsquema}}'" ng-click="idEsquemaNuevo(ck.Esquema)">
+                                                                   
+                                        <input type="checkbox"  ng-attr-id="'{{esquema.idEsquema}}'" ng-model="ck.Esquema" ng-true-value="'{{esquema.idEsquema}}'" class="css-checkbox" ng-click="idEsquemaNuevo(ck.Esquema)">
+                                        <label for="'{{esquema.idEsquema}}'" class="css-label"></label> 
+                                                                                                                               
+                                                                    <!--input type="checkbox" class="i-checks" ng-model="ck.Esquema" ng-true-value="'{{esquema.idEsquema}}'" ng-click="idEsquemaNuevo(ck.Esquema)"-->
                                                                 </td>
                                                             </tr>
                                                         </tbody>
