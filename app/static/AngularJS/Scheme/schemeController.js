@@ -145,36 +145,38 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
 
         $scope.validate = function(){
 
+
+
             var controles =[
-                { value:$scope.esquema.diasGracia,name: 'diasGracia', regExp:'^\d{1,3}$'},
-                { value:$scope.esquema.plazo,name: 'plazo', regExp:'^\d{1,3}$'},
-                { value:$scope.idFinanciera,name: 'idFinanciera', regExp:'*'},
-                { value:$scope.esquema.nombre,name: 'nombre', regExp:'*'},
-                { value:$scope.esquema.descripcion,name: 'descripcion', regExp:'*'},
-                { value:$scope.esquema.tasaInteres,name: 'tasaInteres', regExp:'*'},
-                { value:$scope.esquema.rango,name: 'rango', regExp:'*'},
-                { value:$scope.esquema.precedencia,name: 'precedencia', regExp:'*'},
-                { value:$scope.esquema.porcentajePenetracion,name: 'porcentajePenetracion', regExp:'*'},
-                { value:$scope.esquema.idTiieTipo,name: 'idTiieTipo', regExp:'*'},
-                { value:$scope.esquema.fechaInicio,name: 'fechaInicio', regExp:'*'},
-                { value:$scope.esquema.fechaFin,name: 'fechaFin', regExp:'*'},
-                { value:$scope.esquema.tiie,name: 'tiiename', regExp:'*'}
+                { value:$scope.esquema.diasGracia,name: 'Días de gracia', regExp:'^\\d{1,3}$'},
+                { value:$scope.esquema.plazo,name: 'Plazo', regExp:'^\\d{1,3}$'},                
+                { value:$scope.esquema.nombre,name: 'Nombre', regExp:'*'},
+                { value:$scope.esquema.descripcion,name: 'Descripción', regExp:'*'},
+                { value:$scope.esquema.tasaInteres,name: 'Tasa interes', regExp:'^\\d{1,2}(\\.\\d{1,4})?$'},
+                { value:$scope.esquema.rango,name: 'Rango', regExp:'^\\d{1,3}$'},
+                { value:$scope.esquema.precedencia,name: 'Precedencia', regExp:'^\\d{1,3}$'},
+                { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:'^\\d{1,2}(\\.\\d{1,4})?$'},
+                { value:$scope.esquema.idTiieTipo,name: 'TIIE tipo', regExp:'^\\d{1,3}$'},
+                { value:$scope.esquema.fechaInicio,name: 'Fecha inicio', regExp:'*'},
+                { value:$scope.esquema.fechaFin,name: 'Fecha fin', regExp:'*'},
+                { value:$scope.esquema.tiie,name: 'TIIE', regExp:'*'}
             ];
             
             for (i = 0; i < controles.length; i++) {
+
                 if(controles[i].value == null || controles[i].value == ''){
-                alertFactory.info(controles[i].name +  ' es requerio');
+                alertFactory.info(controles[i].name +  ' es requerido');
                 break;
                 }
 
-/*
-                var pattern =  new RegExp(controles[i].regExp);
-                if(pattern.test(controles[i].value) ){
+                var pattern =  new RegExp(controles[i].regExp);   
+                console.log(pattern,controles[i].value, pattern.test(controles[i].value));             
+                if(pattern.test(controles[i].value) == false ){
                 alertFactory.info(controles[i].name +  ' formato no correcto');
                 break;
                 }
 
-*/
+
             }
 
         }
