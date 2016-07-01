@@ -555,7 +555,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.wizard();
         $scope.hacerCambioEsquema.show = false;
         $scope.idEsquemaNuevo.show = true;
-        //$scope.valorCheckBoxTabla();
+        $scope.idESquemaNueva = 0;
         $scope.modal = modal;
         $('#transpasoCambioEsquema').appendTo("body").modal('show');
     }
@@ -573,6 +573,16 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.idFinancieraCambio = idFinanciera;
         $scope.nombreFinancieraCambio = nombre;
         $scope.getEsquemaFinanciera();
+    }
+    
+    $scope.regresarIntereses = function(){
+        $scope.getCompany();
+        $scope.seleccionarSucursal.show = false;
+        $scope.seleccionarFinanciera.show = false;
+        $scope.checkbox();
+        $scope.transpasoFinanciera.show = false;
+        $scope.modalTraspasoFinanciera.show = false;
+         $scope.getFinanciera();
     }
 
 });
