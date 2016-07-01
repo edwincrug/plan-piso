@@ -192,7 +192,9 @@
                                             <th>Interés mes actual</th>
                                             <th>Interés acumulado</th>
                                             <th>Utilidad</th>
-                                            <th ng-show="modalTraspasoFinanciera.show"></th>
+                                            <th ng-show="modalTraspasoFinanciera.show">
+                                                <input type="checkbox" class="i-checks" ng-click="marcarTodosCheckbox(ck.todo)" ng-model="ck.todo">
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -330,14 +332,22 @@
        <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
             <div class="modal-header" style="padding:20px 20px;">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h1>Actualizar Esquema - {{nombreFinanciera}}</h1>
+                <button type="button" class="close" data-dismiss="modal" ng-click="cancelarCambioFinanciera()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h1>Actualizar Esquema - {{nombreFinancieraCambio}}</h1>
             </div>
                 <div class="modal-body">
+                <div class="input-group-btn">
+        <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Financiera <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li ng-repeat="financiera in financieraNueva">
+                <a href="#" ng-click="seleccionarFinancieraNueva(financiera.idFinanciera, financiera.nombre)">{{financiera.nombre}}</a>
+            </li>
+        </ul>
+    </div>
                 <div ng-show="idEsquemaNuevo.show">
                 <h2>Seleccione el nuevo esquema</h2>
                 <div class="table-responsive" >
-                <table id="esquemasFinanciera" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
+                <table id="esquemasFinancieraNuevo" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
                                                         <thead>
                                                             <tr>
                                                                 <th>N° Esquema</th>
@@ -360,7 +370,7 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <button class="btn btn-primary" ng-click="hacerCambioEsquema()">Cambiar Esquema</button>
+                                                
                                                 </div>
                                                 
                                                 <div ng-show="hacerCambioEsquema.show">
@@ -368,11 +378,14 @@
                                                 <div ng-repeat="unidad in updateEsquemaUnidad" >
                                             <label>Vin -{{unidad.vehNumserie}}</label>
                                             <label>Esquema - {{idESquemaNueva}}</label>
+                                            <label>Esquema - {{nombreFinancieraCambio}}</label>
+                                            
                                         </div>
                                         </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn  btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+                <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal" ng-click="cancelarCambioFinanciera()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+                <button class="btn btn-primary" ng-click="hacerCambioEsquema()">Cambiar Esquema</button>
             </div>
         </div>
     </div>

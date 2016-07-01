@@ -248,7 +248,7 @@ Calculo.prototype.get_interestfinanciera = function (req, res, next) {
     });
 };
 
-
+// SE valida que el usuario sea correcto
 Calculo.prototype.get_validaUsuario = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -268,6 +268,7 @@ Calculo.prototype.get_validaUsuario = function (req, res, next) {
     });
 };
 
+// Muestra todas las financieras
 Calculo.prototype.get_financiera = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -288,6 +289,7 @@ Calculo.prototype.get_financiera = function (req, res, next) {
     });
 };
 
+// Muestra los detalles de los esquemas
 Calculo.prototype.get_detalleEsquema = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -307,6 +309,7 @@ Calculo.prototype.get_detalleEsquema = function (req, res, next) {
     });
 };
 
+// inserta un nuevo esquema
 Calculo.prototype.post_insertesquema = function(req, res, next){
     //Objeto que almacena la respuesta
     var object = {};
@@ -344,6 +347,7 @@ Calculo.prototype.post_insertesquema = function(req, res, next){
  });
 } 
 
+// Actualiza la financiera y el esquema de una unidad
 Calculo.prototype.post_updatescheme = function(req, res, next){
     //Objeto que almacena la respuesta
     var object = {};
@@ -355,7 +359,8 @@ Calculo.prototype.post_updatescheme = function(req, res, next){
     //Asigno a params el valor de mis variables
  
             var params = [{name: 'idEsquema', value: req.body.idEsquema, type: self.model.types.INT},
-                 {name: 'vehNumserie', value: req.body.vehNumserie, type: self.model.types.STRING}
+                        {name: 'vehNumserie', value: req.body.vehNumserie, type: self.model.types.STRING},
+                        {name: 'idFinanciera', value: req.body.idFinanciera, type: self.model.types.INT}
                  ];
  this.model.post('UPD_ESQUENA_UNIDAD_SP', params, function (error, result) {
         //Callback
