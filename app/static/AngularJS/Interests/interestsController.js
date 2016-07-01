@@ -559,10 +559,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modal = modal;
         $('#transpasoCambioEsquema').appendTo("body").modal('show');
     }
-    $scope.marcarTodosCheckbox = function(){
+    /*$scope.marcarTodosCheckbox = function(jj){
         $('input[type=checkbox]').attr('checked',true);
-        console.log('Check')
-    }
+        $scope.valorCheckBoxTabla();
+        console.log($scope.valorCheckBoxTabla)
+    }*/
     // oculta los botones para transpaso de financiera
     $scope.cancelarTranspasoModal = function () {
         $scope.modalTraspasoFinanciera.show = false;
