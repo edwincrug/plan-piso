@@ -180,7 +180,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
                     { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:expresion.decimal1},                
                     { value:$scope.esquema.fechaInicio,name: 'Fecha inicio', regExp:expresion.todo},
                     { value:$scope.esquema.fechaFin,name: 'Fecha fin', regExp:expresion.todo},
-                    { value:$scope.esquema.tiie,name: 'TIIE', regExp:expresion.entero1}
+                    { value:$scope.esquema.tiie,name: 'TIIE', regExp:expresion.decimal1}
                 ];
 
                 return controlesPorFecha;
@@ -271,6 +271,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             if (result.data.length > 0) {                    
                 alertFactory.success("Esquema Agregado");
                 $scope.clearControls();
+                $scope.getEsquemaFinanciera();
             } else {
                 alertFactory.info("Esquema No Agregado");
             }
