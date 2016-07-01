@@ -152,42 +152,64 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
 
 
 
-        $scope.formIsValid = function(){
+        $scope.getControlByRange = function(){
+
+            var controlesPorRango =[
+                    { value:$scope.esquema.diasGracia,name: 'Días de gracia', regExp:expresion.entero1},
+                    { value:$scope.esquema.plazo,name: 'Plazo', regExp:expresion.entero1},
+                    { value:$scope.esquema.nombre,name: 'Nombre', regExp: expresion.todo},
+                    { value:$scope.esquema.descripcion,name: 'Descripción', regExp:expresion.todo},
+                    { value:$scope.esquema.tasaInteres,name: 'Tasa interes', regExp:expresion.decimal1},
+                    { value:$scope.esquema.rango,name: 'Rango', regExp:expresion.entero1},
+                    { value:$scope.esquema.precedencia,name: 'Precedencia', regExp:expresion.entero1},
+                    { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:expresion.decimal1},
+                    { value:$scope.esquema.idTiieTipo,name: 'TIIE tipo', regExp:expresion.entero1},                
+                ];
+
+                return controlesPorRango;
+        };
 
 
-            var esValido =  true;
+        $scope.getControlByDate = function(){
+            var controlesPorFecha =[
+                    { value:$scope.esquema.diasGracia,name: 'Días de gracia', regExp:expresion.entero1},
+                    { value:$scope.esquema.plazo,name: 'Plazo', regExp:expresion.entero1},
+                    { value:$scope.esquema.nombre,name: 'Nombre', regExp: expresion.todo},
+                    { value:$scope.esquema.descripcion,name: 'Descripción', regExp:expresion.todo},
+                    { value:$scope.esquema.tasaInteres,name: 'Tasa interes', regExp:expresion.decimal1},                
+                    { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:expresion.decimal1},                
+                    { value:$scope.esquema.fechaInicio,name: 'Fecha inicio', regExp:expresion.todo},
+                    { value:$scope.esquema.fechaFin,name: 'Fecha fin', regExp:expresion.todo},
+                    { value:$scope.esquema.tiie,name: 'TIIE', regExp:expresion.entero1}
+                ];
+
+                return controlesPorFecha;
+        };
 
 
-            var controles =[
-                { value:$scope.esquema.diasGracia,name: 'Días de gracia', regExp:expresion.entero1},
-                { value:$scope.esquema.plazo,name: 'Plazo', regExp:expresion.entero1},
-                { value:$scope.esquema.nombre,name: 'Nombre', regExp: expresion.todo},
-                { value:$scope.esquema.descripcion,name: 'Descripción', regExp:expresion.todo},
-                { value:$scope.esquema.tasaInteres,name: 'Tasa interes', regExp:expresion.decimal1},
-                { value:$scope.esquema.rango,name: 'Rango', regExp:expresion.entero1},
-                { value:$scope.esquema.precedencia,name: 'Precedencia', regExp:expresion.entero1},
-                { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:expresion.decimal1},
-                { value:$scope.esquema.idTiieTipo,name: 'TIIE tipo', regExp:expresion.entero1},
-                { value:$scope.esquema.fechaInicio,name: 'Fecha inicio', regExp:expresion.todo},
-                { value:$scope.esquema.fechaFin,name: 'Fecha fin', regExp:expresion.todo},
-                { value:$scope.esquema.tiie,name: 'TIIE', regExp:expresion.todo}
-            ];
+
+
+        $scope.formIsValid = function(controls){
+
+            var esValido =  false;
             
-            for (i = 0; i < controles.length; i++) {
+            for (i = 0; i < controls.length; i++) {
 
-                if(controles[i].value == null || controles[i].value == ''){
-                alertFactory.info(controles[i].name +  ' es requerido');
+                if(controls[i].value == null || controls[i].value == ''){
+                alertFactory.info(controls[i].name +  ' es requerido');
                 esValido = false;
                 break;
                 }
 
-                var pattern =  new RegExp(controles[i].regExp);   
-                //console.log(pattern,controles[i].value, pattern.test(controles[i].value)); 
-                if(pattern.test(controles[i].value) == false ){
-                alertFactory.info(controles[i].name +  ' formato no correcto');
+                var pattern =  new RegExp(controls[i].regExp);   
+                //console.log(pattern,controls[i].value, pattern.test(controls[i].value)); 
+                if(pattern.test(controls[i].value) == false ){
+                alertFactory.info(controls[i].name +  ' formato no correcto');
                 esValido = false;
                 break;
                 }
+
+                esValido=true;
             }
 
             return esValido;
@@ -196,58 +218,66 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
 
 
 
-$scope.clearControls = function (){
-                $scope.esquema.diasGracia = null;
-                $scope.esquema.plazo = null;
-                $scope.idFinanciera = null;
-                $scope.esquema.nombre = null;
-                $scope.esquema.descripcion = null;
-                $scope.checked = false;
-                $scope.esquema.tasaInteres = null;
-                $scope.esquema.rango = null;
-                $scope.esquema.precedencia = null;
-                $scope.esquema.porcentajePenetracion = null;
-                $scope.esquema.idTiieTipo = null;
-                $scope.esquema.fechaInicio = null;
-                $scope.esquema.fechaFin = null;
-                $scope.esquema.tiie = null;
+    $scope.clearControls = function (){
+
+        $scope.esquema.diasGracia = null;
+        $scope.esquema.plazo = null;
+        $scope.idFinanciera = null;
+        $scope.esquema.nombre = null;
+        $scope.esquema.descripcion = null;
+        $scope.checked = false;
+        $scope.esquema.tasaInteres = null;
+        $scope.esquema.rango = null;
+        $scope.esquema.precedencia = null;
+        $scope.esquema.porcentajePenetracion = null;
+        $scope.esquema.idTiieTipo = null;
+        $scope.esquema.fechaInicio = null;
+        $scope.esquema.fechaFin = null;
+        $scope.esquema.tiie = null;
 
 
-};
+    };
 
 
     $scope.insertEsquemas = function () {
-     
-       if($scope.formIsValid()){
-     
-                schemeRepository.insertEsquema( 
-                $scope.esquema.diasGracia,
-                $scope.esquema.plazo,
-                $scope.idFinanciera,
-                $scope.esquema.nombre,
-                $scope.esquema.descripcion,
-                $scope.checked,
-                $scope.esquema.tasaInteres,
-                $scope.esquema.rango,
-                $scope.esquema.precedencia,
-                $scope.esquema.porcentajePenetracion,
-                $scope.esquema.idTiieTipo,
-                $scope.esquema.fechaInicio,
-                $scope.esquema.fechaFin,
-                $scope.esquema.tiie
-            ).then(function (result)
-                 {
 
-                if (result.data.length > 0) {                    
-                    alertFactory.success("Esquema Agregado");
-                    $scope.clearControls();
-                } else {
-                    alertFactory.info("Esquema No Agregado");
-                }
-            }, function (error) {
-                alertFactory.error("Error al guardar Esquema");
-            });
-        }
+        var controlsToValidate =[];
+
+        if($scope.checked) {
+        controlsToValidate = $scope.getControlByDate();}
+        else {
+        controlsToValidate = $scope.getControlByRange();}        
+     
+        if(!$scope.formIsValid(controlsToValidate)) return;
+
+        schemeRepository.insertEsquema( 
+        $scope.esquema.diasGracia,
+        $scope.esquema.plazo,
+        $scope.idFinanciera,
+        $scope.esquema.nombre,
+        $scope.esquema.descripcion,
+        $scope.checked,
+        $scope.esquema.tasaInteres,
+        $scope.esquema.rango,
+        $scope.esquema.precedencia,
+        $scope.esquema.porcentajePenetracion,
+        $scope.esquema.idTiieTipo,
+        $scope.esquema.fechaInicio,
+        $scope.esquema.fechaFin,
+        $scope.esquema.tiie
+        ).then(function (result)
+             {
+
+            if (result.data.length > 0) {                    
+                alertFactory.success("Esquema Agregado");
+                $scope.clearControls();
+            } else {
+                alertFactory.info("Esquema No Agregado");
+            }
+        }, function (error) {
+            alertFactory.error("Error al guardar Esquema");
+        });
+        
 
     };
 
