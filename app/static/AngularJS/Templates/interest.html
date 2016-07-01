@@ -336,7 +336,7 @@
                 <h1>Actualizar Esquema - {{nombreFinancieraCambio}}</h1>
             </div>
                 <div class="modal-body">
-                <div class="input-group-btn">
+                <div class="input-group-btn" ng-show="idEsquemaNuevo.show">
         <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Financiera <span class="caret"></span></button>
         <ul class="dropdown-menu">
             <li ng-repeat="financiera in financieraNueva">
@@ -385,7 +385,8 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal" ng-click="cancelarCambioFinanciera()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
-                <button class="btn btn-primary" ng-click="hacerCambioEsquema()">Cambiar Esquema</button>
+                <button class="btn btn-primary" ng-show="idEsquemaNuevo.show" ng-click="hacerCambioEsquema()">Cambiar Esquema</button>
+                <button class="btn btn-primary" data-dismiss="modal" ng-show="hacerCambioEsquema.show" ng-click="regresarIntereses()">Terminar</button>
             </div>
         </div>
     </div>
