@@ -206,7 +206,7 @@ $scope.clearControls = function (){
     $scope.insertEsquemas = function () {
         $scope.validate();
      
-     /*
+     
                 schemeRepository.insertEsquema( 
                 $scope.esquema.diasGracia,
                 $scope.esquema.plazo,
@@ -233,7 +233,7 @@ $scope.clearControls = function (){
                 }
             }, function (error) {
                 alertFactory.error("Error al guardar Esquema");
-            });*/
+            });
 
     };
 
