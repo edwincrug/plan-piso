@@ -79,13 +79,13 @@ registrationModule.factory('interestsRepository', function ($http) {
                 params: {
                     idEmpresa: idEmpresa,
                     idFinanciera: idFinanciera
-                },
+                },  
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        updateScheme: function (idEsquema,vehNumserie,idFinanciera) {
+         updateScheme: function (idEsquema,vehNumserie,idFinanciera) {
             return $http({
                 url: interestsURL + 'updatescheme/',
                 method: "POST",
@@ -97,7 +97,6 @@ registrationModule.factory('interestsRepository', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-
             });
         }
     };

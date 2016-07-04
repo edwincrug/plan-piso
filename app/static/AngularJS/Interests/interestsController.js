@@ -17,7 +17,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.checkbox();
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
-         $scope.getFinanciera();
+        $scope.getFinanciera();
         //$scope.getEsquemaFinanciera();
     }
 
@@ -484,6 +484,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         });
     }
 
+    // Función para mostrar todas las financieras
     $scope.getFinanciera = function () {
         $scope.promise = schemeRepository.getFinanciera().then(function (result) {
             if (result.data.length > 0) {
@@ -498,6 +499,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         });
     }
 
+    // Función para guardar el valor de un checkbox en un array
     $scope.valorCheckBoxTabla = function (idUnidad) {
         $scope.updateEsquemaUnidad.push({
             vehNumserie: idUnidad
@@ -505,6 +507,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         console.log($scope.updateEsquemaUnidad);
     }
 
+    // Función para actualizar un esquema en las unidades
     $scope.updateScheme = function () {
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
             interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie,$scope.idFinancieraCambio).then(function (result) {
@@ -521,28 +524,33 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         });
     }
     
-  $scope.idEsquemaNuevo = function(idEsquema,nombre){
+    // Función para guardar el idEsquema nuevo 
+    $scope.idEsquemaNuevo = function(idEsquema,nombre){
       $scope.idESquemaNueva = idEsquema;
       $scope.nombreEsquemaNueva = nombre;
       console.log(idEsquema, 'hola',$scope.nombreEsquemaNueva);
   }
    
-  $scope.hacerCambioEsquema = function(){
+    // Función para mostrar los detalles del cambio de esquema
+    $scope.hacerCambioEsquema = function(){
       $scope.idEsquemaNuevo.show = false;
       $scope.hacerCambioEsquema.show = true;
      $('input[type=checkbox]').attr('checked',false);
       $scope.modalTraspasoFinanciera.show = false;
       $scope.transpasoFinanciera.show = true;
-      $scope.updateScheme();
+      //$scope.updateScheme();
   }
-  $scope.cancelarCambioFinanciera = function(){
+  
+    //Cancelar el cambio de financiera y cerrar la modal
+    $scope.cancelarCambioFinanciera = function(){
       $scope.idEsquemaNuevo.show = false;
       $scope.hacerCambioEsquema.show = true;
      $('input[type=checkbox]').attr('checked',false);
       $scope.modalTraspasoFinanciera.show = false;
       $scope.transpasoFinanciera.show = true;
   }
-        // Función para mostrar la modal del wizard de transpaso de financiera
+  
+    // Función para mostrar la modal del wizard de transpaso de financiera
     $scope.transpasoFinanciera = function () {
         $scope.modalTraspasoFinanciera.show = true;
         $scope.transpasoFinanciera.show = false;
@@ -559,24 +567,30 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modal = modal;
         $('#transpasoCambioEsquema').appendTo("body").modal('show');
     }
-    /*$scope.marcarTodosCheckbox = function(jj){
+    
+    // Función para marcar todos los checkbox
+    $scope.marcarTodosCheckbox = function(){
         $('input[type=checkbox]').attr('checked',true);
-        $scope.valorCheckBoxTabla();
-        console.log($scope.valorCheckBoxTabla)
-    }*/
+        console.log('Check')
+    }
+    
     // oculta los botones para transpaso de financiera
     $scope.cancelarTranspasoModal = function () {
         $scope.modalTraspasoFinanciera.show = false;
         $scope.transpasoFinanciera.show = true;
+        $('input[type=checkbox]').attr('checked',false);
     }
     
+    // Función para seleccionar nueva financiera
     $scope.seleccionarFinancieraNueva = function(idFinanciera, nombre){
         $scope.idFinancieraCambio = idFinanciera;
         $scope.nombreFinancieraCambio = nombre;
         $scope.getEsquemaFinanciera();
     }
     
+    // Funanción para hacer la actualización del esquema
     $scope.regresarIntereses = function(){
+        $scope.updateScheme();
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
@@ -585,5 +599,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalTraspasoFinanciera.show = false;
          $scope.getFinanciera();
     }
-
+    
+    // Función para mostrar modal de cambiar financiera
+    $scope.traspasoFinanciero = function(){
+         $('#transpasoFinancieroModal').appendTo("body").modal('show');
+        $scope.hacerCambioEsquema.show = false;
+        $scope.idEsquemaNuevo.show = true;
+        $scope.idESquemaNueva = 0;
+    }
 });
