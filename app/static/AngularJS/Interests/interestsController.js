@@ -8,9 +8,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.idEmpresa = {};
     $scope.updateEsquemaUnidad = [];
     $scope.idESquemaNueva = 0;
-    
+
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
+        $scope.updateEsquemaUnidad = [];
+        $scope.idESquemaNueva = 0;
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
@@ -119,21 +121,22 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.total = 0;
                     setTimeout(function () {
                         $('#interestTable').DataTable({
-                            dom: '<"html5buttons"B>lTfgitp',
-                            buttons: [{
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , buttons: [{
                                     extend: 'copy'
                             }, {
                                     extend: 'csv'
                             }, {
-                                    extend: 'excel',
-                                    title: 'ExampleFile'
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
                             }, {
-                                    extend: 'pdf',
-                                    title: 'ExampleFile'
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
                             }
-                                    , {
-                                    extend: 'print',
-                                    customize: function (win) {
+                                    
+                                , {
+                                    extend: 'print'
+                                    , customize: function (win) {
                                         $(win.document.body).addClass('white-bg');
                                         $(win.document.body).css('font-size', '10px');
                                         $(win.document.body).find('table')
@@ -191,21 +194,22 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.total = 0;
                     setTimeout(function () {
                         $('#interestTable').DataTable({
-                            dom: '<"html5buttons"B>lTfgitp',
-                            buttons: [{
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , buttons: [{
                                     extend: 'copy'
                             }, {
                                     extend: 'csv'
                             }, {
-                                    extend: 'excel',
-                                    title: 'ExampleFile'
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
                             }, {
-                                    extend: 'pdf',
-                                    title: 'ExampleFile'
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
                             }
-                                    , {
-                                    extend: 'print',
-                                    customize: function (win) {
+                                    
+                                , {
+                                    extend: 'print'
+                                    , customize: function (win) {
                                         $(win.document.body).addClass('white-bg');
                                         $(win.document.body).css('font-size', '10px');
                                         $(win.document.body).find('table')
@@ -344,17 +348,17 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     //Estilo de checkbox
     $scope.checkbox = (function () {
         $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
+            checkboxClass: 'icheckbox_square-green'
+            , radioClass: 'iradio_square-green'
+        , });
     })
 
     // Función para iniciar wizard
     $scope.wizard = function () {
-            $("#wizard").steps();
+        $("#wizard").steps();
         $("#form").steps({
-            bodyTag: "fieldset",
-            onStepChanging: function (event, currentIndex, newIndex) {
+            bodyTag: "fieldset"
+            , onStepChanging: function (event, currentIndex, newIndex) {
                 // Always allow going backward even if the current step contains invalid fields!
                 if (currentIndex > newIndex) {
                     return true;
@@ -379,8 +383,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
                 // Start validation; Prevent going forward if false
                 return form.valid();
-            },
-            onStepChanged: function (event, currentIndex, priorIndex) {
+            }
+            , onStepChanged: function (event, currentIndex, priorIndex) {
                 // Suppress (skip) "Warning" step if the user is old enough.
                 if (currentIndex === 2 && Number($("#age").val()) >= 18) {
                     $(this).steps("next");
@@ -391,8 +395,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 if (currentIndex === 2 && priorIndex === 3) {
                     $(this).steps("previous");
                 }
-            },
-            onFinishing: function (event, currentIndex) {
+            }
+            , onFinishing: function (event, currentIndex) {
                 var form = $(this);
 
                 // Disable validation on fields that are disabled.
@@ -401,8 +405,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
                 // Start validation; Prevent form submission if false
                 return form.valid();
-            },
-            onFinished: function (event, currentIndex) {
+            }
+            , onFinished: function (event, currentIndex) {
                 var form = $(this);
 
                 // Submit form input
@@ -411,8 +415,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         }).validate({
             errorPlacement: function (error, element) {
                 element.before(error);
-            },
-            rules: {
+            }
+            , rules: {
                 confirm: {
                     equalTo: "#password"
                 }
@@ -422,28 +426,29 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function () {
-        $('#esquemasFinancieraNuevo').DataTable().destroy();
         $scope.esquemas = {};
+        $('#esquemasFinancieraNuevo').DataTable().destroy(); 
         $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinancieraCambio).then(function (result) {
             if (result.data.length > 0) {
                 $scope.esquemas = result.data;
                 setTimeout(function () {
                     $('#esquemasFinancieraNuevo').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp',
-                        buttons: [{
-                                extend: 'copy'
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , buttons: [{
+                                extend: 'Copiar'
                             }, {
                                 extend: 'csv'
                             }, {
-                                extend: 'excel',
-                                title: 'ExampleFile'
+                                extend: 'excel'
+                                , title: 'ExampleFile'
                             }, {
-                                extend: 'pdf',
-                                title: 'ExampleFile'
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
                             }
+                                    
                             , {
-                                extend: 'print',
-                                customize: function (win) {
+                                extend: 'imprimir'
+                                , customize: function (win) {
                                     $(win.document.body).addClass('white-bg');
                                     $(win.document.body).css('font-size', '10px');
                                     $(win.document.body).find('table')
@@ -475,12 +480,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Función para llamar el datepicker
     $scope.calendario = function () {
         $('#calendar .input-group.date').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: true,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true,
-            todayHighlight: true
+            todayBtn: "linked"
+            , keyboardNavigation: true
+            , forceParse: false
+            , calendarWeeks: true
+            , autoclose: true
+            , todayHighlight: true
         });
     }
 
@@ -501,16 +506,20 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Función para guardar el valor de un checkbox en un array
     $scope.valorCheckBoxTabla = function (idUnidad) {
-        $scope.updateEsquemaUnidad.push({
-            vehNumserie: idUnidad
-        });
+        if (idUnidad == false) {
+            console.log('no hay nada')
+        } else {
+            $scope.updateEsquemaUnidad.push({
+                vehNumserie: idUnidad
+            });
+        }
         console.log($scope.updateEsquemaUnidad);
     }
 
     // Función para actualizar un esquema en las unidades
     $scope.updateScheme = function () {
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
-            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie,$scope.idFinancieraCambio).then(function (result) {
+            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie, $scope.idFinancieraCambio).then(function (result) {
                 console.log(result);
                 if (result.data.length > 0) {
                     console.log('pasa por aqui');
@@ -523,33 +532,65 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             });
         });
     }
-    
+
     // Función para guardar el idEsquema nuevo 
-    $scope.idEsquemaNuevo = function(idEsquema,nombre){
-      $scope.idESquemaNueva = idEsquema;
-      $scope.nombreEsquemaNueva = nombre;
-      console.log(idEsquema, 'hola',$scope.nombreEsquemaNueva);
-  }
-   
+    $scope.idEsquemaNuevo = function (idEsquema, nombre) {
+        $scope.idESquemaNueva = idEsquema;
+        $scope.nombreEsquemaNueva = nombre;
+        console.log(idEsquema, 'hola', $scope.nombreEsquemaNueva);
+    }
+
     // Función para mostrar los detalles del cambio de esquema
-    $scope.hacerCambioEsquema = function(){
-      $scope.idEsquemaNuevo.show = false;
-      $scope.hacerCambioEsquema.show = true;
-     $('input[type=checkbox]').attr('checked',false);
-      $scope.modalTraspasoFinanciera.show = false;
-      $scope.transpasoFinanciera.show = true;
-      //$scope.updateScheme();
-  }
-  
+    $scope.hacerCambioEsquema = function () {
+        $scope.idEsquemaNuevo.show = false;
+        $scope.hacerCambioEsquema.show = true;
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.modalTraspasoFinanciera.show = false;
+        $scope.transpasoFinanciera.show = true;
+        setTimeout(function () {
+            $('#cambioEsquema').DataTable({
+                dom: '<"html5buttons"B>lTfgitp'
+                , buttons: [{
+                        extend: 'copy'
+                            }, {
+                        extend: 'csv'
+                            }, {
+                        extend: 'excel'
+                        , title: 'ExampleFile'
+                            }, {
+                        extend: 'pdf'
+                        , title: 'ExampleFile'
+                            }
+                                    
+                    , {
+                        extend: 'print'
+                        , customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                            }
+                        ]
+            });
+        }, 1000);
+        //$scope.updateScheme();
+    }
+
     //Cancelar el cambio de financiera y cerrar la modal
-    $scope.cancelarCambioFinanciera = function(){
-      $scope.idEsquemaNuevo.show = false;
-      $scope.hacerCambioEsquema.show = true;
-     $('input[type=checkbox]').attr('checked',false);
-      $scope.modalTraspasoFinanciera.show = false;
-      $scope.transpasoFinanciera.show = true;
-  }
-  
+    $scope.cancelarCambioFinanciera = function () {
+        $scope.idEsquemaNuevo.show = false;
+        $scope.hacerCambioEsquema.show = true;
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.modalTraspasoFinanciera.show = false;
+        $scope.transpasoFinanciera.show = true;
+        $('#cambioEsquema').DataTable().destroy();
+        $('#esquemasFinancieraNuevo').DataTable().destroy();
+        $scope.updateEsquemaUnidad = [];
+        $scope.idESquemaNueva = 0;
+    }
+
     // Función para mostrar la modal del wizard de transpaso de financiera
     $scope.transpasoFinanciera = function () {
         $scope.modalTraspasoFinanciera.show = true;
@@ -566,30 +607,32 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.idESquemaNueva = 0;
         $scope.modal = modal;
         $('#transpasoCambioEsquema').appendTo("body").modal('show');
+        $scope.esquemas = {};
+        $('#esquemasFinancieraNuevo').DataTable().destroy(); 
     }
-    
+
     // Función para marcar todos los checkbox
-    $scope.marcarTodosCheckbox = function(){
-        $('input[type=checkbox]').attr('checked',true);
+    $scope.marcarTodosCheckbox = function () {
+        $('input[type=checkbox]').attr('checked', true);
         console.log('Check')
     }
-    
+
     // oculta los botones para transpaso de financiera
     $scope.cancelarTranspasoModal = function () {
         $scope.modalTraspasoFinanciera.show = false;
         $scope.transpasoFinanciera.show = true;
-        $('input[type=checkbox]').attr('checked',false);
+        $('input[type=checkbox]').attr('checked', false);
     }
-    
+
     // Función para seleccionar nueva financiera
-    $scope.seleccionarFinancieraNueva = function(idFinanciera, nombre){
+    $scope.seleccionarFinancieraNueva = function (idFinanciera, nombre) {
         $scope.idFinancieraCambio = idFinanciera;
         $scope.nombreFinancieraCambio = nombre;
         $scope.getEsquemaFinanciera();
     }
-    
+
     // Funanción para hacer la actualización del esquema
-    $scope.regresarIntereses = function(){
+    $scope.regresarIntereses = function () {
         $scope.updateScheme();
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
@@ -597,14 +640,57 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.checkbox();
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
-         $scope.getFinanciera();
+        $scope.getFinanciera();
+        $('#cambioEsquema').DataTable().destroy();
+        $('#esquemasFinancieraNuevo').DataTable().destroy();
+        $scope.updateEsquemaUnidad = [];
+        $scope.idESquemaNueva = 0;
     }
-    
+
     // Función para mostrar modal de cambiar financiera
-    $scope.traspasoFinanciero = function(){
-         $('#transpasoFinancieroModal').appendTo("body").modal('show');
+    $scope.traspasoFinanciero = function () {
+        $('#transpasoFinancieroModal').appendTo("body").modal('show');
         $scope.hacerCambioEsquema.show = false;
         $scope.idEsquemaNuevo.show = true;
         $scope.idESquemaNueva = 0;
+    }
+
+    $scope.seleccionarEsquema = function (idEsquema, esFijo) {
+        $('#detallesEsquemas').appendTo("body").modal('show');
+        $scope.idEsquema = idEsquema;
+        $scope.esFijo = esFijo;
+        $scope.getDetalleEsquema();
+        $scope.nombreEsquema = '';
+        if ($scope.esFijo == 1) {
+            console.log($scope.esFijo);
+            $scope.nombreEsquema = 'Tasa por Fechas';
+            $scope.tasaRango.show = false;
+            $scope.tasaFecha.show = true;
+        } else {
+            $scope.nombreEsquema = 'Tasa por Rango';
+            $scope.tasaFecha.show = false;
+            $scope.tasaRango.show = true;
+            console.log($scope.esFijo);
+        }
+    }
+
+    $scope.getDetalleEsquema = function () {
+        $scope.promise = schemeRepository.getDetalleEsquema($scope.idEsquema, $scope.esFijo).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.detalleEsquema = result.data;
+                alertFactory.success("destalles cargados");
+            } else {
+                alertFactory.info("No se encontraron destalles");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar destalles");
+        });
+    }
+
+    $scope.tasaFecha = function () {
+
+    }
+    $scope.tasaRango = function () {
+
     }
 });
