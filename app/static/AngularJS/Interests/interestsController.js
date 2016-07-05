@@ -477,6 +477,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.nombreFinancieraNueva = nombreFinanciera;
         $scope.getEsquemaFinanciera();
     }
+    
 
     // Función para llamar el datepicker
     $scope.calendario = function () {
@@ -675,6 +676,34 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             $scope.tasaRango.show = true;
             console.log($scope.esFijo);
         }
+        setTimeout(function () {
+            $('#detallesEsquema').DataTable({
+                dom: '<"html5buttons"B>lTfgitp'
+                , buttons: [{
+                        extend: 'copy'
+                            }, {
+                        extend: 'csv'
+                            }, {
+                        extend: 'excel'
+                        , title: 'ExampleFile'
+                            }, {
+                        extend: 'pdf'
+                        , title: 'ExampleFile'
+                            }
+                                    
+                    , {
+                        extend: 'print'
+                        , customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                            }
+                        ]
+            });
+        }, 1000);
     }
 
     $scope.getDetalleEsquema = function () {
