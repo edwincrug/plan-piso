@@ -372,7 +372,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
                         if (isConfirm) { 
 
                             swal("Guardado", "Guardar", "success"); 
-                            insertEsquemas();
+                            $scope.insertEsquemas();
 
                         } else {
                             swal("Cancelado", "No se guardo", "error");
