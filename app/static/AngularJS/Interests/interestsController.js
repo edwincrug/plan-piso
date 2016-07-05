@@ -8,6 +8,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.idEmpresa = {};
     $scope.updateEsquemaUnidad = [];
     $scope.idESquemaNueva = 0;
+    
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
@@ -576,6 +577,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         ]
             });
         }, 1000);
+        $scope.observaciones = 'Ésta unidad puede tener un cambio de esquema';
         //$scope.updateScheme();
     }
 
@@ -695,11 +697,20 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     
     $scope.validationSchemaChange = function(){
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
-            interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
-                console.log(result);
+            $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
+                    //for (var i = 0; i < result.data.length; i++) {
                     console.log('pasa por aqui');
-                    alertFactory.success("Esquema Cambiado");
+                    $scope.fechaIngresoInvetario = result.data[0].vehFecremision;
+                    alertFactory.success($scope.fechaIngresoInvetario);
+                    $scope.promise = interestsRepository.getDetalleEsquemaUnidad($scope.idFinancieraCambio).then(function (esquemaNuevo) {
+                        if (esquemaNuevo.data.length > 0) {
+                            $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
+                            console.log($scope.fechaIngresoInvetario,$scope.fechaEsquemaNuevo);
+                        }
+                    });
+                    console.log($scope.fechaEsquemaNuevo);
+                    //}
                 } else {
                     alertFactory.info("Esquema no cambiado");
                 }
@@ -708,4 +719,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             });
         });
     }
+    
+    
 });
