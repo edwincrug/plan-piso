@@ -480,6 +480,7 @@ $scope.insertFields = function (object)
             if (result.data.length > 0) {                    
                 alertFactory.success("Esquema Agregado");
                 $scope.clearControls();
+                $scope.getEsquemaFinanciera();
             } else {
                 alertFactory.info("Esquema No Agregado");
             }

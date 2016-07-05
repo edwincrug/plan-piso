@@ -373,4 +373,42 @@ Calculo.prototype.post_updatescheme = function(req, res, next){
  });
 } 
 
+// Muestra los detalles de los esquemas por unidad
+Calculo.prototype.get_detalleEsquemaunidad = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+    //asignación de valores mediante parámetros del request
+     var params = [{name: 'idEsquema', value: req.query.idEsquema, type: self.model.types.INT}];
+    this.model.query('SEL_DETALLE_ESQUEMA_UNIDAD_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+// Muestra los detalles de los esquemas por unidad
+Calculo.prototype.get_detalleunidadesquema = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+    //asignación de valores mediante parámetros del request
+     var params = [{name: 'vehNumserie', value: req.query.vehNumserie, type: self.model.types.STRING}];
+    this.model.query('SP_DETALLE_UNIDAD_ESQUEMA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 module.exports = Calculo;

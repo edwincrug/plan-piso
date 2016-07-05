@@ -79,13 +79,13 @@ registrationModule.factory('interestsRepository', function ($http) {
                 params: {
                     idEmpresa: idEmpresa,
                     idFinanciera: idFinanciera
-                },
+                },  
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        updateScheme: function (idEsquema,vehNumserie,idFinanciera) {
+         updateScheme: function (idEsquema,vehNumserie,idFinanciera) {
             return $http({
                 url: interestsURL + 'updatescheme/',
                 method: "POST",
@@ -97,7 +97,30 @@ registrationModule.factory('interestsRepository', function ($http) {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-
+            });
+        },
+        getDetalleEsquemaUnidad : function (idEsquema) {
+            return $http({
+                url: interestsURL + 'detalleEsquemaunidad /',
+                method: "GET",
+                params: {
+                    idEsquema: idEsquema
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getDetalleUnidadEsquema : function (vehNumserie) {
+            return $http({
+                url: interestsURL + 'detalleunidadesquema/',
+                method: "GET",
+                params: {
+                    vehNumserie: vehNumserie
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
         }
     };
