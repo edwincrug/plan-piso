@@ -435,7 +435,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $('#esquemasFinancieraNuevo').DataTable({
                         dom: '<"html5buttons"B>lTfgitp'
                         , buttons: [{
-                                extend: 'Copiar'
+                                extend: 'copy'
                             }, {
                                 extend: 'csv'
                             }, {
@@ -447,7 +447,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             }
                                     
                             , {
-                                extend: 'imprimir'
+                                extend: 'print'
                                 , customize: function (win) {
                                     $(win.document.body).addClass('white-bg');
                                     $(win.document.body).css('font-size', '10px');
