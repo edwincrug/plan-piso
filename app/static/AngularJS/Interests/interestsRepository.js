@@ -98,6 +98,30 @@ registrationModule.factory('interestsRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getDetalleEsquemaUnidad : function (idEsquema) {
+            return $http({
+                url: interestsURL + 'detalleEsquemaunidad /',
+                method: "GET",
+                params: {
+                    idEsquema: idEsquema
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getDetalleUnidadEsquema : function (vehNumserie) {
+            return $http({
+                url: interestsURL + 'detalleunidadesquema/',
+                method: "GET",
+                params: {
+                    vehNumserie: vehNumserie
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

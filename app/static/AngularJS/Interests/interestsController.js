@@ -542,6 +542,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Función para mostrar los detalles del cambio de esquema
     $scope.hacerCambioEsquema = function () {
+        $scope.validationSchemaChange();
         $scope.idEsquemaNuevo.show = false;
         $scope.hacerCambioEsquema.show = true;
         $('input[type=checkbox]').attr('checked', false);
@@ -688,9 +689,23 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
 
     $scope.tasaFecha = function () {
-
     }
     $scope.tasaRango = function () {
-
+    }
+    
+    $scope.validationSchemaChange = function(){
+        $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
+            interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
+                console.log(result);
+                if (result.data.length > 0) {
+                    console.log('pasa por aqui');
+                    alertFactory.success("Esquema Cambiado");
+                } else {
+                    alertFactory.info("Esquema no cambiado");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cambiar Esquema");
+            });
+        });
     }
 });
