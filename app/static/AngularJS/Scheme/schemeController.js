@@ -3,11 +3,21 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
     $scope.message = 'Buscando...';
     $scope.tasaFecha = '';
     $scope.tasaRango = '';
-     $scope.esquema = [];
+    $scope.esquema = [];
+
+    
+
+    $scope.lstSchemeType =[
+    {value:true,text:'Esquema por rango de fechas'},
+    {value:false,text:'Esquema por rango de días'}
+    ];
+
+    $scope.selectedOption = $scope.lstSchemeType[0];
+
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
             $scope.getFinanciera();
-            $scope.getEsquemaFinanciera.show = false;
+            $scope.getEsquemaFinanciera.show = false;            
         }
         // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
     $scope.seleccionarFinanciera = function (idFinanciera, nombreFinanciera) {
@@ -180,7 +190,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
                     { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:expresion.decimal1},                
                     { value:$scope.esquema.fechaInicio,name: 'Fecha inicio', regExp:expresion.todo},
                     { value:$scope.esquema.fechaFin,name: 'Fecha fin', regExp:expresion.todo},
-                    { value:$scope.esquema.tiie,name: 'TIIE', regExp:expresion.entero1}
+                    { value:$scope.esquema.tiie,name: 'TIIE', regExp:expresion.decimal1}
                 ];
 
                 return controlesPorFecha;
@@ -222,7 +232,7 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
 
         $scope.esquema.diasGracia = null;
         $scope.esquema.plazo = null;
-        $scope.idFinanciera = null;
+        // $scope.idFinanciera = null;
         $scope.esquema.nombre = null;
         $scope.esquema.descripcion = null;
         $scope.checked = false;
@@ -239,32 +249,200 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
     };
 
 
-    $scope.insertEsquemas = function () {
 
-        var controlsToValidate =[];
+    $scope.lstDateScheme =[];
+    $scope.indexDate =1;
 
-        if($scope.checked) {
-        controlsToValidate = $scope.getControlByDate();}
-        else {
-        controlsToValidate = $scope.getControlByRange();}        
-     
+    $scope.addByDate = function ()
+    {
+        var controlsToValidate = $scope.getControlByDate();
+        
+        if(!$scope.formIsValid(controlsToValidate)) return;
+        
+
+        var scheme = { 
+            indexDate: $scope.indexDate++,
+            diasGracia: $scope.esquema.diasGracia,
+            plazo: $scope.esquema.plazo,
+            nombre: $scope.esquema.nombre,
+            descripcion: $scope.esquema.descripcion,
+            tasaInteres: $scope.esquema.tasaInteres,
+            porcentajePenetracion: $scope.esquema.porcentajePenetracion,
+            fechaInicio: $scope.esquema.fechaInicio,
+            fechaFin: $scope.esquema.fechaFin,
+            tiie: $scope.esquema.tiie,            
+        }
+
+        
+        $scope.lstDateScheme.push(scheme);    
+        $scope.clearControls();
+    };
+
+
+    $scope.removeDateRow= function(value)
+    {
+
+        var index = -1;     
+        var dataArr = eval( $scope.lstDateScheme );
+
+        for( var i = 0; i < dataArr.length; i++ ) {
+            if( dataArr[i].indexDate === value ) {
+                index = i;
+                break;
+            }
+        }
+        if( index === -1 ) {
+            alert( "Something gone wrong" );
+        }
+
+        $scope.lstDateScheme.splice( index, 1 );    
+
+    
+
+    };
+
+
+    $scope.lstRangeScheme =[];
+    $scope.indexRange =1;
+
+    $scope.addByRange = function ()
+    {
+
+        var controlsToValidate = $scope.getControlByRange();
+        
         if(!$scope.formIsValid(controlsToValidate)) return;
 
-        schemeRepository.insertEsquema( 
-        $scope.esquema.diasGracia,
-        $scope.esquema.plazo,
+
+        var scheme = { 
+            indexRange: $scope.indexRange++,
+            diasGracia: $scope.esquema.diasGracia,
+            plazo: $scope.esquema.plazo,
+            nombre: $scope.esquema.nombre,
+            descripcion: $scope.esquema.descripcion,
+            tasaInteres: $scope.esquema.tasaInteres,
+            rango: $scope.esquema.rango,
+            precedencia: $scope.esquema.precedencia,
+            porcentajePenetracion: $scope.esquema.porcentajePenetracion,
+            idTiieTipo: $scope.esquema.idTiieTipo
+        }
+
+
+        $scope.lstRangeScheme.push(scheme);    
+        $scope.clearControls();
+
+    };
+
+
+     $scope.removeRangeRow= function(value)
+    {
+
+        var index = -1;     
+        var dataArr = eval( $scope.lstRangeScheme );
+
+        for( var i = 0; i < dataArr.length; i++ ) {
+            if( dataArr[i].indexRange === value ) {
+                index = i;
+                break;
+            }
+        }
+        if( index === -1 ) {
+            alert( "Something gone wrong" );
+        }
+
+        $scope.lstRangeScheme.splice( index, 1 );    
+
+      
+    };
+
+
+$scope.showConfirmDelete = function (type,index) {
+
+       swal({
+                        title: "¿Estas seguro?",
+                        text: "No se podrá  deshacer la accion",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Si, Eliminar",
+                        cancelButtonText: "No, cancelar",
+                        closeOnConfirm: false,
+                        closeOnCancel: false },
+                    function (isConfirm) {
+                        if (isConfirm) {                        
+
+
+                            if(type==1) //elimina por fecha
+                            {
+                            $scope.removeDateRow(index);
+                            swal("Eliminado", "Eliminado", "success"); 
+                            }
+
+
+                            if(type==2) //elimina por Rango
+                            {
+                            $scope.removeDateRow(index);
+                            swal("Eliminado", "Eliminado", "success"); 
+                            }
+
+                        } else {
+                            swal("Cancelado", "No se elimino", "error");
+                        }        
+
+                    });
+}
+
+
+
+$scope.insertEsquemas = function () {
+
+        var controls =[];
+
+        if($scope.checked) {
+        controls= $scope.lstRangeScheme;
+        }
+        else {
+        controls = $scope.lstDateScheme;}        
+
+
+        console.log(controls);
+         
+        
+        for (var i = 0; i < controls.length; i++) {
+            console.log(controls[i]);
+            $scope.insertFields(controls[i]);
+        };
+
+/*
+        $scope.lstRangeScheme=[];
+        $scope.lstDateScheme=[];
+*/    
+    };
+
+
+
+
+
+$scope.insertFields = function (object) 
+{
+
+    var esRango = !$scope.checked;
+
+
+    schemeRepository.insertEsquema( 
+        object.diasGracia,
+        object.plazo,
         $scope.idFinanciera,
-        $scope.esquema.nombre,
-        $scope.esquema.descripcion,
-        $scope.checked,
-        $scope.esquema.tasaInteres,
-        $scope.esquema.rango,
-        $scope.esquema.precedencia,
-        $scope.esquema.porcentajePenetracion,
-        $scope.esquema.idTiieTipo,
-        $scope.esquema.fechaInicio,
-        $scope.esquema.fechaFin,
-        $scope.esquema.tiie
+        object.nombre,
+        object.descripcion,
+        esRango,
+        object.tasaInteres,
+        object.rango,
+        object.precedencia,
+        object.porcentajePenetracion,
+        object.idTiieTipo,
+        object.fechaInicio,
+        object.fechaFin,
+        object.tiie
         ).then(function (result)
              {
 
@@ -277,9 +455,21 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
         }, function (error) {
             alertFactory.error("Error al guardar Esquema");
         });
-        
+ 
+}
 
-    };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
