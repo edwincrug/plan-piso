@@ -355,6 +355,37 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
     };
 
 
+
+    $scope.showConfirmSave = function () {
+
+       swal({
+                        title: "¿Estas seguro?",
+                        text: "No se podrá  deshacer la accion",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Si, Guardar",
+                        cancelButtonText: "No, cancelar",
+                        closeOnConfirm: false,
+                        closeOnCancel: false },
+                    function (isConfirm) {
+                        if (isConfirm) { 
+
+                            swal("Guardado", "Guardar", "success"); 
+                            insertEsquemas();
+
+                        } else {
+                            swal("Cancelado", "No se guardo", "error");
+                        }        
+
+                    });
+}
+
+
+
+
+
+
 $scope.showConfirmDelete = function (type,index) {
 
        swal({
