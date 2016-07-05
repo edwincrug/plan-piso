@@ -5,14 +5,14 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
     $scope.tasaRango = '';
     $scope.esquema = [];
 
-    
-
-    $scope.lstSchemeType =[
-    {value:true,text:'Esquema por rango de fechas'},
-    {value:false,text:'Esquema por rango de días'}
+    $scope.lstTiie =[
+    {value:1,text:'TIIE Actual'},
+    {value:2,text:'TIIE Promedio'}
     ];
 
-    $scope.selectedOption = $scope.lstSchemeType[0];
+
+
+    $scope.selectedOption = $scope.lstTiie[0];
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
@@ -323,7 +323,8 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             rango: $scope.esquema.rango,
             precedencia: $scope.esquema.precedencia,
             porcentajePenetracion: $scope.esquema.porcentajePenetracion,
-            idTiieTipo: $scope.esquema.idTiieTipo
+            //idTiieTipo: $scope.esquema.idTiieTipo
+            idTiieTipo: $scope.selectedOption.value
         }
 
 
@@ -358,29 +359,21 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
 
     $scope.showConfirmSave = function () {
 
-       swal({
-                        title: "¿Estas seguro?",
-                        text: "No se podrá  deshacer la accion",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Si, Guardar",
-                        cancelButtonText: "No, cancelar",
-                        closeOnConfirm: false,
-                        closeOnCancel: false },
-                    function (isConfirm) {
-                        if (isConfirm) { 
+    var txt;
 
-                            swal("Guardado", "Guardar", "success"); 
-                            $scope.insertEsquemas();
+    var r = confirm("¿Estas seguro que deseas guardar?");
 
-                        } else {
-                            swal("Cancelado", "No se guardo", "error");
-                        }        
+    if (r == true) {
+        txt = "Eliminado";
+         $scope.insertEsquemas();
+    } else {
+        txt = "cancelado";
+    }
 
-                    });
-}
 
+
+
+};
 
 
 
@@ -388,39 +381,36 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
 
 $scope.showConfirmDelete = function (type,index) {
 
-       swal({
-                        title: "¿Estas seguro?",
-                        text: "No se podrá  deshacer la accion",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Si, Eliminar",
-                        cancelButtonText: "No, cancelar",
-                        closeOnConfirm: false,
-                        closeOnCancel: false },
-                    function (isConfirm) {
-                        if (isConfirm) {                        
+    var r = confirm("¿Estas seguro que deseas eliminar?");
+
+    if (r == true) {        
+        $scope.removeDateRow(index);
+        alertFactory.success("Eliminado");
+    } else {
+        alertFactory.warning("Cancelado");
+    }
 
 
-                            if(type==1) //elimina por fecha
-                            {
-                            $scope.removeDateRow(index);
-                            swal("Eliminado", "Eliminado", "success"); 
-                            }
+};
 
 
-                            if(type==2) //elimina por Rango
-                            {
-                            $scope.removeDateRow(index);
-                            swal("Eliminado", "Eliminado", "success"); 
-                            }
+$scope.compareDate = function (initDate,endDate) 
+{
 
-                        } else {
-                            swal("Cancelado", "No se elimino", "error");
-                        }        
 
-                    });
-}
+console.log($scope.selectedOption.value);
+console.log($scope.selectedOption);
+    /*
+    var initialDate = new Date(initDate);
+    var finalDate = new Date(endDate);
+
+
+    for (var i = 0; i < $scope.lstDateScheme.length; i++) {
+        $scope.lstDateScheme[i].fechaInicio;
+        $scope.lstDateScheme[i].fechaFin;
+    };
+*/
+};
 
 
 
@@ -489,17 +479,6 @@ $scope.insertFields = function (object)
         });
  
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

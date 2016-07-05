@@ -338,14 +338,18 @@
                                                 ng-model="esquema.rango" placeholder="Rango Días">                                                
                                                 </div>
 
-
-                                                   <div class="form-group">                            
+                                                <!-- <div class="form-group">                            
                                                 <label for="tipoTiie">Tipo Tiie:</label> 
                                                 <input type="text" class="form-control" id="tipoTiie" 
                                                 ng-model="esquema.idTiieTipo" placeholder="Tipo Tiie">                            
-                                                </div>
+                                                </div> -->
 
-                                            
+                                            <div class="form-group">        
+                                                <label for="tipoTiie">Tipo Tiie:</label> 
+                                                <select id="tipoTiie" ng-options="lst.text for lst in lstTiie"  
+                                            ng-model="selectedOption" class="form-control"  ></select> 
+
+                                            </div> 
 
                             </div> 
 
@@ -445,6 +449,7 @@
 
                 
                 <button class="btn btn-primary btn-sm demo4" ng-click="showConfirmSave()">Guardar</button>
+                <button class="btn btn-primary" ng-click="compareDate(esquema.fechaInicio,esquema.fechaFin)">test</button> 
 
             </div>
         </div>
