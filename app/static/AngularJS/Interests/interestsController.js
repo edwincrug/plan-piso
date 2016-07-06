@@ -8,7 +8,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.idEmpresa = {};
     $scope.updateEsquemaUnidad = [];
     $scope.idESquemaNueva = 0;
-    
+
+
+
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
@@ -17,6 +19,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
+        $scope.getInterest.show = false;
         $scope.checkbox();
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
@@ -28,7 +31,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
         $scope.seleccionarSucursal.show = false;
         $scope.idEmpresa = idEmpresa;
-        console.log($scope.idEmpresa)
+        $scope.getInterest.show = false;
         $scope.nombreEmpresa = nombreEmpresa;
         $scope.getFinancial();
         $scope.getSucursal();
@@ -48,14 +51,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Muestra los detalles de la financiera
     $scope.seleccionarFinanciera = function (idFinanciera, nombreFinanciera) {
         $scope.idFinanciera = idFinanciera;
-        //console.log($scope.idFinanciera);
         $scope.nombreFinanciera = nombreFinanciera;
-        //console.log($scope.nombreFinanciera);
         $scope.seleccionarSucursal.show = true;
         $scope.getInterestFinanciera();
         $scope.seleccionarFinanciera.show = true;
         $scope.getFinancial.show = false;
         $scope.transpasoFinanciera.show = true;
+        $scope.ocultarSucursal.show = true;
     }
 
     // Función para filtrar compañias
@@ -73,12 +75,20 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         }
         // Función para trar las financieras por empresa
     $scope.getFinancial = function () {
+        $scope.totalUnidades = 0;
+        $scope.totalInteres = 0;
+        $scope.totalAdeudo = 0;
         $scope.financieras = {};
         $scope.promise = interestsRepository.getFinancieraSelect($scope.idEmpresa).then(function (result) {
             if (result.data.length > 0) {
                 $scope.financieras = result.data;
                 console.log($scope.financieras)
-                alertFactory.success("Financieras cargadas");
+                for (var i = 0; i < result.data.length; i++) {
+                    $scope.totalUnidades += (result.data[i].unidades);
+                    $scope.totalInteres += (result.data[i].interes);
+                    $scope.totalAdeudo += (result.data[i].adeudo);
+                    alertFactory.success("Financieras cargadas");
+                }
             } else {
                 alertFactory.info("No se encontraron Financieras");
             }
@@ -92,7 +102,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
             if (result.data.length > 0) {
                 $scope.sucursales = result.data;
-                console.log(result.data);
                 alertFactory.success("Sucursales cargados");
             } else {
                 alertFactory.info("No se encontraron Sucursales");
@@ -100,6 +109,89 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         }, function (error) {
             alertFactory.error("Error al cargar Sucursales");
         });
+    }
+
+    // Función para mostrar intereses por empresa
+    $scope.getInterest = function () {
+        $('#interestTable').DataTable().destroy();
+        $scope.interes = {};
+        $scope.promise =
+            interestsRepository.getInterest($scope.idEmpresa).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.interes = result.data;
+                    $scope.unidades = result.data.length;
+                    $scope.unidadesVencidas = 0;
+                    $scope.interesTotal = 0;
+                    $scope.interesActual = 0;
+                    $scope.unidadesPorVencer = 0;
+                    $scope.interesnopagados = 0;
+                    $scope.interespagado = 0;
+                    $scope.interesmespasado = 0;
+                    $scope.total = 0;
+                    setTimeout(function () {
+                        $('#interestTable').DataTable({
+                            dom: '<"html5buttons"B>lTfgitp',
+                            buttons: [{
+                                    extend: 'copy'
+                            }, {
+                                    extend: 'csv'
+                            }, {
+                                    extend: 'excel',
+                                    title: 'ExampleFile'
+                            }, {
+                                    extend: 'pdf',
+                                    title: 'ExampleFile'
+                            }
+
+                                , {
+                                    extend: 'print',
+                                    customize: function (win) {
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+                                        $(win.document.body).find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                            }
+                        ]
+                        });
+                    }, 1000);
+                    for (var i = 0; i < result.data.length; i++) {
+                        $scope.unidadesPorVencer += 1;
+                        $scope.total += (result.data[i].interesAcumulado);
+                        $scope.porcentajeTotalUnidades = 100;
+                        $scope.interesmespasado += (result.data[i].interesAcumulado);
+                        $scope.interespagado += (result.data[i].interesPagado);
+                        $scope.interesActual += (result.data[i].interesAcumuladoActual);
+                    }
+                    $scope.interesTotal = $scope.interesActual + $scope.interesmespasado;
+                    $scope.interesnopagados = $scope.interesTotal;
+                    alertFactory.success("Intereses cargados");
+                    $scope.seleccionarSucursal.show = true;
+                    $scope.seleccionarFinanciera.show = true;
+                    $scope.getFinancial.show = false;
+                    $scope.transpasoFinanciera.show = true;
+                    $scope.getInterest.show = true;
+                    $scope.ocultarSucursal.show = false;
+                } else {
+                    alertFactory.info("Intereses no encontrados");
+                    $scope.interesmespasado = 0;
+                    $scope.unidades = 0;
+                    $scope.unidadesVencidas = 0;
+                    $scope.interesTotal = 0;
+                    $scope.interesActual = 0;
+                    $scope.unidadesPorVencer = 0;
+                    $scope.interesRestante = 0;
+                    $scope.porcentajeRestante = 0;
+                    $scope.total = 0;
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar intereses");
+            });
+    }
+
+    $scope.ocultarSucursal = function () {
+
     }
 
     // Función para mostrar intereses por financiera
@@ -122,22 +214,22 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.total = 0;
                     setTimeout(function () {
                         $('#interestTable').DataTable({
-                            dom: '<"html5buttons"B>lTfgitp'
-                            , buttons: [{
+                            dom: '<"html5buttons"B>lTfgitp',
+                            buttons: [{
                                     extend: 'copy'
                             }, {
                                     extend: 'csv'
                             }, {
-                                    extend: 'excel'
-                                    , title: 'ExampleFile'
+                                    extend: 'excel',
+                                    title: 'ExampleFile'
                             }, {
-                                    extend: 'pdf'
-                                    , title: 'ExampleFile'
+                                    extend: 'pdf',
+                                    title: 'ExampleFile'
                             }
-                                    
+
                                 , {
-                                    extend: 'print'
-                                    , customize: function (win) {
+                                    extend: 'print',
+                                    customize: function (win) {
                                         $(win.document.body).addClass('white-bg');
                                         $(win.document.body).css('font-size', '10px');
                                         $(win.document.body).find('table')
@@ -195,22 +287,22 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.total = 0;
                     setTimeout(function () {
                         $('#interestTable').DataTable({
-                            dom: '<"html5buttons"B>lTfgitp'
-                            , buttons: [{
+                            dom: '<"html5buttons"B>lTfgitp',
+                            buttons: [{
                                     extend: 'copy'
                             }, {
                                     extend: 'csv'
                             }, {
-                                    extend: 'excel'
-                                    , title: 'ExampleFile'
+                                    extend: 'excel',
+                                    title: 'ExampleFile'
                             }, {
-                                    extend: 'pdf'
-                                    , title: 'ExampleFile'
+                                    extend: 'pdf',
+                                    title: 'ExampleFile'
                             }
-                                    
+
                                 , {
-                                    extend: 'print'
-                                    , customize: function (win) {
+                                    extend: 'print',
+                                    customize: function (win) {
                                         $(win.document.body).addClass('white-bg');
                                         $(win.document.body).css('font-size', '10px');
                                         $(win.document.body).find('table')
@@ -271,6 +363,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }
     }
+
 
     // Función Principal para los filtros
     $scope.rangeFilter = function () {
@@ -337,29 +430,76 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('#inicioModal').modal('toggle');
     }
 
-    // Función para traer detalles de las unidades
+    // Función para traer detalles de las unidades    
     $scope.getDetailsUnit = function () {
+        $scope.ocultarEquemaFechas.show = false;
+        $scope.ocultarEsquemaRango.show = false;
+        $('#esquemaDetalleUnidad').DataTable().destroy();
+        $scope.detailsUnitScheme = {};
         $scope.promise = interestsRepository.getDetailsUnit($scope.vehNumserie).then(function (result) {
             if (result.data.length > 0) {
                 $scope.detailsUnit = result.data;
+                $scope.esquemafijo = result.data[0].esFijo;
+                interestsRepository.getDetailsUnitScheme($scope.vehNumserie).then(function (detalles) {
+                    if (detalles.data.length > 0) {
+                        $scope.detailsUnitScheme = detalles.data;
+                        setTimeout(function () {
+                            $('#esquemaDetalleUnidad').DataTable({
+                                dom: '<"html5buttons"B>lTfgitp',
+                                iDisplayLength:5,
+                                buttons: [{
+                                        extend: 'copy'
+                            }, {
+                                        extend: 'csv'
+                            }, {
+                                        extend: 'excel',
+                                        title: 'ExampleFile'
+                            }, {
+                                        extend: 'pdf',
+                                        title: 'ExampleFile'
+                            }
+                                , {
+                                        extend: 'print',
+                                        customize: function (win) {
+                                            $(win.document.body).addClass('white-bg');
+                                            $(win.document.body).css('font-size', '10px');
+                                            $(win.document.body).find('table')
+                                                .addClass('compact')
+                                                .css('font-size', 'inherit');
+                                        }
+                            }
+                        ]
+                            });
+                        }, 1000);
+                        if ($scope.esquemafijo == false) {
+                            $scope.ocultarEquemaFechas.show = false;
+                            $scope.ocultarEsquemaRango.show = true
+                        } else {
+                            $scope.ocultarEquemaFechas.show = true;
+                            $scope.ocultarEsquemaRango.show = false;
+                        }
+                    }
+                });
             }
         });
     }
 
-    //Estilo de checkbox
+    $scope.ocultarEsquemaRango = function () {}
+    $scope.ocultarEquemaFechas = function () {}
+        //Estilo de checkbox
     $scope.checkbox = (function () {
         $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green'
-            , radioClass: 'iradio_square-green'
-        , });
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
     })
 
     // Función para iniciar wizard
     $scope.wizard = function () {
         $("#wizard").steps();
         $("#form").steps({
-            bodyTag: "fieldset"
-            , onStepChanging: function (event, currentIndex, newIndex) {
+            bodyTag: "fieldset",
+            onStepChanging: function (event, currentIndex, newIndex) {
                 // Always allow going backward even if the current step contains invalid fields!
                 if (currentIndex > newIndex) {
                     return true;
@@ -384,8 +524,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
                 // Start validation; Prevent going forward if false
                 return form.valid();
-            }
-            , onStepChanged: function (event, currentIndex, priorIndex) {
+            },
+            onStepChanged: function (event, currentIndex, priorIndex) {
                 // Suppress (skip) "Warning" step if the user is old enough.
                 if (currentIndex === 2 && Number($("#age").val()) >= 18) {
                     $(this).steps("next");
@@ -396,8 +536,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 if (currentIndex === 2 && priorIndex === 3) {
                     $(this).steps("previous");
                 }
-            }
-            , onFinishing: function (event, currentIndex) {
+            },
+            onFinishing: function (event, currentIndex) {
                 var form = $(this);
 
                 // Disable validation on fields that are disabled.
@@ -406,8 +546,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
                 // Start validation; Prevent form submission if false
                 return form.valid();
-            }
-            , onFinished: function (event, currentIndex) {
+            },
+            onFinished: function (event, currentIndex) {
                 var form = $(this);
 
                 // Submit form input
@@ -416,8 +556,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         }).validate({
             errorPlacement: function (error, element) {
                 element.before(error);
-            }
-            , rules: {
+            },
+            rules: {
                 confirm: {
                     equalTo: "#password"
                 }
@@ -428,28 +568,29 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function () {
         $scope.esquemas = {};
-        $('#esquemasFinancieraNuevo').DataTable().destroy(); 
+        $('#esquemasFinancieraNuevo').DataTable().destroy();
         $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinancieraCambio).then(function (result) {
             if (result.data.length > 0) {
                 $scope.esquemas = result.data;
                 setTimeout(function () {
                     $('#esquemasFinancieraNuevo').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp'
-                        , buttons: [{
+                        dom: '<"html5buttons"B>lTfgitp',
+                        iDisplayLength:5,
+                        buttons: [{
                                 extend: 'copy'
                             }, {
                                 extend: 'csv'
                             }, {
-                                extend: 'excel'
-                                , title: 'ExampleFile'
+                                extend: 'excel',
+                                title: 'ExampleFile'
                             }, {
-                                extend: 'pdf'
-                                , title: 'ExampleFile'
+                                extend: 'pdf',
+                                title: 'ExampleFile'
                             }
-                                    
+
                             , {
-                                extend: 'print'
-                                , customize: function (win) {
+                                extend: 'print',
+                                customize: function (win) {
                                     $(win.document.body).addClass('white-bg');
                                     $(win.document.body).css('font-size', '10px');
                                     $(win.document.body).find('table')
@@ -470,24 +611,25 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
 
     $scope.modalAgregarNuevoEsquemas = function () {
-            $('#modalAgregarNuevoEsquema').appendTo("body").modal('show');
-        }
-        // funcion de prueba para mostrar nombre de las financieras
+        $('#modalAgregarNuevoEsquema').appendTo("body").modal('show');
+    }
+
+    // funcion de prueba para mostrar nombre de las financieras
     $scope.seleccionarFinancieraTranspaso = function (idFinanciera, nombreFinanciera) {
         $scope.nombreFinancieraNueva = nombreFinanciera;
         $scope.getEsquemaFinanciera();
     }
-    
+
 
     // Función para llamar el datepicker
     $scope.calendario = function () {
         $('#calendar .input-group.date').datepicker({
-            todayBtn: "linked"
-            , keyboardNavigation: true
-            , forceParse: false
-            , calendarWeeks: true
-            , autoclose: true
-            , todayHighlight: true
+            todayBtn: "linked",
+            keyboardNavigation: true,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
         });
     }
 
@@ -496,7 +638,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.promise = schemeRepository.getFinanciera().then(function (result) {
             if (result.data.length > 0) {
                 $scope.financieraNueva = result.data;
-                console.log(result.data)
                 alertFactory.success("financieras cargados");
             } else {
                 alertFactory.info("No se encontraron financieras");
@@ -522,7 +663,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.updateScheme = function () {
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
             interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie, $scope.idFinancieraCambio).then(function (result) {
-                console.log(result);
                 if (result.data.length > 0) {
                     console.log('pasa por aqui');
                     alertFactory.success("Esquema Cambiado");
@@ -552,22 +692,23 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.transpasoFinanciera.show = true;
         setTimeout(function () {
             $('#cambioEsquema').DataTable({
-                dom: '<"html5buttons"B>lTfgitp'
-                , buttons: [{
+                dom: '<"html5buttons"B>lTfgitp',
+                iDisplayLength:5,
+                buttons: [{
                         extend: 'copy'
                             }, {
                         extend: 'csv'
                             }, {
-                        extend: 'excel'
-                        , title: 'ExampleFile'
+                        extend: 'excel',
+                        title: 'ExampleFile'
                             }, {
-                        extend: 'pdf'
-                        , title: 'ExampleFile'
+                        extend: 'pdf',
+                        title: 'ExampleFile'
                             }
-                                    
+
                     , {
-                        extend: 'print'
-                        , customize: function (win) {
+                        extend: 'print',
+                        customize: function (win) {
                             $(win.document.body).addClass('white-bg');
                             $(win.document.body).css('font-size', '10px');
                             $(win.document.body).find('table')
@@ -612,13 +753,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modal = modal;
         $('#transpasoCambioEsquema').appendTo("body").modal('show');
         $scope.esquemas = {};
-        $('#esquemasFinancieraNuevo').DataTable().destroy(); 
+        $('#esquemasFinancieraNuevo').DataTable().destroy();
     }
 
     // Función para marcar todos los checkbox
     $scope.marcarTodosCheckbox = function () {
         $('input[type=checkbox]').attr('checked', true);
-        console.log('Check')
+        //$scope.valorCheckBoxTabla(todo);
+        console.log('hola')
     }
 
     // oculta los botones para transpaso de financiera
@@ -676,55 +818,58 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             $scope.tasaRango.show = true;
             console.log($scope.esFijo);
         }
-        setTimeout(function () {
-            $('#detallesEsquema').DataTable({
-                dom: '<"html5buttons"B>lTfgitp'
-                , buttons: [{
-                        extend: 'copy'
+    }
+
+        $scope.getDetalleEsquema = function () {
+            $('#detallesEsquema').DataTable().destroy();
+            $scope.detalleEsquema = {};
+            $scope.promise = schemeRepository.getDetalleEsquema($scope.idEsquema, $scope.esFijo).then(function (result) {
+                        if (result.data.length > 0) {
+                            $scope.detalleEsquema = result.data;
+                            setTimeout(function () {
+                                $('#detallesEsquema').DataTable({
+                                    dom: '<"html5buttons"B>lTfgitp',
+                                    iDisplayLength:5,
+                                    buttons: [{
+                                            extend: 'copy'
                             }, {
-                        extend: 'csv'
+                                            extend: 'csv'
                             }, {
-                        extend: 'excel'
-                        , title: 'ExampleFile'
+                                            extend: 'excel',
+                                            title: 'ExampleFile'
                             }, {
-                        extend: 'pdf'
-                        , title: 'ExampleFile'
-                            }
-                                    
+                                            extend: 'pdf',
+                                            title: 'ExampleFile'
+                            }//iDisplayLength:10
+
                     , {
-                        extend: 'print'
-                        , customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
+                                            extend: 'print',
+                                            customize: function (win) {
+                                                $(win.document.body).addClass('white-bg');
+                                                $(win.document.body).css('font-size', '10px');
+                                                $(win.document.body).find('table')
+                                                    .addClass('compact')
+                                                    .css('font-size', 'inherit');
+                                            }
                             }
                         ]
-            });
-        }, 1000);
+                                });
+                            }, 1000);
+                        
+                        alertFactory.success("destalles cargados");
+                    } else {
+                        alertFactory.info("No se encontraron destalles");
+                    }
+                },
+                function (error) {
+                    alertFactory.error("Error al cargar destalles");
+                });
     }
 
-    $scope.getDetalleEsquema = function () {
-        $scope.promise = schemeRepository.getDetalleEsquema($scope.idEsquema, $scope.esFijo).then(function (result) {
-            if (result.data.length > 0) {
-                $scope.detalleEsquema = result.data;
-                alertFactory.success("destalles cargados");
-            } else {
-                alertFactory.info("No se encontraron destalles");
-            }
-        }, function (error) {
-            alertFactory.error("Error al cargar destalles");
-        });
-    }
+    $scope.tasaFecha = function () {}
+    $scope.tasaRango = function () {}
 
-    $scope.tasaFecha = function () {
-    }
-    $scope.tasaRango = function () {
-    }
-    
-    $scope.validationSchemaChange = function(){
+    $scope.validationSchemaChange = function () {
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
             $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
@@ -735,9 +880,15 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.promise = interestsRepository.getDetalleEsquemaUnidad($scope.idFinancieraCambio).then(function (esquemaNuevo) {
                         if (esquemaNuevo.data.length > 0) {
                             $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
-                            console.log($scope.fechaIngresoInvetario,$scope.fechaEsquemaNuevo);
+                            console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
                         }
                     });
+                    if ($scope.fechaIngresoInvetario <= $scope.fechaEsquemaNuevo) {
+                        console.log('aceptado');
+                    } else {
+                        console.log('denegado')
+                    }
+
                     console.log($scope.fechaEsquemaNuevo);
                     //}
                 } else {
@@ -748,6 +899,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             });
         });
     }
-    
-    
+
+
 });

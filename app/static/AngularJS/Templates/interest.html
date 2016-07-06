@@ -11,11 +11,14 @@
                 <li class="active">
                     <strong>Intereses</strong>
                 </li>
-                <li class="active" ng-show="seleccionarFinanciera.show">
+                <li class="active" ng-show="ocultarSucursal.show">
                     <strong>{{nombreFinanciera}}</strong>
                 </li>
-                <li class="active" ng-show="seleccionarFinanciera.show">
+                <li class="active" ng-show="ocultarSucursal.show">
                     <strong>{{nombreSucursal}}</strong>
+                </li>
+                <li class="active" ng-show="getInterest.show">
+                    <strong>Todas las unidades</strong>
                 </li>
             </ol>
         </div>
@@ -34,7 +37,7 @@
                 </li>
             </ul>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="input-group-btn" ng-show="seleccionarSucursal.show">
+        <div class="input-group-btn" ng-show="ocultarSucursal.show">
             <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Sucursal <span class="caret"></span></button>
             <ul class="dropdown-menu col-xs-1 col-sm-2">
                 <li ng-repeat="sucursales in sucursales">
@@ -46,6 +49,34 @@
     <br/>
     <!--Fin DropDownList-->
     <!--Inico Dashboard Financiera-->
+    <div class="col-lg-4 pointer">
+    <div class="ibox float-e-margins" ng-click="getInterest()" ng-show="getFinancial.show">
+            <div class="ibox-title">
+                <span class="label label-warning pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
+                <h3>Todas las unidades</h3>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <small class="stats-label">Adeudo Total</small>
+                        <h2>{{totalAdeudo | currency}}</h2>
+                    </div>
+                    <div class="col-xs-6">
+                        <small class="stats-label">Intereses</small>
+                        <h2>{{totalInteres | currency}}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <small class="stats-label">Unidades</small>
+                        <h4>{{totalUnidades}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="financieraee" class="col-lg-4 pointer" ng-repeat="financiera in financieras" ng-show="getFinancial.show">
         <div class="ibox float-e-margins" ng-click="seleccionarFinanciera(financiera.idFinanciera,financiera.financiera)">
             <div class="ibox-title">
@@ -74,6 +105,7 @@
             </div>
         </div>
     </div>
+
     <!--Fin Dashboard Financiera-->
     <!--Dashboards-->
     <div class="" ng-show="seleccionarFinanciera.show">
@@ -123,7 +155,7 @@
             <div class="col-lg-8">
             </div>
             <div class="col-lg-1">
-                <div class="widget style1 lazur-bg pointer" ng-click="set30days()" style="padding: 5px 5px">
+                <div class="widget style1 lazur-bg pointer count-info"  ng-class="" ng-click="set30days()" style="padding: 5px 5px">
                     <div class="row vertical-align">
                         <div class="col-xs-1">
                             <i class="glyphicon glyphicon-sort"></i>
@@ -193,6 +225,8 @@
                                             <th>Interés acumulado</th>
                                             <th>Utilidad</th>
                                             <th ng-show="modalTraspasoFinanciera.show">
+                                            <!--button ng-click="marcarTodosCheckbox(ck.id)"></button>
+                                            <!--th ng-show="modalTraspasoFinanciera.show"-->
                                                 <input type="checkbox" class="i-checks" ng-click="marcarTodosCheckbox(ck.todo)" ng-model="ck.todo">
                                             </th>
                                         </tr>
@@ -212,7 +246,6 @@
                                             <td ng-show="modalTraspasoFinanciera.show">
                                                 <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id)">
                                                 <label for="{{intereses.vehNumserie}}" class="css-label"></label>
-                                                <!--input type="checkbox" class="i-checks" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" ng-click="valorCheckBoxTabla(ck.id)"-->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -295,30 +328,59 @@
                         <br/> Descripción:
                         <label>{{detailsUnit[0].descripcion}}</label>
                     </div>
-                    <div class="col-xs-7 col-sm-8">
+                    <div class="col-xs-7 col-sm-8" ng-show="ocultarEquemaFechas.show">
                         <h2><span class="glyphicon glyphicon-stats"></span> Detalle Esquema</h2>
-                        <table class="table table-striped">
+                         <div class="table-responsive">
+                                <table id="esquemaDetalleUnidad" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Tasa Interés:</th>
-                                    <th>Rango:</th>
-                                    <th>Precedencia</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
                                     <th>Porcentaje Penetración</th>
-                                    <th>Tipo Tiie</th>
+                                    <!--th>Tipo Tiie</th-->
                                     <th>Tiie</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="detailsUnit in detailsUnit">
+                                <tr ng-repeat="detailsUnit in detailsUnitScheme">
+                                    <td>{{detailsUnit.tasaInteres | number:2}}%</td>
+                                    <td>{{detailsUnit.fechaInicio | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{detailsUnit.fechaFin | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{detailsUnit.porcentajePenetracion | number:2}}%</td>
+                                    <td>{{detailsUnit.tiie | number:2}}%</td>
+                                    <!--td>{{detailsUnit.monto | number:2}}%</td-->
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-7 col-sm-8" ng-show="ocultarEsquemaRango.show">
+                        <h2><span class="glyphicon glyphicon-stats"></span> Detalle Esquema</h2>
+                         <div class="table-responsive">
+                                <table id="esquemaDetalleUnidad" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tasa Interés:</th>
+                                    <th>Rango de Días</th>
+                                    <th>Precedencia</th>
+                                    <th>Porcentaje Penetración</th>
+                                    <!--th>Tipo Tiie</th-->
+                                    <th>Tiie</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="detailsUnit in detailsUnitScheme">
                                     <td>{{detailsUnit.tasaInteres | number:2}}%</td>
                                     <td>{{detailsUnit.rango}}</td>
                                     <td>{{detailsUnit.precedencia}}</td>
                                     <td>{{detailsUnit.porcentajePenetracion | number:2}}%</td>
-                                    <td>{{detailsUnit.descripcionTiie}}</td>
-                                    <td>{{detailsUnit.monto | number:2}}%</td>
+                                    <td>{{detailsUnit.tiie | number:2}}%</td>
+                                    <!--td>{{detailsUnit.monto | number:2}}%</td-->
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,12 +4,12 @@ var interestsURL = global_settings.urlCORS + 'api/calculo/';
 registrationModule.factory('interestsRepository', function ($http) {
 
     return {
-        getInterest: function (Marca) {
+        getInterest: function (idEmpresa) {
             return $http({
                 url: interestsURL + 'interest/',
                 method: "GET",
                 params: {
-                    Marca: Marca
+                    idEmpresa: idEmpresa
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -19,6 +19,18 @@ registrationModule.factory('interestsRepository', function ($http) {
         getDetailsUnit: function (vehNumserie) {
             return $http({
                 url: interestsURL + 'detailsUnit/',
+                method: "GET",
+                params: {
+                    vehNumserie: vehNumserie
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+            getDetailsUnitScheme: function (vehNumserie) {
+            return $http({
+                url: interestsURL + 'detailsUnitscheme/',
                 method: "GET",
                 params: {
                     vehNumserie: vehNumserie
@@ -101,7 +113,7 @@ registrationModule.factory('interestsRepository', function ($http) {
         },
         getDetalleEsquemaUnidad : function (idEsquema) {
             return $http({
-                url: interestsURL + 'detalleEsquemaunidad /',
+                url: interestsURL + 'detalleEsquemaunidad/',
                 method: "GET",
                 params: {
                     idEsquema: idEsquema

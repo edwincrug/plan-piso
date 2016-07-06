@@ -54,7 +54,8 @@ Calculo.prototype.get_freedayssucursal = function (req, res, next) {
         });
     });
 };
-// Se optiene los detalles de la unidad
+
+// Se optiene los detalles de la unidad  SEL_DETALLE_UNIDAD_ESQUEMA_SP
 Calculo.prototype.get_detailsUnit = function (req, res, next) {
     //Con req.query se obtienen los parametros de la url
     //Ejemplo: ?p1=a&p2=b
@@ -74,6 +75,28 @@ Calculo.prototype.get_detailsUnit = function (req, res, next) {
         });
     });
 };
+
+// Se optiene los detalles de la unidad  
+Calculo.prototype.get_detailsUnitscheme = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+
+    //asignación de valores mediante parámetros del request
+    var params = [{name: 'vehNumserie', value: req.query.vehNumserie, type: self.model.types.STRING}];
+
+    this.model.query('SEL_DETALLE_UNIDAD_ESQUEMA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
 //insertar nueva tiie
 Calculo.prototype.post_addtiie = function (req, res, next) {
     //Referencia a la clase para callback
@@ -100,8 +123,8 @@ Calculo.prototype.get_interest = function (req, res, next) {
     //Referencia a la clase para callback
     var self = this;
     //asignación de valores mediante parámetros del request
-     var params = [{name: 'Marca', value: req.query.Marca, type: self.model.types.STRING}];
-    this.model.query('SEL_INTEREST_SP', params, function (error, result) {
+     var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
+    this.model.query('[SEL_INTERES_COMPANY_SP]', params, function (error, result) {
         self.view.expositor(res, {
             error: error,
             result: result
