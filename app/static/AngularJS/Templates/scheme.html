@@ -31,7 +31,6 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-
                         <div class="table-responsive">
                             <table id="esquemasFinanciera" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
                                 <thead>
@@ -60,7 +59,6 @@
                                 <button class="btn btn-primary" ng-click="nuevoEsquema(0,0)">Agregar</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -68,387 +66,248 @@
     </div>
 </div>
 <!---->
-<div id="detallesEsquemas" class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content animated flipInY">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <div class="modal-header" style="padding:1px 0px;">
-                <h1>Detalle Esquema - {{nombreEsquema}}</h1>
-            </div>
-            <div class="modal-body">
-
-                <div class="table-responsive">
-                    <table id="detallesEsquema" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
-                        <thead>
-                            <tr>
-                                <th>Taza de Interés</th>
-                                <th ng-show="tasaFecha.show">Fecha Inicio</th>
-                                <th ng-show="tasaFecha.show">Fecha Fin</th>
-                                <th ng-show="tasaFecha.show">Tiie</th>
-                                <th ng-show="tasaFecha.show">Porcentaje de Penetración</th>
-                                <th ng-show="tasaRango.show">Rango Días</th>
-                                <th ng-show="tasaRango.show">Precedencia</th>
-                                <th ng-show="tasaRango.show">Tipo Tiie</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="esquema in detalleEsquema">
-                                <td>{{esquema.tasaInteres | number:2}}%</td>
-                                <td ng-show="tasaFecha.show">{{esquema.fechaInicio  | date:'dd-MM-yyyy'}}</td>
-                                <td ng-show="tasaFecha.show">{{esquema.fechaFin | date:'dd-MM-yyyy'}}</td>
-                                <td ng-show="tasaFecha.show">{{esquema.tiie | number:2}}%</td>
-                                <td ng-show="tasaFecha.show">{{esquema.porcentajePenetracion | number:2}}%</td>
-                                <td ng-show="tasaRango.show">{{esquema.rango}}</td>
-                                <td ng-show="tasaRango.show">{{esquema.precedencia}}</td>
-                                <td ng-show="tasaRango.show">{{esquema.idTieeTipo}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-xs-11"></div>
-                    <!--div class="col-xs-1">
-                        <button class="btn btn-success btn-xs">Agregar</button>
-                    </div-->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-<!---->
-<!---->
 <div id="agregarNuevoEsquema" class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <div class="modal-header" style="padding:1px 0px;">
-                <h1>Agregar Nuevo Esquema</h1>
+                <h1>{{titleHeader}}</h1>
             </div>
-
-
-                <div class="modal-body">
-
-
-                    <div >
-                    
-
-
-                    <div class="row">
-
-                            
-                            <div class="col-sm-6">
-                                    
-                                    
-                                        <div class="form-group">
-                                        <label for="eDiasGracia">Días Gracia:</label>
-                                        <input type="text" class="form-control" id="eDiasGracia" 
-                                        ng-model="esquema.diasGracia" placeholder="Días Gracia">
-                                        </div>
-
-                                           <div class="form-group">
-                                        <label for="eNombre">Nombre:</label>
-                                        <input type="text" class="form-control" id="eNombre"
-                                         ng-model="esquema.nombre" placeholder="Nombre">
-                                        </div>
-
-                                        <input type="checkbox" id="checkboxG1" 
-                    ng-model="checked" ng-init="checked=false" class="css-checkbox">
-                    <label for="checkboxG1" class="css-label"> Intereses por Rango</label>
-
-                                        
-                            </div>
-                            <div class="col-sm-6">
-
-
-                                        <div class="form-group">
-                                        <label for="ePlazo">Plazo:</label>
-                                        <input type="text" class="form-control" id="ePlazo" 
-                                        ng-model="esquema.plazo" placeholder="Plazo">
-                                        </div>
-
-
-
-                                        <div class="form-group">
-                                        <label for="eDescripcion">Descripción:</label>
-                                        <input type="text" class="form-control" id="eDescripcion" 
-                                        ng-model="esquema.descripcion" placeholder="Descripción">
-                                        </div>
-                                                                    
-
-                            </div>
-                        </div>  <!-- fin row -->
-
-                        
-                        <div class="row" ng-hide="checked">
-                        
-
-                            <h3 style='text-align: center'>Detalle Fechas</h3>
-                            <hr>
-                            <div class="col-sm-6">
-
-                                         
-                                            <div class="form-group">
-                                            <label for="fTasa">Tasa Intéres:</label>
-                                            <div class="input-group">                                            
-                                            <input type="text" class="form-control" id="fTasa" 
-                                            ng-model="esquema.tasaInteres" placeholder="Tasa Intéres">
-                                            <div class="input-group-addon">%</div>
-                                            </div>
-                                            </div>
-
-                                            <div class="form-group" id="calendar">
-                                            <label for="fInicio">Fecha Inicio:</label>                                                
-                                            <div class="input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control" id="fInicio" 
-                                            ng-model="esquema.fechaInicio" value={{fechaInicio}} >
-                                            </div>
-                                            </div>
-
-
-                                            <div class="form-group">        
-                                            <label for="tipoTiie">Tipo Tiie:</label> 
-                                            <select id="tipoTiie" ng-options="lst.text for lst in lstTiie"  
-                                            ng-model="selectedOption" class="form-control"  ></select> 
-                                            </div> 
-
-                                            
-                                            
-
-                            </div>
-
-
-                            <div class="col-sm-6">
-
-                             
-
-                                            <div class="form-group">                
-                                            <label for="fPorcentaje">Porcentaje Penetración:</label>    
-                                            <div class="input-group">
-                                            <input type="text" class="form-control" id="fPorcentaje" 
-                                            ng-model="esquema.porcentajePenetracion" placeholder="Porcentaje Penetración">
-                                            <div class="input-group-addon">%</div>
-                                            </div>
-                                            </div>
-
-                                            
-
-                                            <div class="form-group" id="calendar">
-                                                <label for="fFin">Fecha Fin:</label>
-                                            <div class="input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                            <input type="text" class="form-control" id="fFin" 
-                                            ng-model="esquema.fechaFin" value={{fechaFin}} >
-                                            </div>
-                                            </div>
-
-                                            <div class="form-group">                    
-                                            <label for="fTiie">Tiie:</label>                        
-                                            <div class="input-group">
-                                            <input type="text" class="form-control" id="fTiie" 
-                                            ng-model="esquema.tiie" placeholder="Tiie">
-                                            <div class="input-group-addon">%</div>
-                                            </div>
-                                            </div>
-
-
-                                            <div >
-                                             <br>
-                                                <button type="button" class="btn btn-primary" ng-click="addByDate()"  >Agregar</button>
-                                            </div>
-
-
-                                
-                                
-
-                                </div> 
-
-                                  <div class="col-sm-12">
-
-                                    <table id="tblAddByDate" class="table table-striped" >
-
-                                        
-
-                                        <tr>
-                                            <th>ID</th>                                            
-                                            <th>Tasa Interes</th>
-                                            <th>% Penetración</th>
-                                            <th>Fecha Inicio</th>
-                                            <th>Fecha Fin</th>
-                                            <th>TIIE Tipo</th>
-                                            <th>TIIE</th>
-                                            
-
-                                        </tr>
-
-                                    
-                                        <tr ng-repeat="field in lstDateScheme">
-                                            
-                                            <td>{{field.indexDate}}</td>                                            
-                                            <td>{{field.tasaInteres}}</td>
-                                            <td>{{field.porcentajePenetracion}}</td>
-                                            <td>{{field.fechaInicio  | date:'dd/MM/yyyy'}}</td>
-                                            <td>{{field.fechaFin  | date:'dd/MM/yyyy'}}</td>
-                                            <td>{{field.idTiieTipo}}</td>
-                                            <td>{{field.tiie}}</td>                                            
-                                            <td> 
- 
-                                            <button type="button" class="btn btn-default" ng-click="showConfirmDelete(1,field.indexDate)">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
-
-
-                                             </td>
-                                        </tr>
-                                    
-
-                                    </table>
-                                    
-                                    
-
-                                  </diV>                               
-                        </div>  <!-- fin row -->
-
-
-                        <div class="row" ng-show="checked">
-                            <h3 style='text-align: center'>Detalle Rango</h3>
-                            <hr>
-
-                            <div class="col-sm-6">
-
-
-                                        
-
-                                                <div class="form-group">
-                                                <label for="tasaInteres">Tasa Intéres:</label> 
-                                                <div class="input-group">
-                                                <input type="text" class="form-control" id="tasaInteres" 
-                                                ng-model="esquema.tasaInteres" placeholder="Tasa Intéres">
-                                                <div class="input-group-addon">%</div>
-                                                </div>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                <label for="rangoDias">Rango Días:</label> 
-                                                <input type="text" class="form-control" id="rangoDias" 
-                                                ng-model="esquema.rango" placeholder="Rango Días">                                                
-                                                </div>
-
-
-                                            <div class="form-group">        
-                                                <label for="tipoTiie">Tipo Tiie:</label> 
-                                                <select id="tipoTiie" ng-options="lst.text for lst in lstTiie"  
-                                            ng-model="selectedOption" class="form-control"  ></select> 
-
-                                            </div> 
-
-                            </div> 
-
-                            <div class="col-sm-6">
-
-                                               
-
-
-                                                <div class="form-group">
-                                                <label for="porcentaje">Porcentaje Penetración:</label> 
-                                                <div class="input-group">
-                                                <input type="text" class="form-control" id="porcentaje" 
-                                                ng-model="esquema.porcentajePenetracion" placeholder="Porcentaje de Penetración">
-                                                <div class="input-group-addon">%</div>
-                                                </div>
-                                                </div>
-
-                                                <div class="form-group">                                 
-                                                <label for="precedencia"></label>                
-                                                <input type="text" class="form-control" id="precedencia" >
-                                                </div>
-
-
-                                                <div class="form-group">                    
-                                            <label for="fTiie">Tiie:</label>                        
-                                            <div class="input-group">
-                                            <input type="text" class="form-control" id="fTiie" 
-                                            ng-model="esquema.tiie" placeholder="Tiie">
-                                            <div class="input-group-addon">%</div>
-                                            </div>
-                                            </div>
-
-                                                <div >
-                                             <br>
-                                                <button type="button" class="btn btn-primary" ng-click="addByRange()"  >Agregar</button>
-                                            </div>
-
-
-                                </div> 
-
-
-                                
-                            <div class="col-sm-12">
-
-
-
-                                    <table id="tblAddByRange" class="table table-striped" >
-
-                                        <tr>
-                                              <th>ID</th>                              
-                                              <th>Tasa Interes</th>
-                                              <th>Rango</th>                                              
-                                              <th>% Penetracion</th>
-                                              <th>TIIE Tipo</th>
-                                            <th>TIIE</th>
-                                              <th></th>
-
-                                        </tr>
-
-                                    
-                                        <tr ng-repeat="field in lstRangeScheme">
-                                            <td>{{field.indexRange}}</td>                                            
-                                            <td>{{field.tasaInteres}}</td>
-                                            <td>{{field.rango}}</td>                                            
-                                            <td>{{field.porcentajePenetracion}}</td>
-                                            <td>{{field.idTiieTipo}}</td>
-                                            <td>{{field.tiie}}</td>
-                                            <td>
-                                            <button type="button" class="btn btn-default" ng-click="showConfirmDelete(2,field.indexRange)">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
-                                            </td>
-                                        </tr>
-                                    
-
-                                    </table>
-                                        
-
-
-                            </div>
-
-
-                                             
-                            
-
-                        </div> <!-- row -->
-
-
-
-
-  
-                
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="eDiasGracia">Días Gracia:</label>
+                            <input type="text" class="form-control" id="eDiasGracia" ng-model="esquema.diasGracia" placeholder="Días Gracia">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="ePlazo">Plazo:</label>
+                            <input type="text" class="form-control" id="ePlazo" ng-model="esquema.plazo" placeholder="Plazo">
+                        </div>
+                    </div>
                 </div>
-
-
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="eNombre">Nombre:</label>
+                            <input type="text" class="form-control" id="eNombre" ng-model="esquema.nombre" placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="eDescripcion">Descripción:</label>
+                            <input type="text" class="form-control" id="eDescripcion" ng-model="esquema.descripcion" placeholder="Descripción">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="checkbox" id="checkboxG1" ng-model="checked" ng-init="checked=false" class="css-checkbox">
+                        <label for="checkboxG1" class="css-label"> Intereses por Rango</label>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                </div>
+                <!-- inicio  controles por fecha  -->
+                <div ng-hide="checked">
+                    <h3 style='text-align: center'>Detalle Fechas</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="fTasa">Tasa Intéres:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fTasa" ng-model="esquema.tasaInteres" placeholder="Tasa Intéres">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="fPorcentaje">Porcentaje Penetración:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fPorcentaje" ng-model="esquema.porcentajePenetracion" placeholder="Porcentaje Penetración">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group" id="calendar">
+                                <label for="fInicio">Fecha Inicio:</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicio" ng-model="esquema.fechaInicio" value={{fechaInicio}}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group" id="calendar">
+                                <label for="fFin">Fecha Fin:</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fFin" ng-model="esquema.fechaFin" value={{fechaFin}}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="tipoTiie">Tipo Tiie:</label>
+                                <select id="tipoTiie" ng-options="lst.text for lst in lstTiie" ng-model="selectedOption" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="fTiie">Tiie:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fTiie" ng-model="esquema.tiie" placeholder="Tiie">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <br>
+                                <button type="button" class="btn btn-primary pull-right" ng-click="addByDate()" >Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h3 style='text-align: center'>Detalles</h3>
+                        <div class="col-sm-12">
+                            <table id="tblAddByDate" class="table table-striped">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tasa Interes</th>
+                                    <th>% Penetración</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Fin</th>
+                                    <th>TIIE Tipo</th>
+                                    <th>TIIE</th>
+                                </tr>
+                                <tr ng-repeat="field in lstDateScheme">
+                                    <td>{{field.indexDate}}</td>
+                                    <td>{{field.tasaInteres}}</td>
+                                    <td>{{field.porcentajePenetracion}}</td>
+                                    <td>{{field.fechaInicio | date:'dd/MM/yyyy'}}</td>
+                                    <td>{{field.fechaFin | date:'dd/MM/yyyy'}}</td>
+                                    <td>{{field.idTiieTipo}}</td>
+                                    <td>{{field.tiie}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-default" ng-disabled="field.esPrecarga" ng-click="showConfirmDelete(1,field.indexDate)">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </diV>
+                    </div>
+                </div>
+                <!-- Fin  controles por fecha  -->
+                <!-- inicio  controles por rango  -->
+                <div ng-show="checked">
+                    <h3 style='text-align: center'>Detalle Rango</h3>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="tasaInteres">Tasa Intéres:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="tasaInteres" ng-model="esquema.tasaInteres" placeholder="Tasa Intéres">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="porcentaje">Porcentaje Penetración:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="porcentaje" ng-model="esquema.porcentajePenetracion" placeholder="Porcentaje Penetración">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="rangoDias">Rango Días:</label>
+                                <input type="text" class="form-control" id="rangoDias" ng-model="esquema.rango" placeholder="Rango Días">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="tipoTiie">Tipo Tiie:</label>
+                                <select id="tipoTiie" ng-options="lst.text for lst in lstTiie" ng-model="selectedOption" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="fTiie">Tiie:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="fTiie" ng-model="esquema.tiie" placeholder="Tiie">
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-primary pull-right" ng-click="addByRange()">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h3 style='text-align: center'>Detalles</h3>
+                        <div class="col-sm-12">
+                            <table id="tblAddByRange" class="table table-striped">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tasa Interes</th>
+                                    <th>Rango</th>
+                                    <th>% Penetracion</th>
+                                    <th>TIIE Tipo</th>
+                                    <th>TIIE</th>
+                                    <th></th>
+                                </tr>
+                                <tr ng-repeat="field in lstRangeScheme">
+                                    <td>{{field.indexRange}}</td>
+                                    <td>{{field.tasaInteres}}</td>
+                                    <td>{{field.rango}}</td>
+                                    <td>{{field.porcentajePenetracion}}</td>
+                                    <td>{{field.idTiieTipo}}</td>
+                                    <td>{{field.tiie}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-default" ng-disabled="field.esPrecarga" ng-click="showConfirmDelete(2,field.indexRange)">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin  controles por rango  -->
+            </div>
             <div class="modal-footer">
                 <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
-
-                
                 <button class="btn btn-primary btn-sm demo4" ng-click="showConfirmSave()">Guardar</button>
-                <!-- <button class="btn btn-primary" ng-click="compareDate(esquema.fechaInicio,esquema.fechaFin)">test</button>  -->
-
             </div>
         </div>
-
-    </div>  
+    </div>
 </div>
 <!---->
