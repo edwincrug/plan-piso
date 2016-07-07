@@ -92,7 +92,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.promise = schemeRepository.getDetalleEsquema(idEsquema, esFijo).then(function(result) {
             if (result.data.length > 0) {
                 $scope.detalleEsquema = result.data;
-                if(esFijo) $scope.inicializarTabla();
+                if(esFijo) $scope.inicializarTablaFecha();
                  else $scope.inicializarTablaRango();
                 
                 alertFactory.success("destalles cargados");
@@ -128,17 +128,19 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
                 tasaInteres: $scope.detalleEsquema[i].tasaInteres,
                 rango: $scope.detalleEsquema[i].rango,                
                 porcentajePenetracion: $scope.detalleEsquema[i].porcentajePenetracion,
-                idTiieTipo: $scope.selectedOption.value
+                idTiieTipo: $scope.selectedOption.value,
+                esPrecarga: true
             }
 
             $scope.lstRangeScheme.push(scheme);
+            //console.log(scheme);
         };
     };
 
 
 
 
-    $scope.inicializarTabla = function() {    
+    $scope.inicializarTablaFecha = function() {    
 
         for (var i = 0; i < $scope.detalleEsquema.length; i++) {
 
@@ -154,6 +156,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
                 fechaInicio: $scope.detalleEsquema[i].fechaInicio,
                 fechaFin: $scope.detalleEsquema[i].fechaFin,
                 tiie: $scope.detalleEsquema[i].tiie,
+                esPrecarga: true
             }
 
             $scope.lstDateScheme.push(scheme);
@@ -302,7 +305,8 @@ $scope.clearControlsMain = function() {
             fechaInicio: $scope.esquema.fechaInicio,
             fechaFin: $scope.esquema.fechaFin,
             tiie: $scope.esquema.tiie,
-            idTiieTipo: $scope.selectedOption.value            
+            idTiieTipo: $scope.selectedOption.value,
+            esPrecarga: true
         }
 
 
@@ -348,9 +352,10 @@ $scope.clearControlsMain = function() {
             tasaInteres: $scope.esquema.tasaInteres,
             rango: $scope.esquema.rango,            
             porcentajePenetracion: $scope.esquema.porcentajePenetracion,
-            precedencia:$scope.indexRange++,          
+            precedencia:$scope.indexRange++,  
             tiie: $scope.esquema.tiie,
-            idTiieTipo: $scope.selectedOption.value
+            idTiieTipo: $scope.selectedOption.value,
+            esPrecarga: true
         }
 
 
