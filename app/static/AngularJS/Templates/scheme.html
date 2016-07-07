@@ -44,7 +44,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="esquema in esquemas" ng-dblclick="seleccionarEsquema(esquema.idEsquema,esquema.esFijo )">
+                                    <tr ng-repeat="esquema in esquemas" ng-dblclick="nuevoEsquema(esquema.idEsquema,esquema.esFijo)">
                                         <td>{{esquema.idEsquema}}</td>
                                         <td>{{esquema.diasGracia}}</td>
                                         <td>{{esquema.plazo}}</td>
@@ -56,7 +56,7 @@
                             </table>
                             <div class="col-xs-11"></div>
                             <div class="col-xs-1">
-                                <button class="btn btn-primary" ng-click="nuevoEsquema()">Agregar</button>
+                                <button class="btn btn-primary" ng-click="nuevoEsquema(0,0)">Agregar</button>
                             </div>
                         </div>
 
@@ -129,8 +129,6 @@
 
                 <div class="modal-body">
 
-                    <!-- <select ng-options="scheme.text for scheme in lstSchemeType"  
-                    ng-model="selectedOption" class="form-control"  ></select> -->
 
                     <div >
                     
@@ -183,7 +181,7 @@
 
                         
                         <div class="row" ng-hide="checked">
-                        <!-- <div class="row" ng-show="selectedOption.value"> -->
+                        
 
                             <h3 style='text-align: center'>Detalle Fechas</h3>
                             <hr>
@@ -208,14 +206,15 @@
                                             </div>
                                             </div>
 
-                                                        <div class="form-group">                    
-                                            <label for="fTiie">Tiie:</label>                        
-                                            <div class="input-group">
-                                            <input type="text" class="form-control" id="fTiie" 
-                                            ng-model="esquema.tiie" placeholder="Tiie">
-                                            <div class="input-group-addon">%</div>
-                                            </div>
-                                            </div>
+
+                                            <div class="form-group">        
+                                            <label for="tipoTiie">Tipo Tiie:</label> 
+                                            <select id="tipoTiie" ng-options="lst.text for lst in lstTiie"  
+                                            ng-model="selectedOption" class="form-control"  ></select> 
+                                            </div> 
+
+                                            
+                                            
 
                             </div>
 
@@ -235,13 +234,21 @@
 
                                             
 
-
                                             <div class="form-group" id="calendar">
                                                 <label for="fFin">Fecha Fin:</label>
                                             <div class="input-group date">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             <input type="text" class="form-control" id="fFin" 
                                             ng-model="esquema.fechaFin" value={{fechaFin}} >
+                                            </div>
+                                            </div>
+
+                                            <div class="form-group">                    
+                                            <label for="fTiie">Tiie:</label>                        
+                                            <div class="input-group">
+                                            <input type="text" class="form-control" id="fTiie" 
+                                            ng-model="esquema.tiie" placeholder="Tiie">
+                                            <div class="input-group-addon">%</div>
                                             </div>
                                             </div>
 
@@ -264,15 +271,12 @@
                                         
 
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Días Gracia</th>
-                                            <th>Plazo</th>
-                                            <th>Nombre</th>
-                                            <th>Descripción</th>
+                                            <th>ID</th>                                            
                                             <th>Tasa Interes</th>
                                             <th>% Penetración</th>
                                             <th>Fecha Inicio</th>
                                             <th>Fecha Fin</th>
+                                            <th>TIIE Tipo</th>
                                             <th>TIIE</th>
                                             
 
@@ -281,25 +285,19 @@
                                     
                                         <tr ng-repeat="field in lstDateScheme">
                                             
-                                            <td>{{field.indexDate}}</td>
-                                            <td>{{field.diasGracia}}</td>
-                                            <td>{{field.plazo}}</td>
-                                            <td>{{field.nombre}}</td>
-                                            <td>{{field.descripcion}}</td>
+                                            <td>{{field.indexDate}}</td>                                            
                                             <td>{{field.tasaInteres}}</td>
                                             <td>{{field.porcentajePenetracion}}</td>
-                                            <td>{{field.fechaInicio}}</td>
-                                            <td>{{field.fechaFin}}</td>
-                                            <td>{{field.tiie}}</td>
+                                            <td>{{field.fechaInicio  | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{field.fechaFin  | date:'dd/MM/yyyy'}}</td>
+                                            <td>{{field.idTiieTipo}}</td>
+                                            <td>{{field.tiie}}</td>                                            
                                             <td> 
  
                                             <button type="button" class="btn btn-default" ng-click="showConfirmDelete(1,field.indexDate)">
                                             <span class="glyphicon glyphicon-trash"></span>
                                             </button>
 
-                                            <!-- 
-                                                <input type="button"  class="btn btn-primary" 
-                                                ng-click="removeDateRow(field.indexDate)"/> -->
 
                                              </td>
                                         </tr>
@@ -338,11 +336,6 @@
                                                 ng-model="esquema.rango" placeholder="Rango Días">                                                
                                                 </div>
 
-                                                <!-- <div class="form-group">                            
-                                                <label for="tipoTiie">Tipo Tiie:</label> 
-                                                <input type="text" class="form-control" id="tipoTiie" 
-                                                ng-model="esquema.idTiieTipo" placeholder="Tipo Tiie">                            
-                                                </div> -->
 
                                             <div class="form-group">        
                                                 <label for="tipoTiie">Tipo Tiie:</label> 
@@ -367,11 +360,20 @@
                                                 </div>
                                                 </div>
 
-                                                     <div class="form-group">                                 
-                                                <label for="precedencia">Precedencia:</label>                
-                                                <input type="text" class="form-control" id="precedencia" 
-                                                ng-model="esquema.precedencia" placeholder="Precedencia">
+                                                <div class="form-group">                                 
+                                                <label for="precedencia"></label>                
+                                                <input type="text" class="form-control" id="precedencia" >
                                                 </div>
+
+
+                                                <div class="form-group">                    
+                                            <label for="fTiie">Tiie:</label>                        
+                                            <div class="input-group">
+                                            <input type="text" class="form-control" id="fTiie" 
+                                            ng-model="esquema.tiie" placeholder="Tiie">
+                                            <div class="input-group-addon">%</div>
+                                            </div>
+                                            </div>
 
                                                 <div >
                                              <br>
@@ -390,32 +392,24 @@
                                     <table id="tblAddByRange" class="table table-striped" >
 
                                         <tr>
-                                              <th>ID</th>
-                                              <th>Días Gracia</th>
-                                              <th>Plazo</th>
-                                              <th>Nombre</th>
-                                              <th>Descripcion</th>
+                                              <th>ID</th>                              
                                               <th>Tasa Interes</th>
-                                              <th>Rango</th>
-                                              <th>Precedencia</th>
+                                              <th>Rango</th>                                              
                                               <th>% Penetracion</th>
-                                              <th>Tiie Tipo</th>
+                                              <th>TIIE Tipo</th>
+                                            <th>TIIE</th>
                                               <th></th>
 
                                         </tr>
 
                                     
                                         <tr ng-repeat="field in lstRangeScheme">
-                                            <td>{{field.indexRange}}</td>
-                                            <td>{{field.diasGracia}}</td>
-                                            <td>{{field.plazo}}</td>
-                                            <td>{{field.nombre}}</td>
-                                            <td>{{field.descripcion}}</td>
+                                            <td>{{field.indexRange}}</td>                                            
                                             <td>{{field.tasaInteres}}</td>
-                                            <td>{{field.rango}}</td>
-                                            <td>{{field.precedencia}}</td>
+                                            <td>{{field.rango}}</td>                                            
                                             <td>{{field.porcentajePenetracion}}</td>
                                             <td>{{field.idTiieTipo}}</td>
+                                            <td>{{field.tiie}}</td>
                                             <td>
                                             <button type="button" class="btn btn-default" ng-click="showConfirmDelete(2,field.indexRange)">
                                             <span class="glyphicon glyphicon-trash"></span>

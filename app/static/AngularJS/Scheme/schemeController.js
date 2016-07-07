@@ -1,98 +1,72 @@
-registrationModule.controller('schemeController', function ($scope, alertFactory, schemeRepository) {
+registrationModule.controller('schemeController', function($scope, alertFactory, schemeRepository) {
 
     $scope.message = 'Buscando...';
     $scope.tasaFecha = '';
     $scope.tasaRango = '';
     $scope.esquema = [];
 
-    $scope.lstTiie =[
-    {value:1,text:'TIIE Actual'},
-    {value:2,text:'TIIE Promedio'}
+    $scope.lstTiie = [
+        { value: 1, text: 'TIIE Actual' },
+        { value: 2, text: 'TIIE Promedio' },
+        { value: 3, text: 'TIIE Fija' }
     ];
-
-
 
     $scope.selectedOption = $scope.lstTiie[0];
 
     // Primer metodo llamado al cargar la pagína
-    $scope.init = function () {
-            $scope.getFinanciera();
-            $scope.getEsquemaFinanciera.show = false;            
-        }
-        // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
-    $scope.seleccionarFinanciera = function (idFinanciera, nombreFinanciera) {
-            $scope.idFinanciera = idFinanciera;
-            $scope.nombreFinanciera = nombreFinanciera;
-            $scope.getEsquemaFinanciera();
-            $scope.getEsquemaFinanciera.show = true;
-        }
-        // Función para mostrar las financieras disponibles
-    $scope.getFinanciera = function () {
-        $scope.promise = schemeRepository.getFinanciera().then(function (result) {
+    $scope.init = function() {
+        $scope.getFinanciera();
+        $scope.getEsquemaFinanciera.show = false;
+    };
+    // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
+    $scope.seleccionarFinanciera = function(idFinanciera, nombreFinanciera) {
+        $scope.idFinanciera = idFinanciera;
+        $scope.nombreFinanciera = nombreFinanciera;
+        $scope.getEsquemaFinanciera();
+        $scope.getEsquemaFinanciera.show = true;
+    };
+    // Función para mostrar las financieras disponibles
+    $scope.getFinanciera = function() {
+        $scope.promise = schemeRepository.getFinanciera().then(function(result) {
             if (result.data.length > 0) {
                 $scope.financieras = result.data;
-                //$scope.diasGracia = result.data.diasGracia;
                 alertFactory.success("financieras cargados");
             } else {
                 alertFactory.info("No se encontraron financieras");
             }
-        }, function (error) {
+        }, function(error) {
             alertFactory.error("Error al cargar financieras");
         });
-    }
+    };
 
-    // Funcion para llamar modal con detalles de esquemas
-    $scope.seleccionarEsquema = function (idEsquema, esFijo) {
-        $('#detallesEsquemas').appendTo("body").modal('show');
-        $scope.idEsquema = idEsquema;
-        $scope.esFijo = esFijo;
-        $scope.getDetalleEsquema();
-        $scope.nombreEsquema = '';
-        if ($scope.esFijo == 1) {
-            console.log($scope.esFijo);
-            $scope.nombreEsquema = 'Tasa por Fechas';
-            $scope.tasaRango.show = false;
-            $scope.tasaFecha.show = true;
-        } else {
-            $scope.nombreEsquema = 'Tasa por Rango';
-            $scope.tasaFecha.show = false;
-            $scope.tasaRango.show = true;
-            console.log($scope.esFijo);
-        }
-    }
 
-    $scope.tasaFecha = function () {
 
-    }
-    $scope.tasaRango = function () {
-
-    }
 
     // Metodo para mostrar los esquemas por financiera
-    $scope.getEsquemaFinanciera = function () {
+    $scope.getEsquemaFinanciera = function() {
         $('#esquemasFinanciera').DataTable().destroy();
-        $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinanciera).then(function (result) {
+        $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinanciera).then(function(result) {
             if (result.data.length > 0) {
                 $scope.esquemas = result.data;
-                setTimeout(function () {
+                setTimeout(function() {
                     $('#esquemasFinanciera').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp'
-                        , buttons: [{
+                        dom: '<"html5buttons"B>lTfgitp',
+                        buttons: [{
                                 extend: 'copy'
                             }, {
                                 extend: 'csv'
                             }, {
-                                extend: 'excel'
-                                , title: 'ExampleFile'
+                                extend: 'excel',
+                                title: 'ExampleFile'
                             }, {
-                                extend: 'pdf'
-                                , title: 'ExampleFile'
+                                extend: 'pdf',
+                                title: 'ExampleFile'
                             }
 
-                            
+
                             , {
-                                extend: 'print'
-                                , customize: function (win) {
+                                extend: 'print',
+                                customize: function(win) {
                                     $(win.document.body).addClass('white-bg');
                                     $(win.document.body).css('font-size', '10px');
                                     $(win.document.body).find('table')
@@ -107,378 +81,417 @@ registrationModule.controller('schemeController', function ($scope, alertFactory
             } else {
                 alertFactory.info("No se encontraron Esquemas");
             }
-        }, function (error) {
+        }, function(error) {
             alertFactory.error("Error al cargar Esquemas");
         });
     }
 
     // Función para mostrar detalles del esquema
-    $scope.getDetalleEsquema = function () {
-        $scope.promise = schemeRepository.getDetalleEsquema($scope.idEsquema, $scope.esFijo).then(function (result) {
+    $scope.getDetalleEsquema = function(idEsquema, esFijo) {
+
+        $scope.promise = schemeRepository.getDetalleEsquema(idEsquema, esFijo).then(function(result) {
             if (result.data.length > 0) {
                 $scope.detalleEsquema = result.data;
+                if(esFijo) $scope.inicializarTabla();
+                 else $scope.inicializarTablaRango();
+                
                 alertFactory.success("destalles cargados");
             } else {
                 alertFactory.info("No se encontraron destalles");
             }
-        }, function (error) {
+        }, function(error) {
             alertFactory.error("Error al cargar destalles");
         });
     }
 
     // Función para llamar la modal
-    $scope.nuevoEsquema = function () {
+    $scope.nuevoEsquema = function(idEsquema, esFijo) {
+        $scope.lstDateScheme = [];
+        $scope.lstRangeScheme =[];
+
         $('#agregarNuevoEsquema').appendTo("body").modal('show');
         $scope.calendario();
+        if(idEsquema > 0 ) $scope.getDetalleEsquema(idEsquema, esFijo);
     };
+
+
+    $scope.inicializarTablaRango = function() {
+
+
+        for (var i = 0; i < $scope.detalleEsquema.length; i++) {
+            var scheme = {
+                indexRange: $scope.indexRange++,
+                diasGracia: $scope.detalleEsquema[i].diasGracia,
+                plazo: $scope.detalleEsquema[i].plazo,
+                nombre: $scope.detalleEsquema[i].nombre,
+                descripcion: $scope.detalleEsquema[i].descripcion,
+                tasaInteres: $scope.detalleEsquema[i].tasaInteres,
+                rango: $scope.detalleEsquema[i].rango,                
+                porcentajePenetracion: $scope.detalleEsquema[i].porcentajePenetracion,
+                idTiieTipo: $scope.selectedOption.value
+            }
+
+            $scope.lstRangeScheme.push(scheme);
+        };
+    };
+
+
+
+
+    $scope.inicializarTabla = function() {    
+
+        for (var i = 0; i < $scope.detalleEsquema.length; i++) {
+
+
+            var scheme = {
+                indexDate: $scope.indexDate++,
+                diasGracia: $scope.detalleEsquema[i].diasGracia,
+                plazo: $scope.detalleEsquema[i].plazo,
+                nombre: $scope.detalleEsquema[i].nombre,
+                descripcion: $scope.detalleEsquema[i].descripcion,
+                tasaInteres: $scope.detalleEsquema[i].tasaInteres,
+                porcentajePenetracion: $scope.detalleEsquema[i].porcentajePenetracion,
+                fechaInicio: $scope.detalleEsquema[i].fechaInicio,
+                fechaFin: $scope.detalleEsquema[i].fechaFin,
+                tiie: $scope.detalleEsquema[i].tiie,
+            }
+
+            $scope.lstDateScheme.push(scheme);
+        }
+
+    };
+
+
+
     // Función para cerrar la modal
-    $scope.cerrar = function () {
+    $scope.cerrar = function() {
         $('#inicioModal').modal('toggle');
     };
     // Función para cargar calendario
-    $scope.calendario = function () {
-            $('#calendar .input-group.date').datepicker({
-                todayBtn: "linked"
-                , keyboardNavigation: true
-                , forceParse: false
-                , calendarWeeks: true
-                , autoclose: true
-                , todayHighlight: true
-            });
-        }
+    $scope.calendario = function() {
+        $('#calendar .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: true,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true
+        });
+    }
 
 
-        //Expresiones Regulares 
-        var expresion =
-        {
-            todo:'.',
-            entero:'^\\d+$',
-            entero1:'^\\d{1,3}$',
-            decimal:'^-?[0-9]+([,\\.][0-9]*)?$',
-            decimal1:'^\\d{1,2}(\\.\\d{1,4})?$'
+    //Expresiones Regulares 
+    var expresion = {
+        todo: '.',
+        entero: '^\\d+$',
+        entero1: '^\\d{1,3}$',
+        decimal: '^-?[0-9]+([,\\.][0-9]*)?$',
+        decimal1: '^\\d{1,2}(\\.\\d{1,4})?$'
 
-        };
-
-
-
-
-        $scope.getControlByRange = function(){
-
-            var controlesPorRango =[
-                    { value:$scope.esquema.diasGracia,name: 'Días de gracia', regExp:expresion.entero1},
-                    { value:$scope.esquema.plazo,name: 'Plazo', regExp:expresion.entero1},
-                    { value:$scope.esquema.nombre,name: 'Nombre', regExp: expresion.todo},
-                    { value:$scope.esquema.descripcion,name: 'Descripción', regExp:expresion.todo},
-                    { value:$scope.esquema.tasaInteres,name: 'Tasa interes', regExp:expresion.decimal1},
-                    { value:$scope.esquema.rango,name: 'Rango', regExp:expresion.entero1},
-                    { value:$scope.esquema.precedencia,name: 'Precedencia', regExp:expresion.entero1},
-                    { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:expresion.decimal1},
-                    { value:$scope.esquema.idTiieTipo,name: 'TIIE tipo', regExp:expresion.entero1},                
-                ];
-
-                return controlesPorRango;
-        };
-
-
-        $scope.getControlByDate = function(){
-            var controlesPorFecha =[
-                    { value:$scope.esquema.diasGracia,name: 'Días de gracia', regExp:expresion.entero1},
-                    { value:$scope.esquema.plazo,name: 'Plazo', regExp:expresion.entero1},
-                    { value:$scope.esquema.nombre,name: 'Nombre', regExp: expresion.todo},
-                    { value:$scope.esquema.descripcion,name: 'Descripción', regExp:expresion.todo},
-                    { value:$scope.esquema.tasaInteres,name: 'Tasa interes', regExp:expresion.decimal1},                
-                    { value:$scope.esquema.porcentajePenetracion,name: 'Porcentaje penetración', regExp:expresion.decimal1},                
-                    { value:$scope.esquema.fechaInicio,name: 'Fecha inicio', regExp:expresion.todo},
-                    { value:$scope.esquema.fechaFin,name: 'Fecha fin', regExp:expresion.todo},
-                    { value:$scope.esquema.tiie,name: 'TIIE', regExp:expresion.decimal1}
-                ];
-
-                return controlesPorFecha;
-        };
+    };
 
 
 
 
-        $scope.formIsValid = function(controls){
+    $scope.getControlMain = function() {
 
-            var esValido =  false;
-            
-            for (i = 0; i < controls.length; i++) {
+        var controlesPorRango = [
+            { value: $scope.esquema.diasGracia, name: 'Días de gracia', regExp: expresion.entero1 },
+            { value: $scope.esquema.plazo, name: 'Plazo', regExp: expresion.entero1 },
+            { value: $scope.esquema.nombre, name: 'Nombre', regExp: expresion.todo },
+            { value: $scope.esquema.descripcion, name: 'Descripción', regExp: expresion.todo }            
+        ];
 
-                if(controls[i].value == null || controls[i].value == ''){
-                alertFactory.info(controls[i].name +  ' es requerido');
+        return controlesPorRango;
+    };
+
+
+
+    $scope.getControlByRange = function() {
+
+        var controlesPorRango = [
+            { value: $scope.esquema.tasaInteres, name: 'Tasa interes', regExp: expresion.decimal1 },
+            { value: $scope.esquema.rango, name: 'Rango', regExp: expresion.entero1 },            
+            { value: $scope.esquema.porcentajePenetracion, name: 'Porcentaje penetración', regExp: expresion.decimal1 },
+            { value: $scope.esquema.tiie, name: 'TIIE', regExp: expresion.decimal1 },
+            { value: $scope.selectedOption.value, name: 'TIIE tipo', regExp: expresion.entero1 }
+        ];
+
+        return controlesPorRango;
+    };
+
+
+    $scope.getControlByDate = function() {
+        var controlesPorFecha = [            
+            { value: $scope.esquema.tasaInteres, name: 'Tasa interes', regExp: expresion.decimal1 },
+            { value: $scope.esquema.porcentajePenetracion, name: 'Porcentaje penetración', regExp: expresion.decimal1 },
+            { value: $scope.esquema.fechaInicio, name: 'Fecha inicio', regExp: expresion.todo },
+            { value: $scope.esquema.fechaFin, name: 'Fecha fin', regExp: expresion.todo },
+            { value: $scope.esquema.tiie, name: 'TIIE', regExp: expresion.decimal1 },
+            { value: $scope.selectedOption.value, name: 'TIIE tipo', regExp: expresion.entero1 }
+        ];
+
+        return controlesPorFecha;
+    };
+
+
+
+
+    $scope.formIsValid = function(controls) {
+
+        var esValido = false;
+
+        for (i = 0; i < controls.length; i++) {
+
+            if (controls[i].value == null || controls[i].value == '') {
+                alertFactory.info(controls[i].name + ' es requerido');
                 esValido = false;
                 break;
-                }
-
-                var pattern =  new RegExp(controls[i].regExp);   
-                //console.log(pattern,controls[i].value, pattern.test(controls[i].value)); 
-                if(pattern.test(controls[i].value) == false ){
-                alertFactory.info(controls[i].name +  ' formato no correcto');
-                esValido = false;
-                break;
-                }
-
-                esValido=true;
             }
 
-            return esValido;
+            var pattern = new RegExp(controls[i].regExp);
 
-        };
+            if (pattern.test(controls[i].value) == false) {
+                alertFactory.info(controls[i].name + ' formato no correcto');
+                esValido = false;
+                break;
+            }
+
+            esValido = true;
+        }
+
+        return esValido;
+
+    };
 
 
-
-    $scope.clearControls = function (){
-
+$scope.clearControlsMain = function() {
         $scope.esquema.diasGracia = null;
         $scope.esquema.plazo = null;
-        // $scope.idFinanciera = null;
         $scope.esquema.nombre = null;
         $scope.esquema.descripcion = null;
-        $scope.checked = false;
+    }
+
+
+    $scope.clearControls = function() {
         $scope.esquema.tasaInteres = null;
-        $scope.esquema.rango = null;
-        $scope.esquema.precedencia = null;
+        $scope.esquema.rango = null;        
         $scope.esquema.porcentajePenetracion = null;
         $scope.esquema.idTiieTipo = null;
         $scope.esquema.fechaInicio = null;
         $scope.esquema.fechaFin = null;
         $scope.esquema.tiie = null;
-
-
     };
 
 
 
-    $scope.lstDateScheme =[];
-    $scope.indexDate =1;
+    $scope.lstDateScheme = [];
+    $scope.indexDate = 1;
 
-    $scope.addByDate = function ()
-    {
+    $scope.addByDate = function() {
+
         var controlsToValidate = $scope.getControlByDate();
-        
-        if(!$scope.formIsValid(controlsToValidate)) return;
-        
 
-        var scheme = { 
-            indexDate: $scope.indexDate++,
-            diasGracia: $scope.esquema.diasGracia,
-            plazo: $scope.esquema.plazo,
-            nombre: $scope.esquema.nombre,
-            descripcion: $scope.esquema.descripcion,
+        if (!$scope.formIsValid(controlsToValidate)) return;
+
+
+        var scheme = {
+            indexDate: $scope.indexDate++,            
             tasaInteres: $scope.esquema.tasaInteres,
             porcentajePenetracion: $scope.esquema.porcentajePenetracion,
             fechaInicio: $scope.esquema.fechaInicio,
             fechaFin: $scope.esquema.fechaFin,
-            tiie: $scope.esquema.tiie,            
+            tiie: $scope.esquema.tiie,
+            idTiieTipo: $scope.selectedOption.value            
         }
 
-        
-        $scope.lstDateScheme.push(scheme);    
+
+        $scope.lstDateScheme.push(scheme);
         $scope.clearControls();
     };
 
 
-    $scope.removeDateRow= function(value)
-    {
+    $scope.removeDateRow = function(value) {
 
-        var index = -1;     
-        var dataArr = eval( $scope.lstDateScheme );
+        var index = -1;
+        var dataArr = eval($scope.lstDateScheme);
 
-        for( var i = 0; i < dataArr.length; i++ ) {
-            if( dataArr[i].indexDate === value ) {
+        for (var i = 0; i < dataArr.length; i++) {
+            if (dataArr[i].indexDate === value) {
                 index = i;
                 break;
             }
         }
-        if( index === -1 ) {
-            alert( "Something gone wrong" );
+        if (index === -1) {
+            alert("Something gone wrong");
         }
 
-        $scope.lstDateScheme.splice( index, 1 );    
+        $scope.lstDateScheme.splice(index, 1);
 
-    
+
 
     };
 
 
-    $scope.lstRangeScheme =[];
-    $scope.indexRange =1;
+    $scope.lstRangeScheme = [];
+    $scope.indexRange = 1;
 
-    $scope.addByRange = function ()
-    {
+    $scope.addByRange = function() {
 
         var controlsToValidate = $scope.getControlByRange();
-        
-        if(!$scope.formIsValid(controlsToValidate)) return;
+
+        if (!$scope.formIsValid(controlsToValidate)) return;
 
 
-        var scheme = { 
-            indexRange: $scope.indexRange++,
-            diasGracia: $scope.esquema.diasGracia,
-            plazo: $scope.esquema.plazo,
-            nombre: $scope.esquema.nombre,
-            descripcion: $scope.esquema.descripcion,
+        var scheme = {
+            indexRange: $scope.indexRange,           
             tasaInteres: $scope.esquema.tasaInteres,
-            rango: $scope.esquema.rango,
-            precedencia: $scope.esquema.precedencia,
+            rango: $scope.esquema.rango,            
             porcentajePenetracion: $scope.esquema.porcentajePenetracion,
-            //idTiieTipo: $scope.esquema.idTiieTipo
+            precedencia:$scope.indexRange++,          
+            tiie: $scope.esquema.tiie,
             idTiieTipo: $scope.selectedOption.value
         }
 
 
-        $scope.lstRangeScheme.push(scheme);    
+        $scope.lstRangeScheme.push(scheme);
         $scope.clearControls();
 
     };
 
 
-     $scope.removeRangeRow= function(value)
-    {
+    $scope.removeRangeRow = function(value) {
 
-        var index = -1;     
-        var dataArr = eval( $scope.lstRangeScheme );
+        var index = -1;
+        var dataArr = eval($scope.lstRangeScheme);
 
-        for( var i = 0; i < dataArr.length; i++ ) {
-            if( dataArr[i].indexRange === value ) {
+        for (var i = 0; i < dataArr.length; i++) {
+            if (dataArr[i].indexRange === value) {
                 index = i;
                 break;
             }
         }
-        if( index === -1 ) {
-            alert( "Something gone wrong" );
+        if (index === -1) {
+            alert("Something gone wrong");
         }
 
-        $scope.lstRangeScheme.splice( index, 1 );    
+        $scope.lstRangeScheme.splice(index, 1);
 
-      
+
     };
 
 
 
-    $scope.showConfirmSave = function () {
+    $scope.showConfirmSave = function() {
 
-    var txt;
+        if (!$scope.formIsValid($scope.getControlMain())) return;
+        var r = confirm("¿Estas seguro que deseas guardar?");
+        if (r == true) $scope.insertEsquema();
 
-    var r = confirm("¿Estas seguro que deseas guardar?");
-
-    if (r == true) {
-        txt = "Eliminado";
-         $scope.insertEsquemas();
-    } else {
-        txt = "cancelado";
-    }
-
-
-
-
-};
-
-
-
-
-
-$scope.showConfirmDelete = function (type,index) {
-
-    var r = confirm("¿Estas seguro que deseas eliminar?");
-
-    if (r == true) {        
-        $scope.removeDateRow(index);
-        alertFactory.success("Eliminado");
-    } else {
-        alertFactory.warning("Cancelado");
-    }
-
-
-};
-
-
-$scope.compareDate = function (initDate,endDate) 
-{
-
-
-console.log($scope.selectedOption.value);
-console.log($scope.selectedOption);
-    /*
-    var initialDate = new Date(initDate);
-    var finalDate = new Date(endDate);
-
-
-    for (var i = 0; i < $scope.lstDateScheme.length; i++) {
-        $scope.lstDateScheme[i].fechaInicio;
-        $scope.lstDateScheme[i].fechaFin;
     };
-*/
-};
 
 
 
-$scope.insertEsquemas = function () {
 
-        var controls =[];
 
-        if($scope.checked) {
-        controls= $scope.lstRangeScheme;
+    $scope.showConfirmDelete = function(type, index) {
+
+        var r = confirm("¿Estas seguro que deseas eliminar?");
+
+        if (r == true) {
+            $scope.removeDateRow(index);
+            alertFactory.success("Eliminado");
+        } else {
+            alertFactory.warning("Cancelado");
         }
-        else {
-        controls = $scope.lstDateScheme;}        
 
 
-        console.log(controls);
-         
-        
-        for (var i = 0; i < controls.length; i++) {
-            console.log(controls[i]);
-            $scope.insertFields(controls[i]);
-        };
-
-/*
-        $scope.lstRangeScheme=[];
-        $scope.lstDateScheme=[];
-*/    
     };
 
 
+    $scope.insertEsquema = function() 
+    {   
 
+                
+        if (!$scope.formIsValid($scope.getControlMain())) return;
 
+        $scope.esquema.idFinanciera = $scope.idFinanciera;
+        $scope.esquema.esFijo = !$scope.checked;
 
-$scope.insertFields = function (object) 
-{
+        schemeRepository.insertEsquema($scope.esquema).then(function(result) {
 
-    var esRango = !$scope.checked;
-
-
-    schemeRepository.insertEsquema( 
-        object.diasGracia,
-        object.plazo,
-        $scope.idFinanciera,
-        object.nombre,
-        object.descripcion,
-        esRango,
-        object.tasaInteres,
-        object.rango,
-        object.precedencia,
-        object.porcentajePenetracion,
-        object.idTiieTipo,
-        object.fechaInicio,
-        object.fechaFin,
-        object.tiie
-        ).then(function (result)
-             {
-
-            if (result.data.length > 0) {                    
+            if (result.data.length > 0) {
+                
+                
                 alertFactory.success("Esquema Agregado");
-                $scope.clearControls();
+
+                if($scope.esquema.esFijo)
+                {
+                    $scope.insertEsquemaFecha(result.data[0].id); 
+                }
+                else{
+                    $scope.insertEsquemaRango(result.data[0].id); 
+                }
+            
+                $scope.clearControlsMain();
                 $scope.getEsquemaFinanciera();
             } else {
                 alertFactory.info("Esquema No Agregado");
             }
-        }, function (error) {
+        }, function(error) {
             alertFactory.error("Error al guardar Esquema");
         });
- 
-}
+
+
+    };
+
+
+    $scope.insertEsquemaFecha = function(idEsquema) 
+    {
+
+            for (var i = 0; i < $scope.lstDateScheme.length; i++) {                
+
+                    schemeRepository.insertEsquemaFecha(idEsquema,$scope.lstDateScheme[i]).then(function(result) {
+                        if (result.data.length > 0) {
+                            alertFactory.success("Detalle Esquema Agregado");
+                            $scope.clearControls();                            
+                        } else {
+                            alertFactory.info("Detalle Esquema No Agregado");
+                        }
+                        }, function(error) {
+                            alertFactory.error("Error al guardar Esquema");
+                    });
+
+            };
+
+        $scope.lstDateScheme= [];
+
+    };
+
+
+
+    $scope.insertEsquemaRango = function(idEsquema)
+    {
+
+            for (var i = 0; i < $scope.lstRangeScheme.length; i++) {
+
+                    schemeRepository.insertEsquemaRango(idEsquema,$scope.lstRangeScheme[i]).then(function(result) {
+                        if (result.data.length > 0) {
+                            alertFactory.success("Detalle Esquema Agregado");
+                            $scope.clearControls();                            
+                        } else {
+                            alertFactory.info("Detalle Esquema No Agregado");
+                        }
+                        }, function(error) {
+                            alertFactory.error("Error al guardar Esquema");
+                    });
+
+            };
+
+        $scope.lstRangeScheme= [];
+
+    };
+
 
 
 

@@ -348,15 +348,7 @@ Calculo.prototype.post_insertesquema = function(req, res, next){
                  {name: 'idFinanciera', value: req.body.idFinanciera, type: self.model.types.INT},
                  {name: 'nombre', value: req.body.nombre, type: self.model.types.STRING},
                  {name: 'descripcion', value: req.body.descripcion, type: self.model.types.STRING},
-                 {name: 'esFijo', value: req.body.esFijo, type: self.model.types.STRING},
-                 {name: 'tasaInteres', value: req.body.tasaInteres, type: self.model.types.DECIMAL},
-                  {name: 'rango', value: req.body.rango, type: self.model.types.DECIMAL},
-                  {name: 'precedencia', value: req.body.precedencia, type: self.model.types.DECIMAL},
-                  {name: 'porcentajePenetracion', value: req.body.porcentajePenetracion, type: self.model.types.DECIMAL},
-                  {name: 'idTiieTipo', value: req.body.idTiieTipo, type: self.model.types.INT},
-                  {name: 'fechaInicio', value: req.body.fechaInicio, type: self.model.types.STRING},
-                  {name: 'fechaFin', value: req.body.fechaFin, type: self.model.types.STRING},
-                  {name: 'tiie', value: req.body.tiie, type: self.model.types.INT}
+                 {name: 'esFijo', value: req.body.esFijo, type: self.model.types.STRING}
 
                  ];
  this.model.post('INS_ESQUEMA_SP', params, function (error, result) {
@@ -432,6 +424,78 @@ Calculo.prototype.get_detalleunidadesquema = function (req, res, next) {
             result: result
         });
     });
+};
+
+
+
+Calculo.prototype.post_insertesquemarango = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+ 
+            var params = [{name: 'idEsquema', value: req.body.idEsquema, type: self.model.types.INT},
+                 {name: 'tasaInteres', value: req.body.tasaInteres, type: self.model.types.DECIMAL},
+                 {name: 'rango', value: req.body.rango, type: self.model.types.INT},
+                 {name: 'precedencia', value: req.body.precedencia, type: self.model.types.INT},
+                 {name: 'porcentajePenetracion', value: req.body.porcentajePenetracion, type: self.model.types.DECIMAL},
+                 {name: 'idTiieTipo', value: req.body.idTiieTipo, type: self.model.types.INT},
+                 {name: 'tiie', value: req.body.tiie, type: self.model.types.DECIMAL}
+
+                 ];
+ this.model.post('INS_ESQUEMA_RANGO_SP', params, function (error, result) {
+        //Callback
+
+   self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+ });
+};
+
+
+
+
+
+
+Calculo.prototype.post_insertesquemafecha = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+ 
+ 
+            var params = [{name: 'idEsquema', value: req.body.idEsquema, type: self.model.types.INT},
+                 {name: 'tasaInteres', value: req.body.tasaInteres, type: self.model.types.DECIMAL},
+                 {name: 'fechaInicio', value: req.body.fechaInicio, type: self.model.types.STRING},
+                 {name: 'fechaFin', value: req.body.fechaFin, type: self.model.types.STRING},
+                 {name: 'porcentajePenetracion', value: req.body.porcentajePenetracion, type: self.model.types.DECIMAL},
+                 {name: 'idTiieTipo', value: req.body.idTiieTipo, type: self.model.types.INT},
+                 {name: 'tiie', value: req.body.tiie, type: self.model.types.DECIMAL}
+
+                 ];
+
+                 console.log(params);
+
+
+ this.model.post('INS_ESQUEMA_FIJO_SP', params, function (error, result) {
+        //Callback
+
+   self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+ });
 };
 
 module.exports = Calculo;

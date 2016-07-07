@@ -37,46 +37,72 @@ registrationModule.factory('schemeRepository', function($http) {
             });
         },
 
-        insertEsquema: function(diasGracia,
-                                plazo,
-                                idFinanciera,
-                                nombre,
-                                descripcion,
-                                esFijo,
-                                tasaInteres,
-                                rango,
-                                precedencia,
-                                porcentajePenetracion,
-                                idTiieTipo,
-                                fechaInicio,
-                                fechaFin,
-                                tiie) {
-    
+        insertEsquema: function(arrEsquema) {    
             return $http({
                 url: schemeURL + 'insertesquema/',
                 method: "POST",
                     data: 
-                            {diasGracia:diasGracia,
-                            plazo:plazo,
-                            idFinanciera:idFinanciera,
-                            nombre:nombre,
-                            descripcion:descripcion,
-                            esFijo:esFijo,
-                            tasaInteres:tasaInteres,
-                            rango:rango,
-                            precedencia:precedencia,
-                            porcentajePenetracion:porcentajePenetracion,
-                            idTiieTipo:idTiieTipo,
-                            fechaInicio:fechaInicio,
-                            fechaFin:fechaFin,
-                            tiie:tiie},
+                            {diasGracia:arrEsquema.diasGracia,
+                            plazo:arrEsquema.plazo,
+                            idFinanciera:arrEsquema.idFinanciera,
+                            nombre:arrEsquema.nombre,
+                            descripcion:arrEsquema.descripcion,
+                            esFijo:arrEsquema.esFijo},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+                
+            });
+        },
+
+
+                insertEsquemaRango: function(idSquema,arrEsquema) {    
+            return $http({
+                url: schemeURL + 'insertesquemarango/',
+                method: "POST",
+                    data: 
+                            {idEsquema:idSquema,
+                            tasaInteres:arrEsquema.tasaInteres,
+                            rango:arrEsquema.rango,
+                            precedencia:arrEsquema.precedencia,
+                            porcentajePenetracion:arrEsquema.porcentajePenetracion,
+                            idTiieTipo:arrEsquema.idTiieTipo,
+                            tiie:arrEsquema.tiie},
+                headers: {
+                'Content-Type': 'application/json'
+                }
+                
+            });
+        },
+
+                insertEsquemaFecha: function(idSquema,arrEsquema) {  
+
+                
+            return $http({
+                url: schemeURL + 'insertesquemafecha/',
+                method: "POST",
+                    data: 
+                            {idEsquema:idSquema,
+                            tasaInteres:arrEsquema.tasaInteres,
+                            fechaInicio:arrEsquema.fechaInicio,
+                            fechaFin:arrEsquema.fechaFin,
+                            porcentajePenetracion:arrEsquema.porcentajePenetracion,
+                            idTiieTipo:arrEsquema.idTiieTipo,
+                            tiie:arrEsquema.tiie},
+
                 headers: {
                 'Content-Type': 'application/json'
                 }
                 
             });
         }
-        
-};      
+
+
+
+    
+    };      
+
+
+
 });
 
