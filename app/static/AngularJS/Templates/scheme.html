@@ -78,13 +78,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="eDiasGracia">Días Gracia:</label>
-                            <input type="text" class="form-control" id="eDiasGracia" ng-model="esquema.diasGracia" placeholder="Días Gracia">
+                            <input type="text" class="form-control" id="eDiasGracia" ng-model="esquema.diasGracia" ng-disabled="!isAddMode" placeholder="Días Gracia">
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="ePlazo">Plazo:</label>
-                            <input type="text" class="form-control" id="ePlazo" ng-model="esquema.plazo" placeholder="Plazo">
+                            <input type="text" class="form-control" id="ePlazo" ng-model="esquema.plazo" ng-disabled="!isAddMode" placeholder="Plazo">
                         </div>
                     </div>
                 </div>
@@ -92,13 +92,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="eNombre">Nombre:</label>
-                            <input type="text" class="form-control" id="eNombre" ng-model="esquema.nombre" placeholder="Nombre">
+                            <input type="text" class="form-control" id="eNombre" ng-model="esquema.nombre" ng-disabled="!isAddMode" placeholder="Nombre">
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="eDescripcion">Descripción:</label>
-                            <input type="text" class="form-control" id="eDescripcion" ng-model="esquema.descripcion" placeholder="Descripción">
+                            <input type="text" class="form-control" id="eDescripcion" ng-model="esquema.descripcion" ng-disabled="!isAddMode" placeholder="Descripción">
                         </div>
                     </div>
                 </div>
