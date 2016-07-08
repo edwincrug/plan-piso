@@ -9,9 +9,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.updateEsquemaUnidad = [];
     $scope.idESquemaNueva = 0;
 
-
-
-
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
         $scope.updateEsquemaUnidad = [];
@@ -364,7 +361,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         }
     }
 
-
     // Función Principal para los filtros
     $scope.rangeFilter = function () {
         $.fn.dataTable.ext.search.push(
@@ -486,84 +482,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     $scope.ocultarEsquemaRango = function () {}
     $scope.ocultarEquemaFechas = function () {}
-        //Estilo de checkbox
+    
+    //Estilo de checkbox
     $scope.checkbox = (function () {
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
     })
-
-    // Función para iniciar wizard
-    $scope.wizard = function () {
-        $("#wizard").steps();
-        $("#form").steps({
-            bodyTag: "fieldset",
-            onStepChanging: function (event, currentIndex, newIndex) {
-                // Always allow going backward even if the current step contains invalid fields!
-                if (currentIndex > newIndex) {
-                    return true;
-                }
-
-                // Forbid suppressing "Warning" step if the user is to young
-                if (newIndex === 3 && Number($("#age").val()) < 18) {
-                    return false;
-                }
-
-                var form = $(this);
-
-                // Clean up if user went backward before
-                if (currentIndex < newIndex) {
-                    // To remove error styles
-                    $(".body:eq(" + newIndex + ") label.error", form).remove();
-                    $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-                }
-
-                // Disable validation on fields that are disabled or hidden.
-                form.validate().settings.ignore = ":disabled,:hidden";
-
-                // Start validation; Prevent going forward if false
-                return form.valid();
-            },
-            onStepChanged: function (event, currentIndex, priorIndex) {
-                // Suppress (skip) "Warning" step if the user is old enough.
-                if (currentIndex === 2 && Number($("#age").val()) >= 18) {
-                    $(this).steps("next");
-                    console.log('Hola');
-                }
-
-                // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
-                if (currentIndex === 2 && priorIndex === 3) {
-                    $(this).steps("previous");
-                }
-            },
-            onFinishing: function (event, currentIndex) {
-                var form = $(this);
-
-                // Disable validation on fields that are disabled.
-                // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
-                form.validate().settings.ignore = ":disabled";
-
-                // Start validation; Prevent form submission if false
-                return form.valid();
-            },
-            onFinished: function (event, currentIndex) {
-                var form = $(this);
-
-                // Submit form input
-                form.submit();
-            }
-        }).validate({
-            errorPlacement: function (error, element) {
-                element.before(error);
-            },
-            rules: {
-                confirm: {
-                    equalTo: "#password"
-                }
-            }
-        });
-    }
 
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function () {
@@ -662,7 +588,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Función para actualizar un esquema en las unidades
     $scope.updateScheme = function () {
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
-            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie, $scope.idFinancieraCambio).then(function (result) {
+            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
                     console.log('pasa por aqui');
                     alertFactory.success("Esquema Cambiado");
@@ -746,7 +672,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Función para mostrar botones de modal de transpasos
     $scope.modalTraspasoFinanciera = function (modal) {
-        $scope.wizard();
+        //$scope.wizard();
         $scope.hacerCambioEsquema.show = false;
         $scope.idEsquemaNuevo.show = true;
         $scope.idESquemaNueva = 0;
@@ -779,6 +705,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Funanción para hacer la actualización del esquema
     $scope.regresarIntereses = function () {
+        $scope.getInterest.show = false;
         $scope.updateScheme();
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
@@ -899,6 +826,4 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             });
         });
     }
-
-
 });

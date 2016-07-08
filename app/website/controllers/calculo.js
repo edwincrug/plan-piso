@@ -374,8 +374,7 @@ Calculo.prototype.post_updatescheme = function(req, res, next){
     //Asigno a params el valor de mis variables
  
             var params = [{name: 'idEsquema', value: req.body.idEsquema, type: self.model.types.INT},
-                        {name: 'vehNumserie', value: req.body.vehNumserie, type: self.model.types.STRING},
-                        {name: 'idFinanciera', value: req.body.idFinanciera, type: self.model.types.INT}
+                        {name: 'vehNumserie', value: req.body.vehNumserie, type: self.model.types.STRING}
                  ];
  this.model.post('UPD_ESQUENA_UNIDAD_SP', params, function (error, result) {
         //Callback
@@ -426,8 +425,6 @@ Calculo.prototype.get_detalleunidadesquema = function (req, res, next) {
     });
 };
 
-
-
 Calculo.prototype.post_insertesquemarango = function(req, res, next){
     //Objeto que almacena la respuesta
     var object = {};
@@ -457,11 +454,6 @@ Calculo.prototype.post_insertesquemarango = function(req, res, next){
 
  });
 };
-
-
-
-
-
 
 Calculo.prototype.post_insertesquemafecha = function(req, res, next){
     //Objeto que almacena la respuesta
