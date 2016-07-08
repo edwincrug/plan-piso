@@ -116,6 +116,8 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.lstRangeScheme = [];
         $scope.checked = false;
         $scope.idEsquema = idEsquema;
+        $scope.clearControls();
+        $scope.clearControlsMain();
 
         $('#agregarNuevoEsquema').appendTo("body").modal('show');
         $scope.calendario();
@@ -123,7 +125,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             $scope.isAddMode = false;
             $scope.getDetalleEsquema(idEsquema, esFijo);
             $scope.titleHeader = "Editar Esquema";
-        } else 
+        } else
 
         {
             $scope.isAddMode = true;
@@ -135,6 +137,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     $scope.inicializarTablaRango = function() {
 
+        $scope.indexRange = 1;
 
         for (var i = 0; i < $scope.detalleEsquema.length; i++) {
             var scheme = {
@@ -151,18 +154,26 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
                 esPrecarga: true
             }
 
-
-
             $scope.lstRangeScheme.push(scheme);
             $scope.indexRange++;
-
         };
+
+        if ($scope.detalleEsquema.length > 0) {
+            $scope.esquema.diasGracia = $scope.detalleEsquema[0].diasGracia;
+            $scope.esquema.plazo = $scope.detalleEsquema[0].plazo;
+            $scope.esquema.nombre = $scope.detalleEsquema[0].nombre;
+            $scope.esquema.descripcion = $scope.detalleEsquema[0].descripcion;
+        }
+
+
     };
 
 
 
 
     $scope.inicializarTablaFecha = function() {
+
+        $scope.indexDate = 1;
 
         for (var i = 0; i < $scope.detalleEsquema.length; i++) {
 
@@ -184,6 +195,13 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
             $scope.lstDateScheme.push(scheme);
             $scope.indexDate++;
+        }
+
+        if ($scope.detalleEsquema.length > 0) {
+            $scope.esquema.diasGracia = $scope.detalleEsquema[0].diasGracia;
+            $scope.esquema.plazo = $scope.detalleEsquema[0].plazo;
+            $scope.esquema.nombre = $scope.detalleEsquema[0].nombre;
+            $scope.esquema.descripcion = $scope.detalleEsquema[0].descripcion;
         }
 
     };
@@ -315,11 +333,16 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
     $scope.lstDateScheme = [];
     $scope.indexDate = 1;
 
+
     $scope.addByDate = function() {
 
         var controlsToValidate = $scope.getControlByDate();
-
         if (!$scope.formIsValid(controlsToValidate)) return;
+
+        if ($scope.dateIsNotOK($scope.esquema.fechaInicio, $scope.esquema.fechaFin, $scope.lstDateScheme)) {
+            alertFactory.info("El rango de fechas ya esta contenido en otro. verifique.");
+            return;
+        }
 
 
         var scheme = {
@@ -337,6 +360,19 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.lstDateScheme.push(scheme);
         $scope.clearControls();
     };
+
+    $scope.dateIsNotOK = function(initDate, endDate, listObj) {
+        var isOk = false;
+
+        for (var i = 0; i < listObj.length; i++) {
+            isOk = $scope.dateExist(initDate, endDate, listObj[i].fechaInicio, listObj[i].fechaFin);
+            if (isOk) break;
+        };
+
+        return isOk;
+
+    }
+
 
 
     $scope.removeDateRow = function(value) {
@@ -371,6 +407,11 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
         if (!$scope.formIsValid(controlsToValidate)) return;
 
+        if (!$scope.rangeIsOK($scope.esquema.rango, $scope.lstRangeScheme)) {
+            alertFactory.info("El rango no puede exceder a los dias plazo. verifique.");
+            return;
+        }
+
 
         var scheme = {
             indexRange: $scope.indexRange,
@@ -386,6 +427,24 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
         $scope.lstRangeScheme.push(scheme);
         $scope.clearControls();
+
+    };
+
+
+    $scope.rangeIsOK = function(newRange, listObj) {
+
+        var sum = 0;
+
+        for (var i = 0; i < listObj.length; i++) {
+            sum += parseInt(listObj[i].rango);
+        };
+
+        sum += parseInt(newRange);
+
+        if ($scope.esquema.plazo > sum)
+            return true;
+        else
+            return false;
 
     };
 
@@ -411,20 +470,17 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     $scope.showConfirmSave = function() {
 
-
         if ($scope.isAddMode) {
-            if (!$scope.formIsValid($scope.getControlMain())) return;      
+            if (!$scope.formIsValid($scope.getControlMain())) return;
             var r = confirm("¿Estas seguro que deseas guardar?");
             if (r == true) $scope.insertEsquema();
+        } else {
+            var r = confirm("¿Estas seguro que deseas guardar?");
+            if (r == true) {
+                if (!$scope.checked) $scope.insertEsquemaFecha($scope.idEsquema);
+                else $scope.insertEsquemaRango($scope.idEsquema);
+            }
         }
-        else{            
-                var r = confirm("¿Estas seguro que deseas guardar?");
-                if (r == true) {
-                    if (!$scope.checked) $scope.insertEsquemaFecha($scope.idEsquema);
-                    else $scope.insertEsquemaRango($scope.idEsquema);
-                }
-        }
-        
 
     };
 
@@ -449,7 +505,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
 
     $scope.insertEsquema = function() {
-        
+
         if (!$scope.formIsValid($scope.getControlMain())) return;
 
         $scope.esquema.idFinanciera = $scope.idFinanciera;
@@ -509,12 +565,9 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
         for (var i = 0; i < $scope.lstRangeScheme.length; i++) {
 
-            console.log("ES:",$scope.lstRangeScheme[i].esPrecarga);
-
             if ($scope.lstRangeScheme[i].esPrecarga == true) {
                 continue;
             }
-            console.log("ES:",$scope.lstRangeScheme[i].indexRange);
 
             schemeRepository.insertEsquemaRango(idEsquema, $scope.lstRangeScheme[i]).then(function(result) {
                 if (result.data.length > 0) {
@@ -532,6 +585,32 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.lstRangeScheme = [];
         $scope.indexRange = 1;
 
+    };
+
+
+
+    $scope.dateExist = function(newIniDate, newEndDate, oldIniDate, oldEndDate) {
+
+        var splitDateA = newIniDate.split('/');
+        var splitDateB = newEndDate.split('/');
+        var splitDateC = oldIniDate.split('/');
+        var splitDateD = oldEndDate.split('/');
+
+        //  formato de fecha  MM/dd/yyyy '01/30/2016'
+        var day = 1;
+        var month = 0;
+        var year = 2;
+
+
+        var dateA = new Date(splitDateA[year], splitDateA[month] - 1, splitDateA[day]);
+        var dateB = new Date(splitDateB[year], splitDateB[month] - 1, splitDateB[day]);
+        var dateC = new Date(splitDateC[year], splitDateC[month] - 1, splitDateC[day]);
+        var dateD = new Date(splitDateD[year], splitDateD[month] - 1, splitDateD[day]);
+
+        if (!(dateB <= dateC || dateA >= dateD))
+            return true; // fecha traslapada
+        else
+            return false; //feha Ok        
     };
 
 
