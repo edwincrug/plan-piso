@@ -155,7 +155,7 @@
             <div class="col-lg-8">
             </div>
             <div class="col-lg-1">
-                <div class="widget style1 lazur-bg pointer count-info"  ng-class="" ng-click="set30days()" style="padding: 5px 5px">
+                <div class="widget style1 lazur-bg pointer count-info"  id="set30days" ng-click="set30days()" style="padding: 5px 5px">
                     <div class="row vertical-align">
                         <div class="col-xs-1">
                             <i class="glyphicon glyphicon-sort"></i>
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="col-lg-1">
-                <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set60days()">
+                <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set60days()" id="set60days">
                     <div class="row vertical-align">
                         <div class="col-xs-3">
                             <i class="glyphicon glyphicon-sort "></i>
@@ -179,7 +179,7 @@
                 </div>
             </div>
             <div class="col-lg-1 pointer">
-                <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set90days()">
+                <div class="widget style1 lazur-bg" style="padding: 5px 5px" ng-click="set90days()" id="set90days">
                     <div class="row vertical-align">
                         <div class="col-xs-3">
                             <i class="glyphicon glyphicon-sort"></i>
@@ -191,7 +191,7 @@
                 </div>
             </div>
             <div class="col-lg-1">
-                <div class="widget style1 lazur-bg" style="padding: 5px 0px" ng-click="set90Masdays()">
+                <div class="widget style1 lazur-bg" style="padding: 5px 0px" ng-click="set90Masdays()" id="set90Masdays">
                     <div class="row vertical-align">
                         <div class="col-xs-3">
                             <i class="glyphicon glyphicon-sort"></i>
@@ -224,16 +224,18 @@
                                             <th>Interés mes actual</th>
                                             <th>Interés acumulado</th>
                                             <th>Utilidad</th>
-                                            <th ng-show="modalTraspasoFinanciera.show">
-                                            <!--button ng-click="marcarTodosCheckbox(ck.id)"></button>
-                                            <!--th ng-show="modalTraspasoFinanciera.show"-->
+                                            <!--th ng-show="modalTraspasoFinanciera.show">
                                                 <input type="checkbox" class="i-checks" ng-click="marcarTodosCheckbox(ck.todo)" ng-model="ck.todo">
                                             </th>
+                                            <th>
+                                            <button ng-click="marcarTodosCheckbox(ck.id)" style="margin-right: 10px">Todo</button>
+                                            </th-->
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.vehNumserie)">
-                                            <td>{{intereses.vehNumserie}}</td>
+                                            <td ng-model="interes.idnum">{{intereses.vehNumserie}}</td>
                                             <td>{{intereses.marca}}</td>
                                             <td>{{intereses.modelo}}</td>
                                             <td ng-class="setClassDias(intereses.diasPlanPiso)">{{intereses.diasPlanPiso}}</td>
@@ -252,7 +254,9 @@
                                 </table>
                             </div>
                             <button class="btn btn-primary" ng-show="transpasoFinanciera.show" ng-click="transpasoFinanciera()">Actualizar Esquema</button>
-                            <!--button class="btn btn-primary" ng-show="transpasoFinanciera.show" ng-click="traspasoFinanciero()">Cambiar Financiera</button-->
+                            <!--button class="btn btn-primary" ng-show="transpasoFinancieraPoliza.show" ng-click="traspasoFinanciero()">Cambiar Financiera</button>
+                            <button class="btn btn-danger" ng-show="modalTraspasoFinanciera.show" ng-click="cancelarTranspasoModal()">Cancelar</button>
+                            <button class="btn btn-primary" ng-click="modalTraspasoFinanciera()" ng-show="modalTraspasoFinanciera.show">Continuar</button-->
                             <button class="btn btn-danger" ng-show="modalTraspasoFinanciera.show" ng-click="cancelarTranspasoModal()">Cancelar</button>
                             <button class="btn btn-primary" ng-click="modalTraspasoFinanciera()" ng-show="modalTraspasoFinanciera.show">Continuar</button>
                         </div>
@@ -456,7 +460,7 @@
                                                         <td>{{unidad.vehNumserie}}</td>
                                                         <td>{{idESquemaNueva}}</td>
                                                         <td>{{nombreEsquemaNueva}}</td>
-                                                        <td>{{nombreFinanciera}}</td>
+                                                        <td>{{nombreFinancieraCambio}}</td>
                                                         <td>{{fechaHoy | date:'dd-MM-yyyy'}}</td>
                                                         <td>{{observaciones}}</td>
                                                     </tr>
