@@ -18,20 +18,39 @@
         </div>
     </div>
     <br/>
-    <div class="input-group col-xs-6 col-sm-2">
-    <div class="input-group-btn">
+
+
+
+
+<div class="row">
+  
+      <div class="col-lg-12">  
+    
         <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Financiera <span class="caret"></span></button>
         <ul class="dropdown-menu">
             <li ng-repeat="financiera in financieras">
                 <a href="#" ng-click="seleccionarFinanciera(financiera.idFinanciera, financiera.nombre)">{{financiera.nombre}}</a>
             </li>
-        </ul>
-        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="input-group-btn">
-    <button type="button" class="btn btn-primary pull-right"  data-dismiss="modal"  ng-click="abrirModalFinanciera()" style="background:#23C6C8; color:#fff">Nueva Financiera</button>
+        </ul>            
     
+    
+
+        
+    <button type="button" class="btn btn-primary"  data-dismiss="modal"  ng-click="abrirModalFinanciera()" style="background:#23C6C8; color:#fff">Nueva Financiera</button>
+    
+
+
     </div>
-    </div>
+
+</div>
+   
+    
+
+
+
+
+
+
     <div class="wrapper wrapper-content" ng-show="getEsquemaFinanciera.show ">
         <div class="row">
             <div class="col-lg-12">
@@ -215,7 +234,7 @@
                                     </td>
                                 </tr>
                             </table>
-                        <!--/diV-->
+                        </diV>
                     </div>
                 </div>
                 <!-- Fin  controles por fecha  -->
