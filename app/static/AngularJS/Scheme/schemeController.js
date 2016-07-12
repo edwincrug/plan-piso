@@ -25,11 +25,44 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.getEsquemaFinanciera();
         $scope.getEsquemaFinanciera.show = true;
     };
+    
     // Función para mostrar las financieras disponibles
     $scope.getFinanciera = function() {
+        $scope.financieras ={};
+        $('#Financieras').DataTable().destroy();
         $scope.promise = schemeRepository.getFinanciera().then(function(result) {
             if (result.data.length > 0) {
                 $scope.financieras = result.data;
+                setTimeout(function() {
+                    $('#Financieras').DataTable({
+                         iDisplayLength: 5,
+                        dom: '<"html5buttons"B>lTfgitp',
+                        buttons: [{
+                                extend: 'copy'
+                            }, {
+                                extend: 'csv'
+                            }, {
+                                extend: 'excel',
+                                title: 'ExampleFile'
+                            }, {
+                                extend: 'pdf',
+                                title: 'ExampleFile'
+                            }
+
+
+                            , {
+                                extend: 'print',
+                                customize: function(win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);
                 alertFactory.success("Financieras cargados");
             } else {
                 alertFactory.info("No se encontraron financieras");
@@ -38,10 +71,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             alertFactory.error("Error al cargar financieras");
         });
     };
-
-
-
-
+    
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function() {
         $('#esquemasFinanciera').DataTable().destroy();
@@ -50,8 +80,9 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
                 $scope.esquemas = result.data;
                 setTimeout(function() {
                     $('#esquemasFinanciera').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp',
-                        buttons: [{
+                        dom: '<"html5buttons"B>lTfgitp'
+                        
+                        , buttons: [{
                                 extend: 'copy'
                             }, {
                                 extend: 'csv'
@@ -134,7 +165,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     };
 
-
     $scope.inicializarTablaRango = function() {
 
         $scope.indexRange = 1;
@@ -167,9 +197,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
 
     };
-
-
-
 
     $scope.inicializarTablaFecha = function() {
 
@@ -206,12 +233,11 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     };
 
-
-
     // Función para cerrar la modal
     $scope.cerrar = function() {
         $('#inicioModal').modal('toggle');
     };
+    
     // Función para cargar calendario
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
@@ -223,8 +249,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             todayHighlight: true
         });
     }
-
-
+    
     //Expresiones Regulares 
     var expresion = {
         todo: '.',
@@ -234,9 +259,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         decimal1: '^\\d{1,2}(\\.\\d{1,4})?$'
 
     };
-
-
-
 
     $scope.getControlMain = function() {
 
@@ -249,8 +271,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
         return controlesPorRango;
     };
-
-
 
     $scope.getControlByRange = function() {
 
@@ -265,7 +285,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         return controlesPorRango;
     };
 
-
     $scope.getControlByDate = function() {
         var controlesPorFecha = [
             { value: $scope.esquema.tasaInteres, name: 'Tasa interes', regExp: expresion.decimal1 },
@@ -278,9 +297,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
         return controlesPorFecha;
     };
-
-
-
 
     $scope.formIsValid = function(controls) {
 
@@ -309,14 +325,12 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     };
 
-
     $scope.clearControlsMain = function() {
         $scope.esquema.diasGracia = null;
         $scope.esquema.plazo = null;
         $scope.esquema.nombre = null;
         $scope.esquema.descripcion = null;
     }
-
 
     $scope.clearControls = function() {
         $scope.esquema.tasaInteres = null;
@@ -328,11 +342,8 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.esquema.tiie = null;
     };
 
-
-
     $scope.lstDateScheme = [];
     $scope.indexDate = 1;
-
 
     $scope.addByDate = function() {
 
@@ -373,8 +384,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     }
 
-
-
     $scope.removeDateRow = function(value) {
 
 
@@ -396,7 +405,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
 
     };
-
 
     $scope.lstRangeScheme = [];
     $scope.indexRange = 1;
@@ -430,7 +438,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     };
 
-
     $scope.rangeIsOK = function(newRange, listObj) {
 
         var sum = 0;
@@ -448,7 +455,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     };
 
-
     $scope.removeRangeRow = function(value) {
 
         var index = -1;
@@ -465,9 +471,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
         $scope.lstRangeScheme.splice(index, 1);
     };
-
-
-
+    
     $scope.showConfirmSave = function() {
 
         if ($scope.isAddMode) {
@@ -484,10 +488,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     };
 
-
-
-
-
     $scope.showConfirmDelete = function(type, index) {
 
         var r = confirm("¿Estas seguro que deseas eliminar?");
@@ -502,7 +502,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         }
 
     };
-
 
     $scope.insertEsquema = function() {
 
@@ -532,7 +531,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     };
 
-
     $scope.insertEsquemaFecha = function(idEsquema) {
 
         for (var i = 0; i < $scope.lstDateScheme.length; i++) {
@@ -558,8 +556,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.indexDate = 1;
 
     };
-
-
 
     $scope.insertEsquemaRango = function(idEsquema) {
 
@@ -587,8 +583,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
     };
 
-
-
     $scope.dateExist = function(newIniDate, newEndDate, oldIniDate, oldEndDate) {
 
         var splitDateA = newIniDate.split('/');
@@ -613,10 +607,41 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             return false; //feha Ok        
     };
 
-
-
-
-
-
-
+    $scope.abrirModalFinanciera = function(){
+        $scope.getFinanciera();
+        $('#nuevaFinanciera').appendTo("body").modal('show');
+    }
+    
+    $scope.agregarNuevaFinanciera = function(nombreFinanciera){
+        $scope.nombreFinancieraNueva = nombreFinanciera;
+         if (nombreFinanciera == '' || nombreFinanciera == undefined) {
+             console.log('No se puede agregar un campo vacio');
+         }else{
+        $scope.newFinancial();
+        $scope.getFinanciera();
+        $scope.financiera.nombre = '';
+         }
+    }
+    
+    $scope.cerrarModalFinanciera = function(){
+        if ($scope.nombreFinancieraNueva == '' || $scope.nombreFinancieraNueva == undefined) {
+             console.log('vacio');
+         }else{
+        $scope.financiera.nombre = '';
+    }
+    }
+    
+    $scope.newFinancial = function(nombre) {
+            schemeRepository.newFinancial($scope.nombreFinancieraNueva).then(function(result) {
+                if (result.data.length > 0) {
+                    alertFactory.success("Financiera nueva agregada");
+                    $scope.clearControls();
+                } else {
+                    alertFactory.info("Financiera no agregada");
+                }
+            }, function(error) {
+                alertFactory.error("Error al guardar Financiera");
+            });
+        };
 });
+

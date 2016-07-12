@@ -490,4 +490,31 @@ Calculo.prototype.post_insertesquemafecha = function(req, res, next){
  });
 };
 
+// Agrega una nueva financiera
+Calculo.prototype.post_newfinancial = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    
+    var params = {};
+	//Referencia a la clase para callback
+	var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+ 
+            var params = [{name: 'nombre', value: req.body.nombre, type: self.model.types.STRING}
+                 ];
+ this.model.post('INS_FINANCIERA_SP', params, function (error, result) {
+        //Callback
+
+   self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+ });
+} 
+
+
+
+
 module.exports = Calculo;
