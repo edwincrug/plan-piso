@@ -320,7 +320,7 @@
 
 <!---->
 
-<!--Modal Transpaso Financiera-->
+<!--Modal Nueva Financiera-->
 <strong><div class="modal inmodal fade " id="nuevaFinanciera" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
        <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
@@ -330,10 +330,10 @@
             </div>
                 <div class="modal-body">
                            <div class="row">
-                           <form class="form-horizontal" role="form">
+                           <!--form class="form-horizontal" role="form"-->
                            <div class="col-sm-3">
+                           <label for="nombreFinanciera">Nombre Financiera:</label>
                             <div class="form-group">
-                                <label for="nombreFinanciera">Nombre Financiera:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="nombreFinanciera" ng-model="financiera.nombre" placeholder="Nombre Financiera">
                                     </div>       
@@ -341,9 +341,9 @@
                             </div>
                                <br/>
                                 <div class="col-sm-2">                    
-                                <button type="button" class="btn btn-primary pull-right" ng-click="agregarNuevaFinanciera(financiera.nombre)" style="background:#23C6C8; color:#fff">Agregar</button>
+                                <button type="button" class="btn btn-primary pull-left" ng-click="agregarNuevaFinanciera(financiera.nombre)" style="background:#23C6C8; color:#fff">Agregar</button>
                                 </div>    
-                               </form>   
+                               <!--/form-->   
                             </div>                  
                                                <div>
                                                 <h2>Financieras</h2>
