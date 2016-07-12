@@ -141,6 +141,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     , title: 'ExampleFile'
                             }
 
+
                                 
                                 , {
                                     extend: 'print'
@@ -224,6 +225,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     , title: 'ExampleFile'
                             }
 
+
                                 
                                 , {
                                     extend: 'print'
@@ -297,6 +299,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     extend: 'pdf'
                                     , title: 'ExampleFile'
                             }
+
 
                                 
                                 , {
@@ -390,15 +393,15 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
         var contenedor = document.getElementById("set30days");
-        contenedor.style.backgroundColor  ="#1863A1" ;
+        contenedor.style.backgroundColor = "#1863A1";
         var contenedor = document.getElementById("set60days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90Masdays");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
-        
-        
+        contenedor.style.backgroundColor = "#23C6C8";
+
+
     }
 
     // Filtro para mostras unidades a 60 días de financiamiento
@@ -408,13 +411,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
         var contenedor = document.getElementById("set60days");
-        contenedor.style.backgroundColor  ="#1863A1" ;
+        contenedor.style.backgroundColor = "#1863A1";
         var contenedor = document.getElementById("set30days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90Masdays");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
     }
 
     // Filtro para mostras unidades a 90 días de financiamiento
@@ -424,13 +427,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
         var contenedor = document.getElementById("set90days");
-        contenedor.style.backgroundColor  ="#1863A1" ;
+        contenedor.style.backgroundColor = "#1863A1";
         var contenedor = document.getElementById("set60days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set30days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90Masdays");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
     }
 
     // Filtro para mostras unidades a mas de 90 días de financiamiento
@@ -440,13 +443,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
         var contenedor = document.getElementById("set90Masdays");
-        contenedor.style.backgroundColor  ="#1863A1" ;
+        contenedor.style.backgroundColor = "#1863A1";
         var contenedor = document.getElementById("set60days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set30days");
-        contenedor.style.backgroundColor  ="#23C6C8" ;
+        contenedor.style.backgroundColor = "#23C6C8";
     }
 
     // Función para llamar modal
@@ -480,7 +483,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                 dom: '<"html5buttons"B>lTfgitp'
                                 , iDisplayLength: 5
                                 , buttons: [{
-                                    customize: function (win) {
+                                        customize: function (win) {
                                             $(win.document.body).addClass('white-bg');
                                             $(win.document.body).css('font-size', '10px');
                                             $(win.document.body).find('table')
@@ -537,6 +540,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                 extend: 'pdf'
                                 , title: 'ExampleFile'
                             }
+
 
                             
                             , {
@@ -601,10 +605,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.valorCheckBoxTabla = function (idUnidad) {
         if (idUnidad == false || idUnidad == undefined) {
             console.log('no hay nada');
-        } else {        
-                $scope.updateEsquemaUnidad.push({
-                    vehNumserie: idUnidad
-                });         
+        } else {
+            $scope.updateEsquemaUnidad.push({
+                vehNumserie: idUnidad
+            });
             console.log($scope.updateEsquemaUnidad);
         }
     }
@@ -634,7 +638,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Función para mostrar los detalles del cambio de esquema
     $scope.hacerCambioEsquema = function () {
-        //$scope.validationSchemaChange();
+        $scope.validationSchemaChange();
         $scope.idEsquemaNuevo.show = false;
         $scope.hacerCambioEsquema.show = true;
         $('input[type=checkbox]').attr('checked', false);
@@ -656,6 +660,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         , title: 'ExampleFile'
                             }
 
+
                     
                     , {
                         extend: 'print'
@@ -670,7 +675,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         ]
             });
         }, 1000);
-        $scope.observaciones = 'Ésta unidad puede tener un cambio de esquema';
+        //$scope.observaciones = 'Ésta unidad puede tener un cambio de esquema';
         //$scope.updateScheme();
     }
 
@@ -796,7 +801,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     , title: 'ExampleFile'
                             } //iDisplayLength:10
 
-                    
+
+                                
                                 , {
                                     extend: 'print'
                                     , customize: function (win) {
@@ -829,9 +835,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.fechaIngresoInvetario = result.data[0].vehFecremision;
-                    if(result.data[0].esFijo == 1){
-                        console.log('el no es esquema es fijo');
-                        interestsRepository.getDetalleEsquemaUnidad($scope.idFinancieraCambio).then(function (esquemaNuevo){
+                    /*if(result.data[0].esFijo == 1){
+                        console.log('el esquema es fijo');
+                        interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo){
                             if (esquemaNuevo.data.length > 0) {
                             $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
                             console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
@@ -843,14 +849,31 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                 console.log('Esta Unidad no se puede transferir')
                             }
                         });
-                    }else{                                                                                
-                            interestsRepository.getDetalleEsquemaUnidad($scope.idFinancieraCambio).then(function (esquemaNuevo) {
-                                if (esquemaNuevo.data.length > 0) {
-                                 $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].rango;
-                                console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
+                    }else{                                                                              
+                    interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
+                    if (esquemaNuevo.data.length > 0) {
+                        $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].rango;
+                        console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
                         }
                     });
-                    }
+                    }*/
+                    interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
+                        if (esquemaNuevo.data.length > 0) {
+                            if (esquemaNuevo.data[0].esFijo == 1) {
+                                $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
+                                console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
+                                if ($scope.fechaIngresoInvetario <= $scope.fechaEsquemaNuevo) {
+                                    $scope.observaciones ='Esta Unidad se puede tranferir';
+                                } else {
+                                    $scope.observaciones = 'Esta Unidad no se puede transferir';
+                                }
+                            } else {
+                                $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].rango;
+                                console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
+                            }
+                        }
+                    });
+
                     console.log($scope.fechaEsquemaNuevo);
                     //}
                 } else {
