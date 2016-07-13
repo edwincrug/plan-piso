@@ -641,5 +641,20 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
                 alertFactory.error("Error al guardar Financiera");
             });
         };
+
+
+        $scope.getStringTasaFija = function(value) {
+            if(value) return "SI";
+            else return "NO";
+        
+        };
+
+        $scope.getStringTipoTiie = function(value) {            
+            return $scope.lstTiie[value-1].text;   
+        };
+
+
+
+
 });
 
