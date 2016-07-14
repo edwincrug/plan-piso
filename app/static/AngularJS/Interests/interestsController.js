@@ -8,10 +8,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.idEmpresa = {};
     $scope.updateEsquemaUnidad = [];
     $scope.idESquemaNueva = 0;
+    $scope.listaUnidadesConValidacion = [];
+    $scope.unidadesAcambiarEsquema = [];
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
         $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
@@ -21,6 +24,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
         $scope.getFinanciera();
+        $scope.getInterestCompanySucursal.show = false;
         //$scope.getEsquemaFinanciera();
     }
 
@@ -37,6 +41,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
         $scope.ocultarSucursal.show = false;
+        $scope.getInterestCompanySucursal.show = false;
     }
 
     // Función para filtrar por sucursal
@@ -58,7 +63,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.ocultarSucursal.show = true;
     }
 
-    // Función para filtrar compañias
+    $scope.seleccionarSucursalDetalle = function (idSucursal, nombreSucursal) {
+            $scope.idSucursal = idSucursal;
+            $scope.nombreSucursal = nombreSucursal;
+            $scope.getInterestCompanySucursal();
+        }
+        // Función para filtrar compañias
     $scope.getCompany = function () {
             $scope.promise = interestsRepository.getCompany().then(function (result) {
                 if (result.data.length > 0) {
@@ -140,8 +150,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     extend: 'pdf'
                                     , title: 'ExampleFile'
                             }
-
-
                                 
                                 , {
                                     extend: 'print'
@@ -173,6 +181,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.transpasoFinanciera.show = true;
                     $scope.getInterest.show = true;
                     $scope.ocultarSucursal.show = false;
+                    $scope.getInterestCompanySucursal.show = true;
                 } else {
                     alertFactory.info("Intereses no encontrados");
                     $scope.interesmespasado = 0;
@@ -199,7 +208,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.promise =
             interestsRepository.getInterestFinanciera($scope.idEmpresa, $scope.idFinanciera).then(function (result) {
                 if (result.data.length > 0) {
-                    console.log(result.data)
                     $scope.interes = result.data;
                     $scope.unidades = result.data.length;
                     $scope.unidadesVencidas = 0;
@@ -226,6 +234,80 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             }
 
 
+
+                                
+                                , {
+                                    extend: 'print'
+                                    , customize: function (win) {
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+                                        $(win.document.body).find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                            }
+                        ]
+                        });
+                    }, 1000);
+                    for (var i = 0; i < result.data.length; i++) {
+                        $scope.unidadesPorVencer += 1;
+                        $scope.total += (result.data[i].interesAcumulado);
+                        $scope.porcentajeTotalUnidades = 100;
+                        $scope.interesmespasado += (result.data[i].interesAcumulado);
+                        $scope.interespagado += (result.data[i].interesPagado);
+                        $scope.interesActual += (result.data[i].interesAcumuladoActual);
+                    }
+                    $scope.interesTotal = $scope.interesActual + $scope.interesmespasado;
+                    $scope.interesnopagados = $scope.interesTotal;
+                    alertFactory.success("Intereses cargados");
+                } else {
+                    alertFactory.info("Intereses no encontrados");
+                    $scope.interesmespasado = 0;
+                    $scope.unidades = 0;
+                    $scope.unidadesVencidas = 0;
+                    $scope.interesTotal = 0;
+                    $scope.interesActual = 0;
+                    $scope.unidadesPorVencer = 0;
+                    $scope.interesRestante = 0;
+                    $scope.porcentajeRestante = 0;
+                    $scope.total = 0;
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar intereses");
+            });
+    }
+
+    // Función para mostrar intereses por Sucursal y empresa
+    $scope.getInterestCompanySucursal = function () {
+        $('#interestTable').DataTable().destroy();
+        $scope.interes = {};
+        $scope.promise =
+            interestsRepository.getInterestCompanySucursal($scope.idEmpresa, $scope.idSucursal).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.interes = result.data;
+                    $scope.unidades = result.data.length;
+                    $scope.unidadesVencidas = 0;
+                    $scope.interesTotal = 0;
+                    $scope.interesActual = 0;
+                    $scope.unidadesPorVencer = 0;
+                    $scope.interesnopagados = 0;
+                    $scope.interespagado = 0;
+                    $scope.interesmespasado = 0;
+                    $scope.total = 0;
+                    setTimeout(function () {
+                        $('#interestTable').DataTable({
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , buttons: [{
+                                    extend: 'copy'
+                            }, {
+                                    extend: 'csv'
+                            }, {
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
+                            }, {
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
+                            }
                                 
                                 , {
                                     extend: 'print'
@@ -299,8 +381,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     extend: 'pdf'
                                     , title: 'ExampleFile'
                             }
-
-
                                 
                                 , {
                                     extend: 'print'
@@ -393,7 +473,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
         var contenedor = document.getElementById("set30days");
-        contenedor.style.backgroundColor = "#1863A1";
+        contenedor.style.backgroundColor = "#269ABC";
         var contenedor = document.getElementById("set60days");
         contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90days");
@@ -411,7 +491,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
         var contenedor = document.getElementById("set60days");
-        contenedor.style.backgroundColor = "#1863A1";
+        contenedor.style.backgroundColor = "#269ABC";
         var contenedor = document.getElementById("set30days");
         contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90days");
@@ -427,7 +507,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
         var contenedor = document.getElementById("set90days");
-        contenedor.style.backgroundColor = "#1863A1";
+        contenedor.style.backgroundColor = "#269ABC";
         var contenedor = document.getElementById("set60days");
         contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set30days");
@@ -439,11 +519,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Filtro para mostras unidades a mas de 90 días de financiamiento
     $scope.set90Masdays = function () {
         $('#min').val(91);
-        $('#max').val(360);
+        $('#max').val(999);
         $scope.rangeFilter();
         $('#interestTable').DataTable().draw();
         var contenedor = document.getElementById("set90Masdays");
-        contenedor.style.backgroundColor = "#1863A1";
+        contenedor.style.backgroundColor = "#269ABC";
         var contenedor = document.getElementById("set60days");
         contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90days");
@@ -542,6 +622,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             }
 
 
+
                             
                             , {
                                 extend: 'print'
@@ -615,7 +696,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Función para actualizar un esquema en las unidades
     $scope.updateScheme = function () {
-        $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
+        $scope.unidadesAcambiarEsquema.forEach(function (updateEsquemaUnidad) {
+            console.log($scope.unidadesAcambiarEsquema);
             interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
                     console.log('pasa por aqui');
@@ -643,40 +725,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.hacerCambioEsquema.show = true;
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalTraspasoFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        setTimeout(function () {
-            $('#cambioEsquema').DataTable({
-                dom: '<"html5buttons"B>lTfgitp'
-                , iDisplayLength: 5
-                , buttons: [{
-                        extend: 'copy'
-                            }, {
-                        extend: 'csv'
-                            }, {
-                        extend: 'excel'
-                        , title: 'ExampleFile'
-                            }, {
-                        extend: 'pdf'
-                        , title: 'ExampleFile'
-                            }
-
-
-                    
-                    , {
-                        extend: 'print'
-                        , customize: function (win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                            }
-                        ]
-            });
-        }, 1000);
-        //$scope.observaciones = 'Ésta unidad puede tener un cambio de esquema';
-        //$scope.updateScheme();
     }
 
     //Cancelar el cambio de financiera y cerrar la modal
@@ -685,24 +735,27 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.hacerCambioEsquema.show = true;
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalTraspasoFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
         $('#cambioEsquema').DataTable().destroy();
         $('#esquemasFinancieraNuevo').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
     }
 
     // Función para mostrar la modal del wizard de transpaso de financiera
     $scope.transpasoFinanciera = function () {
         $scope.modalTraspasoFinanciera.show = true;
+        $scope.valorCheckBoxTabla.show = true;
         $scope.transpasoFinanciera.show = false;
         $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
     }
 
     // Función para mostrar botones de modal de transpasos
     $scope.modalTraspasoFinanciera = function (modal) {
-        //$scope.wizard();
         $scope.hacerCambioEsquema.show = false;
         $scope.idEsquemaNuevo.show = true;
         $scope.idESquemaNueva = 0;
@@ -723,6 +776,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // oculta los botones para transpaso de financiera
     $scope.cancelarTranspasoModal = function () {
         $scope.modalTraspasoFinanciera.show = false;
+        $scope.modalCambioFinanciera.show = true;
+        $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
         $('input[type=checkbox]').attr('checked', false);
     }
@@ -737,6 +792,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Funanción para hacer la actualización del esquema
     $scope.regresarIntereses = function () {
         $scope.getInterest.show = false;
+        $scope.modalCambioFinanciera.show = true;
         $scope.updateScheme();
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
@@ -746,6 +802,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalTraspasoFinanciera.show = false;
         $scope.ocultarSucursal.show = false;
         $scope.getFinanciera();
+        $scope.getInterestCompanySucursal.show = false;
         $('#cambioEsquema').DataTable().destroy();
         $('#esquemasFinancieraNuevo').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
@@ -802,6 +859,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             } //iDisplayLength:10
 
 
+
                                 
                                 , {
                                     extend: 'print'
@@ -831,51 +889,72 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.tasaRango = function () {}
 
     $scope.validationSchemaChange = function () {
+        $scope.listaUnidadesConValidacion = [];
+        $('#cambioEsquema').DataTable().destroy();
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
             $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
-                    $scope.fechaIngresoInvetario = result.data[0].vehFecremision;
-                    /*if(result.data[0].esFijo == 1){
-                        console.log('el esquema es fijo');
-                        interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo){
-                            if (esquemaNuevo.data.length > 0) {
-                            $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
-                            console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
-                        }
-                            if($scope.fechaIngresoInvetario <= $scope.fechaEsquemaNuevo){
-                                console.log('Esta Unidad se puede tranferir')
-                            }
-                            else{
-                                console.log('Esta Unidad no se puede transferir')
-                            }
-                        });
-                    }else{                                                                              
-                    interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
-                    if (esquemaNuevo.data.length > 0) {
-                        $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].rango;
-                        console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
-                        }
-                    });
-                    }*/
                     interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
                         if (esquemaNuevo.data.length > 0) {
                             if (esquemaNuevo.data[0].esFijo == 1) {
+                                $scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
                                 $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
                                 console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
-                                if ($scope.fechaIngresoInvetario <= $scope.fechaEsquemaNuevo) {
-                                    $scope.observaciones ='Esta Unidad se puede tranferir';
+                                if ($scope.fechaEsquemaNuevo <= $scope.fechaIngresoInvetario) {
+                                    $scope.listaUnidadesConValidacion.push({
+                                        vehNumserie: updateEsquemaUnidad.vehNumserie
+                                        , observaciones: "Esta Unidad se puede tranferir a esquema de fechas"
+                                        , status: "OK"
+                                    });
+                                    $scope.fechaIngresoInvetario = 0;
                                 } else {
-                                    $scope.observaciones = 'Esta Unidad no se puede transferir';
+                                    $scope.listaUnidadesConValidacion.push({
+                                        vehNumserie: updateEsquemaUnidad.vehNumserie
+                                        , observaciones: "Esta Unidad no se puede transferir"
+                                        , status: "EXCEEDED"
+                                    });
+                                    $scope.fechaIngresoInvetario = 0;
                                 }
                             } else {
                                 $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].rango;
-                                console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
+                                console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo, 'Esta unidad tiene esquema por rangos');
+                                $scope.observaciones = 'Esta Unidad no se puede transferir a esquema de rangos';
+                                $scope.fechaIngresoInvetario = 0;
                             }
-                        }
-                    });
 
+                        }
+                        $scope.unidadesAutorizadas();
+                    });
                     console.log($scope.fechaEsquemaNuevo);
-                    //}
+                    setTimeout(function () {
+                        $('#cambioEsquema').DataTable({
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , iDisplayLength: 5
+                            , buttons: [{
+                                    extend: 'copy'
+                            }, {
+                                    extend: 'csv'
+                            }, {
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
+                            }, {
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
+                            }
+                    
+                                , {
+                                    extend: 'print'
+                                    , customize: function (win) {
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+                                        $(win.document.body).find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                            }
+                        ]
+                        });
+                    }, 1000);
                 } else {
                     alertFactory.info("Esquema no cambiado");
                 }
@@ -884,4 +963,38 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             });
         });
     }
+
+    $scope.unidadesAutorizadas = function () {
+        $scope.unidadesAcambiarEsquema = [];
+        $scope.listaUnidadesConValidacion.forEach(function (listaUnidadesConValidacion) {
+            if (listaUnidadesConValidacion.status == "OK") {
+                $scope.unidadesAcambiarEsquema.push({
+                    vehNumserie: listaUnidadesConValidacion.vehNumserie
+                });
+                console.log($scope.unidadesAcambiarEsquema)
+            } else {
+                console.log('Unidad No validad', listaUnidadesConValidacion.vehNumserie)
+            }
+        });
+    }
+    $scope.selectFinancial = function(){
+        $scope.transpasoFinanciera.show = false;
+        $scope.modalCambioFinanciera.show = true;
+        $scope.valorCheckBoxTabla.show = true;
+    }
+    $scope.cancelFinancial = function(){
+        $scope.transpasoFinanciera.show = true;
+        $scope.modalCambioFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show= false;
+    }
+    $scope.modalCambioFinanciera = function(modal){
+        $scope.hacerCambioEsquema.show = false;
+        $('#traspasoFinanciero').appendTo("body").modal('show');  
+        $scope.idEsquemaNuevo.show = true;
+        $scope.idESquemaNueva = 0;
+        $scope.modal = modal;
+        $scope.esquemas = {};
+        $('#esquemasFinancieraNuevo').DataTable().destroy();
+    }
+
 });

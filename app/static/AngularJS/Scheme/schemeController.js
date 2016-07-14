@@ -527,8 +527,6 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         }, function(error) {
             alertFactory.error("Error al guardar Esquema");
         });
-
-
     };
 
     $scope.insertEsquemaFecha = function(idEsquema) {

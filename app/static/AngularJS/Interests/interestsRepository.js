@@ -133,6 +133,19 @@ registrationModule.factory('interestsRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        getInterestCompanySucursal: function (idEmpresa, idSucursal) {
+            return $http({
+                url: interestsURL + 'interestcompanysucursal/',
+                method: "GET",
+                params: {
+                    idEmpresa: idEmpresa,
+                    idSucursal: idSucursal
+                },  
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
         }
     };
 });

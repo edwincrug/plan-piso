@@ -20,6 +20,9 @@
                 <li class="active" ng-show="getInterest.show">
                     <strong>Todas las unidades</strong>
                 </li>
+                <li class="active" ng-show="getInterestCompanySucursal.show">
+                    <strong>{{nombreSucursal}}</strong>
+                </li>
             </ol>
         </div>
         <div class="col-lg-2">
@@ -45,6 +48,14 @@
                 </li>
             </ul>
         </div>
+        <div class="input-group-btn" ng-show="getInterestCompanySucursal.show">
+            <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Sucursal <span class="caret"></span></button>
+            <ul class="dropdown-menu col-xs-1 col-sm-2">
+                <li ng-repeat="sucursales in sucursales">
+                    <a href="#" ng-click="seleccionarSucursalDetalle(sucursales.idSucursal,sucursales.nombreSucursal)">{{sucursales.nombreSucursal}}</a>
+                </li>
+            </ul>
+        </div>
     </div>
     <br/>
     <!--Fin DropDownList-->
@@ -52,7 +63,7 @@
     <div class="col-lg-4 pointer">
     <div class="ibox float-e-margins" ng-click="getInterest()" ng-show="getFinancial.show">
             <div class="ibox-title">
-                <span class="label label-warning pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
+                <span class="label label-warning pull-right"><h4>Unidades: {{totalUnidades}}</h4></span>
                 <h3>Todas las unidades</h3>
             </div>
             <div class="ibox-content">
@@ -61,17 +72,15 @@
                         <small class="stats-label">Adeudo Total</small>
                         <h2>{{totalAdeudo | currency}}</h2>
                     </div>
-                    <div class="col-xs-6">
-                        <small class="stats-label">Intereses</small>
-                        <h2>{{totalInteres | currency}}</h2>
-                    </div>
                 </div>
             </div>
             <div class="ibox-content">
                 <div class="row">
-                    <div class="col-xs-4">
-                        <small class="stats-label">Unidades</small>
-                        <h4>{{totalUnidades}}</h4>
+                    <div class="col-xs-6">
+                    </div>
+                    <div class="col-xs-6">
+                        <small class="stats-label">Intereses</small>
+                        <h2>{{totalInteres | currency}}</h2>
                     </div>
                 </div>
             </div>
@@ -80,7 +89,8 @@
     <div id="financieraee" class="col-lg-4 pointer" ng-repeat="financiera in financieras" ng-show="getFinancial.show">
         <div class="ibox float-e-margins" ng-click="seleccionarFinanciera(financiera.idFinanciera,financiera.financiera)">
             <div class="ibox-title">
-                <span class="label label-warning pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
+                <span class="label label-warning pull-right">
+                        <h4>Unidades: {{financiera.unidades}}</h4></span>
                 <h3>{{financiera.financiera}}</h3>
             </div>
             <div class="ibox-content">
@@ -89,17 +99,15 @@
                         <small class="stats-label">Adeudo Total</small>
                         <h2>{{financiera.adeudo | currency}}</h2>
                     </div>
-                    <div class="col-xs-6">
-                        <small class="stats-label">Intereses</small>
-                        <h2>{{financiera.interes | currency}}</h2>
-                    </div>
                 </div>
             </div>
             <div class="ibox-content">
                 <div class="row">
-                    <div class="col-xs-4">
-                        <small class="stats-label">Unidades</small>
-                        <h4>{{financiera.unidades}}</h4>
+                    <div class="col-xs-6">
+                    </div>
+                   <div class="col-xs-6">
+                        <small class="stats-label">Intereses</small>
+                        <h2>{{financiera.interes | currency}}</h2>
                     </div>
                 </div>
             </div>
@@ -118,16 +126,15 @@
                             <h5>Interés Pagado</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">{{interesmespasado  | currency }}</h1>
-                            <small>Unidades: {{unidades}}</small>
-                            <br/>
+                            <h1 class="no-margins">{{interesmespasado  | currency }}</h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <small> Unidades: {{unidades}}</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <span class="label label-warning pull-right">HOY</span>
+                            <span class="label label-primary pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
                             <h5>Interés Mes Actual</h5>
                         </div>
                         <div class="ibox-content">
@@ -139,7 +146,7 @@
                 <div class="col-lg-3">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <span class="label label-danger pull-right">HOY</span>
+                            <span class="label label-primary pull-right">{{fechaHoy | date:'dd-MM-yyyy'}}</span>
                             <h5>Interés Acumulado</h5>
                         </div>
                         <div class="ibox-content">
@@ -245,7 +252,7 @@
                                             <td>{{intereses.interesAcumuladoActual | currency}}</td>
                                             <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual | currency}}</td>
                                             <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
-                                            <td ng-show="modalTraspasoFinanciera.show">
+                                            <td ng-show="valorCheckBoxTabla.show">
                                                 <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id)">
                                                 <label for="{{intereses.vehNumserie}}" class="css-label"></label>
                                             </td>
@@ -254,9 +261,9 @@
                                 </table>
                             </div>
                             <button class="btn btn-primary" ng-show="transpasoFinanciera.show" ng-click="transpasoFinanciera()">Actualizar Esquema</button>
-                            <!--button class="btn btn-primary" ng-show="transpasoFinancieraPoliza.show" ng-click="traspasoFinanciero()">Cambiar Financiera</button>
-                            <button class="btn btn-danger" ng-show="modalTraspasoFinanciera.show" ng-click="cancelarTranspasoModal()">Cancelar</button>
-                            <button class="btn btn-primary" ng-click="modalTraspasoFinanciera()" ng-show="modalTraspasoFinanciera.show">Continuar</button-->
+                            <button class="btn btn-primary" ng-show="transpasoFinanciera.show"  ng-click="selectFinancial()">Cambiar Financiera</button>
+                            <button class="btn btn-danger"  ng-show="modalCambioFinanciera.show" ng-click="cancelFinancial()">Cancelar</button>
+                            <button class="btn btn-primary" ng-show="modalCambioFinanciera.show" ng-click="modalCambioFinanciera()" >Continuar</button>
                             <button class="btn btn-danger" ng-show="modalTraspasoFinanciera.show" ng-click="cancelarTranspasoModal()">Cancelar</button>
                             <button class="btn btn-primary" ng-click="modalTraspasoFinanciera()" ng-show="modalTraspasoFinanciera.show">Continuar</button>
                         </div>
@@ -456,13 +463,13 @@
                                                     </tr>
                                                 </thead>  
                                                 <tbody>
-                                                    <tr ng-repeat="unidad in updateEsquemaUnidad">
-                                                        <td>{{unidad.vehNumserie}}</td>
+                                                    <tr ng-repeat="unidad in listaUnidadesConValidacion">
+                                                        <td  ng-class="setClass(unidad.status)">{{unidad.vehNumserie}}</td>
                                                         <td>{{idESquemaNueva}}</td>
                                                         <td>{{nombreEsquemaNueva}}</td>
                                                         <td>{{nombreFinancieraCambio}}</td>
                                                         <td>{{fechaHoy | date:'dd-MM-yyyy'}}</td>
-                                                        <td>{{observaciones}}</td>
+                                                        <td>{{unidad.observaciones}}</td>
                                                     </tr>
                                                 </tbody>                                                 
                                         </table>
@@ -514,69 +521,92 @@
 </div>
 <!--Fin Modal-->
 
-<!-- Modal para mostrar un cambio de financiera-->
-<div class="modal inmodal fade" id="transpasoFinancieroModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<!--Modal Transpaso Financiera>
+<strong>
+      <div class="modal inmodal fade " id="traspasoFinanciero" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+       <div class="modal-dialog modal-lg">
         <div class="modal-content animated flipInY">
            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <div class="modal-header" style="padding:4px 0px;">
-                <h2>Actualizar Esquema - {{nombreFinancieraCambio}}</h2>
+            <div class="modal-header" style="padding:1px 0px;">
+                <h2>Traspaso Financiero a - {{nombreFinancieraCambio}}</h2>
             </div>
-            <div class="modal-body">
+                <div class="modal-body">
                 <div class="input-group-btn" ng-show="idEsquemaNuevo.show">
-                    <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Financiera <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li ng-repeat="financiera in financieraNueva">
-                            <a href="#" ng-click="seleccionarFinancieraNueva(financiera.idFinanciera, financiera.nombre)">{{financiera.nombre}}</a>
-                        </li>
-                    </ul>
-                </div>
+        <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Financiera <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li ng-repeat="financiera in financieraNueva">
+                <a href="#" ng-click="seleccionarFinancieraNueva(financiera.idFinanciera, financiera.nombre)">{{financiera.nombre}}</a>
+            </li>
+        </ul>
+    </div>
                 <div ng-show="idEsquemaNuevo.show">
-                    <h2>Seleccione el nuevo esquema</h2>
-                    <div class="table-responsive">
-                        <table id="esquemasFinancieraNuevoe" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
-                            <thead>
-                                <tr>
-                                    <th>N° Esquema</th>
-                                    <th>Días gracia</th>
-                                    <th>Plazo</th>
-                                    <th>Financiera</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="esquema in esquemas">
-                                    <td>{{esquema.idEsquema}}</td>
-                                    <td>{{esquema.diasGracia}}</td>
-                                    <td>{{esquema.plazo}}</td>
-                                    <td ng-model="esquema.nombre">{{esquema.nombre}}</td>
-                                    <td>
-                                        <input type="checkbox" ng-attr-id="'{{esquema.idEsquemas}}'" ng-model="ck.Esquemas" ng-true-value="'{{esquema.idEsquemas}}'" class="css-checkbox" ng-click="idEsquemaNuevo(ck.Esquemas,esquema.nombre)">
-                                        <label for="'{{esquema.idEsquemas}}'" class="css-label"></label>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <h2>Seleccione el nuevo esquema</h2>
+                <div class="table-responsive">
+                                <table id="esquemasFinancieraNuevo" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>N° Esquema</th>
+                                                                <th>Días gracia</th>
+                                                                <th>Plazo</th>
+                                                                <th>Financiera</th>
+                                                                <th>Descripción</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="esquema in esquemas" ng-dblclick="seleccionarEsquema(esquema.idEsquema,esquema.esFijo )">
+                                                                <td>{{esquema.idEsquema}}</td>
+                                                                <td>{{esquema.diasGracia}}</td>
+                                                                <td>{{esquema.plazo}}</td>
+                                                                <td ng-model="esquema.nombre">{{esquema.nombre}}</td>
+                                                                <td>{{esquema.descripcion}}</td>
+                                                                <td>            
+                                      <input type="checkbox"  ng-attr-id="'{{esquema.idEsquema}}'" ng-model="ck.Esquema" ng-true-value="'{{esquema.idEsquema}}'" class="css-checkbox" ng-click="idEsquemaNuevo(ck.Esquema,esquema.nombre)">
+                                        <label for="'{{esquema.idEsquema}}'" class="css-label"></label>                                   
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                </div>
+                                             <div ng-show="hacerCambioEsquema.show">
+                                                <h2>Unidades a cambiar de esquema</h2>
+                                                <div class="table-responsive" ng-show="hacerCambioEsquema.show">                      
+                                  <table id="cambioEsquema" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}" >             
+                                                  <thead>
+                                                    <tr>
+                                                        <th>VIN</th>
+                                                        <th>Esquema</th>
+                                                        <th>Nombre Esquema</th>
+                                                        <th>Financiera</th>
+                                                        <th>Fecha</th>
+                                                        <th>Observaciones</th>
+                                                    </tr>
+                                                </thead>  
+                                                <tbody>
+                                                    <tr ng-repeat="unidad in listaUnidadesConValidacion">
+                                                        <td  ng-class="setClass(unidad.status)">{{unidad.vehNumserie}}</td>
+                                                        <td>{{idESquemaNueva}}</td>
+                                                        <td>{{nombreEsquemaNueva}}</td>
+                                                        <td>{{nombreFinancieraCambio}}</td>
+                                                        <td>{{fechaHoy | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{unidad.observaciones}}</td>
+                                                    </tr>
+                                                </tbody>                                                 
+                                        </table>
+                                        </div>
+                                        </div>
                     </div>
-                </div>
-                <div ng-show="hacerCambioEsquema.show">
-                    <h2>Unidades cambiadas de esquema</h2>
-                    <div ng-repeat="unidad in updateEsquemaUnidad">
-                        <label>Vin -{{unidad.vehNumserie}}</label>
-                        <label>Esquema - {{idESquemaNueva}}</label>
-                        <label>Esquema - {{nombreFinancieraCambio}}</label>
-                    </div>
-                </div>
-            </div>
             <div class="modal-footer">
                 <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal" ng-click="cancelarCambioFinanciera()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
-                <button class="btn btn-primary" ng-show="idEsquemaNuevo.show" ng-click="hacerCambioEsquema()">Cambiar Esquema</button>
-                <button class="btn btn-primary" data-dismiss="modal" ng-show="hacerCambioEsquema.show" ng-click="regresarIntereses()">Terminar</button>
+                <button class="btn btn-primary" ng-show="idEsquemaNuevo.show" ng-click="validarUnidadesTraspaso()">Cambiar Esquema</button>
+                <button class="btn btn-primary" data-dismiss="modal" ng-show="hacerCambioEsquema.show" ng-click="hacerCambioFinanciera()">Terminar</button>
             </div>
         </div>
     </div>
 </div>
-<!---->
+</strong>
+<!--Fin Modal-->
 
 <!--Detalle esquemas-->
 <div id="detallesEsquemas" class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">

@@ -514,6 +514,25 @@ Calculo.prototype.post_newfinancial = function(req, res, next){
  });
 } 
 
+// Se obtine los intereses de las unidades por empresa y sucursal
+Calculo.prototype.get_interestcompanysucursal = function (req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+    //asignación de valores mediante parámetros del request
+     var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT},
+                  {name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT}];
+    this.model.query('[SEL_INTERES_COMPANY_SUCURSAL_SP]', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 
 
