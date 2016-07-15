@@ -601,11 +601,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function () {
         $scope.esquemas = {};
-        $('#esquemasFinancieraNuevo').DataTable().destroy();
+        //$('#esquemasFinancieraNuevo').DataTable().destroy();
         $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinancieraCambio).then(function (result) {
             if (result.data.length > 0) {
                 $scope.esquemas = result.data;
-                setTimeout(function () {
+                /*setTimeout(function () {
                     $('#esquemasFinancieraNuevo').DataTable({
                         dom: '<"html5buttons"B>lTfgitp'
                         , iDisplayLength: 5
@@ -619,11 +619,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             }, {
                                 extend: 'pdf'
                                 , title: 'ExampleFile'
-                            }
-
-
-
-                            
+                            }  
                             , {
                                 extend: 'print'
                                 , customize: function (win) {
@@ -636,7 +632,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             }
                         ]
                     });
-                }, 1000);
+                }, 1000);*/
                 alertFactory.success("Esquemas cargados");
             } else {
                 alertFactory.info("No se encontraron Esquemas");
@@ -648,12 +644,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     $scope.modalAgregarNuevoEsquemas = function () {
         $('#modalAgregarNuevoEsquema').appendTo("body").modal('show');
-    }
-
-    // funcion de prueba para mostrar nombre de las financieras
-    $scope.seleccionarFinancieraTranspaso = function (idFinanciera, nombreFinanciera) {
-        $scope.nombreFinancieraNueva = nombreFinanciera;
-        $scope.getEsquemaFinanciera();
     }
 
     // Función para llamar el datepicker
@@ -717,6 +707,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.nombreEsquemaNueva = nombre;
         console.log(idEsquema, 'hola', $scope.nombreEsquemaNueva);
     }
+    $scope.idNuevaEsquema = function(idEsquemaFinanciera, nombreFinanciera) {
+        $scope.idESquemaNueva = idEsquemaFinanciera;
+        $scope.nombreEsquemaNueva = nombreFinanciera;
+        console.log(idEsquemaFinanciera, 'hola', $scope.nombreEsquemaNueva);
+    }
 
     // Función para mostrar los detalles del cambio de esquema
     $scope.hacerCambioEsquema = function () {
@@ -731,6 +726,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     //Cancelar el cambio de financiera y cerrar la modal
     $scope.cancelarCambioFinanciera = function () {
+        //$scope.transpasoFinanciera.show = true;
+        $scope.modalCambioFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show= false;
         $scope.idEsquemaNuevo.show = false;
         $scope.hacerCambioEsquema.show = true;
         $('input[type=checkbox]').attr('checked', false);
@@ -782,8 +780,74 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('input[type=checkbox]').attr('checked', false);
     }
 
+   // funcion de prueba para mostrar nombre de las financieras
+    $scope.seleccionarFinancieraTranspaso = function (idFinanciera, nombreFinanciera) {
+        $scope.idFinancieraCambio = idFinanciera;
+        $scope.nombreFinancieraNueva = nombreFinanciera;
+        $('#esquemasFinancieroCambio').DataTable().destroy();
+        setTimeout(function () {
+                    $('#esquemasFinancieroCambio').DataTable({
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , iDisplayLength: 5
+                        , buttons: [{
+                                extend: 'copy'
+                            }, {
+                                extend: 'csv'
+                            }, {
+                                extend: 'excel'
+                                , title: 'ExampleFile'
+                            }, {
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
+                            }  
+                            , {
+                                extend: 'print'
+                                , customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);
+        $scope.getEsquemaFinanciera();
+
+        
+    }
     // Función para seleccionar nueva financiera
     $scope.seleccionarFinancieraNueva = function (idFinanciera, nombre) {
+        $('#esquemasFinancieraNuevo').DataTable().destroy();
+        setTimeout(function () {
+                    $('#esquemasFinancieraNuevo').DataTable({
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , iDisplayLength: 5
+                        , buttons: [{
+                                extend: 'copy'
+                            }, {
+                                extend: 'csv'
+                            }, {
+                                extend: 'excel'
+                                , title: 'ExampleFile'
+                            }, {
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
+                            }  
+                            , {
+                                extend: 'print'
+                                , customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);
         $scope.idFinancieraCambio = idFinanciera;
         $scope.nombreFinancieraCambio = nombre;
         $scope.getEsquemaFinanciera();
