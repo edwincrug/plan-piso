@@ -716,7 +716,37 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
 
     // Función para mostrar los detalles del cambio de esquema
-    $scope.hacerCambioEsquema = function () {
+    $scope.hacerCambioEsquema = function () {     
+        $('#cambioEsquema').DataTable().destroy();
+        setTimeout(function () {
+                        $('#cambioEsquema').DataTable({
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , iDisplayLength: 5
+                        , buttons: [{
+                                extend: 'copy'
+                            }, {
+                                extend: 'csv'
+                            }, {
+                                extend: 'excel'
+                                , title: 'ExampleFile'
+                            }, {
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
+                            }  
+                            , {
+                                extend: 'print'
+                                , customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);
+        $scope.listaUnidadesConValidacion = [];
         $scope.validationSchemaChange();
         $scope.idEsquemaNuevo.show = false;
         $scope.hacerCambioEsquema.show = true;
@@ -725,6 +755,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
         $scope.transpasoFinanciera.show = false;
+        console.log($scope.fechaEsquemaNuevo);
+        
     }
 
     //Cancelar el cambio de financiera y cerrar la modal
@@ -777,7 +809,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // oculta los botones para transpaso de financiera
     $scope.cancelarTranspasoModal = function () {
         $scope.modalTraspasoFinanciera.show = false;
-        $scope.modalCambioFinanciera.show = true;
+        $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
         $('input[type=checkbox]').attr('checked', false);
@@ -883,7 +915,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.idEsquemaNuevo.show = true;
         $scope.idESquemaNueva = 0;
     }
-
+    
+    // Función para seleccionar una nueva financiera para traspaso financiero
     $scope.seleccionarEsquema = function (idEsquema, esFijo) {
         $('#detallesEsquemas').appendTo("body").modal('show');
         $scope.idEsquema = idEsquema;
@@ -903,6 +936,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         }
     }
 
+    // Función para mostrar los detalles de un esquema
     $scope.getDetalleEsquema = function () {
         $('#detallesEsquema').DataTable().destroy();
         $scope.detalleEsquema = {};
@@ -955,6 +989,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.tasaFecha = function () {}
     $scope.tasaRango = function () {}
 
+    // Validación para mostrar las unidades que pueden cambiar el esquema
     $scope.validationSchemaChange = function () {
         $scope.listaUnidadesConValidacion = [];
         $('#cambioEsquema').DataTable().destroy();
@@ -966,7 +1001,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             if (esquemaNuevo.data[0].esFijo == 1) {
                                 $scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
                                 $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
-                                console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo);
                                 if ($scope.fechaEsquemaNuevo <= $scope.fechaIngresoInvetario) {
                                     $scope.listaUnidadesConValidacion.push({
                                         vehNumserie: updateEsquemaUnidad.vehNumserie
@@ -988,40 +1022,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                 $scope.observaciones = 'Esta Unidad no se puede transferir a esquema de rangos';
                                 $scope.fechaIngresoInvetario = 0;
                             }
-
                         }
                         $scope.unidadesAutorizadas();
                     });
-                    console.log($scope.fechaEsquemaNuevo);
-                    setTimeout(function () {
-                        $('#cambioEsquema').DataTable({
-                            dom: '<"html5buttons"B>lTfgitp'
-                            , iDisplayLength: 5
-                            , buttons: [{
-                                    extend: 'copy'
-                            }, {
-                                    extend: 'csv'
-                            }, {
-                                    extend: 'excel'
-                                    , title: 'ExampleFile'
-                            }, {
-                                    extend: 'pdf'
-                                    , title: 'ExampleFile'
-                            }
-                    
-                                , {
-                                    extend: 'print'
-                                    , customize: function (win) {
-                                        $(win.document.body).addClass('white-bg');
-                                        $(win.document.body).css('font-size', '10px');
-                                        $(win.document.body).find('table')
-                                            .addClass('compact')
-                                            .css('font-size', 'inherit');
-                                    }
-                            }
-                        ]
-                        });
-                    }, 1000);
                 } else {
                     alertFactory.info("Esquema no cambiado");
                 }
