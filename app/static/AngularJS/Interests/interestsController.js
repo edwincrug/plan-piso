@@ -42,6 +42,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalTraspasoFinanciera.show = false;
         $scope.ocultarSucursal.show = false;
         $scope.getInterestCompanySucursal.show = false;
+        $scope.modalCambioFinanciera.show = false;
+        
     }
 
     // Función para filtrar por sucursal
@@ -722,6 +724,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
+        $scope.transpasoFinanciera.show = false;
     }
 
     //Cancelar el cambio de financiera y cerrar la modal
@@ -1042,6 +1045,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         });
     }
     $scope.selectFinancial = function(){
+        //$scope.updateEsquemaUnidad = [];
+        //$scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;
         $scope.transpasoFinanciera.show = false;
         $scope.modalCambioFinanciera.show = true;
         $scope.valorCheckBoxTabla.show = true;
