@@ -231,6 +231,7 @@
                                             <th>Interés mes actual</th>
                                             <th>Interés acumulado</th>
                                             <th>Utilidad</th>
+                                            <th ng-show="valorCheckBoxTabla.show"></th>
                                             <!--th ng-show="modalTraspasoFinanciera.show">
                                                 <input type="checkbox" class="i-checks" ng-click="marcarTodosCheckbox(ck.todo)" ng-model="ck.todo">
                                             </th>
@@ -241,7 +242,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="intereses in interes" ng-dblclick="inicia(intereses.vehNumserie)">
+                                        <tr ng-repeat="intereses in interes">
                                             <td ng-model="interes.idnum">{{intereses.vehNumserie}}</td>
                                             <td>{{intereses.marca}}</td>
                                             <td>{{intereses.modelo}}</td>
@@ -256,6 +257,7 @@
                                                 <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id)">
                                                 <label for="{{intereses.vehNumserie}}" class="css-label"></label>
                                             </td>
+                                            <td><button type="submit" class="btn  btn-default btn-xs pull-left" ng-click="inicia(intereses.vehNumserie)"><span class="glyphicon glyphicon-info-sign"></span></button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -430,10 +432,11 @@
                                                                 <th>Financiera</th>
                                                                 <th>Descripción</th>
                                                                 <th></th>
+                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr ng-repeat="esquema in esquemas" ng-dblclick="seleccionarEsquema(esquema.idEsquema,esquema.esFijo )">
+                                                            <tr ng-repeat="esquema in esquemas">
                                                                 <td>{{esquema.idEsquema}}</td>
                                                                 <td>{{esquema.diasGracia}}</td>
                                                                 <td>{{esquema.plazo}}</td>
@@ -443,6 +446,7 @@
                                       <input type="checkbox"  ng-attr-id="'{{esquema.idEsquema}}'" ng-model="ck.Esquema" ng-true-value="'{{esquema.idEsquema}}'" class="css-checkbox" ng-click="idEsquemaNuevo(ck.Esquema,esquema.nombre)">
                                         <label for="'{{esquema.idEsquema}}'" class="css-label"></label>                                   
                                                                 </td>
+                                                                <td><button type="submit" class="btn  btn-default btn-xs pull-left" ng-click="seleccionarEsquema(esquema.idEsquema,esquema.esFijo )"><span class="glyphicon glyphicon-info-sign"></span></button></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -550,10 +554,11 @@
                                                                 <th>Financiera</th>
                                                                 <th>Descripción</th>
                                                                 <th></th>
+                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr ng-repeat="esquemaFinanciera in esquemas" ng-dblclick="seleccionarEsquema(esquemaFinanciera.idEsquema,esquemas.esFijo )">
+                                                            <tr ng-repeat="esquemaFinanciera in esquemas">
                                                                 <td>{{esquemaFinanciera.idEsquema}}</td>
                                                                 <td>{{esquemaFinanciera.diasGracia}}</td>
                                                                 <td>{{esquemaFinanciera.plazo}}</td>
@@ -561,8 +566,9 @@
                                                                 <td>{{esquemaFinanciera.descripcion}}</td>
                                                                 <td>            
                                       <input type="checkbox"  ng-attr-id="'id{{esquemaFinanciera.idEsquema}}'" ng-model="ck.nuevaFinanciera" ng-true-value="'{{esquemaFinanciera.idEsquema}}'" class="css-checkbox" ng-click="idNuevaEsquema(ck.nuevaFinanciera,esquemaFinanciera.nombre)">
-                                        <label for="'id{{esquemaFinanciera.idEsquema}}'" class="css-label"></label>                                   
+                                        <label for="'id{{esquemaFinanciera.idEsquema}}'" class="css-label"></label>                               
                                                                 </td>
+                                                                <td><button type="submit" class="btn  btn-default btn-xs pull-left" ng-click="seleccionarEsquema(esquemaFinanciera.idEsquema,esquemas.esFijo)"><span class="glyphicon glyphicon-info-sign"></span></button></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
