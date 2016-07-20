@@ -677,25 +677,19 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Función para guardar el valor de un checkbox en un array
     $scope.valorCheckBoxTabla = function (idUnidad) {
         if (idUnidad == false || idUnidad == undefined) {
-            console.log('no hay nada');
         } else {
             $scope.updateEsquemaUnidad.push({
                 vehNumserie: idUnidad
             });
-            console.log($scope.updateEsquemaUnidad);
         }
     }
 
     // Función para actualizar un esquema en las unidades
     $scope.updateScheme = function () {
         $scope.unidadesAcambiarEsquema.forEach(function (updateEsquemaUnidad) {
-            console.log($scope.unidadesAcambiarEsquema);
             interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
-                    console.log('pasa por aqui');
-                    alertFactory.success("Esquema Cambiado");
                 } else {
-                    alertFactory.info("Esquema no cambiado");
                 }
             }, function (error) {
                 alertFactory.error("Error al cambiar Esquema");
@@ -707,12 +701,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.idEsquemaNuevo = function (idEsquema, nombre) {
         $scope.idESquemaNueva = idEsquema;
         $scope.nombreEsquemaNueva = nombre;
-        console.log(idEsquema, 'hola', $scope.nombreEsquemaNueva);
     }
     $scope.idNuevaEsquema = function(idEsquemaFinanciera, nombreFinanciera) {
         $scope.idESquemaNueva = idEsquemaFinanciera;
         $scope.nombreEsquemaNueva = nombreFinanciera;
-        console.log(idEsquemaFinanciera, 'hola', $scope.nombreEsquemaNueva);
     }
 
     // Función para mostrar los detalles del cambio de esquema
@@ -746,7 +738,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         ]
                     });
                 }, 1000);
-        $scope.listaUnidadesConValidacion = [];
+        //$scope.listaUnidadesConValidacion = [];
         $scope.validationSchemaChange();
         $scope.idEsquemaNuevo.show = false;
         $scope.hacerCambioEsquema.show = true;
@@ -754,14 +746,15 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        $scope.transpasoFinanciera.show = false;
-        console.log($scope.fechaEsquemaNuevo);
+        
+       // $scope.transpasoFinanciera.show = false;
         
     }
 
     //Cancelar el cambio de financiera y cerrar la modal
     $scope.cancelarCambioFinanciera = function () {
         //$scope.transpasoFinanciera.show = true;
+        $scope.nombreFinancieraCambio = "";
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show= false;
         $scope.idEsquemaNuevo.show = false;
@@ -803,16 +796,19 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('input[type=checkbox]').attr('checked', true);
         console.log('estan todos los checkbox marcados', id)
             //$scope.valorCheckBoxTabla();
-            //console.log('hola')
     }
 
     // oculta los botones para transpaso de financiera
     $scope.cancelarTranspasoModal = function () {
+        $scope.nombreFinancieraCambio = "";
         $scope.modalTraspasoFinanciera.show = false;
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
         $('input[type=checkbox]').attr('checked', false);
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;
     }
 
    // funcion de prueba para mostrar nombre de las financieras
@@ -906,6 +902,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('#esquemasFinancieraNuevo').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
         $scope.idESquemaNueva = 0;
+        $scope.nombreFinancieraCambio = "";
     }
 
     // Función para mostrar modal de cambiar financiera
@@ -924,7 +921,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.getDetalleEsquema();
         $scope.nombreEsquema = '';
         if ($scope.esFijo == 1) {
-            console.log($scope.esFijo);
             $scope.nombreEsquema = 'Tasa por Fechas';
             $scope.tasaRango.show = false;
             $scope.tasaFecha.show = true;
@@ -932,7 +928,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             $scope.nombreEsquema = 'Tasa por Rango';
             $scope.tasaFecha.show = false;
             $scope.tasaRango.show = true;
-            console.log($scope.esFijo);
         }
     }
 
@@ -1011,14 +1006,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                 } else {
                                     $scope.listaUnidadesConValidacion.push({
                                         vehNumserie: updateEsquemaUnidad.vehNumserie
-                                        , observaciones: "Esta Unidad no se puede transferir"
+                                        , observaciones: "Esta Unidad no se puede transferir, tiene un excedente de días"
                                         , status: "EXCEEDED"
                                     });
                                     $scope.fechaIngresoInvetario = 0;
                                 }
                             } else {
                                 $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].rango;
-                                console.log($scope.fechaIngresoInvetario, $scope.fechaEsquemaNuevo, 'Esta unidad tiene esquema por rangos');
                                 $scope.observaciones = 'Esta Unidad no se puede transferir a esquema de rangos';
                                 $scope.fechaIngresoInvetario = 0;
                             }
@@ -1041,7 +1035,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 $scope.unidadesAcambiarEsquema.push({
                     vehNumserie: listaUnidadesConValidacion.vehNumserie
                 });
-                console.log($scope.unidadesAcambiarEsquema)
+
             } else {
                 console.log('Unidad No validad', listaUnidadesConValidacion.vehNumserie)
             }
