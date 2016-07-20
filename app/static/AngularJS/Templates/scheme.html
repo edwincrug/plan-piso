@@ -60,26 +60,26 @@
                             <table id="esquemasFinanciera" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <tr>
-                                        <th>N° Esquema</th>
-                                        <th>Días gracia</th>
-                                        <th>Plazo</th>
+                                        <!-- <th>N° Esquema</th> -->
                                         <th>Nombre</th>
                                         <th>Descripción</th>
-                                        <th>Taza Fija</th>
-                                        <th></th>
+                                        <th>Días gracia</th>
+                                        <th>Plazo</th>
+                                        <th>Tipo</th>
+                                        <th>Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="esquema in esquemas" >
-                                        <td>{{esquema.idEsquema}}</td>
-                                        <td>{{esquema.diasGracia}}</td>
-                                        <td>{{esquema.plazo}}</td>
+                                        <!-- <td>{{esquema.idEsquema}}</td> -->
                                         <td>{{esquema.nombre}}</td>
                                         <td>{{esquema.descripcion}}</td>
+                                        <td>{{esquema.diasGracia}}</td>
+                                        <td>{{esquema.plazo}}</td>
                                         <td>{{getStringTasaFija(esquema.esFijo)}}</td>                                        
                                         <td>
                                         <button type="button" class="btn btn-default"  ng-click="nuevoEsquema(esquema.idEsquema,esquema.esFijo)">
-                                            <span class="glyphicon glyphicon-edit"> Editar</span>
+                                            <span class="glyphicon glyphicon-edit"> </span>
                                         </button>
                                     </td>
                                     </tr>

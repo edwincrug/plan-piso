@@ -644,8 +644,8 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
 
         $scope.getStringTasaFija = function(value) {
-            if(value) return "SI";
-            else return "NO";
+            if(value) return "FECHA";
+            else return "RANGO";
         
         };
 
