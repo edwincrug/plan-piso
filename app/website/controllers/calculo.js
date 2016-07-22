@@ -261,9 +261,9 @@ Calculo.prototype.get_interestfinanciera = function (req, res, next) {
      var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.STRING},
                    {name: 'idFinanciera', value: req.query.idFinanciera, type: self.model.types.STRING}
                   ];
-    console.log(params)
+    
     this.model.query('SEL_INTERES_FINANCIERA_SP', params, function (error, result) {
-        console.log(error, result)
+        
         self.view.expositor(res, {
             error: error,
             result: result
@@ -476,7 +476,7 @@ Calculo.prototype.post_insertesquemafecha = function(req, res, next){
 
                  ];
 
-                 console.log(params);
+                 
 
 
  this.model.post('INS_ESQUEMA_FIJO_SP', params, function (error, result) {
@@ -513,6 +513,61 @@ Calculo.prototype.post_newfinancial = function(req, res, next){
 
  });
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Muestra los detalles de pagos
+Calculo.prototype.get_paymentreport = function (req, res, next) {
+    
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [];
+
+    this.model.query('SEL_LOTE_PAGO_REPORTE_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+
+// Muestra los detalles de pagos
+Calculo.prototype.get_paymentreportdetail = function (req, res, next) {
+    
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [{name: 'idLote', value: req.query.idLote, type: self.model.types.INT}];
+
+    this.model.query('SEL_LOTE_PAGO_REPORTE_DETALLE_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+
+
+
+
+
+
+
+
+
 
 // Se obtine los intereses de las unidades por empresa y sucursal
 Calculo.prototype.get_interestcompanysucursal = function (req, res, next) {

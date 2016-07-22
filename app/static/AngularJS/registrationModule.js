@@ -33,7 +33,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         }).when('/interestDetails',{
             templateUrl: 'AngularJS/Templates/interestDetails.html',
             controller: 'interestsController'
-        }).when('/',{
+        }).when('/payment',{
+            templateUrl: 'AngularJS/Templates/payment.html',
+            controller: 'paymentController'
+        })
+        .when('/',{
             templateUrl: 'AngularJS/Templates/login.html',
             controller: 'loginController'
         });
