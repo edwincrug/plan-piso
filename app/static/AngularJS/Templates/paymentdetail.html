@@ -41,9 +41,9 @@
                     <td>{{detalle.vehNumserie}}</td>
                     <td>{{detalle.financiera}}</td>
                     <td>{{detalle.fechaProgramacion | date:'dd/MM/yyyy'}}</td>
-                    <td>{{detalle.cargo | currency:"$":2}}</td>
-                    <td ng-hide="editControl"><input type="text" ng-model="detalle.cargo"></td>
-                    <td ng-show="editControl">{{detalle.cargo | currency:"$":2}}</td>
+                    <td>{{detalle.cargoCalculado | currency:"$":2}}</td>
+                    <td ng-hide="editControl"><input type="text" ng-model="detalle.cargoAplicar"></td>
+                    <td ng-show="editControl">{{detalle.cargoAplicar | currency:"$":2}}</td>
                     <td>{{detalle.tipo}}</td>
                     <td>{{detalle.idLoteExterno}}</td>
                     <td>{{detalle.nombreLote}}</td>
