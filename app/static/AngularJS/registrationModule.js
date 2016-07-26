@@ -9,7 +9,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
     .config(function($routeProvider, $locationProvider) {
 
         /*cheange the routes*/
-        $routeProvider.when('/in', {
+        $routeProvider
+        .when('/',{
+            templateUrl: 'AngularJS/Templates/login.html',
+            controller: 'loginController'
+        }).when('/in', {
             templateUrl: 'AngularJS/Templates/example.html', //example 1
             controller: 'exampleController'
         }).when('/interest', {
@@ -36,11 +40,12 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         }).when('/payment',{
             templateUrl: 'AngularJS/Templates/payment.html',
             controller: 'paymentController'
-        })
-        .when('/',{
-            templateUrl: 'AngularJS/Templates/login.html',
-            controller: 'loginController'
-        });
+        }).when('/paymentdetail/:id',{
+            templateUrl: '/AngularJS/Templates/paymentdetail.html',
+            controller: 'paymentDetailController'
+        }).otherwise({
+        redirectTo: '/'
+      });
 
         $locationProvider.html5Mode({
             enabled: true,

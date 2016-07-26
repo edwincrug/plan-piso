@@ -1,21 +1,23 @@
-registrationModule.controller('paymentController', function($scope, $location, alertFactory, paymentRepository) {
+registrationModule.controller('paymentDetailController', function($scope, $routeParams, alertFactory, paymentDetailRepository) {
 
+    $scope.loteDetalle = [];
+    $scope.editControl = true;
 
-    $scope.lote = [];
-
-
-    $scope.init = function() {
-
-        $scope.getPaymentReport();
+    $scope.init = function() {        
+        $scope.showDetail($routeParams.id);
     };
 
-    $scope.getPaymentReport = function() {
 
-        $scope.promise = paymentRepository.getPaymentReport().then(function(result) {
+    $scope.showDetail = function(idLote) {
+
+        $('#tblLoteDetalle').DataTable().destroy();
+        $scope.promise = paymentDetailRepository.getPaymentReportDetail(idLote).then(function(result) {
+
             if (result.data.length > 0) {
-                $scope.lote = result.data;
-                setTimeout(function() { $scope.setTablePaging('tblLote'); }, 1000);
-                alertFactory.success("Pagos cargados");
+                $scope.loteDetalle = result.data;
+                setTimeout(function() { $scope.setTablePaging('tblLoteDetalle'); }, 1000);
+
+                alertFactory.success("Detalles Cargados");
             } else {
                 alertFactory.info("No se encontraron detalles");
             }
@@ -25,16 +27,16 @@ registrationModule.controller('paymentController', function($scope, $location, a
     };
 
 
-    $scope.showDetail = function(idLote) {
-        $location.path('/paymentdetail/' + idLote);
+    $scope.editAmount = function(idVehicle) {
+
+
     };
-
-
 
 
     $scope.setTablePaging = function(idTable) {
         $('#' + idTable).DataTable({
             dom: '<"html5buttons"B>lTfgitp',
+            iDisplayLength: 5,
             buttons: [{
                 extend: 'copy'
             }, {
