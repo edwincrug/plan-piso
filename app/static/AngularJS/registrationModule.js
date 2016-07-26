@@ -40,6 +40,9 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         .when('/',{
             templateUrl: 'AngularJS/Templates/login.html',
             controller: 'loginController'
+        }).when('/newUnits',{
+            templateUrl: 'AngularJS/Templates/newUnits.html',
+            controller: 'newUnitsController'
         });
 
         $locationProvider.html5Mode({

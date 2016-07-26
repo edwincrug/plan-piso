@@ -1,8 +1,6 @@
 registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository) {
     //store an array of free days getting by getFreeDays function  
     $scope.message = 'Buscando...';
-    //$scope.Marca = {};
-    //$scope.vehNumserie = {};
     $scope.detailsUnit = {};
     $scope.fechaHoy = new Date();
     $scope.idEmpresa = {};
@@ -27,7 +25,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalTraspasoFinanciera.show = false;
         $scope.getFinanciera();
         $scope.getInterestCompanySucursal.show = false;
-        //$scope.getEsquemaFinanciera();
     }
 
     // Función para filtrar por empresa
@@ -52,7 +49,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {
         $scope.idSucursal = idSucursal;
         $scope.nombreSucursal = nombreSucursal;
+        $scope.modalCambioFinanciera.show = false;
+        $scope.modalTraspasoFinanciera.show = false;
+        $scope.transpasoFinanciera.show = true;
         $scope.getInterestSucursal();
+
     }
 
     // Muestra los detalles de la financiera
@@ -72,6 +73,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             $scope.nombreSucursal = nombreSucursal;
             $scope.getInterestCompanySucursal();
         }
+    
         // Función para filtrar compañias
     $scope.getCompany = function () {
             $scope.promise = interestsRepository.getCompany().then(function (result) {
@@ -85,6 +87,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 alertFactory.error("Error al cargar Empresas");
             });
         }
+    
         // Función para trar las financieras por empresa
     $scope.getFinancial = function () {
         $scope.totalUnidades = 0;
@@ -673,7 +676,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.promise = schemeRepository.getFinanciera().then(function (result) {
             if (result.data.length > 0) {
                 $scope.financieraNueva = result.data;
-                alertFactory.success("financieras cargados");
+                //alertFactory.success("financieras cargados");
             } else {
                 alertFactory.info("No se encontraron financieras");
             }
@@ -719,34 +722,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Función para mostrar los detalles del cambio de esquema
     $scope.hacerCambioEsquema = function () {     
         $scope.validationSchemaChange();
-        /*setTimeout(function () {
-                        $('#unidadesCambioEsquema').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp'
-                        , iDisplayLength: 5
-                        , buttons: [{
-                                extend: 'copy'
-                            }, {
-                                extend: 'csv'
-                            }, {
-                                extend: 'excel'
-                                , title: 'ExampleFile'
-                            }, {
-                                extend: 'pdf'
-                                , title: 'ExampleFile'
-                            }  
-                            , {
-                                extend: 'print'
-                                , customize: function (win) {
-                                    $(win.document.body).addClass('white-bg');
-                                    $(win.document.body).css('font-size', '10px');
-                                    $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                                }
-                            }
-                        ]
-                    });
-                }, 1000);*/
         //$scope.listaUnidadesConValidacion = [];
         $scope.idEsquemaNuevo.show = false;
         $scope.hacerCambioEsquema.show = true;
@@ -1179,47 +1154,18 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        $('#cambioEsquema').DataTable().destroy();
+        $('#traspasoFinancieroTabla').DataTable().destroy();
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
-        $scope.idESquemaNueva = 0;
-        
+        $scope.idESquemaNueva = 0;       
     }
     
     $scope.hacerCambioEsquemaTraspaso = function () {     
-        $('#cambioEsquema').DataTable().destroy();
-        setTimeout(function () {
-                        $('#cambioEsquema').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp'
-                        , iDisplayLength: 5
-                        , buttons: [{
-                                extend: 'copy'
-                            }, {
-                                extend: 'csv'
-                            }, {
-                                extend: 'excel'
-                                , title: 'ExampleFile'
-                            }, {
-                                extend: 'pdf'
-                                , title: 'ExampleFile'
-                            }  
-                            , {
-                                extend: 'print'
-                                , customize: function (win) {
-                                    $(win.document.body).addClass('white-bg');
-                                    $(win.document.body).css('font-size', '10px');
-                                    $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                                }
-                            }
-                        ]
-                    });
-                }, 1000);
-        $scope.validationSchemaChange();
-        $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.hacerCambioEsquemaTraspaso.show = true;
+        $scope.idEsquemaNuevoTraspaso.show = false;
+        $scope.UnitChangeFinancialDetails();
+        
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
@@ -1229,7 +1175,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.regresarInteresesTraspaso = function () {
         $scope.getInterest.show = false;
         //$scope.modalCambioFinanciera.show = true;
-        $scope.updateScheme();
+        //$scope.updateScheme();
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
@@ -1239,40 +1185,31 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.ocultarSucursal.show = false;
         $scope.getFinanciera();
         $scope.getInterestCompanySucursal.show = false;
-        $('#cambioEsquema').DataTable().destroy();
+        $('#traspasoFinancieroTabla').DataTable().destroy();
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
         $scope.idESquemaNueva = 0;
         $scope.nombreFinancieraCambio = "";
     }
-    
-    
-      $scope.UnitsChangeFinancialDetails = function () {
+        
+    $scope.UnitChangeFinancialDetails = function () {
         $scope.listaUnidadesConValidacion = [];
-        $('#').DataTable().destroy();
+        $('#traspasoFinancieroTabla').DataTable().destroy();
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
             $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
-                    /*interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
+                    interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
                         if (esquemaNuevo.data.length > 0) {
                             if (esquemaNuevo.data[0].esFijo == 1) {
                                 $scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
                                 $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
-                                if ($scope.fechaEsquemaNuevo <= $scope.fechaIngresoInvetario) {
                                     $scope.listaUnidadesConValidacion.push({
                                         vehNumserie: updateEsquemaUnidad.vehNumserie
-                                        , observaciones: "Esta Unidad se puede tranferir a esquema de fechas"
-                                        , status: "OK"
+                                        , nombreEsquemaActual:  result.data[0].nombreE
+                                        , nombreFinanciera: result.data[0].nombreF
+                                        ,deuda:result.data[0].valorInventario
                                     });
                                     $scope.fechaIngresoInvetario = 0;
-                                } else {
-                                    $scope.listaUnidadesConValidacion.push({
-                                        vehNumserie: updateEsquemaUnidad.vehNumserie
-                                        , observaciones: "Esta Unidad no se puede transferir, tiene un excedente de días"
-                                        , status: "EXCEEDED"
-                                    });
-                                    $scope.fechaIngresoInvetario = 0;
-                                }
                             } else {
                                 $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].rango;
                                 $scope.observaciones = 'Esta Unidad no se puede transferir a esquema de rangos';
@@ -1280,7 +1217,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             }
                         }
                         setTimeout(function () {
-                        $('#').DataTable({
+                        $('#traspasoFinancieroTabla').DataTable({
                         dom: '<"html5buttons"B>lTfgitp'
                         , iDisplayLength: 5
                         , buttons: [{
@@ -1307,20 +1244,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         ]
                     });
                 }, 1000);
-                        $scope.unidadesAutorizadas();
-                    });*/
+                    });
                 } else {
                     alertFactory.info("Esquema no cambiado");
                 }
             }, function (error) {
                 alertFactory.error("Error al cambiar Esquema");
             });
-        });
+        });  
     }
-    
-    
-    
-    
-    
-    
+  
 });
