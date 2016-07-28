@@ -26,7 +26,7 @@ registrationModule.controller('paymentController', function($scope, $location, a
 
 
     $scope.showDetail = function(idLote) {
-        $location.path('/paymentdetail/' + idLote);
+        $location.path('/paymentdetail/' + idLote +'/add' );
     };
 
 

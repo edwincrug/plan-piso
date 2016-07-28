@@ -3,7 +3,7 @@ registrationModule.controller('paymentDetailController', function($scope, $route
     $scope.loteDetalle = [];
     $scope.editControl = true;
 
-    $scope.init = function() {        
+    $scope.init = function() {
         $scope.showDetail($routeParams.id);
     };
 
@@ -27,9 +27,12 @@ registrationModule.controller('paymentDetailController', function($scope, $route
     };
 
 
-    $scope.editAmount = function(idVehicle) {
+    $scope.setClass = function(objeto) {
 
-
+        if (objeto.cargoAplicar != objeto.cargoCalculado)
+            objeto.color = "gridFontYellow";
+        else
+            objeto.color = "";
     };
 
 
