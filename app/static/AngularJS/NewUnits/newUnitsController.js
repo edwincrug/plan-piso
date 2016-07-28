@@ -1,3 +1,389 @@
-registrationModule.controller('newUnitsController', function($scope, alertFactory, interestsRepository) {
+registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository) {
     
-}
+    $scope.message = 'Buscando...';
+    $scope.updateEsquemaUnidad =[];
+    $scope.fechaHoy = new Date();
+    
+    $scope.init = function(){
+        //$scope.getNewUnits();
+        $scope.transpasoFinanciera.show = false;
+        $scope.getFinanciera();
+        $scope.getCompany();
+        $scope.getSucursal.show = false;
+    }
+    
+     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
+        $scope.seleccionarSucursal.show = false;
+        $scope.idEmpresa = idEmpresa;
+        $scope.getSucursal.show = true;
+        $scope.nombreEmpresa = nombreEmpresa;
+        $scope.getSucursal();
+         $scope.getNewUnitsCompany();
+        $scope.transpasoFinanciera.show = true;
+        $scope.modalCambioFinanciera.show = false;
+        
+    }
+
+    // Función para filtrar por sucursal
+    $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {
+        $scope.idSucursal = idSucursal;
+        $scope.nombreSucursal = nombreSucursal;
+        $scope.modalCambioFinanciera.show = false;
+        //$scope.modalTraspasoFinanciera.show = false;
+        $scope.transpasoFinanciera.show = true;
+        $scope.getNewUnitsSucursal();
+
+    }
+        // Función para filtrar compañias
+    $scope.getCompany = function () {
+            $scope.promise = interestsRepository.getCompany().then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.empresas = result.data;
+                    alertFactory.success("Empresas cargados");
+                } else {
+                    alertFactory.info("No se encontraron Empresas");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar Empresas");
+            });
+        }
+    
+    $scope.getSucursal = function (idEmpresa) {
+        $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.sucursales = result.data;
+                alertFactory.success("Sucursales cargados");
+            } else {
+                alertFactory.info("No se encontraron Sucursales");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar Sucursales");
+        });
+    }
+    
+    $scope.getNewUnits = function(){
+        $scope.newUnits = [];
+        $('#newUnits').DataTable().destroy();
+        $scope.promise = newUnitsRepository.getNewUnits().then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.newUnits = result.data;
+                    setTimeout(function () {
+                        $('#newUnits').DataTable({
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , buttons: [{
+                                    extend: 'copy'
+                            }, {
+                                    extend: 'csv'
+                            }, {
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
+                            }, {
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
+                            }
+                                
+                                , {
+                                    extend: 'print'
+                                    , customize: function (win) {
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+                                        $(win.document.body).find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                            }
+                        ]
+                        });
+                    }, 1000);
+                } else {
+                    alertFactory.info("No se encontraron Empresas");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar Empresas");
+            });
+    }
+    
+    $scope.getNewUnitsCompany = function(){
+        $scope.newUnits = [];
+        $('#newUnits').DataTable().destroy();
+        $scope.promise = newUnitsRepository.getNewUnitsCompany($scope.idEmpresa).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.newUnits = result.data;
+                    setTimeout(function () {
+                        $('#newUnits').DataTable({
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , buttons: [{
+                                    extend: 'copy'
+                            }, {
+                                    extend: 'csv'
+                            }, {
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
+                            }, {
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
+                            }
+                                
+                                , {
+                                    extend: 'print'
+                                    , customize: function (win) {
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+                                        $(win.document.body).find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                            }
+                        ]
+                        });
+                    }, 1000);
+                } else {
+                    alertFactory.info("No se encontraron Empresas");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar Empresas");
+            });
+    }
+    
+    $scope.getNewUnitsSucursal = function(){
+         $scope.newUnits = [];
+        $('#newUnits').DataTable().destroy();
+        $scope.promise = newUnitsRepository.getNewUnitsSucursal($scope.idEmpresa, $scope.idSucursal).then(function (result) {
+                if (result.data.length > 0) {
+                    $scope.newUnits = result.data;
+                    setTimeout(function () {
+                        $('#newUnits').DataTable({
+                            dom: '<"html5buttons"B>lTfgitp'
+                            , buttons: [{
+                                    extend: 'copy'
+                            }, {
+                                    extend: 'csv'
+                            }, {
+                                    extend: 'excel'
+                                    , title: 'ExampleFile'
+                            }, {
+                                    extend: 'pdf'
+                                    , title: 'ExampleFile'
+                            }
+                                
+                                , {
+                                    extend: 'print'
+                                    , customize: function (win) {
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+                                        $(win.document.body).find('table')
+                                            .addClass('compact')
+                                            .css('font-size', 'inherit');
+                                    }
+                            }
+                        ]
+                        });
+                    }, 1000);
+                } else {
+                    alertFactory.info("No se encontraron Empresas");
+                }
+            }, function (error) {
+                alertFactory.error("Error al cargar Empresas");
+            });
+    }
+    
+    $scope.getFinanciera = function () {
+        $scope.promise = schemeRepository.getFinanciera().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.financieraNueva = result.data;
+                //alertFactory.success("financieras cargados");
+            } else {
+                alertFactory.info("No se encontraron financieras");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar financieras");
+        });
+    }
+    
+    $scope.modalCambioFinanciera = function(modal){
+        $scope.hacerCambioEsquemaTraspaso.show = false;
+        $('#traspasoFinanciero').appendTo("body").modal('show');  
+        $scope.idEsquemaNuevoTraspaso.show = true;
+        $scope.idESquemaNueva = 0;
+        $scope.modal = modal;
+        $scope.esquemas = {};
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+    }
+    
+    $scope.cancelFinancial = function(){
+        $scope.nombreFinancieraCambio = "";
+        $scope.transpasoFinanciera.show = true;
+        $scope.modalCambioFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show= false;
+        $('input[type=checkbox]').attr('checked', false);
+    }
+    
+    $scope.transpasoFinanciera = function () {
+        //$scope.modalTraspasoFinanciera.show = true;
+        $scope.valorCheckBoxTabla.show = true;
+        $scope.transpasoFinanciera.show = false;
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;
+    }
+    
+    $scope.selectFinancial = function(){
+        //$scope.updateEsquemaUnidad = [];
+        //$scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;
+        $scope.transpasoFinanciera.show = false;
+        $scope.modalCambioFinanciera.show = true;
+        $scope.valorCheckBoxTabla.show = true;
+    }
+    
+    $scope.getEsquemaFinanciera = function () {
+        $scope.esquemas = {};
+        $scope.fechaInicio = [];
+        $scope.fechaInicios = "";
+        //$('#esquemasFinancieraNuevo').DataTable().destroy();
+        $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinancieraCambio).then(function (result) {
+            if (result.data.length > 0) {
+                $scope.esquemas = result.data;
+                for (var i = 0; i < result.data.length; i++) {
+                $scope.idEsquema = result.data[i].idEsquema;
+                $scope.esFijo = result.data[i].esFijo;
+                //$scope.getDetalleEsquema();
+                }                
+                alertFactory.success("Esquemas cargados");
+            } else {
+                alertFactory.info("No se encontraron Esquemas");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar Esquemas");
+        });
+    }
+    
+    $scope.valorCheckBoxTabla = function (idUnidad) {
+        if (idUnidad == false || idUnidad == undefined) {
+        } else {
+            $scope.updateEsquemaUnidad.push({
+                vehNumserie: idUnidad
+            });
+        }
+    }
+    
+    $scope.seleccionarFinancieraNuevaTraspaso = function (idFinanciera, nombre) {
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        setTimeout(function () {
+                    $('#esquemasFinancieraNuevoTraspaso').DataTable({
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , iDisplayLength: 5
+                        , buttons: [{
+                                extend: 'copy'
+                            }, {
+                                extend: 'csv'
+                            }, {
+                                extend: 'excel'
+                                , title: 'ExampleFile'
+                            }, {
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
+                            }  
+                            , {
+                                extend: 'print'
+                                , customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);
+        $scope.idFinancieraCambio = idFinanciera;
+        $scope.nombreFinancieraCambio = nombre;
+        $scope.getEsquemaFinanciera();
+    }
+    
+    $scope.updateScheme = function () {
+        $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
+            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
+                if (result.data.length > 0) {
+                } else {
+                }
+            }, function (error) {
+                alertFactory.error("Error al cambiar Esquema");
+            });
+        });
+    }
+     
+    $scope.idEsquemaNuevoTraspaso = function (idEsquema, nombre) {
+        $scope.idESquemaNueva = idEsquema;
+        $scope.nombreEsquemaNueva = nombre;
+    }
+    
+    $scope.cancelarCambioFinancieraTraspaso = function () {
+        $scope.nombreFinancieraCambio = "";
+        $scope.valorCheckBoxTabla.show= false;
+        $scope.idEsquemaNuevoTraspaso.show = false;
+        $scope.hacerCambioEsquemaTraspaso.show = true;
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.modalCambioFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show = false;
+        $scope.transpasoFinanciera.show = true;
+        $('#unidadesCambioEsquemaNuevo').DataTable().destroy();
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;       
+    }
+    
+    $scope.hacerCambioEsquemaTraspaso = function () {     
+        $scope.hacerCambioEsquemaTraspaso.show = true;
+        $scope.idEsquemaNuevoTraspaso.show = false;
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.valorCheckBoxTabla.show = false;  
+        setTimeout(function () {
+                    $('#unidadesCambioEsquemaNuevo').DataTable({
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , iDisplayLength: 5
+                        , buttons: [{
+                                extend: 'copy'
+                            }, {
+                                extend: 'csv'
+                            }, {
+                                extend: 'excel'
+                                , title: 'ExampleFile'
+                            }, {
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
+                            }  
+                            , {
+                                extend: 'print'
+                                , customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);
+    }
+    
+    $scope.regresarInteresesTraspaso = function () {
+        $scope.updateScheme();
+        $scope.getCompany();
+        $scope.seleccionarSucursal.show = false;
+        $scope.transpasoFinanciera.show = false;
+        $scope.modalCambioFinanciera.show = false;
+        $scope.getFinanciera();
+        $scope.getCompany();
+        $scope.getSucursal.show = false;
+        $('#unidadesCambioEsquemaNuevo').DataTable().destroy();
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        $scope.updateEsquemaUnidad = [];
+        $scope.idESquemaNueva = 0;
+        $scope.nombreFinancieraCambio = "";
+    }
+      
+});

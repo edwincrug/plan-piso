@@ -589,6 +589,49 @@ Calculo.prototype.get_interestcompanysucursal = function (req, res, next) {
     });
 };
 
+// Se muestran las unidades nuevas que no tienen un esquema asignado
+Calculo.prototype.get_newUnits = function (req, res, next) {
+    
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [];
+
+    this.model.query('SEL_UNIDADES_NUEVAS_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+Calculo.prototype.get_newUnitsCompany = function (req, res, next) {
+    
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT}];
+
+    this.model.query('SEL_UNIDADES_NUEVAS_EMPRESA_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+Calculo.prototype.get_newUnitsSucursal = function (req, res, next) {
+    
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [{name: 'idEmpresa', value: req.query.idEmpresa, type: self.model.types.INT},
+                 {name: 'idSucursal', value: req.query.idSucursal, type: self.model.types.INT}];
+
+    this.model.query('SEL_UNIDADES_NUEVAS_SUCURSAL_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 
 module.exports = Calculo;

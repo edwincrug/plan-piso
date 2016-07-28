@@ -10,6 +10,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.unidadesAcambiarEsquema = [];
     $scope.detalleEsquema = {};
     $scope.fechaInicio =[];
+    $scope.margen=0;
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
@@ -79,7 +80,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             $scope.promise = interestsRepository.getCompany().then(function (result) {
                 if (result.data.length > 0) {
                     $scope.empresas = result.data;
-                    alertFactory.success("Empresas cargados");
+                    //alertFactory.success("Empresas cargados");
                 } else {
                     alertFactory.info("No se encontraron Empresas");
                 }
@@ -102,7 +103,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     $scope.totalUnidades += (result.data[i].unidades);
                     $scope.totalInteres += (result.data[i].interes);
                     $scope.totalAdeudo += (result.data[i].adeudo);
-                    alertFactory.success("Financieras cargadas");
+                    //alertFactory.success("Financieras cargadas");
                 }
             } else {
                 alertFactory.info("No se encontraron Financieras");
@@ -117,7 +118,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
             if (result.data.length > 0) {
                 $scope.sucursales = result.data;
-                alertFactory.success("Sucursales cargados");
+                //alertFactory.success("Sucursales cargados");
             } else {
                 alertFactory.info("No se encontraron Sucursales");
             }
@@ -178,7 +179,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         $scope.interesmespasado += (result.data[i].interesAcumulado);
                         $scope.interespagado += (result.data[i].interesPagado);
                         $scope.interesActual += (result.data[i].interesAcumuladoActual);
+                        //$scope.margen = ((result.data[i].precioCompra)+(result.data[i].interesAcumulado)+(result.data[i].interesAcumuladoActual))-(result.data[i].precioVenta);
                     }
+                    //$scope.margenUnidad = $scope.margen;
                     $scope.interesTotal = $scope.interesActual + $scope.interesmespasado;
                     $scope.interesnopagados = $scope.interesTotal;
                     alertFactory.success("Intereses cargados");
@@ -263,6 +266,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         $scope.interesmespasado += (result.data[i].interesAcumulado);
                         $scope.interespagado += (result.data[i].interesPagado);
                         $scope.interesActual += (result.data[i].interesAcumuladoActual);
+                        //$scope.margen = ((result.data[i].precioCompra)+(result.data[i].interesAcumulado)+(result.data[i].interesAcumuladoActual))-(result.data[i].precioVenta);
                     }
                     $scope.interesTotal = $scope.interesActual + $scope.interesmespasado;
                     $scope.interesnopagados = $scope.interesTotal;
@@ -409,10 +413,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         $scope.interesmespasado += (result.data[i].interesAcumulado);
                         $scope.interespagado += (result.data[i].interesPagado);
                         $scope.interesActual += (result.data[i].interesAcumuladoActual);
+                        //$scope.margen = ((result.data[i].precioCompra)+(result.data[i].interesAcumulado)+(result.data[i].interesAcumuladoActual))-(result.data[i].precioVenta);
                     }
                     $scope.interesTotal = $scope.interesActual + $scope.interesmespasado;
                     $scope.interesnopagados = $scope.interesTotal;
-                    alertFactory.success("Intereses cargados");
+                    //alertFactory.success("Intereses cargados");
                 } else {
                     alertFactory.info("Intereses no encontrados");
                     $scope.interesmespasado = 0;
@@ -447,6 +452,13 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Función para el ng-class en el campo días
     $scope.setClassDias = function (dias) {
         if (dias >= 180) {
+            return 'gridFontRed';
+        } else {
+            return 'gridFontGreen';
+        }
+    }
+    $scope.setClassMargen = function (margen) {
+        if (margen < 0 ) {
             return 'gridFontRed';
         } else {
             return 'gridFontGreen';
@@ -678,7 +690,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 $scope.financieraNueva = result.data;
                 //alertFactory.success("financieras cargados");
             } else {
-                alertFactory.info("No se encontraron financieras");
+                //alertFactory.info("No se encontraron financieras");
             }
         }, function (error) {
             alertFactory.error("Error al cargar financieras");
@@ -1088,6 +1100,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
     
     $scope.cancelFinancial = function(){
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.updateEsquemaUnidad = [];
         $scope.nombreFinancieraCambio = "";
         $scope.transpasoFinanciera.show = true;
         $scope.modalCambioFinanciera.show = false;
@@ -1105,7 +1119,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
     
     $scope.seleccionarFinancieraNuevaTraspaso = function (idFinanciera, nombre) {
-        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        //$('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        $scope.idFinancieraCambio = idFinanciera;
+        $scope.nombreFinancieraCambio = nombre;
+        $scope.getEsquemaFinanciera();
         setTimeout(function () {
                     $('#esquemasFinancieraNuevoTraspaso').DataTable({
                         dom: '<"html5buttons"B>lTfgitp'
@@ -1134,9 +1151,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         ]
                     });
                 }, 1000);
-        $scope.idFinancieraCambio = idFinanciera;
-        $scope.nombreFinancieraCambio = nombre;
-        $scope.getEsquemaFinanciera();
     }
     
     // Función para guardar el idEsquema nuevo 
@@ -1154,8 +1168,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        $('#traspasoFinancieroTabla').DataTable().destroy();
-        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        //$('#traspasoFinancieroTabla').DataTable().destroy();
+        //$('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;       
@@ -1165,7 +1179,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.hacerCambioEsquemaTraspaso.show = true;
         $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.UnitChangeFinancialDetails();
-        
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
@@ -1175,7 +1188,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.regresarInteresesTraspaso = function () {
         $scope.getInterest.show = false;
         //$scope.modalCambioFinanciera.show = true;
-        //$scope.updateScheme();
+        $scope.updateSchemeFinancial();
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
@@ -1252,6 +1265,18 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 alertFactory.error("Error al cambiar Esquema");
             });
         });  
+    }
+    
+    $scope.updateSchemeFinancial = function () {
+        $scope.listaUnidadesConValidacion.forEach(function (updateEsquemaUnidad) {
+            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
+                if (result.data.length > 0) {
+                } else {
+                }
+            }, function (error) {
+                alertFactory.error("Error al cambiar Esquema");
+            });
+        });
     }
   
 });

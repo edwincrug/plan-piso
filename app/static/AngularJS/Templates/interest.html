@@ -248,7 +248,7 @@
                                             <td>{{intereses.interesAcumulado | currency}}</td>
                                             <td ng-model="interes.interesActal">{{intereses.interesAcumuladoActual | currency}}</td>
                                             <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual | currency}}</td>
-                                            <td ng-class="setClass(intereses.estatus)">{{intereses.margenGanancia | currency}}</td>
+                                            <td ng-class="setClassMargen(inter.margen)" ng-model="inter.margen">{{intereses.precioVenta - (intereses.interesAcumuladoActual + intereses.interesAcumulado + intereses.precioCompra) | currency}}</td>
                                             <td ng-show="valorCheckBoxTabla.show">
                                                 <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id, interes.deuda, interes.interesActal,interes.nombreEsquemaActual)">
                                                 <label for="{{intereses.vehNumserie}}" class="css-label"></label>
@@ -545,7 +545,7 @@
                             <div class="modal-footer">
                                 <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal" ng-click="cancelarCambioFinanciera()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
                                 <button class="btn btn-primary" ng-show="idEsquemaNuevo.show" ng-click="hacerCambioEsquema()">Siguiente</button>
-                                <button class="btn btn-primary" data-dismiss="modal" ng-show="hacerCambioEsquema.show" ng-click="regresarIntereses()">Terminar</button>
+                                <button class="btn btn-primary" data-dismiss="modal" ng-show="hacerCambioEsquema.show" ng-click="regresarIntereses()">Cambiar</button>
                             </div>
                         </div>
                 </div>
@@ -637,7 +637,7 @@
                             <div class="modal-footer">
                                 <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal" ng-click="cancelarCambioFinancieraTraspaso()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
                                 <button class="btn btn-primary" ng-show="idEsquemaNuevoTraspaso.show" ng-click="hacerCambioEsquemaTraspaso()">Siguiente</button>
-                                <button class="btn btn-primary" data-dismiss="modal" ng-show="hacerCambioEsquemaTraspaso.show" ng-click="regresarInteresesTraspaso()">Terminar</button>
+                                <button class="btn btn-primary" data-dismiss="modal" ng-show="hacerCambioEsquemaTraspaso.show" ng-click="regresarInteresesTraspaso()">Cambiar</button>
                             </div>
                         </div>
                 </div>
