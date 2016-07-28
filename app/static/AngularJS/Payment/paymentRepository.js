@@ -8,10 +8,16 @@ registrationModule.factory('paymentRepository', function($http) {
 
 
 
-        getPaymentReport: function() {
+        getPaymentReport: function(idStatus) {
             return $http({
                 url: paymentURL + 'paymentreport/',
-                method: "GET"
+                method: "GET",
+                params: {
+                    idStatus: idStatus
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
         },
         getPaymentReportDetail: function(idLote) {

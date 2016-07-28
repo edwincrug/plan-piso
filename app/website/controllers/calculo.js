@@ -531,7 +531,8 @@ Calculo.prototype.get_paymentreport = function (req, res, next) {
     
     var self = this;
     //asignación de valores mediante parámetros del request
-    var params = [];
+    var params = [{name: 'idStatus', value: req.query.idStatus, type: self.model.types.INT}];
+
 
     this.model.query('SEL_LOTE_PAGO_REPORTE_SP', params, function (error, result) {
         self.view.expositor(res, {

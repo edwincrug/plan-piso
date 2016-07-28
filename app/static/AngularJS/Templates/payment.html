@@ -15,42 +15,96 @@
         </div>
     </div>
     </br>
-    <!-- tabla lotes -->
-    <div class="row">
-        <div class="col-sm-12">
-            <table id="tblLote" class="table table-striped table-bordered table-hover dataTables-example">
-                <thead>
-                    <tr>
-                        <th>Lote</th>
-                        <th>Tipo</th>
-                        <th>Monto</th>
-                        <th>Fecha Programación</th>
-                        <th>ID Lote Externo</th>
-                        <th>Nombre Lote</th>
-                        <th>Fecha Aplicación</th>
-                        <th>Estatus</th>
-                        <th>Detalle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="pago in lote">
-                        <td>{{pago.idLote}}</td>
-                        <td>{{pago.tipo}}</td>
-                        <td>{{pago.Monto | currency:"$":2}}</td>
-                        <td>{{pago.fechaProgramacion | date:'dd/MM/yyyy'}}</td>
-                        <td>{{pago.idLoteExterno}}</td>
-                        <td>{{pago.nombreLote}}</td>
-                        <td>{{pago.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
-                        <td>{{pago.estatus}}</td>
-                        <td>
-                            <button type="button" class="btn btn-default" ng-click="showDetail(pago.idLote)">
-                                <span class="glyphicon glyphicon-th-list"> </span>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- tabs inicio-->
+    <ul class="nav nav-tabs">
+        <li ng-class="panels[0].className" ng-click="setActiveClass(panels[0])"><a href="#">{{panels[0].name}}</a></li>
+        <li ng-class="panels[1].className" ng-click="setActiveClass(panels[1])"><a href="#">{{panels[1].name}}</a></li>
+    </ul>
+    <!-- tabs Fin-->
+    <!-- tabContent1 Ini-->
+    <div ng-show="panels[0].active">
+        <br>
+        <!-- tabla lotes no Aplicado -->
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="tblLoteNoAplicado" class="table table-striped table-bordered table-hover dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>Lote</th>
+                            <th>Tipo</th>
+                            <th>Monto</th>
+                            <th>Fecha Programación</th>
+                            <th>ID Lote Externo</th>
+                            <th>Nombre Lote</th>
+                            <th>Fecha Aplicación</th>
+                            <th>Estatus</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="noAplicado in loteNoAplicado">
+                            <td>{{noAplicado.idLote}}</td>
+                            <td>{{noAplicado.tipo}}</td>
+                            <td>{{noAplicado.Monto | currency:"$":2}}</td>
+                            <td>{{noAplicado.fechaProgramacion | date:'dd/MM/yyyy'}}</td>
+                            <td>{{noAplicado.idLoteExterno}}</td>
+                            <td>{{noAplicado.nombreLote}}</td>
+                            <td>{{noAplicado.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
+                            <td>{{noAplicado.estatus}}</td>
+                            <td>
+                                <button type="button" class="btn btn-default" ng-click="showDetail(noAplicado.idLote)">
+                                    <span class="glyphicon glyphicon-th-list"> </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <!-- tabla lotes no Aplicado  FIN-->
     </div>
-    <!-- tabla lotes FIN-->
+    <!-- tabContent1 Fin-->
+    <!-- tabContent2 Ini-->
+    <div ng-show="panels[1].active">
+        <br>
+        <!-- tabla lotes Aplicado -->
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="tblLoteAplicado" class="table table-striped table-bordered table-hover dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>Lote</th>
+                            <th>Tipo</th>
+                            <th>Monto</th>
+                            <th>Fecha Programación</th>
+                            <th>ID Lote Externo</th>
+                            <th>Nombre Lote</th>
+                            <th>Fecha Aplicación</th>
+                            <th>Estatus</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="aplicado in loteAplicado">
+                            <td>{{aplicado.idLote}}</td>
+                            <td>{{aplicado.tipo}}</td>
+                            <td>{{aplicado.Monto | currency:"$":2}}</td>
+                            <td>{{aplicado.fechaProgramacion | date:'dd/MM/yyyy'}}</td>
+                            <td>{{aplicado.idLoteExterno}}</td>
+                            <td>{{aplicado.nombreLote}}</td>
+                            <td>{{aplicado.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
+                            <td>{{aplicado.estatus}}</td>
+                            <td>
+                                <button type="button" class="btn btn-default" ng-click="showDetail(aplicado.idLote)">
+                                    <span class="glyphicon glyphicon-th-list"> </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- tabla lotes  Aplicado  FIN-->
+    </div>
+    <!-- tabContent2 Fin-->
 </div>

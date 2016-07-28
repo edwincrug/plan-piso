@@ -1,20 +1,38 @@
 registrationModule.controller('paymentController', function($scope, $location, alertFactory, paymentRepository) {
 
 
-    $scope.lote = [];
+    $scope.loteNoAplicado = [];
+    $scope.loteAplicado = [];
+    $scope.panels = [{ name: 'Pendiente', active: true, className: "active" }, { name: 'Aplicado', active: false, className: "" }];
 
 
     $scope.init = function() {
-
-        $scope.getPaymentReport();
+        $scope.getPaymentReport(5);
+        $scope.getNoPaymentReport(1);
     };
 
-    $scope.getPaymentReport = function() {
+    $scope.getNoPaymentReport = function(idStatus) {
 
-        $scope.promise = paymentRepository.getPaymentReport().then(function(result) {
+        $scope.promise = paymentRepository.getPaymentReport(idStatus).then(function(result) {
             if (result.data.length > 0) {
-                $scope.lote = result.data;
-                setTimeout(function() { $scope.setTablePaging('tblLote'); }, 1000);
+                $scope.loteNoAplicado = result.data;
+                setTimeout(function() { $scope.setTablePaging('tblLoteNoAplicado'); }, 1000);
+                alertFactory.success("Pagos cargados");
+            } else {
+                alertFactory.info("No se encontraron detalles");
+            }
+        }, function(error) {
+            alertFactory.error("Error al cargar detalles");
+        });
+    };
+
+
+    $scope.getPaymentReport = function(idStatus) {
+
+        $scope.promise = paymentRepository.getPaymentReport(idStatus).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.loteAplicado = result.data;
+                setTimeout(function() { $scope.setTablePaging('tblLoteAplicado'); }, 1000);
                 alertFactory.success("Pagos cargados");
             } else {
                 alertFactory.info("No se encontraron detalles");
@@ -26,7 +44,21 @@ registrationModule.controller('paymentController', function($scope, $location, a
 
 
     $scope.showDetail = function(idLote) {
-        $location.path('/paymentdetail/' + idLote +'/add' );
+        $location.path('/paymentdetail/' + idLote + '/add');
+    };
+
+
+
+    $scope.setActiveClass = function(currentTab) {
+
+        for (var i = 0; i < $scope.panels.length; i++) {
+            $scope.panels[i].active = false;
+            $scope.panels[i].className = "";
+        }
+
+        currentTab.active = true;
+        currentTab.className = "active";
+
     };
 
 
