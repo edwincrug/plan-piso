@@ -3,7 +3,11 @@ registrationModule.controller('paymentController', function($scope, $location, a
 
     $scope.loteNoAplicado = [];
     $scope.loteAplicado = [];
-    $scope.panels = [{ name: 'Pendiente', active: true, className: "active" }, { name: 'Aplicado', active: false, className: "" }];
+
+    $scope.panels = [
+        { name: 'Pendiente', active: true, className: "active" },
+        { name: 'Aplicado', active: false, className: "" }
+    ];
 
 
     $scope.init = function() {

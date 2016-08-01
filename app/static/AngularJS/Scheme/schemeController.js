@@ -25,17 +25,17 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.getEsquemaFinanciera();
         $scope.getEsquemaFinanciera.show = true;
     };
-    
+
     // Función para mostrar las financieras disponibles
     $scope.getFinanciera = function() {
-        $scope.financieras ={};
+        $scope.financieras = {};
         $('#Financieras').DataTable().destroy();
         $scope.promise = schemeRepository.getFinanciera().then(function(result) {
             if (result.data.length > 0) {
                 $scope.financieras = result.data;
                 setTimeout(function() {
                     $('#Financieras').DataTable({
-                         iDisplayLength: 5,
+                        iDisplayLength: 5,
                         dom: '<"html5buttons"B>lTfgitp',
                         buttons: [{
                                 extend: 'copy'
@@ -71,7 +71,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             alertFactory.error("Error al cargar financieras");
         });
     };
-    
+
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function() {
         $('#esquemasFinanciera').DataTable().destroy();
@@ -81,8 +81,9 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
                 setTimeout(function() {
                     $('#esquemasFinanciera').DataTable({
                         dom: '<"html5buttons"B>lTfgitp'
-                        
-                        , buttons: [{
+
+                        ,
+                        buttons: [{
                                 extend: 'copy'
                             }, {
                                 extend: 'csv'
@@ -237,7 +238,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
     $scope.cerrar = function() {
         $('#inicioModal').modal('toggle');
     };
-    
+
     // Función para cargar calendario
     $scope.calendario = function() {
         $('#calendar .input-group.date').datepicker({
@@ -246,10 +247,11 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             forceParse: false,
             calendarWeeks: true,
             autoclose: true,
-            todayHighlight: true
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
         });
     }
-    
+
     //Expresiones Regulares 
     var expresion = {
         todo: '.',
@@ -471,7 +473,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
         $scope.lstRangeScheme.splice(index, 1);
     };
-    
+
     $scope.showConfirmSave = function() {
 
         if ($scope.isAddMode) {
@@ -585,19 +587,39 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
 
         var splitDateA = newIniDate.split('/');
         var splitDateB = newEndDate.split('/');
-        var splitDateC = oldIniDate.split('/');
-        var splitDateD = oldEndDate.split('/');
+        var splitDateC = [];
+        var splitDateD = [];
 
-        //  formato de fecha  MM/dd/yyyy '01/30/2016'
-        var day = 1;
-        var month = 0;
+
+        var day = 0;
+        var month = 1;
         var year = 2;
 
 
         var dateA = new Date(splitDateA[year], splitDateA[month] - 1, splitDateA[day]);
         var dateB = new Date(splitDateB[year], splitDateB[month] - 1, splitDateB[day]);
-        var dateC = new Date(splitDateC[year], splitDateC[month] - 1, splitDateC[day]);
-        var dateD = new Date(splitDateD[year], splitDateD[month] - 1, splitDateD[day]);
+        var dateC = null;
+        var dateD = null;
+
+        if (oldIniDate.indexOf('/') > -1) {
+
+            splitDateC = oldIniDate.split('/');
+            splitDateD = oldEndDate.split('/');
+            dateC = new Date(splitDateC[year], splitDateC[month] - 1, splitDateC[day]);
+            dateD = new Date(splitDateD[year], splitDateD[month] - 1, splitDateD[day]);
+
+
+        } else {
+            var subC = oldIniDate.substring(0, 10);
+            var subD = oldEndDate.substring(0, 10);
+
+            splitDateC = subC.split('-');
+            splitDateD = subD.split('-');
+            dateC = new Date(splitDateC[0], splitDateC[1] - 1, splitDateC[2]);
+            dateD = new Date(splitDateD[0], splitDateD[1] - 1, splitDateD[2]);
+        }
+
+
 
         if (!(dateB <= dateC || dateA >= dateD))
             return true; // fecha traslapada
@@ -605,56 +627,55 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             return false; //feha Ok        
     };
 
-    $scope.abrirModalFinanciera = function(){
+    $scope.abrirModalFinanciera = function() {
         $scope.getFinanciera();
         $('#nuevaFinanciera').appendTo("body").modal('show');
     }
-    
-    $scope.agregarNuevaFinanciera = function(nombreFinanciera){
+
+    $scope.agregarNuevaFinanciera = function(nombreFinanciera) {
         $scope.nombreFinancieraNueva = nombreFinanciera;
-         if (nombreFinanciera == '' || nombreFinanciera == undefined) {
-             console.log('No se puede agregar un campo vacio');
-         }else{
-        $scope.newFinancial();
-        $scope.getFinanciera();
-        $scope.financiera.nombre = '';
-         }
+        if (nombreFinanciera == '' || nombreFinanciera == undefined) {
+            console.log('No se puede agregar un campo vacio');
+        } else {
+            $scope.newFinancial();
+            $scope.getFinanciera();
+            $scope.financiera.nombre = '';
+        }
     }
-    
-    $scope.cerrarModalFinanciera = function(){
+
+    $scope.cerrarModalFinanciera = function() {
         if ($scope.nombreFinancieraNueva == '' || $scope.nombreFinancieraNueva == undefined) {
-             console.log('vacio');
-         }else{
-        $scope.financiera.nombre = '';
+            console.log('vacio');
+        } else {
+            $scope.financiera.nombre = '';
+        }
     }
-    }
-    
+
     $scope.newFinancial = function(nombre) {
-            schemeRepository.newFinancial($scope.nombreFinancieraNueva).then(function(result) {
-                if (result.data.length > 0) {
-                    alertFactory.success("Financiera nueva agregada");
-                    $scope.clearControls();
-                } else {
-                    alertFactory.info("Financiera no agregada");
-                }
-            }, function(error) {
-                alertFactory.error("Error al guardar Financiera");
-            });
-        };
+        schemeRepository.newFinancial($scope.nombreFinancieraNueva).then(function(result) {
+            if (result.data.length > 0) {
+                alertFactory.success("Financiera nueva agregada");
+                $scope.clearControls();
+            } else {
+                alertFactory.info("Financiera no agregada");
+            }
+        }, function(error) {
+            alertFactory.error("Error al guardar Financiera");
+        });
+    };
 
 
-        $scope.getStringTasaFija = function(value) {
-            if(value) return "FECHA";
-            else return "RANGO";
-        
-        };
+    $scope.getStringTasaFija = function(value) {
+        if (value) return "FECHA";
+        else return "RANGO";
 
-        $scope.getStringTipoTiie = function(value) {            
-            return $scope.lstTiie[value-1].text;   
-        };
+    };
+
+    $scope.getStringTipoTiie = function(value) {
+        return $scope.lstTiie[value - 1].text;
+    };
 
 
 
 
 });
-

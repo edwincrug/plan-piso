@@ -7,7 +7,7 @@
                     <a href="/">Home</a>
                 </li>
                 <li class="active">
-                    <strong>Lote de Pagos</strong>
+                    <strong>Lote De Pagos</strong>
                 </li>
             </ol>
         </div>
@@ -16,7 +16,7 @@
     </div>
     </br>
     <!-- tabs inicio-->
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs ">
         <li ng-class="panels[0].className" ng-click="setActiveClass(panels[0])"><a href="#">{{panels[0].name}}</a></li>
         <li ng-class="panels[1].className" ng-click="setActiveClass(panels[1])"><a href="#">{{panels[1].name}}</a></li>
     </ul>
@@ -52,7 +52,7 @@
                             <td>{{noAplicado.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
                             <td>{{noAplicado.estatus}}</td>
                             <td>
-                                <button type="button" class="btn btn-default" ng-click="showDetail(noAplicado.idLote)">
+                                <button type="button" class="btn btn-default lazur-bg" ng-click="showDetail(noAplicado.idLote)">
                                     <span class="glyphicon glyphicon-th-list"> </span>
                                 </button>
                             </td>
@@ -95,7 +95,7 @@
                             <td>{{aplicado.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
                             <td>{{aplicado.estatus}}</td>
                             <td>
-                                <button type="button" class="btn btn-default" ng-click="showDetail(aplicado.idLote)">
+                                <button type="button" class="btn btn-default lazur-bg" ng-click="showDetail(aplicado.idLote)">
                                     <span class="glyphicon glyphicon-th-list"> </span>
                                 </button>
                             </td>
