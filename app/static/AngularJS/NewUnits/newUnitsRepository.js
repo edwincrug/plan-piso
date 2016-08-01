@@ -33,7 +33,20 @@ registrationModule.factory('newUnitsRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+         updateSchemeNews: function (idEsquema,vehNumserie) {
+            return $http({
+                url: newUnitstsURL + 'updateschemenews/',
+                method: "POST",
+                data: {
+                    idEsquema: idEsquema,
+                    vehNumserie: vehNumserie
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
      }
 });
 

@@ -12,7 +12,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.getSucursal.show = false;
     }
     
-     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
+    $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
         $scope.seleccionarSucursal.show = false;
         $scope.idEmpresa = idEmpresa;
         $scope.getSucursal.show = true;
@@ -302,9 +302,9 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.getEsquemaFinanciera();
     }
     
-    $scope.updateScheme = function () {
+    $scope.updateSchemeNews = function () {
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
-            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
+            newUnitsRepository.updateSchemeNews($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
                 } else {
                 }
@@ -371,7 +371,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.regresarInteresesTraspaso = function () {
-        $scope.updateScheme();
+        $scope.updateSchemeNews();
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.transpasoFinanciera.show = false;
