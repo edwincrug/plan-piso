@@ -499,8 +499,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         contenedor.style.backgroundColor = "#23C6C8";
         var contenedor = document.getElementById("set90Masdays");
         contenedor.style.backgroundColor = "#23C6C8";
-
-
     }
 
     // Filtro para mostras unidades a 60 días de financiamiento
@@ -992,6 +990,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     // Validación para mostrar las unidades que pueden cambiar el esquema
     $scope.validationSchemaChange = function () {
         $scope.listaUnidadesConValidacion = [];
+        //$scope.restafechas = "";
         $('#unidadesCambioEsquema').DataTable().destroy();
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
             $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
@@ -999,12 +998,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
                         if (esquemaNuevo.data.length > 0) {
                             if (esquemaNuevo.data[0].esFijo == 1) {
-                                $scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
-                                $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
+                                //$scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
+                                //$scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
                                 if ($scope.fechaEsquemaNuevo <= $scope.fechaIngresoInvetario) {
+                                    $scope.restafechas = $scope.fechaEsquemaNuevo - 10
+                                    console.log($scope.restafechas)
                                     $scope.listaUnidadesConValidacion.push({
                                         vehNumserie: updateEsquemaUnidad.vehNumserie
-                                        , observaciones: "Esta Unidad se puede tranferir a esquema de fechas"
+                                        , observaciones: "Esta Unidad se puede transferir a esquema de fechas"
                                         , status: "OK"
                                     });
                                     $scope.fechaIngresoInvetario = 0;
@@ -1017,9 +1018,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                     $scope.fechaIngresoInvetario = 0;
                                 }
                             } else {
-                                $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].rango;
-                                $scope.observaciones = 'Esta Unidad no se puede transferir a esquema de rangos';
-                                $scope.fechaIngresoInvetario = 0;
+                                $scope.listaUnidadesConValidacion.push({
+                                        vehNumserie: updateEsquemaUnidad.vehNumserie
+                                        , observaciones: "Esta Unidad se puede transferir"
+                                        , status: "OK"
+                                    });
                             }
                         }
                         setTimeout(function () {
