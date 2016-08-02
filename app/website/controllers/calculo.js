@@ -514,18 +514,6 @@ Calculo.prototype.post_newfinancial = function(req, res, next){
  });
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
 // Muestra los detalles de pagos
 Calculo.prototype.get_paymentreport = function (req, res, next) {
     
@@ -542,8 +530,6 @@ Calculo.prototype.get_paymentreport = function (req, res, next) {
     });
 };
 
-
-
 // Muestra los detalles de pagos
 Calculo.prototype.get_paymentreportdetail = function (req, res, next) {
     
@@ -558,17 +544,6 @@ Calculo.prototype.get_paymentreportdetail = function (req, res, next) {
         });
     });
 };
-
-
-
-
-
-
-
-
-
-
-
 
 // Se obtine los intereses de las unidades por empresa y sucursal
 Calculo.prototype.get_interestcompanysucursal = function (req, res, next) {
@@ -657,6 +632,20 @@ Calculo.prototype.post_updateschemenews = function(req, res, next){
 
  });
 }
+
+Calculo.prototype.get_unitsdetailspayment = function (req, res, next) {
+    
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [{name: 'idUnidad', value: req.query.idUnidad, type: self.model.types.INT}];
+
+    this.model.query('SEL_UNIDAD_DETALLE_PAGO_SP', params, function (error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
 
 
 

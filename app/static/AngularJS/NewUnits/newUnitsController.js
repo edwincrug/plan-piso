@@ -62,11 +62,13 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.getNewUnits = function(){
+        $scope.TotalUnidades = 0;
         $scope.newUnits = [];
         $('#newUnits').DataTable().destroy();
         $scope.promise = newUnitsRepository.getNewUnits().then(function (result) {
                 if (result.data.length > 0) {
                     $scope.newUnits = result.data;
+                    $scope.TotalUnidades = result.data.length;
                     setTimeout(function () {
                         $('#newUnits').DataTable({
                             dom: '<"html5buttons"B>lTfgitp'
@@ -104,11 +106,13 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.getNewUnitsCompany = function(){
+        $scope.TotalUnidades = 0;
         $scope.newUnits = [];
         $('#newUnits').DataTable().destroy();
         $scope.promise = newUnitsRepository.getNewUnitsCompany($scope.idEmpresa).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.newUnits = result.data;
+                    $scope.TotalUnidades = result.data.length;
                     setTimeout(function () {
                         $('#newUnits').DataTable({
                             dom: '<"html5buttons"B>lTfgitp'
@@ -146,11 +150,13 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.getNewUnitsSucursal = function(){
+        $scope.TotalUnidades = 0;
          $scope.newUnits = [];
         $('#newUnits').DataTable().destroy();
         $scope.promise = newUnitsRepository.getNewUnitsSucursal($scope.idEmpresa, $scope.idSucursal).then(function (result) {
                 if (result.data.length > 0) {
                     $scope.newUnits = result.data;
+                    $scope.TotalUnidades = result.data.length;
                     setTimeout(function () {
                         $('#newUnits').DataTable({
                             dom: '<"html5buttons"B>lTfgitp'

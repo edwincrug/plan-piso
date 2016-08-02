@@ -97,7 +97,7 @@ registrationModule.factory('interestsRepository', function ($http) {
                 }
             });
         },
-         updateScheme: function (idEsquema,vehNumserie) {
+        updateScheme: function (idEsquema,vehNumserie) {
             return $http({
                 url: interestsURL + 'updatescheme/',
                 method: "POST",
@@ -142,6 +142,18 @@ registrationModule.factory('interestsRepository', function ($http) {
                     idEmpresa: idEmpresa,
                     idSucursal: idSucursal
                 },  
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        getUnitsDetailSpayment : function (idUnidad) {
+            return $http({
+                url: interestsURL + 'unitsdetailspayment/',
+                method: "GET",
+                params: {
+                    idUnidad: idUnidad
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
