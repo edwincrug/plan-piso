@@ -47,6 +47,26 @@ registrationModule.factory('newUnitsRepository', function ($http) {
                 }
             });
         },
+          insertMovementScheme: function (idUnidad,idFinanciera,fecha,cargo,abono) {
+            return $http({
+                url: newUnitstsURL + 'insertmovementscheme/',
+                method: "POST",
+                data: {
+                        idUnidad : idUnidad,
+                        idFinanciera : idFinanciera,
+                        fecha : fecha,
+                        cargo : cargo,
+                        abono : abono
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        }
+         
+         
+         
      }
 });
 

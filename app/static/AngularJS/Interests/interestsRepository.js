@@ -28,7 +28,7 @@ registrationModule.factory('interestsRepository', function ($http) {
                 }
             });
         },
-            getDetailsUnitScheme: function (vehNumserie) {
+        getDetailsUnitScheme: function (vehNumserie) {
             return $http({
                 url: interestsURL + 'detailsUnitscheme/',
                 method: "GET",
@@ -158,6 +158,23 @@ registrationModule.factory('interestsRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+        insertMovementFinancial: function (idUnidad,idFinanciera,fecha,cargo,abono) {
+            return $http({
+                url: interestsURL + 'insertmovementfinancial/',
+                method: "POST",
+                data: {
+                        idUnidad : idUnidad,
+                        idFinanciera : idFinanciera,
+                        fecha : fecha,
+                        cargo : cargo,
+                        abono : abono
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        } 
     };
 });
