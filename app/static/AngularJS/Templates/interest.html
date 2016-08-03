@@ -423,19 +423,19 @@
                             </div>
                         <div class="ibox-content" id="ibox-content">
                             <div id="vertical-timeline" class="vertical-container dark-timeline center-orientation">
-                                <div class="vertical-timeline-block"  ng-repeat="detallePagos in detallePagos">
+                                <div class="vertical-timeline-block"  ng-repeat="timePagos in detallePagos">
                                     <div class="vertical-timeline-icon navy-bg">
                                         <i class="fa fa-briefcase"></i>
                                 </div>
                                     <div class="vertical-timeline-content">
-                                    <h2>Financiera: {{detallePagos.nombreFinanciera}}</h2>
-                                    <p>Descripción: {{detallePagos.descripcion}} </p>
-                                    <p>Nombre Esquema: {{detallePagos.nombreEsquema}}</p>
-                                    <p>Cargo: {{detallePagos.cargo| currency:"$":2}} </p>
-                                    <p>Abono: {{detallePagos.abono| currency:"$":2}}</p>
+                                    <h2>Financiera: {{timePagos.nombreFinanciera}}</h2>
+                                    <p>Descripción: {{timePagos.descripcion}} </p>
+                                    <p>Nombre Esquema: {{timePagos.nombreEsquema}}</p>
+                                    <p>Cargo: {{timePagos.cargo| currency:"$":2}} </p>
+                                    <p>Abono: {{timePagos.abono| currency:"$":2}}</p>
                                     <span class="vertical-date">
                                         Today <br/>
-                                        <small>{{detallePagos.fecha| date:'dd/MM/yyyy'}}</small>
+                                        <!-- <small>{{timePagos.fecha| date:'dd/MM/yyyy'}}</small> -->
                                     </span>
                                 </div>
                                 </div>

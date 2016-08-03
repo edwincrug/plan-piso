@@ -2,20 +2,26 @@ registrationModule.controller('paymentDetailController', function($scope, $route
 
     $scope.loteDetalle = [];
     $scope.editControl = true;
+    $scope.disableControl = false;
 
     $scope.init = function() {
         $scope.showDetail($routeParams.id);
+
+        if ($routeParams.mode == 'review') {
+            $scope.disableControl = true;
+        }
+
     };
 
 
     $scope.showDetail = function(idLote) {
 
         $('#tblLoteDetalle').DataTable().destroy();
-        $scope.promise = paymentDetailRepository.getPaymentReportDetail(idLote).then(function(result) {
 
+        $scope.promise = paymentDetailRepository.getPaymentReportDetail(idLote).then(function(result) {
             if (result.data.length > 0) {
                 $scope.loteDetalle = result.data;
-                setTimeout(function() { $scope.setTablePaging('tblLoteDetalle'); }, 1000);
+                setTimeout(function() { $scope.setTablePaging('#tblLoteDetalle'); }, 1000);
 
                 alertFactory.success("Detalles Cargados");
             } else {
@@ -24,6 +30,15 @@ registrationModule.controller('paymentDetailController', function($scope, $route
         }, function(error) {
             alertFactory.error("Error al cargar detalles");
         });
+    };
+
+
+    $scope.cargoKeyUp = function(key, obj) {
+        if (key.keyCode == 13) {
+            if (!isNaN(obj.cargoAplicar)) {
+                alertFactory.info("OK");
+            }
+        }
     };
 
 
@@ -37,7 +52,7 @@ registrationModule.controller('paymentDetailController', function($scope, $route
 
 
     $scope.setTablePaging = function(idTable) {
-        $('#' + idTable).DataTable({
+        $(idTable).DataTable({
             dom: '<"html5buttons"B>lTfgitp',
             iDisplayLength: 5,
             buttons: [{
@@ -63,11 +78,6 @@ registrationModule.controller('paymentDetailController', function($scope, $route
         });
 
     };
-
-
-
-
-
 
 
 

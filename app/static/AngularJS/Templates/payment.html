@@ -52,7 +52,7 @@
                             <td>{{noAplicado.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
                             <td>{{noAplicado.estatus}}</td>
                             <td>
-                                <button type="button" class="btn btn-default lazur-bg" ng-click="showDetail(noAplicado.idLote)">
+                                <button type="button" class="btn btn-default lazur-bg" ng-click="showDetailEdit(noAplicado.idLote)">
                                     <span class="glyphicon glyphicon-th-list"> </span>
                                 </button>
                             </td>
@@ -95,7 +95,7 @@
                             <td>{{aplicado.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
                             <td>{{aplicado.estatus}}</td>
                             <td>
-                                <button type="button" class="btn btn-default lazur-bg" ng-click="showDetail(aplicado.idLote)">
+                                <button type="button" class="btn btn-default lazur-bg" ng-click="showDetailReview(aplicado.idLote)">
                                     <span class="glyphicon glyphicon-th-list"> </span>
                                 </button>
                             </td>

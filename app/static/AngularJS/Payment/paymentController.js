@@ -47,8 +47,13 @@ registrationModule.controller('paymentController', function($scope, $location, a
     };
 
 
-    $scope.showDetail = function(idLote) {
-        $location.path('/paymentdetail/' + idLote + '/add');
+    $scope.showDetailEdit = function(idLote) {
+        $location.path('/paymentdetail/' + idLote + '/edit');
+    };
+
+
+    $scope.showDetailReview = function(idLote) {
+        $location.path('/paymentdetail/' + idLote + '/review');
     };
 
 

@@ -556,7 +556,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $('#DetallesUnidadModal').appendTo("body").modal('show');
         $scope.vehNumserie = vehNumserie;
         $scope.idUnidad = idUnidad;
-        console.log($scope.idUnidad)
+        //console.log($scope.idUnidad)
         $scope.getDetailsUnit();
         $scope.timeLineUnits();
     }
