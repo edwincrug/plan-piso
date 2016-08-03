@@ -580,6 +580,7 @@ Calculo.prototype.get_newUnits = function (req, res, next) {
     });
 };
 
+// Muestra las unidades nuevas que no tienen esquema asignado
 Calculo.prototype.get_newUnitsCompany = function (req, res, next) {
     
     var self = this;
@@ -594,6 +595,7 @@ Calculo.prototype.get_newUnitsCompany = function (req, res, next) {
     });
 };
 
+// Muestra las unidades sin esquema por sucursal
 Calculo.prototype.get_newUnitsSucursal = function (req, res, next) {
     
     var self = this;
@@ -609,6 +611,7 @@ Calculo.prototype.get_newUnitsSucursal = function (req, res, next) {
     });
 };
 
+// Actualiza el esquema nuevo a las unidades nuevas
 Calculo.prototype.post_updateschemenews = function(req, res, next){
     //Objeto que almacena la respuesta
     var object = {};
@@ -633,6 +636,7 @@ Calculo.prototype.post_updateschemenews = function(req, res, next){
  });
 }
 
+// Muestra los detalles de los movimientos de las unidades
 Calculo.prototype.get_unitsdetailspayment = function (req, res, next) {
     
     var self = this;
@@ -647,8 +651,61 @@ Calculo.prototype.get_unitsdetailspayment = function (req, res, next) {
     });
 };
 
+// Agrega un movimiento por traspaso financiero
+Calculo.prototype.post_insertmovementfinancial = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+ 
+            var params = [{name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT},
+                 {name: 'idFinanciera', value: req.body.idFinanciera, type: self.model.types.DECIMAL},
+                 {name: 'fecha', value: req.body.fecha, type: self.model.types.STRING},
+                 {name: 'cargo', value: req.body.cargo, type: self.model.types.DECIMAL},
+                 {name: 'abono', value: req.body.abono, type: self.model.types.DECIMAL}
+                 ];
+ this.model.post('INS_MOVIMIENTO_TRASPASO_FINANCIERO_SP', params, function (error, result) {
+        //Callback
 
+   self.view.expositor(res, {
+            error: error,
+            result: result
+        });
 
+ });
+};
+
+// Agrega un movimiento por cambio de esquema
+Calculo.prototype.post_insertmovementscheme = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+ 
+            var params = [{name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT},
+                 {name: 'idFinanciera', value: req.body.idFinanciera, type: self.model.types.DECIMAL},
+                 {name: 'fecha', value: req.body.fecha, type: self.model.types.STRING},
+                 {name: 'cargo', value: req.body.cargo, type: self.model.types.DECIMAL},
+                 {name: 'abono', value: req.body.abono, type: self.model.types.DECIMAL}
+                 ];
+ this.model.post('INS_MOVIMIENTO_ESQUEMA_SP', params, function (error, result) {
+        //Callback
+
+   self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+ });
+};
 
 
 module.exports = Calculo;

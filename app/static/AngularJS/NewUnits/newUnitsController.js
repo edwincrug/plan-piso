@@ -264,11 +264,11 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         });
     }
     
-    $scope.valorCheckBoxTabla = function (idUnidad) {
-        if (idUnidad == false || idUnidad == undefined) {
-        } else {
+    $scope.valorCheckBoxTabla = function (idUnidad,idu) {
+        if (idUnidad == false || idUnidad == undefined) {} else {
             $scope.updateEsquemaUnidad.push({
-                vehNumserie: idUnidad
+                vehNumserie: idUnidad,
+                idUnidad: idu
             });
         }
     }
@@ -329,7 +329,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.nombreFinancieraCambio = "";
         $scope.valorCheckBoxTabla.show= false;
         $scope.idEsquemaNuevoTraspaso.show = false;
-        $scope.hacerCambioEsquemaTraspaso.show = true;
+        $scope.hacerCambioEsquemaTraspaso.show = false;
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
@@ -391,5 +391,29 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.idESquemaNueva = 0;
         $scope.nombreFinancieraCambio = "";
     }
+    
+    $scope.getStringTasaFija = function (value) {
+        if (value) return "FECHA";
+        else return "RANGO";
+    };
+
+    $scope.getStringTipoTiie = function (value) {
+        return $scope.lstTiie[value - 1].text;
+    };
+
+    $scope.lstTiie = [
+        {
+            value: 1,
+            text: 'TIIE Actual'
+        },
+        {
+            value: 2,
+            text: 'TIIE Promedio'
+        },
+        {
+            value: 3,
+            text: 'TIIE Fija'
+        }
+    ];
       
 });
