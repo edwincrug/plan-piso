@@ -705,15 +705,14 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Función para mostrar los detalles del cambio de esquema
     $scope.hacerCambioEsquema = function () {
-        $scope.validationSchemaChange();
         //$scope.listaUnidadesConValidacion = [];
         $scope.idEsquemaNuevo.show = false;
         $scope.hacerCambioEsquema.show = true;
+        $scope.validationSchemaChange();
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-
     }
 
     //Cancelar el cambio de financiera y cerrar la modal
@@ -973,6 +972,34 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 if (result.data.length > 0) {
                     interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
                         if (esquemaNuevo.data.length > 0) {
+                            setTimeout(function () {
+                            $('#unidadesCambioEsquema').DataTable({
+                                dom: '<"html5buttons"B>lTfgitp',
+                                iDisplayLength: 5,
+                                buttons: [{
+                                        extend: 'copy'
+                            }, {
+                                        extend: 'csv'
+                            }, {
+                                        extend: 'excel',
+                                        title: 'ExampleFile'
+                            }, {
+                                        extend: 'pdf',
+                                        title: 'ExampleFile'
+                            }
+                            , {
+                                        extend: 'print',
+                                        customize: function (win) {
+                                            $(win.document.body).addClass('white-bg');
+                                            $(win.document.body).css('font-size', '10px');
+                                            $(win.document.body).find('table')
+                                                .addClass('compact')
+                                                .css('font-size', 'inherit');
+                                        }
+                            }
+                        ]
+                            });
+                        }, 1000);
                             if (esquemaNuevo.data[0].esFijo == 1) {
                                 //$scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
                                 //$scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
@@ -1001,34 +1028,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                                 });
                             }
                         }
-                        setTimeout(function () {
-                            $('#unidadesCambioEsquema').DataTable({
-                                dom: '<"html5buttons"B>lTfgitp',
-                                iDisplayLength: 5,
-                                buttons: [{
-                                        extend: 'copy'
-                            }, {
-                                        extend: 'csv'
-                            }, {
-                                        extend: 'excel',
-                                        title: 'ExampleFile'
-                            }, {
-                                        extend: 'pdf',
-                                        title: 'ExampleFile'
-                            }
-                            , {
-                                        extend: 'print',
-                                        customize: function (win) {
-                                            $(win.document.body).addClass('white-bg');
-                                            $(win.document.body).css('font-size', '10px');
-                                            $(win.document.body).find('table')
-                                                .addClass('compact')
-                                                .css('font-size', 'inherit');
-                                        }
-                            }
-                        ]
-                            });
-                        }, 1000);
                         $scope.unidadesAutorizadas();
                     });
                 } else {

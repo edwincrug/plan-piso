@@ -85,7 +85,7 @@
                                         <td>{{intereses.valorInventario | currency}}</td>
                                         <td>{{intereses.precioLista | currency}}</td>
                                         <td ng-show="valorCheckBoxTabla.show">
-                                            <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses.idUnidad)">>
+                                            <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses.idUnidad)">
                                             <label for="{{intereses.vehNumserie}}" class="css-label"></label>
                                         </td>
                                     </tr>
@@ -143,7 +143,7 @@
                                                 <!--th>Fecha inicio</th-->
                                                 <th>Tipo</th>
                                                 <th></th>
-                                                <th></th>
+                                                <!--th></th-->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -157,8 +157,8 @@
                                                   <input type="checkbox"  ng-attr-id="'{{esquema.idEsquema}}1'" ng-model="ck.Esquema" ng-true-value="'{{esquema.idEsquema}}'" class="css-checkbox" ng-click="idEsquemaNuevoTraspaso(ck.Esquema,esquema.nombre)">
                                                   <label for="'{{esquema.idEsquema}}1'" class="css-label"></label>             
                                                 </td>
-                                                    <td><button type="submit" class="btn  btn-default pull-left" ng-click="seleccionarEsquema(esquema.idEsquema,esquema.esFijo, esquema.nombre )"><span class="glyphicon glyphicon-info-sign"></span></button>
-                                                </td>
+                                                    <!--td><button type="submit" class="btn  btn-default pull-left" ng-click="seleccionarEsquema(esquema.idEsquema,esquema.esFijo, esquema.nombre )"><span class="glyphicon glyphicon-info-sign"></span></button>
+                                                </td-->
                                             </tr>
                                         </tbody>
                                     </table>

@@ -328,7 +328,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.cancelarCambioFinancieraTraspaso = function () {
         $scope.nombreFinancieraCambio = "";
         $scope.valorCheckBoxTabla.show= false;
-        $scope.idEsquemaNuevoTraspaso.show = false;
+        $scope.idEsquemaNuevoTraspaso.show = true;
         $scope.hacerCambioEsquemaTraspaso.show = false;
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalCambioFinanciera.show = false;
