@@ -8,7 +8,8 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
             if (result.data.length > 0) {
                 alertFactory.success("Bienvenido a Plan Piso"+ result.data[0].usuario);
                 $scope.login = result.data;
-                location.href = '/interest';
+                $scope.nombreUsuario = result.data[0].usuario;
+                location.href = '/newUnits';
             } else {
                 alertFactory.info("Datos Incorrectos");
             }

@@ -39,7 +39,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             $scope.promise = interestsRepository.getCompany().then(function (result) {
                 if (result.data.length > 0) {
                     $scope.empresas = result.data;
-                    alertFactory.success("Empresas cargados");
+                    //alertFactory.success("Empresas cargados");
                 } else {
                     alertFactory.info("No se encontraron Empresas");
                 }
@@ -52,7 +52,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
             if (result.data.length > 0) {
                 $scope.sucursales = result.data;
-                alertFactory.success("Sucursales cargados");
+                //alertFactory.success("Sucursales cargados");
             } else {
                 alertFactory.info("No se encontraron Sucursales");
             }

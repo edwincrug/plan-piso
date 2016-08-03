@@ -1156,8 +1156,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        //$('#traspasoFinancieroTabla').DataTable().destroy();
-        //$('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        $('#traspasoFinancieroTabla').DataTable().destroy();
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
@@ -1165,9 +1165,10 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     $scope.hacerCambioEsquemaTraspaso = function () {
         //$('#traspasoFinancieroTabla').DataTable().destroy(); 
-        $scope.hacerCambioEsquemaTraspaso.show = true;
+        
         $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.UnitChangeFinancialDetails();
+        $scope.hacerCambioEsquemaTraspaso.show = true;
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
