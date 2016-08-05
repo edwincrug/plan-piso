@@ -159,9 +159,26 @@ registrationModule.factory('interestsRepository', function ($http) {
                 }
             });
         },
-        insertMovementFinancial: function (idUnidad,idFinanciera,fecha,cargo,abono) {
+        insertMovementFinancial : function (idUnidad,idFinanciera,fecha,cargo,abono) {
             return $http({
                 url: interestsURL + 'insertmovementfinancial/',
+                method: "POST",
+                data: {
+                        idUnidad : idUnidad,
+                        idFinanciera : idFinanciera,
+                        fecha : fecha,
+                        cargo : cargo,
+                        abono : abono
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+        insertMovementFinancialCargo: function (idUnidad,idFinanciera,fecha,cargo,abono) {
+            return $http({
+                url: interestsURL + 'insertmovementfinancialdebit/',
                 method: "POST",
                 data: {
                         idUnidad : idUnidad,

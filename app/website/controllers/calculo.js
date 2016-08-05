@@ -668,7 +668,7 @@ Calculo.prototype.post_insertmovementfinancial = function(req, res, next){
                  {name: 'cargo', value: req.body.cargo, type: self.model.types.DECIMAL},
                  {name: 'abono', value: req.body.abono, type: self.model.types.DECIMAL}
                  ];
- this.model.post('INS_MOVIMIENTO_TRASPASO_FINANCIERO_SP', params, function (error, result) {
+ this.model.post('INS_MOVIMIENTO_TRASPASO_FINANCIERO_ABONO_SP', params, function (error, result) {
         //Callback
 
    self.view.expositor(res, {
@@ -707,5 +707,32 @@ Calculo.prototype.post_insertmovementscheme = function(req, res, next){
  });
 };
 
+// Agrega un movimiento por traspaso financiero
+Calculo.prototype.post_insertmovementfinancialdebit = function(req, res, next){
+    //Objeto que almacena la respuesta
+    var object = {};
+    
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+ 
+            var params = [{name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT},
+                 {name: 'idFinanciera', value: req.body.idFinanciera, type: self.model.types.DECIMAL},
+                 {name: 'fecha', value: req.body.fecha, type: self.model.types.STRING},
+                 {name: 'cargo', value: req.body.cargo, type: self.model.types.DECIMAL},
+                 {name: 'abono', value: req.body.abono, type: self.model.types.DECIMAL}
+                 ];
+ this.model.post('INS_MOVIMIENTO_TRASPASO_FINANCIERO_CARGO_SP', params, function (error, result) {
+        //Callback
+
+   self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+ });
+};
 
 module.exports = Calculo;

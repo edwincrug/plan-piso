@@ -243,39 +243,15 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.getEsquemaFinanciera = function () {
-        $scope.esquemas = {};
+        $scope.esquemas = [];
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.fechaInicio = [];
         $scope.fechaInicios = "";
         //$('#esquemasFinancieraNuevo').DataTable().destroy();
         $scope.promise = schemeRepository.getEsquemaFinanciera($scope.idFinancieraCambio).then(function (result) {
             if (result.data.length > 0) {
                 $scope.esquemas = result.data;
-                for (var i = 0; i < result.data.length; i++) {
-                $scope.idEsquema = result.data[i].idEsquema;
-                $scope.esFijo = result.data[i].esFijo;
-                //$scope.getDetalleEsquema();
-                }                
-                alertFactory.success("Esquemas cargados");
-            } else {
-                alertFactory.info("No se encontraron Esquemas");
-            }
-        }, function (error) {
-            alertFactory.error("Error al cargar Esquemas");
-        });
-    }
-    
-    $scope.valorCheckBoxTabla = function (idUnidad,idu) {
-        if (idUnidad == false || idUnidad == undefined) {} else {
-            $scope.updateEsquemaUnidad.push({
-                vehNumserie: idUnidad,
-                idUnidad: idu
-            });
-        }
-    }
-    
-    $scope.seleccionarFinancieraNuevaTraspaso = function (idFinanciera, nombre) {
-        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
-        setTimeout(function () {
+                setTimeout(function () {
                     $('#esquemasFinancieraNuevoTraspaso').DataTable({
                         dom: '<"html5buttons"B>lTfgitp'
                         , iDisplayLength: 5
@@ -303,9 +279,36 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                         ]
                     });
                 }, 1000);
+                for (var i = 0; i < result.data.length; i++) {
+                $scope.idEsquema = result.data[i].idEsquema;
+                $scope.esFijo = result.data[i].esFijo;
+                //$scope.getDetalleEsquema();
+                }                
+                alertFactory.success("Esquemas cargados");
+            } else {
+                alertFactory.info("No se encontraron Esquemas");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar Esquemas");
+        });
+    }
+    
+    $scope.valorCheckBoxTabla = function (idUnidad,idu) {
+        if (idUnidad == false || idUnidad == undefined) {} else {
+            $scope.updateEsquemaUnidad.push({
+                vehNumserie: idUnidad,
+                idUnidad: idu
+            });
+        }
+    }
+    
+    $scope.seleccionarFinancieraNuevaTraspaso = function (idFinanciera, nombre) {
         $scope.idFinancieraCambio = idFinanciera;
         $scope.nombreFinancieraCambio = nombre;
         $scope.getEsquemaFinanciera();
+        
+        
+        
     }
     
     $scope.updateSchemeNews = function () {
@@ -326,6 +329,8 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.cancelarCambioFinancieraTraspaso = function () {
+        $('#unidadesCambioEsquemaNuevo').DataTable().destroy();
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.nombreFinancieraCambio = "";
         $scope.valorCheckBoxTabla.show= false;
         $scope.idEsquemaNuevoTraspaso.show = true;
@@ -334,8 +339,6 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        $('#unidadesCambioEsquemaNuevo').DataTable().destroy();
-        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;       
