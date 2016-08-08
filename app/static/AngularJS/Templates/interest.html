@@ -419,14 +419,29 @@
                             <div class="col-lg-12">
                             <div class="ibox float-e-margins">
                             <div class="text-center float-e-margins p-md">
-                            <h2>Detalle de movimientos</h2>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="widget style1 lazur-bg">
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <i class="fa fa-automobile fa-4x"></i>
+                                        </div>
+                                    <div class="col-xs-7 text-right">
+                                        <span>Costo de compra</span>
+                                        <h2 class="font-bold">{{costoUnidad | currency}}</h2>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            <!--h2></h2>
                                 <!--a href="#" class="btn btn-xs btn-primary" id="leftVersion" ng-click="timeLineLeftVersion()">Left version</a-->
                             </div>
                         <div class="ibox-content" id="ibox-content">
                             <div id="vertical-timeline" class="vertical-container dark-timeline center-orientation">
                                 <div class="vertical-timeline-block"  ng-repeat="timePagos in detallePagos">
-                                    <div class="vertical-timeline-icon blue-bg">
-                                        <i class="fa fa-briefcase"></i>
+                                    <div class="vertical-timeline-icon blue-bg" ng-class="setClassColor(timePagos.idMovimientoTipo)">
+                                        <i class="fa fa-briefcase" ng-class="setClassIcono(timePagos.idMovimientoTipo)"></i>
                                     </div>
                                         <div class="vertical-timeline-content">
                                         <h2>{{timePagos.descripcion}}</h2>

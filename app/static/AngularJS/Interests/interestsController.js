@@ -12,6 +12,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.detalleEsquema = {};
     $scope.fechaInicio = [];
     $scope.margen = 0;
+    $scope.costoUnidad = 0;
     /*
      if (!($('#lgnUser').val().indexOf('[') > -1)) {
                 localStorageService.set('lgnUser', $('#lgnUser').val());
@@ -590,6 +591,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             if (result.data.length > 0) {
                 $scope.detailsUnit = result.data;
                 $scope.esquemafijo = result.data[0].esFijo;
+                $scope.costoUnidad = result.data[0].valorInventario;
                 interestsRepository.getDetailsUnitScheme($scope.vehNumserie).then(function (detalles) {
                     if (detalles.data.length > 0) {
                         $scope.detailsUnitScheme = detalles.data;
@@ -1384,7 +1386,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             className: "active"
         },
         {
-            name: 'Movimientos',
+            name: 'Detalle Movimientos',
             active: false,
             className: ""
         }
@@ -1416,6 +1418,52 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         }, function (error) {
             alertFactory.error("Error al cargar financieras");
         });
+    }
+    
+    $scope.setClassColor = function(idMovimientoTipo){
+        switch (idMovimientoTipo) {
+        case 1:
+            return 'blue-bg';
+        case 2:
+            return 'yellow-bg';
+        case 3:
+            return 'lazur-bg';
+        case 4:
+            return 'navy-bg';
+        case 5:
+            return 'red-bg';
+        case 6:
+            return 'lazur-bg';
+        case 7:
+            return 'orange-bg';
+        case 8:
+            return 'yellow-bg';
+        default:
+            return 'gridFontGreen';
+        }  
+    }
+    
+    $scope.setClassIcono = function(idMovimientoTipo){
+        switch (idMovimientoTipo) {
+        case 1:
+            return 'fa fa-bank';
+        case 2:
+            return 'fa fa-building';
+        case 3:
+            return 'fa fa-institution';
+        case 4:
+            return 'fa fa-building';
+        case 5:
+            return 'fa fa-plane';
+        case 6:
+            return 'fa fa-sliders';
+        case 7:
+            return 'fa fa-bar-chart-o';
+        case 8:
+            return 'fa fa-briefcase';
+        default:
+            return 'gridFontGreen';
+        }  
     }
 
 });
