@@ -425,22 +425,20 @@
                         <div class="ibox-content" id="ibox-content">
                             <div id="vertical-timeline" class="vertical-container dark-timeline center-orientation">
                                 <div class="vertical-timeline-block"  ng-repeat="timePagos in detallePagos">
-                                    <div class="vertical-timeline-icon navy-bg">
+                                    <div class="vertical-timeline-icon blue-bg">
                                         <i class="fa fa-briefcase"></i>
-                                </div>
-                                    <div class="vertical-timeline-content">
-
-                                    <h2>{{timePagos.descripcion}}</h2>
-                                    <p>Financiera: {{timePagos.nombreFinanciera}}</p>
-                                    <p>Nombre Esquema: {{timePagos.nombreEsquema}}</p>
-                                    <p>Cargo: {{timePagos.cargo| currency:"$":2}} </p>
-                                    <p>Abono: {{timePagos.abono| currency:"$":2}}</p>
-                                    <span class="vertical-date">
+                                    </div>
+                                        <div class="vertical-timeline-content">
+                                        <h2>{{timePagos.descripcion}}</h2>
+                                        <p>Financiera: {{timePagos.nombreFinanciera}}</p>
+                                        <p>Nombre Esquema: {{timePagos.nombreEsquema}}</p>
+                                        <p>Cargo: {{timePagos.cargo| currency:"$":2}} </p>
+                                        <p>Abono: {{timePagos.abono| currency:"$":2}}</p>
+                                        <span class="vertical-date">
                                          <br/>
                                         <small>{{timePagos.fecha| date:'dd/MM/yyyy'}}</small>
-
-                                    </span>
-                                </div>
+                                        </span>
+                                        </div>
                                 </div>
                                 <!--div class="vertical-timeline-block">
                                 <div class="vertical-timeline-icon blue-bg">

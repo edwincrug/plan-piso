@@ -34,7 +34,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.getNewUnitsSucursal();
 
     }
-        // Función para filtrar compañias
+    // Función para filtrar compañias
     $scope.getCompany = function () {
             $scope.promise = interestsRepository.getCompany().then(function (result) {
                 if (result.data.length > 0) {
@@ -312,7 +312,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.updateSchemeNews = function () {
-        $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
+        $scope.unidadesAcambiarEsquema.forEach(function (updateEsquemaUnidad) {
             newUnitsRepository.updateSchemeNews($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
                 } else {
@@ -329,7 +329,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.cancelarCambioFinancieraTraspaso = function () {
-        $('#unidadesCambioEsquemaNuevo').DataTable().destroy();
+        $('#unidadesCambioEsquemaNuevos').DataTable().destroy();
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.nombreFinancieraCambio = "";
         $scope.valorCheckBoxTabla.show= false;
@@ -347,10 +347,10 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.hacerCambioEsquemaTraspaso = function () {     
         $scope.hacerCambioEsquemaTraspaso.show = true;
         $scope.idEsquemaNuevoTraspaso.show = false;
+        $scope.validationSchemaChange();
         $('input[type=checkbox]').attr('checked', false);
-        $scope.valorCheckBoxTabla.show = false;  
         setTimeout(function () {
-                    $('#unidadesCambioEsquemaNuevo').DataTable({
+                    $('#unidadesCambioEsquemaNuevos').DataTable({
                         dom: '<"html5buttons"B>lTfgitp'
                         , iDisplayLength: 5
                         , buttons: [{
@@ -377,6 +377,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                         ]
                     });
                 }, 1000);
+        $scope.valorCheckBoxTabla.show = false;  
     }
     
     $scope.regresarInteresesTraspaso = function () {
@@ -388,9 +389,10 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.getFinanciera();
         $scope.getCompany();
         $scope.getSucursal.show = false;
-        $('#unidadesCambioEsquemaNuevo').DataTable().destroy();
+        $('#unidadesCambioEsquemaNuevos').DataTable().destroy();
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
         $scope.nombreFinancieraCambio = "";
     }
@@ -418,5 +420,95 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             text: 'TIIE Fija'
         }
     ];
+    
+     // Validación para mostrar las unidades que pueden cambiar el esquema
+    $scope.validationSchemaChange = function () {
+        $('#unidadesCambioEsquemaNuevos').DataTable().destroy();
+        $scope.listaUnidadesConValidacion = [];
+        $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
+            $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
+                if (result.data.length > 0) {
+                    interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function (esquemaNuevo) {
+                        if (esquemaNuevo.data.length > 0) {
+                            if (esquemaNuevo.data[0].esFijo == 1) {
+                                $scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
+                                $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
+                                if ($scope.fechaEsquemaNuevo <= $scope.fechaIngresoInvetario) {
+                                    //$scope.restafechas = $scope.fechaEsquemaNuevo - 10
+                                    $scope.listaUnidadesConValidacion.push({
+                                        vehNumserie: updateEsquemaUnidad.vehNumserie,
+                                        observaciones: "Esta Unidad se puede transferir a esquema de fechas",
+                                        status: "OK"
+                                    });
+                                    $scope.fechaIngresoInvetario = 0;
+                                } else {
+                                    $scope.listaUnidadesConValidacion.push({
+                                        vehNumserie: updateEsquemaUnidad.vehNumserie,
+                                        observaciones: "Esta Unidad no se puede transferir, tiene un excedente de días",
+                                        status: "EXCEEDED"
+                                    });
+                                    $scope.fechaIngresoInvetario = 0;
+                                }
+                            } else {
+                                $scope.listaUnidadesConValidacion.push({
+                                    vehNumserie: updateEsquemaUnidad.vehNumserie,
+                                    observaciones: "Esta Unidad se puede transferir",
+                                    status: "OK"
+                                });
+                            }
+                        }
+                        $scope.unidadesAutorizadas();
+                    });
+  
+                } else {
+                    alertFactory.info("Esquema no cambiado");
+                }
+                   /*setTimeout(function () {
+                    $('#unidadesCambioEsquemaNuevos').DataTable({
+                        dom: '<"html5buttons"B>lTfgitp'
+                        , iDisplayLength: 5
+                        , buttons: [{
+                                extend: 'copy'
+                            }, {
+                                extend: 'csv'
+                            }, {
+                                extend: 'excel'
+                                , title: 'ExampleFile'
+                            }, {
+                                extend: 'pdf'
+                                , title: 'ExampleFile'
+                            }  
+                            , {
+                                extend: 'print'
+                                , customize: function (win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ]
+                    });
+                }, 1000);*/
+            }, function (error) {
+                alertFactory.error("Error al cambiar Esquema");
+            });
+        });
+    }
+
+    $scope.unidadesAutorizadas = function () {
+        $scope.unidadesAcambiarEsquema = [];
+        $scope.listaUnidadesConValidacion.forEach(function (listaUnidadesConValidacion) {
+            if (listaUnidadesConValidacion.status == "OK") {
+                $scope.unidadesAcambiarEsquema.push({
+                    vehNumserie: listaUnidadesConValidacion.vehNumserie
+                });
+            } else {
+                //console.log('Unidad No validad', listaUnidadesConValidacion.vehNumserie)
+            }
+        });
+    }
+    
       
 });

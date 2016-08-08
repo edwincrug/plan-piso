@@ -54,6 +54,11 @@ router = require('./website/router');
     
   };
 
+   /* this.expressServer.post('*', function(req, res){
+        var user = { idUsuario: req.body.idUsuario };
+        res.render('index', { user });
+    });*/
+
   ExpressServer.prototype.router = function(controller,funcionalidad,method,url){
     console.log(url);
     var parameters = this.config.parameters;
