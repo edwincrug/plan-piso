@@ -1429,9 +1429,9 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         case 3:
             return 'lazur-bg';
         case 4:
-            return 'navy-bg';
-        case 5:
             return 'red-bg';
+        case 5:
+            return 'navy-bg';
         case 6:
             return 'lazur-bg';
         case 7:
