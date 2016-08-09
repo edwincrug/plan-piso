@@ -47,14 +47,25 @@ registrationModule.controller('paymentController', function($scope, $location, a
     };
 
 
-    $scope.showDetailEdit = function(idLote) {
-        $location.path('/paymentdetail/' + idLote + '/edit');
+    $scope.allowEdit = function(idLote, idStatus) {
+
+        switch (idStatus) {
+            case 4:
+                $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/edit');
+                break;
+            case 2:
+            case 3:
+            case 1:
+            case 5:
+                $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/review');
+                break;
+            default:
+                $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/review');
+        }
+
     };
 
 
-    $scope.showDetailReview = function(idLote) {
-        $location.path('/paymentdetail/' + idLote + '/review');
-    };
 
     $scope.setActiveClass = function(currentTab) {
 

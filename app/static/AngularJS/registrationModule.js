@@ -37,7 +37,7 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
             templateUrl: 'AngularJS/Templates/payment.html',
             controller: 'paymentController'
         })
-        .when('/paymentdetail/:id/:mode',{
+        .when('/paymentdetail/:id/:lotStatus/:mode',{
             templateUrl: '/AngularJS/Templates/paymentdetail.html',
             controller: 'paymentDetailController'
         })

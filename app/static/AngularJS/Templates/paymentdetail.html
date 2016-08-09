@@ -79,7 +79,7 @@
                 <tr>
                     <th>VIN</th>
                     <th>Financiera</th>
-                    <th>Abono Capital</th>
+                    <th>Pago por Reducción</th>
                     <th>Cargo Calculado</th>
                     <th>Cargo Aplicar</th>
                     <th style="display:none;">Cargo Aplicar</th>
@@ -114,43 +114,21 @@
     <!-- tabla detalle lotes FIN -->
 </div>
 <!-- INIT FIN -->
-<div style="display:none;">
-    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="showconfirmBox('mdlSendAprove')">
-        <span class="glyphicon glyphicon-send"> </span> Enviar
-    </button>
-    <button class="btn  btn-danger" data-dismiss="modal" ng-click="cerrarModalFinanciera()">
-        <span class="glyphicon glyphicon-remove"></span> Rechazar </button>
-    <button class="btn btn-primary" data-dismiss="modal" ng-click="showconfirmBox('mdlAprove')">
-        <span class="glyphicon glyphicon-ok"></span> Aprobar </button>
-</div>
-<!--Modal Alert Enviar-->
-<div class="modal inmodal fade " id="mdlSendAprove" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content animated flipInY">
-            <div class="modal-header" style="padding:1px 0px;">
-                <h2>Mensaje de Aplicación</h2>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-4"><i class="glyphicon glyphicon-alert fa-5x"></i> </div>
-                    <div class="col-sm-8">
-                        </br>El lote será enviado para su aprobación.</div>
-                </div>
-                </br>
-                <div style="text-align: center;">¿Desea continuar?</div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger btn-rounded" data-dismiss="modal" ng-click="cerrarModalFinanciera()">
-                    <span class="glyphicon glyphicon-remove"></span> Cancelar</button>
-                <button class="btn btn-primary btn-rounded" data-dismiss="modal" ng-click="cerrarModalFinanciera()">
-                    <span class="glyphicon glyphicon-ok"></span> Aceptar</button>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-sm-8">
+        <button class="btn  btn-danger" data-dismiss="modal" ng-click="showconfirmBox(2)" ng-show="showbtnConfirm">
+            <span class="glyphicon glyphicon-remove"></span> Rechazar </button>
+    </div>
+    <div class="col-sm-4">
+        <button type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="showconfirmBox(1)" ng-show="showbtnSend">
+            <span class="glyphicon glyphicon-send"> </span> Enviar
+        </button>
+        <button class="btn btn-primary pull-right" data-dismiss="modal" ng-click="showconfirmBox(3)" ng-show="showbtnConfirm">
+            <span class="glyphicon glyphicon-ok"></span> Aprobar </button>
     </div>
 </div>
 <!--Modal Alert Enviar-->
-<!--Modal Alert Enviar-->
-<div class="modal inmodal fade " id="mdlAprove" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+<div class="modal inmodal fade " id="mldConfirmBox" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-sm">
         <div class="modal-content animated flipInY">
             <div class="modal-header" style="padding:1px 0px;">
@@ -160,14 +138,14 @@
                 <div class="row">
                     <div class="col-sm-4"><i class="glyphicon glyphicon-alert fa-5x"></i> </div>
                     <div class="col-sm-8">
-                        </br>¿Estas Seguro?
+                        </br>{{mdlMessage}}
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger btn-rounded" data-dismiss="modal" ng-click="cerrarModalFinanciera()">
+                <button class="btn btn-danger btn-rounded" data-dismiss="modal" >
                     <span class="glyphicon glyphicon-remove"></span> Cancelar</button>
-                <button class="btn btn-primary btn-rounded" data-dismiss="modal" ng-click="cerrarModalFinanciera()">
+                <button class="btn btn-primary btn-rounded" data-dismiss="modal" ng-click="execActionConfirmBox()">
                     <span class="glyphicon glyphicon-ok"></span> Aceptar</button>
             </div>
         </div>

@@ -1,16 +1,46 @@
 registrationModule.controller('paymentDetailController', function($scope, $routeParams, alertFactory, paymentDetailRepository) {
 
+    $scope.mdlMessage = "";
+    $scope.mdlCurrent = 0;
+    $scope.mdlAction = { enviar: 1, rechazar: 2, aprobar: 3 };
+
+    //Variables que actuan sobre el grid
     $scope.loteDetalle = [];
     $scope.editControl = true;
     $scope.disableControl = false;
 
-    $scope.init = function() {
-        $scope.showDetail($routeParams.id);
+    //varibles de los botones de accion
+    $scope.showbtnConfirm = false;
+    $scope.showbtnSend = false;
 
-         //loteDetalle[0].estatus 
+
+    $scope.init = function() {
+
+        $scope.showDetail($routeParams.id);
+        $scope.setButtons($routeParams.lotStatus);
 
         if ($routeParams.mode == 'review') {
             $scope.disableControl = true;
+        }
+
+    };
+
+
+
+    $scope.setButtons = function(idStatus) {
+
+        switch (parseInt(idStatus)) {
+            case 4:
+                $scope.showbtnConfirm = false;
+                $scope.showbtnSend = true;
+                break;
+            case 1:
+                $scope.showbtnConfirm = true;
+                $scope.showbtnSend = false;
+                break;
+            default:
+                $scope.showbtnConfirm = false;
+                $scope.showbtnSend = false;
         }
 
     };
@@ -31,7 +61,7 @@ registrationModule.controller('paymentDetailController', function($scope, $route
             }
         }, function(error) {
             alertFactory.error("Error al cargar detalles");
-        });
+        });        
     };
 
 
@@ -43,8 +73,48 @@ registrationModule.controller('paymentDetailController', function($scope, $route
         }
     };
 
-    $scope.showconfirmBox = function(name) {
-        $('#'+ name).appendTo("body").modal('show');
+    $scope.execActionConfirmBox = function() {
+
+        switch ($scope.mdlCurrent) {
+            case $scope.mdlAction.enviar:
+                alertFactory.info("Enviado");
+                break;
+            case $scope.mdlAction.rechazar:
+                alertFactory.info("Rechazado");
+                break;
+            case $scope.mdlAction.aprobar:
+                alertFactory.info("Aprobado");
+                break;
+            default:
+                $scope.mdlMessage = "";
+        }
+        $scope.mdlCurrent = 0;
+    };
+
+
+    $scope.showconfirmBox = function(type) {
+
+        $scope.mdlMessage = "";
+
+        switch (type) {
+            case $scope.mdlAction.enviar:
+                $scope.mdlCurrent = $scope.mdlAction.enviar;
+                $scope.mdlMessage = "El lote será enviado para aprobación. \n ¿Desea continuar?";
+                break;
+            case $scope.mdlAction.rechazar:
+                $scope.mdlCurrent = $scope.mdlAction.rechazar;
+                $scope.mdlMessage = "¿Esta seguro de rechazar el lote?";
+                break;
+            case $scope.mdlAction.aprobar:
+                $scope.mdlCurrent = $scope.mdlAction.aprobar;
+                $scope.mdlMessage = "¿Esta seguro de Aprobar el lote?";
+                break;
+            default:
+                $scope.mdlCurrent = 0;
+                $scope.mdlMessage = "";
+        }
+
+        $('#mldConfirmBox').appendTo("body").modal('show');
     };
 
 
@@ -101,7 +171,6 @@ registrationModule.controller('paymentDetailController', function($scope, $route
         });
 
     };
-
 
 
 });

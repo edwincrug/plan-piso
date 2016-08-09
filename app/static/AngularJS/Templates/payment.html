@@ -32,9 +32,9 @@
                         <tr>
                             <th>Lote</th>
                             <th>Tipo</th>
-                            <th>abonoCapital</th>
-                            <th>Monto</th>
-                            <th>interesUsuario</th>
+                            <th>Pago por Reducción</th>
+                            <th>Cargo Calculado</th>
+                            <th>Cargo Aplicar</th>
                             <th>Fecha Programación</th>
                             <th>ID Lote Externo</th>
                             <th>Nombre Lote</th>
@@ -56,7 +56,7 @@
                             <td>{{noAplicado.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
                             <td>{{noAplicado.estatus}}</td>
                             <td>
-                                <button type="button" class="btn btn-default lazur-bg" ng-click="showDetailEdit(noAplicado.idLote)">
+                                <button type="button" class="btn btn-info" ng-click="allowEdit(noAplicado.idLote,noAplicado.estatusNumber)">
                                     <span class="glyphicon glyphicon-th-list"> </span>
                                 </button>
                             </td>
@@ -79,7 +79,7 @@
                         <tr>
                             <th>Lote</th>
                             <th>Tipo</th>
-                            <th>abonoCapital</th>
+                            <th>Pago por Reducción</th>
                             <th>Monto</th>
                             <th>interesUsuario</th>
                             <th>Fecha Programación</th>
@@ -103,7 +103,7 @@
                             <td>{{aplicado.fechaAplicacion | date:'dd/MM/yyyy'}}</td>
                             <td>{{aplicado.estatus}}</td>
                             <td>
-                                <button type="button" class="btn btn-default lazur-bg" ng-click="showDetailReview(aplicado.idLote)">
+                                <button type="button" class="btn btn-default lazur-bg" ng-click="allowEdit(aplicado.idLote,aplicado.estatusNumber)">
                                     <span class="glyphicon glyphicon-th-list"> </span>
                                 </button>
                             </td>
