@@ -1,4 +1,4 @@
-registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository) {
+registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository /*localStorageService*/) {
     //store an array of free days getting by getFreeDays function  
     $scope.message = 'Buscando...';
     $scope.detailsUnit = {};
@@ -1269,8 +1269,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     }
 
     $scope.UnitChangeFinancialDetails = function () {
-        $scope.listaUnidadesConValidacion = [];
         $('#traspasoFinancieroTabla').DataTable().destroy();
+        $scope.listaUnidadesConValidacion = [];
         $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
             $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
@@ -1309,34 +1309,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                             }
                         }          
                     });
-                    /*setTimeout(function () {
-                            $('#traspasoFinancieroTabla').DataTable({
-                                dom: '<"html5buttons"B>lTfgitp',
-                                iDisplayLength: 5,
-                                buttons: [{
-                                        extend: 'copy'
-                            }, {
-                                        extend: 'csv'
-                            }, {
-                                        extend: 'excel',
-                                        title: 'ExampleFile'
-                            }, {
-                                        extend: 'pdf',
-                                        title: 'ExampleFile'
-                            }
-                            , {
-                                        extend: 'print',
-                                        customize: function (win) {
-                                            $(win.document.body).addClass('white-bg');
-                                            $(win.document.body).css('font-size', '10px');
-                                            $(win.document.body).find('table')
-                                                .addClass('compact')
-                                                .css('font-size', 'inherit');
-                                        }
-                            }
-                        ]
-                            });
-                        }, 1000);*/
                 } else {
                     alertFactory.info("Esquema no cambiado");
                 }
@@ -1465,5 +1437,4 @@ registrationModule.controller('interestsController', function ($scope, alertFact
             return 'gridFontGreen';
         }  
     }
-
 });

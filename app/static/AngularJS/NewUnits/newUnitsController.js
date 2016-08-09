@@ -299,22 +299,24 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 vehNumserie: idUnidad,
                 idUnidad: idu
             });
+            console.log($scope.updateEsquemaUnidad)
         }
     }
     
     $scope.seleccionarFinancieraNuevaTraspaso = function (idFinanciera, nombre) {
         $scope.idFinancieraCambio = idFinanciera;
         $scope.nombreFinancieraCambio = nombre;
-        $scope.getEsquemaFinanciera();
-        
-        
-        
+        $scope.getEsquemaFinanciera();   
     }
     
     $scope.updateSchemeNews = function () {
         $scope.unidadesAcambiarEsquema.forEach(function (updateEsquemaUnidad) {
             newUnitsRepository.updateSchemeNews($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
+                    newUnitsRepository.insertMovementScheme(updateEsquemaUnidad.idUnidad, updateEsquemaUnidad.idFinanciera,updateEsquemaUnidad.fecha,updateEsquemaUnidad.idCostoInventario,0).then(function (nuevos) {
+                    if (nuevos.data.length > 0) {
+                    }else{}
+                    });
                 } else {
                 }
             }, function (error) {
@@ -434,18 +436,23 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                                 $scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
                                 $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
                                 if ($scope.fechaEsquemaNuevo <= $scope.fechaIngresoInvetario) {
-                                    //$scope.restafechas = $scope.fechaEsquemaNuevo - 10
                                     $scope.listaUnidadesConValidacion.push({
                                         vehNumserie: updateEsquemaUnidad.vehNumserie,
                                         observaciones: "Esta Unidad se puede transferir a esquema de fechas",
-                                        status: "OK"
+                                        status: "OK",
+                                        idUnidad: updateEsquemaUnidad.idUnidad,
+                                        idFinanciera:$scope.idESquemaNueva,
+                                        idCostoInventario: result.data[0].valorInventario
                                     });
                                     $scope.fechaIngresoInvetario = 0;
                                 } else {
                                     $scope.listaUnidadesConValidacion.push({
                                         vehNumserie: updateEsquemaUnidad.vehNumserie,
                                         observaciones: "Esta Unidad no se puede transferir, tiene un excedente de días",
-                                        status: "EXCEEDED"
+                                        status: "EXCEEDED",
+                                        idUnidad: updateEsquemaUnidad.idUnidad,
+                                        idFinanciera:$scope.idESquemaNueva,
+                                        idCostoInventario: result.data[0].valorInventario
                                     });
                                     $scope.fechaIngresoInvetario = 0;
                                 }
@@ -453,7 +460,10 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                                 $scope.listaUnidadesConValidacion.push({
                                     vehNumserie: updateEsquemaUnidad.vehNumserie,
                                     observaciones: "Esta Unidad se puede transferir",
-                                    status: "OK"
+                                    status: "OK",
+                                    idUnidad: updateEsquemaUnidad.idUnidad,
+                                    idFinanciera:$scope.idESquemaNueva,
+                                    idCostoInventario: result.data[0].valorInventario
                                 });
                             }
                         }
@@ -463,34 +473,6 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 } else {
                     alertFactory.info("Esquema no cambiado");
                 }
-                   /*setTimeout(function () {
-                    $('#unidadesCambioEsquemaNuevos').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp'
-                        , iDisplayLength: 5
-                        , buttons: [{
-                                extend: 'copy'
-                            }, {
-                                extend: 'csv'
-                            }, {
-                                extend: 'excel'
-                                , title: 'ExampleFile'
-                            }, {
-                                extend: 'pdf'
-                                , title: 'ExampleFile'
-                            }  
-                            , {
-                                extend: 'print'
-                                , customize: function (win) {
-                                    $(win.document.body).addClass('white-bg');
-                                    $(win.document.body).css('font-size', '10px');
-                                    $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                                }
-                            }
-                        ]
-                    });
-                }, 1000);*/
             }, function (error) {
                 alertFactory.error("Error al cambiar Esquema");
             });
@@ -502,7 +484,11 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.listaUnidadesConValidacion.forEach(function (listaUnidadesConValidacion) {
             if (listaUnidadesConValidacion.status == "OK") {
                 $scope.unidadesAcambiarEsquema.push({
-                    vehNumserie: listaUnidadesConValidacion.vehNumserie
+                    vehNumserie: listaUnidadesConValidacion.vehNumserie,
+                    idUnidad: listaUnidadesConValidacion.idUnidad,
+                    idFinanciera:listaUnidadesConValidacion.idFinanciera,
+                    idCostoInventario: listaUnidadesConValidacion.idCostoInventario,
+                    fecha: $scope.fechaHoy
                 });
             } else {
                 //console.log('Unidad No validad', listaUnidadesConValidacion.vehNumserie)
@@ -510,5 +496,17 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         });
     }
     
+        $scope.setClass = function (status) {
+        switch (status) {
+        case 'OK':
+            return 'gridFontGreen';
+        case 'CHECK':
+            return 'gridFontYellow';
+        case 'EXCEEDED':
+            return 'gridFontRed';
+        default:
+            return 'gridFontGreen';
+        }
+    }
       
 });

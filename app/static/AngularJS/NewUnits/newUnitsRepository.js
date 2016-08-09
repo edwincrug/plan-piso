@@ -3,7 +3,7 @@ var newUnitstsURL = global_settings.urlCORS + 'api/calculo/';
 
 registrationModule.factory('newUnitsRepository', function ($http) {
      return {
-         getNewUnits: function() {
+        getNewUnits: function() {
             return $http({
                 url: newUnitstsURL + 'newUnits/',
                 method: "GET"
@@ -34,7 +34,7 @@ registrationModule.factory('newUnitsRepository', function ($http) {
                 }
             });
         },
-         updateSchemeNews: function (idEsquema,vehNumserie) {
+        updateSchemeNews: function (idEsquema,vehNumserie) {
             return $http({
                 url: newUnitstsURL + 'updateschemenews/',
                 method: "POST",
@@ -47,7 +47,7 @@ registrationModule.factory('newUnitsRepository', function ($http) {
                 }
             });
         },
-          insertMovementScheme: function (idUnidad,idFinanciera,fecha,cargo,abono) {
+        insertMovementScheme: function (idUnidad,idFinanciera,fecha,cargo,abono) {
             return $http({
                 url: newUnitstsURL + 'insertmovementscheme/',
                 method: "POST",
@@ -63,10 +63,7 @@ registrationModule.factory('newUnitsRepository', function ($http) {
                 }
 
             });
-        }
-         
-         
-         
+        } 
      }
 });
 
