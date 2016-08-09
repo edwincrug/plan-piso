@@ -7,6 +7,8 @@ registrationModule.controller('paymentDetailController', function($scope, $route
     $scope.init = function() {
         $scope.showDetail($routeParams.id);
 
+         //loteDetalle[0].estatus 
+
         if ($routeParams.mode == 'review') {
             $scope.disableControl = true;
         }
@@ -41,13 +43,34 @@ registrationModule.controller('paymentDetailController', function($scope, $route
         }
     };
 
+    $scope.showconfirmBox = function(name) {
+        $('#'+ name).appendTo("body").modal('show');
+    };
+
+
+    $scope.savePayment = function(objeto) {
+
+        $scope.promise = paymentDetailRepository.updateUsrPayment(objeto.idLotePagoDetalle, objeto.cargoAplicar).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.resultado = result.data;
+                alertFactory.success("Dato Actualizado");
+            } else {
+                alertFactory.info("No Encontrado");
+            }
+        }, function(error) {
+            alertFactory.error("Ocurrio un error al actualizar");
+        });
+
+    };
+
+
 
     $scope.setClass = function(objeto) {
 
         if (objeto.cargoAplicar != objeto.cargoCalculado)
-            objeto.color = "gridFontYellow";
+            return "gridFontBlue";
         else
-            objeto.color = "";
+            return "";
     };
 
 

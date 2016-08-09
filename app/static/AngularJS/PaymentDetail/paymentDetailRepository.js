@@ -8,10 +8,18 @@ registrationModule.factory('paymentDetailRepository', function($http) {
 
 
 
-        getPaymentReport: function() {
+      //  updateScheme: function (idEsquema,vehNumserie) {
+        updateUsrPayment: function (idDetallePago,monto) {
             return $http({
-                url: paymentURL + 'paymentreport/',
-                method: "GET"
+                url: interestsURL + 'updateusrpayment/',
+                method: "POST",
+                data: {
+                    idDetallePago: idDetallePago,
+                    monto: monto
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
         },
         getPaymentReportDetail: function(idLote) {

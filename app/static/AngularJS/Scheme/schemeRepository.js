@@ -51,7 +51,8 @@ registrationModule.factory('schemeRepository', function ($http) {
                     idFinanciera: arrEsquema.idFinanciera,
                     nombre: arrEsquema.nombre,
                     descripcion: arrEsquema.descripcion,
-                    esFijo: arrEsquema.esFijo
+                    esFijo: arrEsquema.esFijo,
+                    abonoCapital: arrEsquema.porcentajePagoCapital 
                 },
                 headers: {
                     'Content-Type': 'application/json'

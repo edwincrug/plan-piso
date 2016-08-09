@@ -194,6 +194,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             $scope.esquema.plazo = $scope.detalleEsquema[0].plazo;
             $scope.esquema.nombre = $scope.detalleEsquema[0].nombre;
             $scope.esquema.descripcion = $scope.detalleEsquema[0].descripcion;
+            $scope.esquema.porcentajePagoCapital = $scope.detalleEsquema[0].porcentajePagoCapital;
         }
 
 
@@ -230,6 +231,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             $scope.esquema.plazo = $scope.detalleEsquema[0].plazo;
             $scope.esquema.nombre = $scope.detalleEsquema[0].nombre;
             $scope.esquema.descripcion = $scope.detalleEsquema[0].descripcion;
+            $scope.esquema.porcentajePagoCapital = $scope.detalleEsquema[0].porcentajePagoCapital;
         }
 
     };
@@ -268,7 +270,8 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             { value: $scope.esquema.diasGracia, name: 'Días de gracia', regExp: expresion.entero1 },
             { value: $scope.esquema.plazo, name: 'Plazo', regExp: expresion.entero1 },
             { value: $scope.esquema.nombre, name: 'Nombre', regExp: expresion.todo },
-            { value: $scope.esquema.descripcion, name: 'Descripción', regExp: expresion.todo }
+            { value: $scope.esquema.descripcion, name: 'Descripción', regExp: expresion.todo },
+            { value: $scope.esquema.porcentajePagoCapital, name: 'Abono Capital', regExp: expresion.decimal1 }
         ];
 
         return controlesPorRango;
@@ -332,7 +335,8 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.esquema.plazo = null;
         $scope.esquema.nombre = null;
         $scope.esquema.descripcion = null;
-    }
+        $scope.esquema.porcentajePagoCapital = null;
+    };
 
     $scope.clearControls = function() {
         $scope.esquema.tasaInteres = null;

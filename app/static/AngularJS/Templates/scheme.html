@@ -18,39 +18,17 @@
         </div>
     </div>
     <br/>
-
-
-
-
-<div class="row">
-  
-      <div class="col-lg-12">  
-    
-        <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Financiera <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li ng-repeat="financiera in financieras">
-                <a href="#" ng-click="seleccionarFinanciera(financiera.idFinanciera, financiera.nombre)">{{financiera.nombre}}</a>
-            </li>
-        </ul>            
-    
-    
-
-        
-    <button type="button" class="btn btn-primary"  data-dismiss="modal"  ng-click="abrirModalFinanciera()" style="background:#23C6C8; color:#fff">Nueva Financiera</button>
-    
-
-
+    <div class="row">
+        <div class="col-lg-12">
+            <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Financiera <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li ng-repeat="financiera in financieras">
+                    <a href="#" ng-click="seleccionarFinanciera(financiera.idFinanciera, financiera.nombre)">{{financiera.nombre}}</a>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="abrirModalFinanciera()" style="background:#23C6C8; color:#fff">Nueva Financiera</button>
+        </div>
     </div>
-
-</div>
-   
-    
-
-
-
-
-
-
     <div class="wrapper wrapper-content" ng-show="getEsquemaFinanciera.show ">
         <div class="row">
             <div class="col-lg-12">
@@ -70,18 +48,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="esquema in esquemas" >
+                                    <tr ng-repeat="esquema in esquemas">
                                         <!-- <td>{{esquema.idEsquema}}</td> -->
                                         <td>{{esquema.nombre}}</td>
                                         <td>{{esquema.descripcion}}</td>
                                         <td>{{esquema.diasGracia}}</td>
                                         <td>{{esquema.plazo}}</td>
-                                        <td>{{getStringTasaFija(esquema.esFijo)}}</td>                                        
+                                        <td>{{getStringTasaFija(esquema.esFijo)}}</td>
                                         <td>
-                                        <button type="button" class="btn btn-default"  ng-click="nuevoEsquema(esquema.idEsquema,esquema.esFijo)">
-                                            <span class="glyphicon glyphicon-edit"> </span>
-                                        </button>
-                                    </td>
+                                            <button type="button" class="btn btn-default" ng-click="nuevoEsquema(esquema.idEsquema,esquema.esFijo)">
+                                                <span class="glyphicon glyphicon-edit"> </span>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -139,6 +117,10 @@
                         <label for="checkboxG1" class="css-label"> Intereses por Rango</label>
                     </div>
                     <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="eDescripcion">Porcentaje Abono a Capital</label>
+                            <input type="text" class="form-control" id="eAbonoCapital" ng-model="esquema.porcentajePagoCapital" ng-disabled="!isAddMode" placeholder="Porcentaje">
+                        </div>
                     </div>
                 </div>
                 <!-- inicio  controles por fecha  -->
@@ -180,7 +162,7 @@
                                 <label for="fFin">Fecha Fin:</label>
                                 <div class="input-group date">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    <input type="text" class="form-control" id="fFin" ng-model="esquema.fechaFin" value={{fechaFin}}  placeholder="dd/mm/yyyy">
+                                    <input type="text" class="form-control" id="fFin" ng-model="esquema.fechaFin" value={{fechaFin}} placeholder="dd/mm/yyyy">
                                 </div>
                             </div>
                         </div>
@@ -341,9 +323,7 @@
         </div>
     </div>
 </div>
-
 <!---->
-
 <!--Modal Nueva Financiera-->
 <strong><div class="modal inmodal fade " id="nuevaFinanciera" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
        <div class="modal-dialog modal-lg">

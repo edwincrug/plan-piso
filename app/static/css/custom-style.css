@@ -13,6 +13,18 @@
         color: white;
     }
     
+    .gridFontBlue {
+        background-color: #1A7BB9;
+        color: white;
+    }
+
+    .gridFontLightBlue {    
+        background-color: #23C6C8 ;
+        color: white;
+    }
+
+
+    
     input[type=checkbox].css-checkbox {
         position: absolute;
         z-index: -1000;

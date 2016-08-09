@@ -56,8 +56,6 @@ registrationModule.controller('paymentController', function($scope, $location, a
         $location.path('/paymentdetail/' + idLote + '/review');
     };
 
-
-
     $scope.setActiveClass = function(currentTab) {
 
         for (var i = 0; i < $scope.panels.length; i++) {
@@ -69,9 +67,6 @@ registrationModule.controller('paymentController', function($scope, $location, a
         currentTab.className = "active";
 
     };
-
-
-
 
     $scope.setTablePaging = function(idTable) {
         $('#' + idTable).DataTable({

@@ -32,7 +32,9 @@
                         <tr>
                             <th>Lote</th>
                             <th>Tipo</th>
+                            <th>abonoCapital</th>
                             <th>Monto</th>
+                            <th>interesUsuario</th>
                             <th>Fecha Programación</th>
                             <th>ID Lote Externo</th>
                             <th>Nombre Lote</th>
@@ -45,7 +47,9 @@
                         <tr ng-repeat="noAplicado in loteNoAplicado">
                             <td>{{noAplicado.idLote}}</td>
                             <td>{{noAplicado.tipo}}</td>
+                            <td>{{noAplicado.abonoCapital | currency:"$":2}}</td>
                             <td>{{noAplicado.Monto | currency:"$":2}}</td>
+                            <td>{{noAplicado.interesUsuario | currency:"$":2}}</td>
                             <td>{{noAplicado.fechaProgramacion | date:'dd/MM/yyyy'}}</td>
                             <td>{{noAplicado.idLoteExterno}}</td>
                             <td>{{noAplicado.nombreLote}}</td>
@@ -75,7 +79,9 @@
                         <tr>
                             <th>Lote</th>
                             <th>Tipo</th>
+                            <th>abonoCapital</th>
                             <th>Monto</th>
+                            <th>interesUsuario</th>
                             <th>Fecha Programación</th>
                             <th>ID Lote Externo</th>
                             <th>Nombre Lote</th>
@@ -88,7 +94,9 @@
                         <tr ng-repeat="aplicado in loteAplicado">
                             <td>{{aplicado.idLote}}</td>
                             <td>{{aplicado.tipo}}</td>
+                            <td>{{aplicado.abonoCapital | currency:"$":2}}</td>
                             <td>{{aplicado.Monto | currency:"$":2}}</td>
+                            <td>{{aplicado.interesUsuario | currency:"$":2}}</td>
                             <td>{{aplicado.fechaProgramacion | date:'dd/MM/yyyy'}}</td>
                             <td>{{aplicado.idLoteExterno}}</td>
                             <td>{{aplicado.nombreLote}}</td>
