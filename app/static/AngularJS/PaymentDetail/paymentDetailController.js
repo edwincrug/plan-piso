@@ -1,4 +1,4 @@
-registrationModule.controller('paymentDetailController', function($scope, $routeParams, alertFactory, paymentDetailRepository) {
+registrationModule.controller('paymentDetailController', function($scope, $location, $routeParams, alertFactory, paymentDetailRepository) {
 
     $scope.mdlMessage = "";
     $scope.mdlCurrent = 0;
@@ -22,6 +22,10 @@ registrationModule.controller('paymentDetailController', function($scope, $route
         if ($routeParams.mode == 'review') {
             $scope.disableControl = true;
         }
+
+
+        //setTimeout(function() { $("#initialCol").trigger("click"); }, 3000);
+
 
     };
 
@@ -61,7 +65,10 @@ registrationModule.controller('paymentDetailController', function($scope, $route
             }
         }, function(error) {
             alertFactory.error("Error al cargar detalles");
-        });        
+        });
+
+
+
     };
 
 
@@ -77,12 +84,15 @@ registrationModule.controller('paymentDetailController', function($scope, $route
 
         switch ($scope.mdlCurrent) {
             case $scope.mdlAction.enviar:
+                $location.path('/payment/');
                 alertFactory.info("Enviado");
                 break;
             case $scope.mdlAction.rechazar:
+                $location.path('/payment/');
                 alertFactory.info("Rechazado");
                 break;
             case $scope.mdlAction.aprobar:
+                $location.path('/payment/');
                 alertFactory.info("Aprobado");
                 break;
             default:
@@ -148,6 +158,9 @@ registrationModule.controller('paymentDetailController', function($scope, $route
         $(idTable).DataTable({
             dom: '<"html5buttons"B>lTfgitp',
             iDisplayLength: 5,
+            order: [
+                [0, "desc"]
+            ],
             buttons: [{
                 extend: 'copy'
             }, {

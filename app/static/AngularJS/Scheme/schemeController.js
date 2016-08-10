@@ -80,9 +80,10 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
                 $scope.esquemas = result.data;
                 setTimeout(function() {
                     $('#esquemasFinanciera').DataTable({
-                        dom: '<"html5buttons"B>lTfgitp'
-
-                        ,
+                        dom: '<"html5buttons"B>lTfgitp',
+                        order: [
+                            [0, "desc"]
+                        ],
                         buttons: [{
                                 extend: 'copy'
                             }, {
@@ -116,7 +117,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         }, function(error) {
             alertFactory.error("Error al cargar Esquemas");
         });
-    }
+    };
 
     // Función para mostrar detalles del esquema
     $scope.getDetalleEsquema = function(idEsquema, esFijo) {
@@ -140,13 +141,14 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         }, function(error) {
             alertFactory.error("Error al cargar detalles");
         });
-    }
+    };
 
     // Función para llamar la modal
     $scope.nuevoEsquema = function(idEsquema, esFijo) {
         $scope.lstDateScheme = [];
         $scope.lstRangeScheme = [];
         $scope.checked = false;
+        $scope.checkedReduccion = false;
         $scope.idEsquema = idEsquema;
         $scope.clearControls();
         $scope.clearControlsMain();
@@ -270,8 +272,8 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
             { value: $scope.esquema.diasGracia, name: 'Días de gracia', regExp: expresion.entero1 },
             { value: $scope.esquema.plazo, name: 'Plazo', regExp: expresion.entero1 },
             { value: $scope.esquema.nombre, name: 'Nombre', regExp: expresion.todo },
-            { value: $scope.esquema.descripcion, name: 'Descripción', regExp: expresion.todo },
-            { value: $scope.esquema.porcentajePagoCapital, name: 'Abono Capital', regExp: expresion.decimal1 }
+            { value: $scope.esquema.descripcion, name: 'Descripción', regExp: expresion.todo }
+            // { value: $scope.esquema.porcentajePagoCapital, name: 'Abono Capital', regExp: expresion.decimal1 }
         ];
 
         return controlesPorRango;
@@ -335,7 +337,7 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
         $scope.esquema.plazo = null;
         $scope.esquema.nombre = null;
         $scope.esquema.descripcion = null;
-        $scope.esquema.porcentajePagoCapital = null;
+        $scope.esquema.porcentajePagoCapital = 0;
     };
 
     $scope.clearControls = function() {

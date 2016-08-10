@@ -38,22 +38,24 @@
                             <table id="esquemasFinanciera" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
                                 <thead>
                                     <tr>
-                                        <!-- <th>N° Esquema</th> -->
+                                        <th style="display:none;">N° Esquema</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
                                         <th>Días gracia</th>
                                         <th>Plazo</th>
+                                        <th>Fecha Creación</th>
                                         <th>Tipo</th>
                                         <th>Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="esquema in esquemas">
-                                        <!-- <td>{{esquema.idEsquema}}</td> -->
+                                        <td style="display:none;">{{esquema.idEsquema}}</td>
                                         <td>{{esquema.nombre}}</td>
                                         <td>{{esquema.descripcion}}</td>
                                         <td>{{esquema.diasGracia}}</td>
                                         <td>{{esquema.plazo}}</td>
+                                        <td>{{esquema.fechaCreacion | date:'dd-MM-yyyy'}}</td>
                                         <td>{{getStringTasaFija(esquema.esFijo)}}</td>
                                         <td>
                                             <button type="button" class="btn btn-default" ng-click="nuevoEsquema(esquema.idEsquema,esquema.esFijo)">
@@ -115,11 +117,14 @@
                     <div class="col-sm-6">
                         <input type="checkbox" id="checkboxG1" ng-model="checked" ng-init="checked=false" class="css-checkbox">
                         <label for="checkboxG1" class="css-label"> Intereses por Rango</label>
+                        </br>
+                        <input type="checkbox" id="chkReduccion" ng-model="checkedReduccion" ng-init="checkedReduccion=false" class="css-checkbox">
+                        <label for="chkReduccion" class="css-label"> Pago por Reducción</label>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="eDescripcion">Pago por Reducción</label>
-                            <input type="text" class="form-control" id="eAbonoCapital" ng-model="esquema.porcentajePagoCapital" ng-disabled="!isAddMode" placeholder="Porcentaje">
+                        <div class="form-group" ng-show="checkedReduccion">
+                            <label for="eDescripcion">Pago por Reducción:</label>
+                            <input type="text" class="form-control" id="eAbonoCapital" ng-model="esquema.porcentajePagoCapital" ng-disabled="!isAddMode" placeholder="Porcentaje ">
                         </div>
                     </div>
                 </div>
