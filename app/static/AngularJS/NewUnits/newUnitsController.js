@@ -331,26 +331,25 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     }
     
     $scope.cancelarCambioFinancieraTraspaso = function () {
-        $('#unidadesCambioEsquemaNuevos').DataTable().destroy();
-        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;   
         $scope.nombreFinancieraCambio = "";
         $scope.valorCheckBoxTabla.show= false;
-        $scope.idEsquemaNuevoTraspaso.show = true;
+        $('#unidadesCambioEsquemaNuevos').DataTable().destroy();
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.hacerCambioEsquemaTraspaso.show = false;
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
+        //$scope.idEsquemaNuevoTraspaso.show = true;
         $scope.transpasoFinanciera.show = true;
-        $scope.updateEsquemaUnidad = [];
-        $scope.listaUnidadesConValidacion = [];
-        $scope.idESquemaNueva = 0;       
     }
     
-    $scope.hacerCambioEsquemaTraspaso = function () {     
-        $scope.hacerCambioEsquemaTraspaso.show = true;
+    $scope.hacerCambioEsquemaTraspaso = function () {  
         $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.validationSchemaChange();
-        $('input[type=checkbox]').attr('checked', false);
+        $scope.hacerCambioEsquemaTraspaso.show = true;
         setTimeout(function () {
                     $('#unidadesCambioEsquemaNuevos').DataTable({
                         dom: '<"html5buttons"B>lTfgitp'
@@ -379,7 +378,10 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                         ]
                     });
                 }, 1000);
-        $scope.valorCheckBoxTabla.show = false;  
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.valorCheckBoxTabla.show = false;
+        $scope.modalCambioFinanciera.show = false;
+        $scope.transpasoFinanciera.show = true;
     }
     
     $scope.regresarInteresesTraspaso = function () {

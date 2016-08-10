@@ -1,4 +1,4 @@
-registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository /*localStorageService*/) {
+registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository /*,localStorageService*/) {
     //store an array of free days getting by getFreeDays function  
     $scope.message = 'Buscando...';
     $scope.detailsUnit = {};
@@ -500,7 +500,6 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                 return false;
             }
         );
-
     }
 
     // Filtro para mostras unidades a 30 días de financiamiento
@@ -724,8 +723,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.hacerCambioEsquema = function () {
         //$scope.listaUnidadesConValidacion = [];
         $scope.idEsquemaNuevo.show = false;
-        $scope.hacerCambioEsquema.show = true;
         $scope.validationSchemaChange();
+        $scope.hacerCambioEsquema.show = true;
         $('input[type=checkbox]').attr('checked', false);
         setTimeout(function () {
                             $('#unidadesCambioEsquema').DataTable({
@@ -763,6 +762,11 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     //Cancelar el cambio de financiera y cerrar la modal
     $scope.cancelarCambioFinanciera = function () {
         $scope.nombreFinancieraCambio = "";
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;
+        $('#unidadesCambioEsquema').DataTable().destroy();
+        $('#esquemasFinancieraNuevo').DataTable().destroy();
         $scope.valorCheckBoxTabla.show = false;
         $scope.idEsquemaNuevo.show = false;
         $scope.hacerCambioEsquema.show = true;
@@ -770,11 +774,8 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        $('#unidadesCambioEsquema').DataTable().destroy();
-        $('#esquemasFinancieraNuevo').DataTable().destroy();
-        $scope.updateEsquemaUnidad = [];
-        $scope.listaUnidadesConValidacion = [];
-        $scope.idESquemaNueva = 0;
+        
+        
     }
 
     // Función para mostrar la modal del wizard de transpaso de financiera
@@ -1195,26 +1196,25 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     $scope.cancelarCambioFinancieraTraspaso = function () {
         $scope.nombreFinancieraCambio = "";
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;
+        $('#traspasoFinancieroTabla').DataTable().destroy();
+        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.valorCheckBoxTabla.show = false;
-        $scope.idEsquemaNuevoTraspaso.show = false;
+        //$scope.idEsquemaNuevoTraspaso.show = false;
         $scope.hacerCambioEsquemaTraspaso.show = false;
         $('input[type=checkbox]').attr('checked', false);
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        $('#traspasoFinancieroTabla').DataTable().destroy();
-        $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
-        $scope.updateEsquemaUnidad = [];
-        $scope.listaUnidadesConValidacion = [];
-        $scope.idESquemaNueva = 0;
+        
     }
 
     $scope.hacerCambioEsquemaTraspaso = function () {
-        //$('#traspasoFinancieroTabla').DataTable().destroy(); 
         $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.UnitChangeFinancialDetails();
         $scope.hacerCambioEsquemaTraspaso.show = true;
-        $('input[type=checkbox]').attr('checked', false);
         setTimeout(function () {
                             $('#traspasoFinancieroTabla').DataTable({
                                 dom: '<"html5buttons"B>lTfgitp',
@@ -1243,8 +1243,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                         ]
                             });
                         }, 1000);
+        $('input[type=checkbox]').attr('checked', false);
         $scope.modalTraspasoFinanciera.show = false;
-        $scope.valorCheckBoxTabla.show = false;              
+        $scope.modalCambioFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show = false; 
+        $scope.transpasoFinanciera.show = true;
+        
     }
 
     $scope.regresarInteresesTraspaso = function () {
