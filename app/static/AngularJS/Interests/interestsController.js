@@ -1,4 +1,4 @@
-registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository) {
+registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository, localStorageService) {
     //store an array of free days getting by getFreeDays function  
     $scope.message = 'Buscando...';
     $scope.detailsUnit = {};
@@ -33,7 +33,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.getFinanciera();
         $scope.getInterestCompanySucursal.show = false;
         
-             /*if (!($('#lgnUser').val().indexOf('[') > -1)) {
+             if (!($('#lgnUser').val().indexOf('[') > -1)) {
                 localStorageService.set('lgnUser', $('#lgnUser').val());
             } else {
                 if (($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')) {
@@ -45,7 +45,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
                     }
 
                 }
-            }*/
+            }
     };
 
     // Función para filtrar por empresa

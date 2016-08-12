@@ -5,7 +5,7 @@
 // -- Modificó: 
 // -- Fecha: 
 // -- =============================================
-var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy","ui.bootstrap"])
+var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy","ui.bootstrap","LocalStorageModule"])
     .config(function($routeProvider, $locationProvider) {
 
         /*cheange the routes*/
