@@ -52,13 +52,20 @@ router = require('./website/router');
       res.sendfile('app/static/index.html');
     });
     
-  };
+  /*this.expressServer.post('*', function(req, res) {
+        require('./website/modules/adminLogin')(req, function(error, token) {
+            if (error) return res.redirect("/");
+            //res.redirect("/?token=" + JSON.parse(token).token)
+        })
+
+    });*/
     
-    /*
+    
    this.expressServer.post('*', function(req, res){
         var user = { idUsuario: req.body.idUsuario };
         res.render('index', { user });
-    });*/
+    });
+  };
 
   ExpressServer.prototype.router = function(controller,funcionalidad,method,url){
     console.log(url);

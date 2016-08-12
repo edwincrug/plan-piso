@@ -3,14 +3,26 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.message = 'Buscando...';
     $scope.updateEsquemaUnidad =[];
     $scope.fechaHoy = new Date();
+    $scope.listaUnidadesConValidacion = [];
+    $scope.unidadesAcambiarEsquema = [];
+    $scope.updateEsquemaUnidad = [];
+    $scope.listaUnidadesConValidacion = [];
+    $scope.idESquemaNueva = 0; 
+    $scope.nombreFinancieraCambio = "";
     
     $scope.init = function(){
-        //$scope.getNewUnits();
         $scope.transpasoFinanciera.show = false;
         $scope.getFinanciera();
         $scope.getCompany();
         $scope.getSucursal.show = false;
-    }
+        $scope.updateEsquemaUnidad =[];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.unidadesAcambiarEsquema = [];
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0; 
+        $scope.nombreFinancieraCambio = "";
+    };
     
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
         $scope.seleccionarSucursal.show = false;
@@ -22,7 +34,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.transpasoFinanciera.show = true;
         $scope.modalCambioFinanciera.show = false;
         
-    }
+    };
 
     // Función para filtrar por sucursal
     $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {
@@ -33,7 +45,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.transpasoFinanciera.show = true;
         $scope.getNewUnitsSucursal();
 
-    }
+    };
     // Función para filtrar compañias
     $scope.getCompany = function () {
             $scope.promise = interestsRepository.getCompany().then(function (result) {
@@ -46,7 +58,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             }, function (error) {
                 alertFactory.error("Error al cargar Empresas");
             });
-        }
+        };
     
     $scope.getSucursal = function (idEmpresa) {
         $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
@@ -59,7 +71,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         }, function (error) {
             alertFactory.error("Error al cargar Sucursales");
         });
-    }
+    };
     
     $scope.getNewUnits = function(){
         $scope.TotalUnidades = 0;
@@ -103,7 +115,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             }, function (error) {
                 alertFactory.error("Error al cargar Empresas");
             });
-    }
+    };
     
     $scope.getNewUnitsCompany = function(){
         $scope.TotalUnidades = 0;
@@ -147,7 +159,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             }, function (error) {
                 alertFactory.error("Error al cargar Empresas");
             });
-    }
+    };
     
     $scope.getNewUnitsSucursal = function(){
         $scope.TotalUnidades = 0;
@@ -191,7 +203,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             }, function (error) {
                 alertFactory.error("Error al cargar Empresas");
             });
-    }
+    };
     
     $scope.getFinanciera = function () {
         $scope.promise = schemeRepository.getFinanciera().then(function (result) {
@@ -204,7 +216,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         }, function (error) {
             alertFactory.error("Error al cargar financieras");
         });
-    }
+    };
     
     $scope.modalCambioFinanciera = function(modal){
         $scope.hacerCambioEsquemaTraspaso.show = false;
@@ -214,7 +226,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.modal = modal;
         $scope.esquemas = {};
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
-    }
+    };
     
     $scope.cancelFinancial = function(){
         $scope.nombreFinancieraCambio = "";
@@ -222,7 +234,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show= false;
         $('input[type=checkbox]').attr('checked', false);
-    }
+    };
     
     $scope.transpasoFinanciera = function () {
         //$scope.modalTraspasoFinanciera.show = true;
@@ -231,7 +243,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
-    }
+    };
     
     $scope.selectFinancial = function(){
         //$scope.updateEsquemaUnidad = [];
@@ -240,7 +252,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.transpasoFinanciera.show = false;
         $scope.modalCambioFinanciera.show = true;
         $scope.valorCheckBoxTabla.show = true;
-    }
+    };
     
     $scope.getEsquemaFinanciera = function () {
         $scope.esquemas = [];
@@ -291,7 +303,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         }, function (error) {
             alertFactory.error("Error al cargar Esquemas");
         });
-    }
+    };
     
     $scope.valorCheckBoxTabla = function (idUnidad,idu) {
         if (idUnidad == false || idUnidad == undefined) {} else {
@@ -301,13 +313,13 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             });
             console.log($scope.updateEsquemaUnidad)
         }
-    }
+    };
     
     $scope.seleccionarFinancieraNuevaTraspaso = function (idFinanciera, nombre) {
         $scope.idFinancieraCambio = idFinanciera;
         $scope.nombreFinancieraCambio = nombre;
         $scope.getEsquemaFinanciera();   
-    }
+    };
     
     $scope.updateSchemeNews = function () {
         $scope.unidadesAcambiarEsquema.forEach(function (updateEsquemaUnidad) {
@@ -323,12 +335,12 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 alertFactory.error("Error al cambiar Esquema");
             });
         });
-    }
+    };
      
     $scope.idEsquemaNuevoTraspaso = function (idEsquema, nombre) {
         $scope.idESquemaNueva = idEsquema;
         $scope.nombreEsquemaNueva = nombre;
-    }
+    };
     
     $scope.cancelarCambioFinancieraTraspaso = function () {
         $scope.updateEsquemaUnidad = [];
@@ -344,7 +356,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.valorCheckBoxTabla.show = false;
         //$scope.idEsquemaNuevoTraspaso.show = true;
         $scope.transpasoFinanciera.show = true;
-    }
+    };
     
     $scope.hacerCambioEsquemaTraspaso = function () {  
         $scope.idEsquemaNuevoTraspaso.show = false;
@@ -382,7 +394,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.valorCheckBoxTabla.show = false;
         $scope.modalCambioFinanciera.show = false;
         $scope.transpasoFinanciera.show = true;
-    }
+    };
     
     $scope.regresarInteresesTraspaso = function () {
         $scope.updateSchemeNews();
@@ -399,7 +411,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
         $scope.nombreFinancieraCambio = "";
-    }
+    };
     
     $scope.getStringTasaFija = function (value) {
         if (value) return "FECHA";
@@ -425,7 +437,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         }
     ];
     
-     // Validación para mostrar las unidades que pueden cambiar el esquema
+    // Validación para mostrar las unidades que pueden cambiar el esquema
     $scope.validationSchemaChange = function () {
         $('#unidadesCambioEsquemaNuevos').DataTable().destroy();
         $scope.listaUnidadesConValidacion = [];
@@ -479,7 +491,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 alertFactory.error("Error al cambiar Esquema");
             });
         });
-    }
+    };
 
     $scope.unidadesAutorizadas = function () {
         $scope.unidadesAcambiarEsquema = [];
@@ -496,9 +508,9 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 //console.log('Unidad No validad', listaUnidadesConValidacion.vehNumserie)
             }
         });
-    }
+    };
     
-        $scope.setClass = function (status) {
+    $scope.setClass = function (status) {
         switch (status) {
         case 'OK':
             return 'gridFontGreen';
@@ -509,6 +521,6 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         default:
             return 'gridFontGreen';
         }
-    }
+    };
       
 });
