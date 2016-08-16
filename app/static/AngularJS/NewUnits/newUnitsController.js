@@ -1,5 +1,4 @@
-registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
-    
+﻿registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
     $scope.message = 'Buscando...';
     $scope.updateEsquemaUnidad =[];
     $scope.fechaHoy = new Date();
@@ -9,12 +8,13 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.listaUnidadesConValidacion = [];
     $scope.idESquemaNueva = 0; 
     $scope.nombreFinancieraCambio = "";
-    $rootScope.empleadoNombre=[];
-    $rootScope.noo = 'yo'
+    
+
     
     $scope.init = function(){
         getEmpleados();
         console.log($rootScope.currentEmployee)
+        $scope.getUsuario();
         $scope.transpasoFinanciera.show = false;
         $scope.getSucursal.show = false;
         $scope.getFinanciera();
@@ -26,14 +26,15 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0; 
         $scope.nombreFinancieraCambio = "";
-               loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
-            if (result.data.length > 0) {
-                $rootScope.empleado = result.data;
-              } else {
-                alertFactory.info("Datos Incorrectos");
-            }
-        });   
-        $rootScope.empleadoNombre = $rootScope.empleado;
+    };
+    
+    $scope.getUsuario = function(){
+        $rootScope.empleadoNombre=[];
+        loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
+                $rootScope.empleadoNombre = result.data[0].nombre;
+                
+        }); 
+        
     };
 
     

@@ -1,11 +1,13 @@
-registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository, localStorageService, $rootScope) {
+﻿registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository, localStorageService, $rootScope) {
     $scope.message = 'Buscando...';
     $scope.empleado = [];
     
     
     $scope.init = function () {
         $(".dropdown").remove(".dropdown");
-        $("#botonCerrar").remove(".a");
+	//$(".nav").remove(".nav");
+        $(".botonCerrar").remove(".botonCerrar");
+	$(".blanco").remove(".blanco");
         
         if (!($('#lgnUser').val().indexOf('[') > -1)) {
                 localStorageService.set('lgnUser', $('#lgnUser').val());
