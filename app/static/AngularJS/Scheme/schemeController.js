@@ -17,10 +17,10 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
     $scope.init = function() {
         $scope.getFinanciera();
         $scope.getEsquemaFinanciera.show = false;
-        getEmpleado();
+        //getEmpleado();
     };
     
-            var getEmpleado = function(){
+           /* var getEmpleado = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
         }
@@ -41,7 +41,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
     };
-    
+    */
     
     
     // Función para seleccionar las financieras y mostrar la tabla con los esquemas 

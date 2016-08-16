@@ -23,11 +23,11 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.idESquemaNueva = 0; 
         $scope.nombreFinancieraCambio = "";
         console.log($rootScope.currentEmployee)
-        getEmpleado();
+        //getEmpleado();
     };
     
     
-    var getEmpleado = function(){
+    /*var getEmpleado = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
         }
@@ -40,14 +40,14 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 else{
                    alert('Inicie sesión desde panel de aplicaciones.');
                     //window.close(); 
-                    location.href = '/';
+                    //location.href = '/';
                 }
                 
             }
         }
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
-    };
+    };*/
     
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
         $scope.seleccionarSucursal.show = false;

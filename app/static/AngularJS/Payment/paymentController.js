@@ -16,7 +16,7 @@ registrationModule.controller('paymentController', function($scope, $rootScope,$
         getEmpleado();
     };
 
-        var getEmpleado = function(){
+        /*var getEmpleado = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
         }
@@ -36,7 +36,7 @@ registrationModule.controller('paymentController', function($scope, $rootScope,$
         }
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
-    };
+    };*/
     
     $scope.getNoPaymentReport = function(idStatus) {
 

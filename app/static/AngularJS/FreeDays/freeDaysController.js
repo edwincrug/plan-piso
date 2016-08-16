@@ -11,7 +11,7 @@ registrationModule.controller('freeDaysController', function ($scope, alertFacto
         getEmpleado();
     };
     
-    var getEmpleado = function(){
+    /*var getEmpleado = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
         }
@@ -32,7 +32,7 @@ registrationModule.controller('freeDaysController', function ($scope, alertFacto
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
     };
-    
+    */
     
     $scope.seleccionarEmpresa = function (empresa, nombre) {
             $scope.Marca = empresa;
