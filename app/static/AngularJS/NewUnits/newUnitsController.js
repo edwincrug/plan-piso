@@ -9,6 +9,8 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.listaUnidadesConValidacion = [];
     $scope.idESquemaNueva = 0; 
     $scope.nombreFinancieraCambio = "";
+    $rootScope.empleadoNombre=[];
+    $rootScope.noo = 'yo'
     
     $scope.init = function(){
         getEmpleados();
@@ -26,13 +28,12 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.nombreFinancieraCambio = "";
                loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
             if (result.data.length > 0) {
-                $rootScope.empleadoNombre = result.data;
+                $rootScope.empleado = result.data;
               } else {
                 alertFactory.info("Datos Incorrectos");
             }
-        });
-        
-        
+        });   
+        $rootScope.empleadoNombre = $rootScope.empleado;
     };
 
     
