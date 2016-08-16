@@ -6,7 +6,7 @@ registrationModule.factory('loginRepository', function($http) {
     return {        
         getValidaUsuario: function(usuario,password) {
             return $http({
-                url: interestsURL + 'ValidaUsuario/',
+                url: loginURL + 'ValidaUsuario/',
                 method: "GET",
                  params: {usuario: usuario,
                          password:password},
@@ -15,11 +15,11 @@ registrationModule.factory('loginRepository', function($http) {
                 }
             });
         },
-        getEmpleado: function(idUsuario) {
+        getEmpleado: function(idEmpleado) {
             return $http({
-                url: interestsURL + 'getEmpleado/',
+                url: loginURL + 'getEmpleado/',
                 method: "GET",
-                 params: {idUsuario: idUsuario},
+                 params: {idEmpleado: idEmpleado},
                 headers: {
                 'Content-Type': 'application/json'
                 }

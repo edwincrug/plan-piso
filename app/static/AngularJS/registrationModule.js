@@ -65,3 +65,8 @@ registrationModule.directive('resize', function($window) {
         changeHeight(); // when page loads          
     };
 });
+
+registrationModule.run(function($rootScope) {
+    $rootScope.var = "full";
+
+})

@@ -12,13 +12,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     
     $scope.init = function(){
         getEmpleados();
-        loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
-            if (result.data.length > 0) {
-                $rootScope.empleado = result.data;
-              } else {
-                alertFactory.info("Datos Incorrectos");
-            }
-        }
+        console.log($rootScope.currentEmployee)
         $scope.transpasoFinanciera.show = false;
         $scope.getSucursal.show = false;
         $scope.getFinanciera();
@@ -30,7 +24,14 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0; 
         $scope.nombreFinancieraCambio = "";
-        console.log($rootScope.currentEmployee)
+               loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
+            if (result.data.length > 0) {
+                $rootScope.empleadoNombre = result.data;
+              } else {
+                alertFactory.info("Datos Incorrectos");
+            }
+        });
+        
         
     };
 
