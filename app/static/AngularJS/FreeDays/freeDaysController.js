@@ -1,4 +1,4 @@
-registrationModule.controller('freeDaysController', function ($scope, alertFactory, freeDaysRepository, interestsRepository) {
+registrationModule.controller('freeDaysController', function ($scope, alertFactory, freeDaysRepository, interestsRepository,localStorageService, $rootScope) {
 
     //store an array of free days getting by getFreeDays function
     $scope.allDays = {};
@@ -8,7 +8,32 @@ registrationModule.controller('freeDaysController', function ($scope, alertFacto
         //
         $scope.seleccionarSucursal.show = false;
         $scope.getCompany();
+        getEmpleado();
     };
+    
+    var getEmpleado = function(){
+        if(!($('#lgnUser').val().indexOf('[') > -1)){
+            localStorageService.set('lgnUser', $('#lgnUser').val());
+        }
+        else{
+            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
+                if(getParameterByName('employee') != ''){
+                    $rootScope.currentEmployee = getParameterByName('employee');
+                    return;
+                }
+                else{
+                   alert('Inicie sesión desde panel de aplicaciones.');
+                    //window.close(); 
+                    location.href = '/';
+                }
+                
+            }
+        }
+        //Obtengo el empleado logueado
+        $rootScope.currentEmployee = localStorageService.get('lgnUser');
+    };
+    
+    
     $scope.seleccionarEmpresa = function (empresa, nombre) {
             $scope.Marca = empresa;
             $scope.nombreCorto = empresa;

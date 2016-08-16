@@ -1,4 +1,4 @@
-registrationModule.controller('schemeController', function($scope, alertFactory, schemeRepository) {
+registrationModule.controller('schemeController', function($scope, $rootScope,alertFactory, schemeRepository,localStorageService) {
 
     $scope.message = 'Buscando...';
     $scope.tasaFecha = '';
@@ -17,7 +17,33 @@ registrationModule.controller('schemeController', function($scope, alertFactory,
     $scope.init = function() {
         $scope.getFinanciera();
         $scope.getEsquemaFinanciera.show = false;
+        getEmpleado();
     };
+    
+            var getEmpleado = function(){
+        if(!($('#lgnUser').val().indexOf('[') > -1)){
+            localStorageService.set('lgnUser', $('#lgnUser').val());
+        }
+        else{
+            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
+                if(getParameterByName('employee') != ''){
+                    $rootScope.currentEmployee = getParameterByName('employee');
+                    return;
+                }
+                else{
+                   alert('Inicie sesión desde panel de aplicaciones.');
+                    //window.close(); 
+                    location.href = '/';
+                }
+                
+            }
+        }
+        //Obtengo el empleado logueado
+        $rootScope.currentEmployee = localStorageService.get('lgnUser');
+    };
+    
+    
+    
     // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
     $scope.seleccionarFinanciera = function(idFinanciera, nombreFinanciera) {
         $scope.idFinanciera = idFinanciera;

@@ -1,4 +1,4 @@
-registrationModule.controller('paymentController', function($scope, $location, alertFactory, paymentRepository) {
+registrationModule.controller('paymentController', function($scope, $rootScope,$location, alertFactory, paymentRepository,localStorageService) {
 
 
     $scope.loteNoAplicado = [];
@@ -13,8 +13,31 @@ registrationModule.controller('paymentController', function($scope, $location, a
     $scope.init = function() {
         $scope.getPaymentReport(5);
         $scope.getNoPaymentReport(1);
+        getEmpleado();
     };
 
+        var getEmpleado = function(){
+        if(!($('#lgnUser').val().indexOf('[') > -1)){
+            localStorageService.set('lgnUser', $('#lgnUser').val());
+        }
+        else{
+            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
+                if(getParameterByName('employee') != ''){
+                    $rootScope.currentEmployee = getParameterByName('employee');
+                    return;
+                }
+                else{
+                   alert('Inicie sesión desde panel de aplicaciones.');
+                    //window.close(); 
+                    location.href = '/';
+                }
+                
+            }
+        }
+        //Obtengo el empleado logueado
+        $rootScope.currentEmployee = localStorageService.get('lgnUser');
+    };
+    
     $scope.getNoPaymentReport = function(idStatus) {
 
         $scope.promise = paymentRepository.getPaymentReport(idStatus).then(function(result) {

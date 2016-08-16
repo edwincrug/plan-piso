@@ -1,4 +1,4 @@
-registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository) {
+registrationModule.controller('interestsController', function ($scope, $rootScope,alertFactory, interestsRepository, schemeRepository,localStorageService) {
     //store an array of free days getting by getFreeDays function  
     $scope.message = 'Buscando...';
     $scope.detailsUnit = {};
@@ -19,6 +19,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
+        getEmpleado();
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
@@ -42,6 +43,28 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.getInterestCompanySucursal.show = false;
     };
 
+    
+        var getEmpleado = function(){
+        if(!($('#lgnUser').val().indexOf('[') > -1)){
+            localStorageService.set('lgnUser', $('#lgnUser').val());
+        }
+        else{
+            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
+                if(getParameterByName('employee') != ''){
+                    $rootScope.currentEmployee = getParameterByName('employee');
+                    return;
+                }
+                else{
+                   alert('Inicie sesión desde panel de aplicaciones.');
+                    //window.close(); 
+                    location.href = '/';
+                }
+                
+            }
+        }
+        //Obtengo el empleado logueado
+        $rootScope.currentEmployee = localStorageService.get('lgnUser');
+    };
     // Función para filtrar por empresa
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
         $scope.seleccionarSucursal.show = false;

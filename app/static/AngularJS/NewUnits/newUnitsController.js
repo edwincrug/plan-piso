@@ -1,4 +1,4 @@
-registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope) {
+registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService) {
     
     $scope.message = 'Buscando...';
     $scope.updateEsquemaUnidad =[];
@@ -23,6 +23,30 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.idESquemaNueva = 0; 
         $scope.nombreFinancieraCambio = "";
         console.log($rootScope.currentEmployee)
+        getEmpleado();
+    };
+    
+    
+    var getEmpleado = function(){
+        if(!($('#lgnUser').val().indexOf('[') > -1)){
+            localStorageService.set('lgnUser', $('#lgnUser').val());
+        }
+        else{
+            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
+                if(getParameterByName('employee') != ''){
+                    $rootScope.currentEmployee = getParameterByName('employee');
+                    return;
+                }
+                else{
+                   alert('Inicie sesión desde panel de aplicaciones.');
+                    //window.close(); 
+                    location.href = '/';
+                }
+                
+            }
+        }
+        //Obtengo el empleado logueado
+        $rootScope.currentEmployee = localStorageService.get('lgnUser');
     };
     
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
