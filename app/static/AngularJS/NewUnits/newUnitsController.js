@@ -1,4 +1,4 @@
-registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository) {
+registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope) {
     
     $scope.message = 'Buscando...';
     $scope.updateEsquemaUnidad =[];
@@ -22,6 +22,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0; 
         $scope.nombreFinancieraCambio = "";
+        console.log($rootScope.currentEmployee)
     };
     
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {

@@ -19,7 +19,7 @@ registrationModule.factory('loginRepository', function($http) {
             return $http({
                 url: interestsURL + 'getEmpleado/',
                 method: "GET",
-                 params: {idUsuario: idUsuario}
+                 params: {idUsuario: idUsuario},
                 headers: {
                 'Content-Type': 'application/json'
                 }

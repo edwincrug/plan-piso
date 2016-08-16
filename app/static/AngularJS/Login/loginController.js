@@ -1,5 +1,6 @@
-registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository, localStorageService) {
+registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository, localStorageService, $rootScope) {
     $scope.message = 'Buscando...';
+    $scope.empleado = [];
     
     
     $scope.init = function () {
@@ -21,15 +22,29 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
 
                 }
             }
-        $scope.currentEmployee = localStorageService.get('lgnUser');
-        console.log($scope.currentEmployee)
+        $rootScope.currentEmployee = localStorageService.get('lgnUser');
+        console.log($rootScope.currentEmployee)
         }
 
+        
+        $scope.getEmpleado = function(){
+            loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
+            if (result.data.length > 0) {
+                $rootScope.empleado = result.data;
+              } else {
+                alertFactory.info("Datos Incorrectos");
+            }
+        }, function (error) {
+            alertFactory.error("Datos no correctos");
+        });
+    }
+    
+    
         $scope.getValidaUsuario = function () {
         $scope.promise = loginRepository.getValidaUsuario($scope.usuario, $scope.password).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("Bienvenido a Plan Piso"+ result.data[0].usuario);
-                $scope.login = result.data;
+                $rootScope.login = result.data;
                 $scope.nombreUsuario = result.data[0].usuario;
                 location.href = '/newUnits';
             } else {
