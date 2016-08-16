@@ -1,4 +1,4 @@
-registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService) {
+registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
     
     $scope.message = 'Buscando...';
     $scope.updateEsquemaUnidad =[];
@@ -11,6 +11,14 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.nombreFinancieraCambio = "";
     
     $scope.init = function(){
+        getEmpleados();
+        loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
+            if (result.data.length > 0) {
+                $rootScope.empleado = result.data;
+              } else {
+                alertFactory.info("Datos Incorrectos");
+            }
+        }
         $scope.transpasoFinanciera.show = false;
         $scope.getSucursal.show = false;
         $scope.getFinanciera();
@@ -23,13 +31,14 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.idESquemaNueva = 0; 
         $scope.nombreFinancieraCambio = "";
         console.log($rootScope.currentEmployee)
-        //getEmpleado();
+        
     };
+
     
-    
-    /*var getEmpleado = function(){
+    var getEmpleados = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
+            //$scope.getEmpleado();
         }
         else{
             if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
@@ -47,7 +56,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         }
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
-    };*/
+    };
     
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
         $scope.seleccionarSucursal.show = false;

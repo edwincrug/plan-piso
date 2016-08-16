@@ -9,6 +9,7 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
         
         if (!($('#lgnUser').val().indexOf('[') > -1)) {
                 localStorageService.set('lgnUser', $('#lgnUser').val());
+                $scope.getEmpleado();
                 location.href = '/newUnits';
             } else {
                 if (($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')) {
@@ -23,7 +24,8 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
                 }
             }
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
-        //console.log($rootScope.currentEmployee)
+        console.log($rootScope.currentEmployee)
+        
         }
 
         
