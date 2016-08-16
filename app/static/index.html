@@ -2,8 +2,12 @@
 <html lang="es">
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
     <title>Plan Piso</title>
     <meta name="description" content="description project">
     <meta name="author" content="name" />
@@ -12,7 +16,7 @@
     <!-- Libreria de Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900italic' rel='stylesheet' type='text/css'>
     <!--Hojas de estilos-->
-    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
     <!--Loading-->
     <link href="/css/toastr.css" rel="stylesheet" />
     <link href="/css/angular-busy.css" rel="stylesheet" />
@@ -87,11 +91,12 @@
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span class="m-r-sm text-muted welcome-message">GRUPO ANDRADE | PLAN PISO</span>
+                            <span  class="m-r-sm text-muted welcome-message">GRUPO ANDRADE | PLAN PISO</span>
                             <div id="maestroContenedor">
                             <div class="main">
                                 <div></div>
                                     <input type="hidden" id="lgnUser" value="[[ user.idUsuario ]]">
+                                    
                                 </div>
                             </div>
                         </li>
@@ -122,7 +127,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/">
+                            <a id="botonCerrar" href="/">
                                 <i class="fa fa-sign-out"></i> Cerrar
                             </a>
                         </li>
@@ -141,23 +146,23 @@
     <!--Interface de usuario-->
     <script src="/js/libs/toastr/toastr.min.js"></script>
     <!-- Librerias Angular-->
-    <script src="/js/libs/angular/angular.min.js"></script>
-    <script src="/js/libs/angular/angular-route.min.js"></script>
-    <script src="/js/libs/angular/ui-bootstrap-tpls.min.js"></script>
+    <script src="js/libs/angular/angular.min.js"></script>
+    <script src="js/libs/angular/angular-route.min.js"></script>
+    <script src="js/libs/angular/ui-bootstrap-tpls.min.js"></script>
     <script src="js/libs/angular/angular-local-storage.min.js"></script>
     <script src="helpers.js"></script>
     
     <!--Funciones Comunes-->
     <script src="/confront.js"></script>
     <!--Angular Busy-->
-    <script src="/js/libs/angular/angular-busy.js"></script>
+    <script src="js/libs/angular/angular-busy.js"></script>
     <!--Librería para realizar querys-->
     <!--Librerias de aplicación angular-->
     <script src="/AngularJS/registrationModule.js"></script>
     <!--librerias de componenetes-->
     <script src="/AngularJS/alertFactory.js"></script>
     <!--Controllers-->
-    <script src="/AngularJS/Example/exampleController.js"></script>
+    <script src="AngularJS/Example/exampleController.js"></script>
     <script src="/AngularJS/Interests/interestsRepository.js"></script>
     <script src="/AngularJS/Interests/interestsController.js"></script>
     <script src="/AngularJS/FreeDays/freeDaysRepository.js"></script>
@@ -176,19 +181,19 @@
     <script src="/AngularJS/NewUnits/newUnitsRepository.js"></script>
     
     <!--Script Inspinia-->
-    <script src="/js/libs/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/pace/pace.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/dataTables/datatables.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/iCheck/icheck.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/staps/jquery.steps.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/validate/jquery.validate.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/fullcalendar/moment.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/cropper/cropper.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/footable/footable.all.min.js"></script>
-    <script src="/js/libs/inspinia/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/pace/pace.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/dataTables/datatables.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/staps/jquery.steps.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script src="js/libs/inspinia/js/plugins/fullcalendar/moment.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/cropper/cropper.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/footable/footable.all.min.js"></script>
+    <script src="js/libs/inspinia/js/plugins/sweetalert/sweetalert.min.js"></script>
     <!-- Scripts Graficas -->
     <script src="/js/libs/inspinia/js/plugins/flot/jquery.flot.js"></script>
     <script src="/js/libs/inspinia/js/plugins/flot/jquery.flot.time.js"></script>

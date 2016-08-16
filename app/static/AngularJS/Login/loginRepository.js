@@ -14,7 +14,17 @@ registrationModule.factory('loginRepository', function($http) {
                 'Content-Type': 'application/json'
                 }
             });
-        }
+        },
+        getEmpleado: function(idUsuario) {
+            return $http({
+                url: interestsURL + 'getEmpleado/',
+                method: "GET",
+                 params: {idUsuario: idUsuario}
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            });
+        } 
 };      
 });
 

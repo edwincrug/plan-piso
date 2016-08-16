@@ -774,4 +774,21 @@ Calculo.prototype.post_insertmovementfinancialdebit = function(req, res, next) {
     });
 };
 
+Calculo.prototype.get_getEmpleado = function(req, res, next) {
+
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [{ name: 'idEmpleado', value: req.query.idEmpleado, type: self.model.types.INT }];
+
+    this.model.query('SEL_EMPLEADO_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+
+
 module.exports = Calculo;

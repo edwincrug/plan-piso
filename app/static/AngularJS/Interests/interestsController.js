@@ -1,4 +1,4 @@
-registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository, localStorageService) {
+registrationModule.controller('interestsController', function ($scope, alertFactory, interestsRepository, schemeRepository) {
     //store an array of free days getting by getFreeDays function  
     $scope.message = 'Buscando...';
     $scope.detailsUnit = {};
@@ -19,33 +19,27 @@ registrationModule.controller('interestsController', function ($scope, alertFact
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
-        //location.reload();
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
-        $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
         $scope.getInterest.show = false;
-        $scope.checkbox();
+        $scope.detailsUnit = {};
+        $scope.fechaHoy = new Date();
+        $scope.idEmpresa = {};
+        $scope.detallePagos =[];
+        $scope.unidadesAcambiarEsquema = [];
+        $scope.detalleEsquema = {};
+        $scope.fechaInicio = [];
+        $scope.margen = 0;
+        $scope.costoUnidad = 0;
+        $scope.getCompany();
+        $scope.getFinanciera();
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
-        $scope.getFinanciera();
-        $scope.getInterestCompanySucursal.show = false;
         
-             if (!($('#lgnUser').val().indexOf('[') > -1)) {
-                localStorageService.set('lgnUser', $('#lgnUser').val());
-            } else {
-                if (($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')) {
-                    if (getParameterByName('employee') != '') {
-                        $rootScope.currentEmployee = getParameterByName('employee');
-                    } else {
-                        alert('Inicie sesión desde panel de aplicaciones.');
-                        //window.close(); 
-                    }
-
-                }
-            }
+        $scope.getInterestCompanySucursal.show = false;
     };
 
     // Función para filtrar por empresa
@@ -631,12 +625,12 @@ registrationModule.controller('interestsController', function ($scope, alertFact
     $scope.ocultarEquemaFechas = function () {};
 
     //Estilo de checkbox
-    $scope.checkbox = (function () {
+    /*$scope.checkbox = (function () {
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
-    })
+    })*/
 
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function () {
@@ -906,7 +900,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
-        $scope.checkbox();
+        //$scope.checkbox();
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
         $scope.ocultarSucursal.show = false;
@@ -1262,7 +1256,7 @@ registrationModule.controller('interestsController', function ($scope, alertFact
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
-        $scope.checkbox();
+        //$scope.checkbox();
         $scope.transpasoFinanciera.show = false;
         $scope.modalCambioFinanciera.show = false;
         $scope.ocultarSucursal.show = false;

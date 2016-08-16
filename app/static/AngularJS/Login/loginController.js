@@ -1,8 +1,30 @@
-registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository) {
+registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository, localStorageService) {
     $scope.message = 'Buscando...';
+    
+    
     $scope.init = function () {
-          $("nav").remove(".navbar");
+        $(".dropdown").remove(".dropdown");
+        $("#botonCerrar").remove(".a");
+        
+        if (!($('#lgnUser').val().indexOf('[') > -1)) {
+                localStorageService.set('lgnUser', $('#lgnUser').val());
+                location.href = '/newUnits';
+            } else {
+                if (($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')) {
+                    if (getParameterByName('employee') != '') {
+                        $rootScope.currentEmployee = getParameterByName('employee');
+                        location.href = '/newUnits';
+                    } else {
+                        alert('Inicie sesión desde panel de aplicaciones.');
+                        //window.close(); 
+                    }
+
+                }
+            }
+        $scope.currentEmployee = localStorageService.get('lgnUser');
+        console.log($scope.currentEmployee)
         }
+
         $scope.getValidaUsuario = function () {
         $scope.promise = loginRepository.getValidaUsuario($scope.usuario, $scope.password).then(function (result) {
             if (result.data.length > 0) {

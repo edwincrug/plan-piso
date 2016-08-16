@@ -12,9 +12,9 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     
     $scope.init = function(){
         $scope.transpasoFinanciera.show = false;
+        $scope.getSucursal.show = false;
         $scope.getFinanciera();
         $scope.getCompany();
-        $scope.getSucursal.show = false;
         $scope.updateEsquemaUnidad =[];
         $scope.listaUnidadesConValidacion = [];
         $scope.unidadesAcambiarEsquema = [];
@@ -30,7 +30,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.getSucursal.show = true;
         $scope.nombreEmpresa = nombreEmpresa;
         $scope.getSucursal();
-         $scope.getNewUnitsCompany();
+        $scope.getNewUnitsCompany();
         $scope.transpasoFinanciera.show = true;
         $scope.modalCambioFinanciera.show = false;
         
@@ -60,6 +60,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             });
         };
     
+    //Función para mostrar las sucursales por empresa
     $scope.getSucursal = function (idEmpresa) {
         $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
             if (result.data.length > 0) {
@@ -73,6 +74,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         });
     };
     
+    // Función para mostrar todas las unidades nuevas
     $scope.getNewUnits = function(){
         $scope.TotalUnidades = 0;
         $scope.newUnits = [];
@@ -117,6 +119,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             });
     };
     
+    // Función para mostrar las unidades nuevas por empresa
     $scope.getNewUnitsCompany = function(){
         $scope.TotalUnidades = 0;
         $scope.newUnits = [];
@@ -161,6 +164,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             });
     };
     
+    // Función para mostrar todas las unidades nuevas por sucursal
     $scope.getNewUnitsSucursal = function(){
         $scope.TotalUnidades = 0;
          $scope.newUnits = [];
@@ -205,6 +209,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             });
     };
     
+    // Función para mostrar todas las financieras disponibles
     $scope.getFinanciera = function () {
         $scope.promise = schemeRepository.getFinanciera().then(function (result) {
             if (result.data.length > 0) {
@@ -218,6 +223,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         });
     };
     
+    // Función para abrir modal de asignanción de esquema
     $scope.modalCambioFinanciera = function(modal){
         $scope.hacerCambioEsquemaTraspaso.show = false;
         $('#traspasoFinanciero').appendTo("body").modal('show');  
@@ -228,13 +234,16 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
     };
     
+    // Función para ocultar las opciones de asignanción de esquema
     $scope.cancelFinancial = function(){
         $scope.nombreFinancieraCambio = "";
         $scope.transpasoFinanciera.show = true;
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show= false;
+        $scope.valorCheckBoxTabla = [];
         $('input[type=checkbox]').attr('checked', false);
     };
+    
     
     $scope.transpasoFinanciera = function () {
         //$scope.modalTraspasoFinanciera.show = true;
@@ -245,6 +254,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.idESquemaNueva = 0;
     };
     
+    // Función para mostrar opciones de asignación de cambio de esquema
     $scope.selectFinancial = function(){
         //$scope.updateEsquemaUnidad = [];
         //$scope.listaUnidadesConValidacion = [];
@@ -254,9 +264,10 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.valorCheckBoxTabla.show = true;
     };
     
+    // Función para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function () {
-        $scope.esquemas = [];
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
+        $scope.esquemas = [];
         $scope.fechaInicio = [];
         $scope.fechaInicios = "";
         //$('#esquemasFinancieraNuevo').DataTable().destroy();
@@ -305,22 +316,26 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         });
     };
     
+    // Función para guardar en una lista los id de unidades para asignación de esquema
     $scope.valorCheckBoxTabla = function (idUnidad,idu) {
         if (idUnidad == false || idUnidad == undefined) {} else {
             $scope.updateEsquemaUnidad.push({
                 vehNumserie: idUnidad,
                 idUnidad: idu
             });
-            console.log($scope.updateEsquemaUnidad)
+           // console.log($scope.updateEsquemaUnidad)
         }
     };
     
+    
+    // Función para seleccionar la financiera a hacer el cambio
     $scope.seleccionarFinancieraNuevaTraspaso = function (idFinanciera, nombre) {
         $scope.idFinancieraCambio = idFinanciera;
         $scope.nombreFinancieraCambio = nombre;
         $scope.getEsquemaFinanciera();   
     };
     
+    // Función para actualizar el esquema por unidad
     $scope.updateSchemeNews = function () {
         $scope.unidadesAcambiarEsquema.forEach(function (updateEsquemaUnidad) {
             newUnitsRepository.updateSchemeNews($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
@@ -337,11 +352,13 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         });
     };
      
+    // Función para seleccionar el esquema a asignar
     $scope.idEsquemaNuevoTraspaso = function (idEsquema, nombre) {
         $scope.idESquemaNueva = idEsquema;
         $scope.nombreEsquemaNueva = nombre;
     };
     
+    // Función para cancelar una asignación de esquema
     $scope.cancelarCambioFinancieraTraspaso = function () {
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
@@ -358,6 +375,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.transpasoFinanciera.show = true;
     };
     
+    // Función para hacer validación de que unidades se les puede asignar un nuevo esquema
     $scope.hacerCambioEsquemaTraspaso = function () {  
         $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.validationSchemaChange();
@@ -396,6 +414,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.transpasoFinanciera.show = true;
     };
     
+    // Función que hace la asignanción del nuevo esquema a la unidad
     $scope.regresarInteresesTraspaso = function () {
         $scope.updateSchemeNews();
         $scope.getCompany();
@@ -403,7 +422,6 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.transpasoFinanciera.show = false;
         $scope.modalCambioFinanciera.show = false;
         $scope.getFinanciera();
-        $scope.getCompany();
         $scope.getSucursal.show = false;
         $('#unidadesCambioEsquemaNuevos').DataTable().destroy();
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
