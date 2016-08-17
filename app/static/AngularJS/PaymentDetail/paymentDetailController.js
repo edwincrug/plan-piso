@@ -22,11 +22,6 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
         if ($routeParams.mode == 'review') {
             $scope.disableControl = true;
         }
-
-
-        //setTimeout(function() { $("#initialCol").trigger("click"); }, 3000);
-
-
     };
 
 
@@ -105,6 +100,7 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
     $scope.showconfirmBox = function(type) {
 
         $scope.mdlMessage = "";
+        $scope.mdlCurrent = 0;
 
         switch (type) {
             case $scope.mdlAction.enviar:

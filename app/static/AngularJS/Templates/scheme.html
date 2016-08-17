@@ -114,20 +114,34 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input type="checkbox" id="checkboxG1" ng-model="checked" ng-init="checked=false" class="css-checkbox">
                         <label for="checkboxG1" class="css-label"> Intereses por Rango</label>
-                        </br>
+                    </div>
+                    <div class="col-sm-4">
                         <input type="checkbox" id="chkReduccion" ng-model="checkedReduccion" ng-init="checkedReduccion=false" class="css-checkbox">
                         <label for="chkReduccion" class="css-label"> Pago por Reducción</label>
                     </div>
+                    <div class="col-sm-4">
+                        <input type="checkbox" id="chkMoratorio" ng-model="checkedMoratorio" ng-init="checkedMoratorio=false" class="css-checkbox">
+                        <label for="chkMoratorio" class="css-label">Interes Moratorio</label>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group" ng-show="checkedReduccion">
                             <label for="eDescripcion">Pago por Reducción:</label>
-                            <input type="text" class="form-control" id="eAbonoCapital" ng-model="esquema.porcentajePagoCapital" ng-disabled="!isAddMode" placeholder="Porcentaje ">
+                            <input type="text" class="form-control" id="eAbonoCapital" ng-model="esquema.porcentajePagoCapital" ng-disabled="!isAddMode" placeholder="Porcentaje de Pago">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" ng-show="checkedMoratorio">
+                            <label for="txtInteresMoratorio">Interes Moratorio:</label>
+                            <input type="text" class="form-control" id="txtInteresMoratorio" ng-model="esquema.interesMoratorio" ng-disabled="!isAddMode" placeholder="Porcentaje Interes">
                         </div>
                     </div>
                 </div>
+                <hr>
                 <!-- inicio  controles por fecha  -->
                 <div ng-hide="checked">
                     <h3 style='text-align: center'>Detalle Fechas</h3>

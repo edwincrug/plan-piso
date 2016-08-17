@@ -353,7 +353,8 @@ Calculo.prototype.post_insertesquema = function(req, res, next) {
         { name: 'nombre', value: req.body.nombre, type: self.model.types.STRING },
         { name: 'descripcion', value: req.body.descripcion, type: self.model.types.STRING },
         { name: 'esFijo', value: req.body.esFijo, type: self.model.types.STRING },
-        { name: 'abonoCapital', value: req.body.abonoCapital, type: self.model.types.INT }
+        { name: 'abonoCapital', value: req.body.abonoCapital, type: self.model.types.INT },
+        { name: 'interesMoratorio', value: req.body.interesMoratorio, type: self.model.types.INT }
     ];
 
     this.model.post('INS_ESQUEMA_SP', params, function(error, result) {

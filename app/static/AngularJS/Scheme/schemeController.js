@@ -175,6 +175,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         $scope.lstRangeScheme = [];
         $scope.checked = false;
         $scope.checkedReduccion = false;
+        $scope.checkedMoratorio = false;
         $scope.idEsquema = idEsquema;
         $scope.clearControls();
         $scope.clearControlsMain();
@@ -209,7 +210,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
                 rango: $scope.detalleEsquema[i].rango,
                 porcentajePenetracion: $scope.detalleEsquema[i].porcentajePenetracion,
                 tiie: $scope.detalleEsquema[i].tiie,
-                idTiieTipo: $scope.selectedOption.value,
+                idTiieTipo: $scope.selectedOption.value,                
                 esPrecarga: true
             }
 
@@ -223,6 +224,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
             $scope.esquema.nombre = $scope.detalleEsquema[0].nombre;
             $scope.esquema.descripcion = $scope.detalleEsquema[0].descripcion;
             $scope.esquema.porcentajePagoCapital = $scope.detalleEsquema[0].porcentajePagoCapital;
+            $scope.esquema.interesMoratorio = $scope.detalleEsquema[0].interesMoratorio;
         }
 
 
@@ -246,7 +248,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
                 fechaInicio: $scope.detalleEsquema[i].fechaInicio,
                 fechaFin: $scope.detalleEsquema[i].fechaFin,
                 tiie: $scope.detalleEsquema[i].tiie,
-                idTiieTipo: $scope.selectedOption.value,
+                idTiieTipo: $scope.selectedOption.value,                
                 esPrecarga: true
             }
 
@@ -260,6 +262,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
             $scope.esquema.nombre = $scope.detalleEsquema[0].nombre;
             $scope.esquema.descripcion = $scope.detalleEsquema[0].descripcion;
             $scope.esquema.porcentajePagoCapital = $scope.detalleEsquema[0].porcentajePagoCapital;
+            $scope.esquema.interesMoratorio = $scope.detalleEsquema[0].interesMoratorio;
         }
 
     };
@@ -363,7 +366,8 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         $scope.esquema.plazo = null;
         $scope.esquema.nombre = null;
         $scope.esquema.descripcion = null;
-        $scope.esquema.porcentajePagoCapital = 0;
+        $scope.esquema.porcentajePagoCapital = null;
+        $scope.esquema.interesMoratorio = null; 
     };
 
     $scope.clearControls = function() {
@@ -544,9 +548,12 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         $scope.esquema.idFinanciera = $scope.idFinanciera;
         $scope.esquema.esFijo = !$scope.checked;
 
+        console.log($scope.esquema);
+
         schemeRepository.insertEsquema($scope.esquema).then(function(result) {
 
             if (result.data.length > 0) {
+
 
                 if ($scope.esquema.esFijo) $scope.insertEsquemaFecha(result.data[0].id);
                 else $scope.insertEsquemaRango(result.data[0].id);
@@ -570,6 +577,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
             if ($scope.lstDateScheme[i].esPrecarga == true) {
                 continue;
             }
+
 
             schemeRepository.insertEsquemaFecha(idEsquema, $scope.lstDateScheme[i]).then(function(result) {
                 if (result.data.length > 0) {

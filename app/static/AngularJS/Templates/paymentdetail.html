@@ -116,14 +116,14 @@
 <!-- INIT FIN -->
 <div class="row">
     <div class="col-sm-8">
-        <button class="btn  btn-danger" data-dismiss="modal" ng-click="showconfirmBox(2)" ng-show="showbtnConfirm">
+        <button class="btn  btn-danger" data-dismiss="modal" ng-click="showconfirmBox(mdlAction.rechazar)" ng-show="showbtnConfirm">
             <span class="glyphicon glyphicon-remove"></span> Rechazar </button>
     </div>
     <div class="col-sm-4">
-        <button type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="showconfirmBox(1)" ng-show="showbtnSend">
+        <button type="button" class="btn btn-success pull-right" data-dismiss="modal" ng-click="showconfirmBox(mdlAction.enviar)" ng-show="showbtnSend">
             <span class="glyphicon glyphicon-send"> </span> Enviar
         </button>
-        <button class="btn btn-primary pull-right" data-dismiss="modal" ng-click="showconfirmBox(3)" ng-show="showbtnConfirm">
+        <button class="btn btn-primary pull-right" data-dismiss="modal" ng-click="showconfirmBox(mdlAction.aprobar)" ng-show="showbtnConfirm">
             <span class="glyphicon glyphicon-ok"></span> Aprobar </button>
     </div>
 </div>
