@@ -192,6 +192,20 @@ registrationModule.factory('interestsRepository', function ($http) {
                 }
 
             });
-        } 
+        },
+        updateDate: function (idUnidad,fechaCalculo) {
+            return $http({
+                url: interestsURL + 'updateDate/',
+                method: "POST",
+                data: {
+                        idUnidad : idUnidad,
+                        fechaCalculo : fechaCalculo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        }
     };
 });

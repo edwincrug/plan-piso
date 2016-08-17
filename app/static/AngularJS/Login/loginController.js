@@ -1,13 +1,12 @@
-﻿registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository, localStorageService, $rootScope) {
+registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository, localStorageService, $rootScope) {
     $scope.message = 'Buscando...';
     $scope.empleado = [];
     
     
     $scope.init = function () {
         $(".dropdown").remove(".dropdown");
-	//$(".nav").remove(".nav");
         $(".botonCerrar").remove(".botonCerrar");
-	$(".blanco").remove(".blanco");
+	    $(".blanco").remove(".blanco");
         
         if (!($('#lgnUser').val().indexOf('[') > -1)) {
                 localStorageService.set('lgnUser', $('#lgnUser').val());
@@ -26,10 +25,7 @@
                 }
             }
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
-        console.log($rootScope.currentEmployee)
-        
         }
-
         
         $scope.getEmpleado = function(){
             loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
@@ -50,6 +46,7 @@
                 alertFactory.success("Bienvenido a Plan Piso"+ result.data[0].usuario);
                 $rootScope.login = result.data;
                 $scope.nombreUsuario = result.data[0].usuario;
+                $('#lgnUser').val(result.data[0].idUsuario)
                 location.href = '/newUnits';
             } else {
                 alertFactory.info("Datos Incorrectos");

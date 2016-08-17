@@ -1,4 +1,4 @@
-﻿registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
+registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
     $scope.message = 'Buscando...';
     $scope.updateEsquemaUnidad =[];
     $scope.fechaHoy = new Date();
@@ -377,7 +377,7 @@
         $scope.unidadesAcambiarEsquema.forEach(function (updateEsquemaUnidad) {
             newUnitsRepository.updateSchemeNews($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
                 if (result.data.length > 0) {
-                    newUnitsRepository.insertMovementScheme(updateEsquemaUnidad.idUnidad, updateEsquemaUnidad.idFinanciera,updateEsquemaUnidad.fecha,updateEsquemaUnidad.idCostoInventario,0).then(function (nuevos) {
+                    newUnitsRepository.insertMovementScheme(updateEsquemaUnidad.idUnidad, $scope.idFinancieraCambio,updateEsquemaUnidad.fecha,updateEsquemaUnidad.idCostoInventario,0).then(function (nuevos) {
                     if (nuevos.data.length > 0) {
                     }else{}
                     });
@@ -414,8 +414,11 @@
     
     // Función para hacer validación de que unidades se les puede asignar un nuevo esquema
     $scope.hacerCambioEsquemaTraspaso = function () {  
-        $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.validationSchemaChange();
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.valorCheckBoxTabla.show = false;
+        $scope.modalCambioFinanciera.show = false;
+        $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.hacerCambioEsquemaTraspaso.show = true;
         setTimeout(function () {
                     $('#unidadesCambioEsquemaNuevos').DataTable({
@@ -445,9 +448,6 @@
                         ]
                     });
                 }, 1000);
-        $('input[type=checkbox]').attr('checked', false);
-        $scope.valorCheckBoxTabla.show = false;
-        $scope.modalCambioFinanciera.show = false;
         $scope.transpasoFinanciera.show = true;
     };
     
@@ -535,10 +535,9 @@
                                     idCostoInventario: result.data[0].valorInventario
                                 });
                             }
+                            $scope.unidadesAutorizadas();
                         }
-                        $scope.unidadesAutorizadas();
                     });
-  
                 } else {
                     alertFactory.info("Esquema no cambiado");
                 }

@@ -57,7 +57,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                 else{
                    alert('Inicie sesión desde panel de aplicaciones.');
                     //window.close(); 
-                    location.href = '/';
+                    //location.href = '/';
                 }
                 
             }
@@ -1232,8 +1232,12 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     };
 
     $scope.hacerCambioEsquemaTraspaso = function () {
-        $scope.idEsquemaNuevoTraspaso.show = false;
         $scope.UnitChangeFinancialDetails();
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.idEsquemaNuevoTraspaso.show = false;        
+        $scope.modalTraspasoFinanciera.show = false;
+        $scope.modalCambioFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show = false; 
         $scope.hacerCambioEsquemaTraspaso.show = true;
         setTimeout(function () {
                             $('#traspasoFinancieroTabla').DataTable({
@@ -1263,22 +1267,20 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                         ]
                             });
                         }, 1000);
-        $('input[type=checkbox]').attr('checked', false);
-        $scope.modalTraspasoFinanciera.show = false;
-        $scope.modalCambioFinanciera.show = false;
-        $scope.valorCheckBoxTabla.show = false; 
         $scope.transpasoFinanciera.show = true;
         
     };
 
     $scope.regresarInteresesTraspaso = function () {
-        $scope.getInterest.show = false;
+        
         $scope.updateSchemeFinancial();
         $scope.insertarCargo();
         $scope.insertarAbono();
+        $scope.updateDate();
         $scope.getCompany();
         $scope.seleccionarSucursal.show = false;
         $scope.seleccionarFinanciera.show = false;
+        $scope.getInterest.show = false;
         //$scope.checkbox();
         $scope.transpasoFinanciera.show = false;
         $scope.modalCambioFinanciera.show = false;
@@ -1374,7 +1376,18 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                     });
         });
     };
+    
+     $scope.updateDate = function(){
+            $scope.listaUnidadesConValidacion.forEach(function (updateEsquemaUnidad) {
+                interestsRepository.updateDate(updateEsquemaUnidad.idUnidad,$scope.fechaHoy).then(function (cambio) {
+                    if (cambio.data.length > 0) {
+                        console.log('Exito se guardo cargo')
+                    }else{}
+                    });
+        });
+    };
 
+    
     $scope.panels = [
         {
             name: 'Esquemas',
