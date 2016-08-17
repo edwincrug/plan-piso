@@ -789,6 +789,29 @@ Calculo.prototype.get_getEmpleado = function(req, res, next) {
     });
 };
 
+Calculo.prototype.post_updateDate = function(req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+
+    var params = [{ name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT },
+        { name: 'fechaCalculo', value: req.body.fechaCalculo, type: self.model.types.STRING }
+    ];
+    this.model.post('UPD_FECHA_CALCULO', params, function(error, result) {
+        //Callback
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+    });
+};
 
 
 
