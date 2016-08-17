@@ -1,6 +1,7 @@
 registrationModule.controller('loginController', function ($scope, alertFactory, loginRepository, localStorageService, $rootScope) {
     $scope.message = 'Buscando...';
     $scope.empleado = [];
+    $rootScope.currentEmployee = 0;
     
     
     $scope.init = function () {

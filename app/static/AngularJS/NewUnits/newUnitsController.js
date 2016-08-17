@@ -8,6 +8,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.listaUnidadesConValidacion = [];
     $scope.idESquemaNueva = 0; 
     $scope.nombreFinancieraCambio = "";
+    $rootScope.currentEmployee = 0;
     
 
     
