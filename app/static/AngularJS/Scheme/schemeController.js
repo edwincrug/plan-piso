@@ -570,7 +570,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         });
     };
 
-    $scope.insertEsquemaFecha = function(idEsquema) {
+    $scope.insertEsquemaFecha = function(idEsquema) {        
 
         for (var i = 0; i < $scope.lstDateScheme.length; i++) {
 
@@ -599,6 +599,9 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
 
     $scope.insertEsquemaRango = function(idEsquema) {
 
+        console.log($scope.lstRangeScheme) ;
+
+        
         for (var i = 0; i < $scope.lstRangeScheme.length; i++) {
 
             if ($scope.lstRangeScheme[i].esPrecarga == true) {
