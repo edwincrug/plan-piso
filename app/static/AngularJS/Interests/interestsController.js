@@ -13,6 +13,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     $scope.fechaInicio = [];
     $scope.margen = 0;
     $scope.costoUnidad = 0;
+ 
     
     /*
             */
@@ -39,7 +40,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.getFinanciera();
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
-        
+        console.log( $scope.fechaHoy)
         $scope.getInterestCompanySucursal.show = false;
     };
 
@@ -1313,7 +1314,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                                     idFinancieraNueva : $scope.idFinancieraCambio,
                                     nombreFinanciera: result.data[0].nombreF,
                                     idFinanciera : result.data[0].idFinanciera,
-                                    deuda: result.data[0].valorInventario,
+                                    deuda: result.data[0].saldo,
                                     fecha: new Date()
                                 });
                                 $scope.fechaIngresoInvetario = 0;
@@ -1329,7 +1330,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                                     idFinancieraNueva : $scope.idFinancieraCambio,
                                     nombreFinanciera: result.data[0].nombreF,
                                     idFinanciera : result.data[0].idFinanciera,
-                                    deuda: result.data[0].valorInventario,
+                                    deuda: result.data[0].saldo,
                                     fecha: new Date()
                                 });
                             }
@@ -1377,7 +1378,8 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         });
     };
     
-     $scope.updateDate = function(){
+    $scope.updateDate = function(){
+        
             $scope.listaUnidadesConValidacion.forEach(function (updateEsquemaUnidad) {
                 interestsRepository.updateDate(updateEsquemaUnidad.idUnidad,$scope.fechaHoy).then(function (cambio) {
                     if (cambio.data.length > 0) {
@@ -1387,7 +1389,6 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         });
     };
 
-    
     $scope.panels = [
         {
             name: 'Esquemas',

@@ -9,13 +9,15 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.idESquemaNueva = 0; 
     $scope.nombreFinancieraCambio = "";
     $rootScope.currentEmployee = 0;
+    $scope.userData = localStorageService.get('userData');
+    $rootScope.empleadoNombre=[];
     
 
     
     $scope.init = function(){
-        getEmpleados();
-        console.log($rootScope.currentEmployee)
-        $scope.getUsuario();
+        console.log($scope.userData[0].nombre);
+        getEmpleados();   
+        //$scope.getUsuario();
         $scope.transpasoFinanciera.show = false;
         $scope.getSucursal.show = false;
         $scope.getFinanciera();
@@ -43,17 +45,27 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
             //$scope.getEmpleado();
+            
         }
         else{
             if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
                 if(getParameterByName('employee') != ''){
                     $rootScope.currentEmployee = getParameterByName('employee');
                     return;
+                     $scope.getUsuario();
+                    console.log('pasoaquidos')
                 }
                 else{
-                   alert('Inicie sesión desde panel de aplicaciones.');
+                    if($scope.userData == null){
+                          alert('Inicie sesión desde panel de aplicaciones .');
                     //window.close(); 
-                    //location.href = '/';
+                    location.href = '/';
+                        
+                    }else{
+                        console.log('pasoaqui')
+                        $rootScope.empleadoNombre = $scope.userData[0].nombre;
+                 
+                    }
                 }
                 
             }

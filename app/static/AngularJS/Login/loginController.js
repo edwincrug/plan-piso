@@ -41,13 +41,14 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
     }
     
     
-        $scope.getValidaUsuario = function () {
+        /*$scope.getValidaUsuario = function () {
         $scope.promise = loginRepository.getValidaUsuario($scope.usuario, $scope.password).then(function (result) {
             if (result.data.length > 0) {
                 alertFactory.success("Bienvenido a Plan Piso"+ result.data[0].usuario);
                 $rootScope.login = result.data;
-                $scope.nombreUsuario = result.data[0].usuario;
-                $('#lgnUser').val(result.data[0].idUsuario)
+                //$scope.nombreUsuario = result.data[0].usuario;
+                //$('#lgnUser').val(result.data[0].idUsuario)
+                localStorageService.set('userData', $scope.login);
                 location.href = '/newUnits';
             } else {
                 alertFactory.info("Datos Incorrectos");
@@ -56,9 +57,22 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
             alertFactory.error("Datos no correctos");
         });
     }
-        $scope.login = function(usuario, password){
-            $scope.usuario = usuario;
+        
+            /*$scope.usuario = usuario;
             $scope.password = password;
-             $scope.getValidaUsuario();
+             $scope.getValidaUsuario();*/
+        $scope.login = function(usuario, password){
+        $scope.promise = loginRepository.getValidaUsuario(usuario, password).then(function (result) {
+            if (result.data.length > 0) {
+                alertFactory.success("Bienvenido a Plan Piso"+ result.data[0].usuario);
+                $rootScope.login = result.data;
+                //$scope.nombreUsuario = result.data[0].usuario;
+                //$('#lgnUser').val(result.data[0].idUsuario)
+                localStorageService.set('userData', $rootScope.login);
+                location.href = '/newUnits';
+            } else {
+                alertFactory.info("Datos Incorrectos");
+            }
+        });
         }
 });
