@@ -5,8 +5,6 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
     
     
     $scope.init = function () {
-        return localStorageService.clearAll('userData');
-        return localStorageService.clearAll('lgnUser');
         $(".dropdown").remove(".dropdown");
         $(".botonCerrar").remove(".botonCerrar");
 	    $(".blanco").remove(".blanco");

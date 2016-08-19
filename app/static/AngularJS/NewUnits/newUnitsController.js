@@ -16,6 +16,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     
     $scope.init = function(){
         console.log($scope.userData);
+        $rootScope.empleadoNombre="";
         $scope.getEmpleados();  
         $scope.getUsuario();
         $scope.transpasoFinanciera.show = false;
@@ -61,6 +62,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                     location.href = '/';
                         
                     }else{
+                        $rootScope.empleadoNombre=[];
                         console.log('pasoaqui')
                         $rootScope.empleadoNombre = $scope.userData[0].nombre;
                  
