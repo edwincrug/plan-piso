@@ -13,6 +13,8 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     $scope.fechaInicio = [];
     $scope.margen = 0;
     $scope.costoUnidad = 0;
+    $scope.userData = localStorageService.get('userData');
+    $rootScope.empleadoNombre="";
  
     
     /*
@@ -20,7 +22,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
-        getEmpleado();
+        $scope.getEmpleados();
         $scope.updateEsquemaUnidad = [];
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
@@ -40,25 +42,33 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.getFinanciera();
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
-        console.log( $scope.fechaHoy)
         $scope.getInterestCompanySucursal.show = false;
     };
 
-    
-        var getEmpleado = function(){
+    $scope.getEmpleados = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
+            //$scope.getEmpleado();
         }
         else{
             if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
                 if(getParameterByName('employee') != ''){
                     $rootScope.currentEmployee = getParameterByName('employee');
                     return;
+                     $scope.getUsuario();
+                    console.log('pasoaquidos')
                 }
                 else{
-                   alert('Inicie sesión desde panel de aplicaciones.');
+                    if($scope.userData == null){
+                           alert('Inicie sesión desde panel de aplicaciones o desde el login.');
                     //window.close(); 
-                    //location.href = '/';
+                    location.href = '/';
+                        
+                    }else{
+                        console.log('pasoaqui')
+                        $rootScope.empleadoNombre = $scope.userData[0].nombre;
+                 
+                    }
                 }
                 
             }

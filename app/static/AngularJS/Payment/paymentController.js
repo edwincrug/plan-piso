@@ -1,6 +1,7 @@
 registrationModule.controller('paymentController', function($scope, $rootScope,$location, alertFactory, paymentRepository,localStorageService) {
 
-
+    $scope.userData = localStorageService.get('userData');
+    $rootScope.empleadoNombre="";
     $scope.loteNoAplicado = [];
     $scope.loteAplicado = [];
 
@@ -13,30 +14,40 @@ registrationModule.controller('paymentController', function($scope, $rootScope,$
     $scope.init = function() {
         $scope.getPaymentReport(5);
         $scope.getNoPaymentReport(1);
-        getEmpleado();
+        $scope.getEmpleados();
     };
 
-        /*var getEmpleado = function(){
+    $scope.getEmpleados = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
+            //$scope.getEmpleado();
         }
         else{
             if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
                 if(getParameterByName('employee') != ''){
                     $rootScope.currentEmployee = getParameterByName('employee');
                     return;
+                     $scope.getUsuario();
+                    console.log('pasoaquidos')
                 }
                 else{
-                   alert('Inicie sesión desde panel de aplicaciones.');
+                    if($scope.userData == null){
+                          alert('Inicie sesión desde panel de aplicaciones .');
                     //window.close(); 
                     location.href = '/';
+                        
+                    }else{
+                        console.log('pasoaqui')
+                        $rootScope.empleadoNombre = $scope.userData[0].nombre;
+                 
+                    }
                 }
                 
             }
         }
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
-    };*/
+    };
     
     $scope.getNoPaymentReport = function(idStatus) {
 

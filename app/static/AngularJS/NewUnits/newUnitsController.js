@@ -10,14 +10,14 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.nombreFinancieraCambio = "";
     $rootScope.currentEmployee = 0;
     $scope.userData = localStorageService.get('userData');
-    $rootScope.empleadoNombre=[];
+    $rootScope.empleadoNombre="";
     
 
     
     $scope.init = function(){
-        console.log($scope.userData[0].nombre);
-        getEmpleados();   
-        //$scope.getUsuario();
+        console.log($scope.userData);
+        $scope.getEmpleados();  
+        $scope.getUsuario();
         $scope.transpasoFinanciera.show = false;
         $scope.getSucursal.show = false;
         $scope.getFinanciera();
@@ -39,13 +39,12 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         }); 
         
     };
-
     
-    var getEmpleados = function(){
+    
+    $scope.getEmpleados = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
             //$scope.getEmpleado();
-            
         }
         else{
             if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){

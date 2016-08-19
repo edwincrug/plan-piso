@@ -5,10 +5,13 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
     
     
     $scope.init = function () {
+        return localStorageService.clearAll('userData');
+        return localStorageService.clearAll('lgnUser');
         $(".dropdown").remove(".dropdown");
         $(".botonCerrar").remove(".botonCerrar");
 	    $(".blanco").remove(".blanco");
-        
+        return localStorageService.clearAll('userData');
+        return localStorageService.clearAll('lgnUser');
         if (!($('#lgnUser').val().indexOf('[') > -1)) {
                 localStorageService.set('lgnUser', $('#lgnUser').val());
                 $scope.getEmpleado();
@@ -19,8 +22,7 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
                         $rootScope.currentEmployee = getParameterByName('employee');
                         location.href = '/newUnits';
                     } else {
-                        alert('Inicie sesión desde panel de aplicaciones.');
-                        //window.close(); 
+                        alert('Inicie sesión desde panel de aplicaciones o desde el login.');
                     }
 
                 }
@@ -39,28 +41,6 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
             alertFactory.error("Datos no correctos");
         });
     }
-    
-    
-        /*$scope.getValidaUsuario = function () {
-        $scope.promise = loginRepository.getValidaUsuario($scope.usuario, $scope.password).then(function (result) {
-            if (result.data.length > 0) {
-                alertFactory.success("Bienvenido a Plan Piso"+ result.data[0].usuario);
-                $rootScope.login = result.data;
-                //$scope.nombreUsuario = result.data[0].usuario;
-                //$('#lgnUser').val(result.data[0].idUsuario)
-                localStorageService.set('userData', $scope.login);
-                location.href = '/newUnits';
-            } else {
-                alertFactory.info("Datos Incorrectos");
-            }
-        }, function (error) {
-            alertFactory.error("Datos no correctos");
-        });
-    }
-        
-            /*$scope.usuario = usuario;
-            $scope.password = password;
-             $scope.getValidaUsuario();*/
         $scope.login = function(usuario, password){
         $scope.promise = loginRepository.getValidaUsuario(usuario, password).then(function (result) {
             if (result.data.length > 0) {

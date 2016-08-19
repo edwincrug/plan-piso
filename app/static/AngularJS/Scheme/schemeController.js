@@ -1,6 +1,8 @@
 registrationModule.controller('schemeController', function($scope, $rootScope,alertFactory, schemeRepository,localStorageService) {
 
     $scope.message = 'Buscando...';
+    $scope.userData = localStorageService.get('userData');
+    $rootScope.empleadoNombre="";
     $scope.tasaFecha = '';
     $scope.tasaRango = '';
     $scope.esquema = [];
@@ -15,25 +17,36 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function() {
+        $scope.getEmpleados();
         $scope.getFinanciera();
         $scope.getEsquemaFinanciera.show = false;
         //getEmpleado();
     };
     
-           /* var getEmpleado = function(){
+    $scope.getEmpleados = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
+            //$scope.getEmpleado();
         }
         else{
             if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
                 if(getParameterByName('employee') != ''){
                     $rootScope.currentEmployee = getParameterByName('employee');
                     return;
+                     $scope.getUsuario();
+                    console.log('pasoaquidos')
                 }
                 else{
-                   alert('Inicie sesión desde panel de aplicaciones.');
+                    if($scope.userData == null){
+                          alert('Inicie sesión desde panel de aplicaciones .');
                     //window.close(); 
                     location.href = '/';
+                        
+                    }else{
+                        console.log('pasoaqui')
+                        $rootScope.empleadoNombre = $scope.userData[0].nombre;
+                 
+                    }
                 }
                 
             }
@@ -41,7 +54,6 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
     };
-    */
     
     
     // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
