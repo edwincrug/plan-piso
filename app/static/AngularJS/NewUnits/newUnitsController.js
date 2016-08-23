@@ -1,4 +1,4 @@
-registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
+﻿registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
     $scope.message = 'Buscando...';
     $scope.updateEsquemaUnidad =[];
     $scope.fechaHoy = new Date();
@@ -15,7 +15,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
 
     
     $scope.init = function(){
-        console.log($scope.userData);
+        console.log($rootScope.currentEmployee);
         $rootScope.empleadoNombre="";
         $scope.getEmpleados();  
         $scope.getUsuario();
@@ -45,15 +45,16 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.getEmpleados = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
-            //$scope.getEmpleado();
+            //$scope.getUsuario();
         }
         else{
             if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
                 if(getParameterByName('employee') != ''){
                     $rootScope.currentEmployee = getParameterByName('employee');
                     return;
-                     $scope.getUsuario();
-                    console.log('pasoaquidos')
+			console.log('pasoaquidos')
+                      $scope.getUsuario();
+                    
                 }
                 else{
                     if($scope.userData == null){
@@ -73,6 +74,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         }
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
+console.log($rootScope.currentEmployee);
     };
     
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
