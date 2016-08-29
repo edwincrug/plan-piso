@@ -1,4 +1,4 @@
-﻿registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
+registrationModule.controller('newUnitsController', function($scope, alertFactory, newUnitsRepository, interestsRepository, schemeRepository,$rootScope, localStorageService, loginRepository) {
     $scope.message = 'Buscando...';
     $scope.updateEsquemaUnidad =[];
     $scope.fechaHoy = new Date();
@@ -15,10 +15,10 @@
 
     
     $scope.init = function(){
-        console.log($rootScope.currentEmployee);
+        console.log($scope.userData);
         $rootScope.empleadoNombre="";
         $scope.getEmpleados();  
-        $scope.getUsuario();
+        //$scope.getUsuario();
         $scope.transpasoFinanciera.show = false;
         $scope.getSucursal.show = false;
         $scope.getFinanciera();
@@ -45,16 +45,15 @@
     $scope.getEmpleados = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
-            //$scope.getUsuario();
+            //$scope.getEmpleado();
         }
         else{
             if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
                 if(getParameterByName('employee') != ''){
                     $rootScope.currentEmployee = getParameterByName('employee');
                     return;
-			console.log('pasoaquidos')
-                      $scope.getUsuario();
-                    
+                     $scope.getUsuario();
+                    console.log('pasoaquidos')
                 }
                 else{
                     if($scope.userData == null){
@@ -74,7 +73,6 @@
         }
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
-console.log($rootScope.currentEmployee);
     };
     
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {

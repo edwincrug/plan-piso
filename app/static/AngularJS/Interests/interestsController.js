@@ -706,7 +706,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     // Función para mostrar todas las financieras
     $scope.getFinanciera = function () {
-        $scope.promise = schemeRepository.getFinanciera().then(function (result) {
+        $scope.promise = interestsRepository.getFinanciera().then(function (result) {
             if (result.data.length > 0) {
                 $scope.financieraNueva = result.data;
                 //alertFactory.success("financieras cargados");

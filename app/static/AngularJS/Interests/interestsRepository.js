@@ -206,6 +206,12 @@ registrationModule.factory('interestsRepository', function ($http) {
                 }
 
             });
-        }
+        },
+        getFinanciera: function () {
+            return $http({
+                url: schemeURL + 'financialBank/',
+                method: "GET"
+            });
+        }     
     };
 });

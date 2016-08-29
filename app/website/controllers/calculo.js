@@ -315,6 +315,29 @@ Calculo.prototype.get_financiera = function(req, res, next) {
     });
 };
 
+// Muestra las financieras o bancos que no son de planta
+Calculo.prototype.get_financialBank = function(req, res, next) {
+    //Con req.query se obtienen los parametros de la url
+    //Ejemplo: ?p1=a&p2=b
+    //Retorna {p1:'a',p2:'b'}
+    //Objeto que envía los parámetros
+    //var params = [];
+    //Referencia a la clase para callback
+    var self = this;
+
+    //asignación de valores mediante parámetros del request
+    var params = [];
+
+    this.model.query('SEL_FINANCIERAS_BANCOS_SP', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+
 // Muestra los detalles de los esquemas
 Calculo.prototype.get_detalleEsquema = function(req, res, next) {
     //Con req.query se obtienen los parametros de la url
@@ -673,6 +696,31 @@ Calculo.prototype.post_updateschemenews = function(req, res, next) {
 
     });
 }
+// mUESTRA LOS DETALLES DE LOS ESQUEMAS
+Calculo.prototype.get_detailsSchemeValidate = function(req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+
+    var params = [{ name: 'idEsquema', value: req.body.idEsquema, type: self.model.types.INT }
+    ];
+    this.model.post('SEL_DETALLE_ESQUEMA_VALIDACION_SP', params, function(error, result) {
+        //Callback
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+    });
+}
+
+
 
 // Muestra los detalles de los movimientos de las unidades
 Calculo.prototype.get_unitsdetailspayment = function(req, res, next) {

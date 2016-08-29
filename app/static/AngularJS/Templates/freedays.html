@@ -2,7 +2,7 @@
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
            <br/>
-            <h2>Empresa {{nombre}}</h2>
+            <h2>Empresa {{nombreEmpresa}}</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="/">Home</a>
@@ -24,7 +24,7 @@
             <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Empresa <span class="caret"></span></button>
             <ul class="dropdown-menu">
                 <li ng-repeat="empresa in empresas">
-                    <a href="#" ng-click="seleccionarEmpresa(empresa.emp_nombrecto, empresa.emp_nombre)">{{empresa.emp_nombre}}</a>
+                    <a href="#" ng-click="seleccionarEmpresa(empresa.idEmpresa, empresa.nombre)">{{empresa.nombre}}</a>
                 </li>
             </ul>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -32,7 +32,7 @@
             <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Sucursal <span class="caret"></span></button>
             <ul class="dropdown-menu col-xs-1 col-sm-2">
                 <li ng-repeat="sucursales in sucursales">
-                    <a href="#" ng-click="seleccionarSucursal(sucursales.catsuc_nombrecto,sucursales.catemp_nombrecto,sucursales.nombre_sucursal)">{{sucursales.nombre_sucursal}}</a>
+                    <a href="#" ng-click="seleccionarSucursal(sucursales.idSucursal, sucursales.nombreSucursal)">{{sucursales.nombreSucursal}}</a>
                 </li>
             </ul>
         </div>

@@ -8,74 +8,53 @@ registrationModule.controller('freeDaysController', function ($scope, alertFacto
         //
         $scope.seleccionarSucursal.show = false;
         $scope.getCompany();
-        getEmpleado();
-    };
+
+    }
     
-    /*var getEmpleado = function(){
-        if(!($('#lgnUser').val().indexOf('[') > -1)){
-            localStorageService.set('lgnUser', $('#lgnUser').val());
-        }
-        else{
-            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
-                if(getParameterByName('employee') != ''){
-                    $rootScope.currentEmployee = getParameterByName('employee');
-                    return;
-                }
-                else{
-                   alert('Inicie sesión desde panel de aplicaciones.');
-                    //window.close(); 
-                    location.href = '/';
-                }
-                
-            }
-        }
-        //Obtengo el empleado logueado
-        $rootScope.currentEmployee = localStorageService.get('lgnUser');
-    };
-    */
-    
-    $scope.seleccionarEmpresa = function (empresa, nombre) {
-            $scope.Marca = empresa;
-            $scope.nombreCorto = empresa;
-            $scope.nombre = nombre;
+    $scope.seleccionarEmpresa = function (idEmpresa, nombre) {
+            $scope.idEmpresa = idEmpresa;
+            $scope.nombreEmpresa = nombre;
+            console.log($scope.idEmpresa, $scope.nombreEmpresa);
             $scope.seleccionarSucursal.show = true;
             $scope.getSucursal();
-            $scope.getFreeDays();
+            //$scope.getFreeDays();
 
         }
         // Función para mostrar empresas
-    $scope.seleccionarSucursal = function (sucursal, empresa, nombre) {
-        $scope.nombreCorto = sucursal;
-        $scope.sucursal = empresa;
-        $scope.nombreSucursal = nombre;
-        $scope.getFreedaysSucursal();
+    $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {
+        $scope.idSucursal = idSucursal;
+        $scope.nombreSucursal = nombreSucursal;
+         console.log($scope.idSucursal, $scope.nombreSucursal);
+        //$scope.getFreedaysSucursal();
     }
+    
+    // Función para filtrar compañias
     $scope.getCompany = function () {
-            $scope.promise = interestsRepository.getCompany().then(function (result) {
-                if (result.data.length > 0) {
-                    $scope.empresas = result.data;
-                    alertFactory.success("Empresas cargados");
-                } else {
-                    alertFactory.info("No se encontraron Empresas");
-                }
-            }, function (error) {
-                alertFactory.error("Error al cargar Empresas");
-            });
-        }
-        // Función para mostrar sucursales
-    $scope.getSucursal = function (nombreCorto) {
-        $scope.promise = interestsRepository.getSucursal($scope.nombreCorto).then(function (result) {
+        $scope.promise = interestsRepository.getCompany().then(function (result) {
+            if (result.data.length > 0) {
+                $scope.empresas = result.data;
+                //alertFactory.success("Empresas cargados");
+            } else {
+                alertFactory.info("No se encontraron Empresas");
+            }
+        }, function (error) {
+            alertFactory.error("Error al cargar Empresas");
+        });
+    };
+    
+     // Función para obtener las sucursales por empresa
+    $scope.getSucursal = function () {
+        $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
             if (result.data.length > 0) {
                 $scope.sucursales = result.data;
-                alertFactory.success("Sucursales cargados");
             } else {
                 alertFactory.info("No se encontraron Sucursales");
             }
         }, function (error) {
             alertFactory.error("Error al cargar Sucursales");
         });
-    }
-
+    };
+/*
     // Función para pintar los estatus de los días
     $scope.setClass = function (status) {
         switch (status) {
@@ -203,5 +182,5 @@ for (var i = 0; i < result.data.length; i++) {
             alertFactory.error("Error al cargar datos");
         });
     };
-
+*/
 });
