@@ -55,7 +55,7 @@ registrationModule.controller('paymentController', function($scope, $rootScope,$
             if (result.data.length > 0) {
                 $scope.loteNoAplicado = result.data;
                 setTimeout(function() { $scope.setTablePaging('tblLoteNoAplicado'); }, 1000);
-                alertFactory.success("Pagos cargados");
+                //alertFactory.success("Pagos cargados");
             } else {
                 alertFactory.info("No se encontraron detalles");
             }
@@ -71,7 +71,7 @@ registrationModule.controller('paymentController', function($scope, $rootScope,$
             if (result.data.length > 0) {
                 $scope.loteAplicado = result.data;
                 setTimeout(function() { $scope.setTablePaging('tblLoteAplicado'); }, 1000);
-                alertFactory.success("Pagos cargados");
+                //alertFactory.success("Pagos cargados");
             } else {
                 alertFactory.info("No se encontraron detalles");
             }

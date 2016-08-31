@@ -101,7 +101,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
                         ]
                     });
                 }, 1000);
-                alertFactory.success("Financieras cargados");
+                //alertFactory.success("Financieras cargados");
             } else {
                 alertFactory.info("No se encontraron financieras");
             }
@@ -172,7 +172,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
                     $scope.checked = true;
                 }
 
-                alertFactory.success("Detalles cargados");
+                //alertFactory.success("Detalles cargados");
             } else {
                 alertFactory.info("No se encontraron detalles");
             }

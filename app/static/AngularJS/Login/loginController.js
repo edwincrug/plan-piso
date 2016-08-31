@@ -27,12 +27,8 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
                 }
             }
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
-        }
-    
-   /* $scope.inicartodo = function(){
-        return localStorageService.clearAll('userData');
-        return localStorageService.clearAll('lgnUser');
-    }*/
+        };
+
         // Función para traer el nombre del usuario
         $scope.getEmpleado = function(){
             loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
@@ -44,7 +40,7 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
         }, function (error) {
             alertFactory.error("Datos no correctos");
         });
-    }
+    };
         // Función para iniciar sesión sin control de aplicaciones
         $scope.login = function(usuario, password){
         $scope.promise = loginRepository.getValidaUsuario(usuario, password).then(function (result) {
@@ -58,5 +54,5 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
                 alertFactory.info("Datos Incorrectos");
             }
         });
-        }
+    }
 });

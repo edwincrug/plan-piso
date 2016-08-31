@@ -54,7 +54,7 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
                 $scope.loteDetalle = result.data;
                 setTimeout(function() { $scope.setTablePaging('#tblLoteDetalle'); }, 1000);
 
-                alertFactory.success("Detalles Cargados");
+                //alertFactory.success("Detalles Cargados");
             } else {
                 alertFactory.info("No se encontraron detalles");
             }

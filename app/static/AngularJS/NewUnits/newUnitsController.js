@@ -32,16 +32,21 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.nombreFinancieraCambio = "";
     };
     
+    // Función para mostrar el nombre de usuario
     $scope.getUsuario = function(){
         $rootScope.empleadoNombre=[];
         loginRepository.getEmpleado($rootScope.currentEmployee).then(function (result) {
+             if (result.data.length > 0) {
                 $rootScope.empleadoNombre = result.data[0].nombre;
+             }else{
+                 $rootScope.empleadoNombre = $scope.userData[0].nombre;
+             }
                 
         }); 
         
     };
     
-    
+    // Función para ver que usuario inicio sesión si por control de aplicaciones o login tradicional
     $scope.getEmpleados = function(){
         if(!($('#lgnUser').val().indexOf('[') > -1)){
             localStorageService.set('lgnUser', $('#lgnUser').val());
@@ -75,6 +80,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
     };
     
+    // Función para seleccionar las empresas 
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
         $scope.seleccionarSucursal.show = false;
         $scope.idEmpresa = idEmpresa;

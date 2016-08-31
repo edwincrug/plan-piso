@@ -3,6 +3,7 @@ registrationModule.controller('freeDaysController', function ($scope, alertFacto
     //store an array of free days getting by getFreeDays function
     $scope.allDays = {};
     $scope.message = 'Buscando...';
+    
     //Primer metodo inicial
     $scope.init = function () {
         //
@@ -11,6 +12,7 @@ registrationModule.controller('freeDaysController', function ($scope, alertFacto
 
     }
     
+    // Función para elegir el idEmpresa y nombre de la empresa
     $scope.seleccionarEmpresa = function (idEmpresa, nombre) {
             $scope.idEmpresa = idEmpresa;
             $scope.nombreEmpresa = nombre;
@@ -20,7 +22,8 @@ registrationModule.controller('freeDaysController', function ($scope, alertFacto
             //$scope.getFreeDays();
 
         }
-        // Función para mostrar empresas
+    
+    // Función para mostrar empresas
     $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {
         $scope.idSucursal = idSucursal;
         $scope.nombreSucursal = nombreSucursal;

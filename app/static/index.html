@@ -40,6 +40,7 @@
 </head>
 
 <body ng-app="registrationModule">
+<body ng-app="registrationModule">
     <div id="wrapper">
 <!--
         <nav class="navbar-default navbar-static-side" role="navigation">
@@ -86,13 +87,14 @@
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                    <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="/#"><i class="fa fa-bars"></i> </a>
+                    <div class="navbar-header" style="margin:5px 20px 1px">
+                       <img alt="image"  src="/image/logoA.png" style="width:130px; height:60px"/>
+                        <!--a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href=""><i class="fa fa-bars"></i> </a-->
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span  class="m-r-sm text-muted welcome-message">GRUPO ANDRADE | PLAN PISO</span>
-                            <span class="blanco" >{{ empleadoNombre }}</span>  
+                            <span  class="m-r-sm text-muted welcome-message"> PLAN PISO |</span>
+                            <span class="blanco" >{{ empleadoNombre }} |</span>  
                             <div id="maestroContenedor">
                             <div class="main">
                                 <div></div>
@@ -101,30 +103,24 @@
                                 </div>
                             </div>
                         </li>
-                         <!--div id="maestroContenedor">
-                            <div class="main">
-                                <div ng-view></div>
-                                    <input type="hidden" id="lgnUser" value="[[ user.idUsuario ]]">
-                                </div>
-                            </div-->
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="/newUnits">
-                                <i class="glyphicon glyphicon-alert"> UnidadesNuevas</i>
+                                <i class="glyphicon glyphicon-alert"> UnidadesNuevas /</i>
                             </a>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="/scheme">
-                                <i class="glyphicon glyphicon-random"> Esquemas</i>
+                                <i class="glyphicon glyphicon-random"> Esquemas /</i>
                             </a>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="/interest">
-                                <i class="glyphicon glyphicon-usd"> PlanPiso</i>
+                                <i class="glyphicon glyphicon-usd"> PlanPiso /</i>
                             </a>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="/payment">
-                                <i class="glyphicon glyphicon-usd"> Pagos</i>
+                                <i class="glyphicon glyphicon-usd"> Pagos /</i>
                             </a>
                         </li>
                         <li>
@@ -195,6 +191,7 @@
     <script src="js/libs/inspinia/js/plugins/cropper/cropper.min.js"></script>
     <script src="js/libs/inspinia/js/plugins/footable/footable.all.min.js"></script>
     <script src="js/libs/inspinia/js/plugins/sweetalert/sweetalert.min.js"></script>
+     
     <!-- Scripts Graficas -->
     <script src="/js/libs/inspinia/js/plugins/flot/jquery.flot.js"></script>
     <script src="/js/libs/inspinia/js/plugins/flot/jquery.flot.time.js"></script>

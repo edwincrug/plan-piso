@@ -16,9 +16,6 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     $scope.userData = localStorageService.get('userData');
     $rootScope.empleadoNombre="";
  
-    
-    /*
-            */
 
     // Primer metodo llamado al cargar la pagína
     $scope.init = function () {
@@ -76,6 +73,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
     };
+    
     // Función para filtrar por empresa
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
         $scope.seleccionarSucursal.show = false;
@@ -658,14 +656,6 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     $scope.ocultarEquemaFechas = function () {};
 
-    //Estilo de checkbox
-    /*$scope.checkbox = (function () {
-        $('.i-checks').iCheck({
-            checkboxClass: 'icheckbox_square-green',
-            radioClass: 'iradio_square-green',
-        });
-    })*/
-
     // Metodo para mostrar los esquemas por financiera
     $scope.getEsquemaFinanciera = function () {
         $scope.esquemas = {};
@@ -1129,16 +1119,19 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
             }
         });
     };
-
+    
+    // Función para evaluar si el esquema es por rango o fecha
     $scope.getStringTasaFija = function (value) {
         if (value) return "FECHA";
         else return "RANGO";
     };
-
+    
+    // Función para mostrar que tipo de tiie tiene el esquema
     $scope.getStringTipoTiie = function (value) {
         return $scope.lstTiie[value - 1].text;
     };
-
+    
+    //lista de tipos de tiie
     $scope.lstTiie = [
         {
             value: 1,
@@ -1155,16 +1148,16 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     ];
 
     //Funciones para traspaso financiero
-
+    
+    // Función para habilitar las opciones de traspaso financiero
     $scope.selectFinancial = function () {
-        //$scope.updateEsquemaUnidad = [];
-        //$scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
         $scope.transpasoFinanciera.show = false;
         $scope.modalCambioFinanciera.show = true;
         $scope.valorCheckBoxTabla.show = true;
     };
 
+    // Función para desabilitar las opciones de traspaso financiero
     $scope.cancelFinancial = function () {
         $('input[type=checkbox]').attr('checked', false);
         $scope.updateEsquemaUnidad = [];
@@ -1173,7 +1166,8 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.modalCambioFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
     };
-
+    
+    // Función para abrir la modal de traspaso financiero
     $scope.modalCambioFinanciera = function (modal) {
         $scope.hacerCambioEsquemaTraspaso.show = false;
         $('#traspasoFinanciero').appendTo("body").modal('show');
@@ -1184,6 +1178,8 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
     };
 
+    // Función para seleccionar el id de financiera y su nombre, manda a llamar la  función para cargar
+    // los esquemas de esa financiera
     $scope.seleccionarFinancieraNuevaTraspaso = function (idFinanciera, nombre) {
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
         $scope.idFinancieraCambio = idFinanciera;
@@ -1219,12 +1215,14 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         }, 1000);
     };
 
-    // Función para guardar el idEsquema nuevo 
+    // Función para guardar el idEsquema nuevo y el nombre
     $scope.idEsquemaNuevoTraspaso = function (idEsquema, nombre) {
         $scope.idESquemaNueva = idEsquema;
         $scope.nombreEsquemaNueva = nombre;
     };
 
+    // Función para cancelar el traspaso financiera y limpiar todas las variables 
+    // utilizadas para el traspaso
     $scope.cancelarCambioFinancieraTraspaso = function () {
         $scope.nombreFinancieraCambio = "";
         $scope.updateEsquemaUnidad = [];
@@ -1241,7 +1239,8 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.transpasoFinanciera.show = true;
         
     };
-
+    
+    // Función para mostrar las unidades con sus detalles para el traspaso financiero
     $scope.hacerCambioEsquemaTraspaso = function () {
         $scope.UnitChangeFinancialDetails();
         $('input[type=checkbox]').attr('checked', false);
@@ -1281,7 +1280,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.transpasoFinanciera.show = true;
         
     };
-
+    // Función para realizar el traspaso de financieras con las unidades seleccionadas
     $scope.regresarInteresesTraspaso = function () {
         
         $scope.updateSchemeFinancial();
@@ -1305,6 +1304,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.nombreFinancieraCambio = "";
     };
 
+    // Función para agregar los detalles de las unidades a cambiar de financiera
     $scope.UnitChangeFinancialDetails = function () {
         $('#traspasoFinancieroTabla').DataTable().destroy();
         $scope.listaUnidadesConValidacion = [];
@@ -1354,7 +1354,8 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
             });
         });
     };
-
+    
+    // Función para actualizar la nueva financiera por unidad
     $scope.updateSchemeFinancial = function () {
         $scope.listaUnidadesConValidacion.forEach(function (updateEsquemaUnidad) {
             interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function (result) {
