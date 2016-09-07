@@ -633,12 +633,13 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.promise = interestsRepository.getDetailsUnit($scope.vehNumserie).then(function (result) {
             if (result.data.length > 0) {
                 $scope.detailsUnit = result.data;
-                console.log($scope.detailsUnit);
+                
                 $scope.esquemafijo = result.data[0].esFijo;
                 $scope.costoUnidad = result.data[0].valorInventario;
                 interestsRepository.getDetailsUnitScheme($scope.vehNumserie).then(function (detalles) {
                     if (detalles.data.length > 0) {
                         $scope.detailsUnitScheme = detalles.data;
+                        console.log($scope.detailsUnitScheme);
                         setTimeout(function () {
                             $('#esquemaDetalleUnidad').DataTable({
                                 dom: '<"html5buttons"B>lTfgitp',
