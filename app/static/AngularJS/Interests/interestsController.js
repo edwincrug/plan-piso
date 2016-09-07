@@ -496,12 +496,27 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     };
 
     // Función para el ng-class en el campo días
-    $scope.setClassDias = function (dias) {
+    $scope.setClassDias = function (objInteres) {
+
+
+        var financiamiento = objInteres.plazo  - objInteres.diasGracia;
+        var diasEnFin = objInteres.diasPlanPiso ;
+
+        if (diasEnFin < financiamiento) {
+            return 'gridFontGreen';
+        } else {
+            return 'gridFontRed';
+        }
+
+        
+        
+/*
         if (dias >= 180) {
             return 'gridFontRed';
         } else {
             return 'gridFontGreen';
         }
+        */
     };
 
     $scope.setClassMargen = function (margen) {
@@ -618,6 +633,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.promise = interestsRepository.getDetailsUnit($scope.vehNumserie).then(function (result) {
             if (result.data.length > 0) {
                 $scope.detailsUnit = result.data;
+                console.log($scope.detailsUnit);
                 $scope.esquemafijo = result.data[0].esFijo;
                 $scope.costoUnidad = result.data[0].valorInventario;
                 interestsRepository.getDetailsUnitScheme($scope.vehNumserie).then(function (detalles) {

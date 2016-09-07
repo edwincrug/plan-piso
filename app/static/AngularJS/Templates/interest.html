@@ -220,12 +220,13 @@
                             <div class="table-responsive">
                                 <table id="interestTable" class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr>                                            
                                             <th>VIN</th>
                                             <th>Descripción Modelo</th>
                                             <th>Modelo</th>
                                             <th>Nombre esquema</th>
-                                            <th>Días financiamiento </th>
+                                            <th>Días en financiamiento </th>                                            
+                                            <th>Días restantes </th> 
                                             <th>Precio compra</th>
                                             <th>Precio venta</th>
                                             <th>Interés al corte (Pagado)</th>
@@ -238,11 +239,15 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="intereses in interes">
-                                            <td ng-model="interes.idnum">{{intereses.vehNumserie}}</td>
+                                            <td ng-model="interes.idnum">{{intereses.vehNumserie}}</td>                                            
                                             <td>{{intereses.descModelo}}</td>
                                             <td>{{intereses.modelo}}</td>
                                             <td ng-model="interes.nombreEsquemaActual">{{intereses.esquema}}</td>
-                                            <td ng-class="setClassDias(intereses.diasPlanPiso)">{{intereses.diasPlanPiso}}</td>
+                                            <td ng-class="setClassDias(intereses)">{{intereses.diasPlanPiso}}</td>                     
+
+
+                                            <td >{{  intereses.plazo - intereses.diasGracia - intereses.diasPlanPiso}}</td>
+
                                             <td ng-model="interes.deuda">{{intereses.precioCompra | currency}}</td>
                                             <td>{{intereses.precioVenta | currency}}</td>
                                             <td>{{intereses.interesAcumulado | currency}}</td>
@@ -342,6 +347,7 @@
                         <label>{{detailsUnit[0].descripcion}}</label>
                         <br/> Días Inventario:
                         <label>{{detailsUnit[0].diasInventario}}</label>
+
                     </div>
                     </div>
                     <br/>
@@ -352,12 +358,15 @@
                         <label>{{getStringTasaFija(detailsUnit[0].esFijo)}}</label>
                         <br/> Nombre:
                         <label>{{detailsUnit[0].nombre}}</label>
-                        <br/>Días Financiamiento:
-                        <label>{{detailsUnit[0].diasFinanciamiento}}</label>
+                        <br/>Días de Financiamiento:
+                        <label>{{ detailsUnit[0].plazo - detailsUnit[0].diasGracia}}</label>
                         <br/> Plazo:
                         <label>{{detailsUnit[0].plazo}}</label>
+                        <br/> Intéres Moratorio:
+                        <label>{{detailsUnit[0].porcentajePagoCapital | number:2}}%</label>
                         <br/> Descripción:
                         <label>{{detailsUnit[0].descripcion}}</label>
+                        
                     </div>
                     <div class="col-xs-7 col-sm-8" ng-show="ocultarEquemaFechas.show">
                         <h2><span class="glyphicon glyphicon-stats"></span> Detalle Esquema</h2>
@@ -365,9 +374,10 @@
                                 <table id="esquemaDetalleUnidad" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Tasa Interés:</th>
+                                    
                                     <th>Fecha Inicio</th>
                                     <th>Fecha Fin</th>
+                                    <th>Tasa Interés:</th>
                                     <th>Porcentaje Penetración</th>
                                     <!--th>Tipo Tiie</th-->
                                     <th>Tiie</th>
@@ -375,9 +385,10 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="detailsUnit in detailsUnitScheme">
-                                    <td>{{detailsUnit.tasaInteres | number:2}}%</td>
+                                    
                                     <td>{{detailsUnit.fechaInicio | date:'dd-MM-yyyy'}}</td>
                                     <td>{{detailsUnit.fechaFin | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{detailsUnit.tasaInteres | number:2}}%</td>
                                     <td>{{detailsUnit.porcentajePenetracion | number:2}}%</td>
                                     <td>{{detailsUnit.tiie | number:2}}%</td>
                                     <!--td>{{detailsUnit.monto | number:2}}%</td-->
