@@ -126,6 +126,7 @@
                         <input type="checkbox" id="chkMoratorio" ng-model="checkedMoratorio" ng-init="checkedMoratorio=false" class="css-checkbox">
                         <label for="chkMoratorio" class="css-label">Interés Moratorio</label>
                     </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
@@ -204,7 +205,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
+
+                        <div class="col-sm-6">                            
+                        <input type="checkbox" id="chkAmpliar" ng-model="checkedAmpliar" ng-init="checkedAmpliar=false" class="css-checkbox">
+                        <label for="chkAmpliar" class="css-label">Ampliación</label>
+                    
                         </div>
                         <div class="col-sm-6">
                             <div>
@@ -227,7 +232,7 @@
                                     <th>TIIE</th>
                                 </tr>
                                 <tr ng-repeat="field in lstDateScheme">
-                                    <td>{{field.indexDate}}</td>
+                                    <td ng-class="setClass(field)"  ng-attr-title="{{setTitle(field)}}">{{field.indexDate}}</td>
                                     <td>{{field.tasaInteres | number:2}} % </td>
                                     <td>{{field.porcentajePenetracion | number:2}} %</td>
                                     <td>{{field.fechaInicio | date:'dd/MM/yyyy'}}</td>
