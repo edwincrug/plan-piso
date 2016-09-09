@@ -501,7 +501,8 @@ Calculo.prototype.post_insertesquemafecha = function(req, res, next) {
         { name: 'fechaFin', value: req.body.fechaFin, type: self.model.types.STRING },
         { name: 'porcentajePenetracion', value: req.body.porcentajePenetracion, type: self.model.types.DECIMAL },
         { name: 'idTiieTipo', value: req.body.idTiieTipo, type: self.model.types.INT },
-        { name: 'tiie', value: req.body.tiie, type: self.model.types.DECIMAL }
+        { name: 'tiie', value: req.body.tiie, type: self.model.types.DECIMAL },
+        { name: 'idTipo', value: req.body.idTipo, type: self.model.types.INT },
 
     ];
 

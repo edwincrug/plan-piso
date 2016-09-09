@@ -109,7 +109,8 @@ registrationModule.factory('schemeRepository', function ($http) {
                     fechaFin: arrEsquema.fechaFin,
                     porcentajePenetracion: arrEsquema.porcentajePenetracion,
                     idTiieTipo: arrEsquema.idTiieTipo,
-                    tiie: arrEsquema.tiie
+                    tiie: arrEsquema.tiie,
+                    idTipo: arrEsquema.idTipo
                 },
 
                 headers: {

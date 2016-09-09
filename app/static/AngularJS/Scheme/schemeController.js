@@ -635,7 +635,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
 
         $scope.lstDateScheme = [];
         $scope.indexDate = 1;
-
+    
     };
 
     $scope.insertEsquemaRango = function(idEsquema) {
