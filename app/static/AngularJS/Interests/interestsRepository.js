@@ -212,6 +212,18 @@ registrationModule.factory('interestsRepository', function ($http) {
                 url: schemeURL + 'financialBank/',
                 method: "GET"
             });
-        }     
+        } ,
+            getMovimientoMensual: function (idUnidad) {
+            return $http({
+                url: interestsURL + 'movimientomensual/',
+                method: "GET",
+                params: {
+                    idUnidad: idUnidad
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
     };
 });

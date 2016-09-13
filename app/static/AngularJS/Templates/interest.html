@@ -61,7 +61,7 @@
     <!--Fin DropDownList-->
     <!--Inico Dashboard Financiera-->
     <div class="col-lg-4 pointer">
-    <div class="ibox float-e-margins" ng-click="getInterest()" ng-show="getFinancial.show">
+        <div class="ibox float-e-margins" ng-click="getInterest()" ng-show="getFinancial.show">
             <div class="ibox-title">
                 <span class="label label-warning pull-right"><h4>Unidades: {{totalUnidades}}</h4></span>
                 <h3>Todas las unidades</h3>
@@ -105,7 +105,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                     </div>
-                   <div class="col-xs-6">
+                    <div class="col-xs-6">
                         <small class="stats-label">Intereses</small>
                         <h2>{{financiera.interes | currency}}</h2>
                     </div>
@@ -113,7 +113,6 @@
             </div>
         </div>
     </div>
-
     <!--Fin Dashboard Financiera-->
     <!--Dashboards-->
     <div class="" ng-show="seleccionarFinanciera.show">
@@ -162,7 +161,7 @@
             <div class="col-lg-8">
             </div>
             <div class="col-lg-1">
-                <div class="widget style1 lazur-bg pointer count-info"  id="set30days" ng-click="set30days()" style="padding: 5px 5px">
+                <div class="widget style1 lazur-bg pointer count-info" id="set30days" ng-click="set30days()" style="padding: 5px 5px">
                     <div class="row vertical-align">
                         <div class="col-xs-1">
                             <i class="glyphicon glyphicon-sort"></i>
@@ -220,13 +219,13 @@
                             <div class="table-responsive">
                                 <table id="interestTable" class="table table-striped">
                                     <thead>
-                                        <tr>                                            
+                                        <tr>
                                             <th>VIN</th>
                                             <th>Descripción Modelo</th>
                                             <th>Modelo</th>
                                             <th>Nombre esquema</th>
-                                            <th>Días en financiamiento </th>                                            
-                                            <th>Días restantes </th> 
+                                            <th>Días con Interés </th>
+                                            <th>Días restantes </th>
                                             <th>Precio compra</th>
                                             <th>Precio venta</th>
                                             <th>Interés al corte (Pagado)</th>
@@ -239,42 +238,41 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="intereses in interes">
-                                            <td ng-model="interes.idnum">{{intereses.vehNumserie}}</td>                                            
+                                            <td ng-model="interes.idnum">{{intereses.vehNumserie}}</td>
                                             <td>{{intereses.descModelo}}</td>
                                             <td>{{intereses.modelo}}</td>
                                             <td ng-model="interes.nombreEsquemaActual">{{intereses.esquema}}</td>
-                                            <td ng-class="setClassDias(intereses)">{{intereses.diasPlanPiso}}</td>                     
-
-
-                                            <td >{{  intereses.plazo - intereses.diasGracia - intereses.diasPlanPiso}}</td>
-
+                                            <td ng-class="setClassDias(intereses)">{{intereses.diasPlanPiso}}</td>
+                                            <td>{{ intereses.plazo - intereses.diasGracia - intereses.diasPlanPiso}}</td>
                                             <td ng-model="interes.deuda">{{intereses.precioCompra | currency}}</td>
                                             <td>{{intereses.precioVenta | currency}}</td>
                                             <td>{{intereses.interesAcumulado | currency}}</td>
                                             <td ng-model="interes.interesActal">{{intereses.interesAcumuladoActual | currency}}</td>
                                             <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual | currency}}</td>
-                                            <td ng-class="setClassMargen(inter.margen)" ng-model="inter.margen">{{intereses.precioVenta - (intereses.interesAcumuladoActual + intereses.interesAcumulado + intereses.precioCompra) | currency}}</td>
+                                            <td ng-class="setClassMargen(intereses)" ng-model="inter.margen">{{intereses.precioVenta - (intereses.interesAcumuladoActual + intereses.interesAcumulado + intereses.precioCompra) | currency}}</td>
                                             <td ng-show="valorCheckBoxTabla.show">
                                                 <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses.idUnidad)">
                                                 <label for="{{intereses.vehNumserie}}" class="css-label"></label>
                                             </td>
-                                            <td><button type="submit" class="btn  btn-default lazur-bg" ng-click="inicia(intereses.vehNumserie, intereses.idUnidad)"><span class="glyphicon glyphicon-folder-open"></span></button></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-info" ng-click="inicia(intereses.vehNumserie, intereses.idUnidad)"><span class="glyphicon glyphicon-th-list"> </span></button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="row">
-                               <div class="col-xs-10">
+                                <div class="col-xs-10">
                                     <button class="btn btn-success" ng-show="transpasoFinanciera.show" ng-click="transpasoFinanciera()">Cambio de Agencia</button>
                                 </div>
                                 <div class="col-xs-2">
-                                    <button class="btn btn-warning" ng-show="transpasoFinanciera.show"  ng-click="selectFinancial()">Traspaso Financiero</button>
+                                    <button class="btn btn-warning" ng-show="transpasoFinanciera.show" ng-click="selectFinancial()">Traspaso Financiero</button>
                                 </div>
                                 <div class="col-xs-10">
-                                    <button class="btn btn-danger"  ng-show="modalCambioFinanciera.show" ng-click="cancelFinancial()">Cancelar Traspaso Financiero</button>
+                                    <button class="btn btn-danger" ng-show="modalCambioFinanciera.show" ng-click="cancelFinancial()">Cancelar Traspaso Financiero</button>
                                 </div>
                                 <div class="col-xs-2">
-                                    <button class="btn btn-warning" ng-show="modalCambioFinanciera.show" ng-click="modalCambioFinanciera()" >Continuar Traspaso Financiero</button>
+                                    <button class="btn btn-warning" ng-show="modalCambioFinanciera.show" ng-click="modalCambioFinanciera()">Continuar Traspaso Financiero</button>
                                 </div>
                                 <div class="col-xs-10">
                                     <button class="btn btn-danger" ng-show="modalTraspasoFinanciera.show" ng-click="cancelarTranspasoModal()">Cancelar Cambio de Agencia</button>
@@ -292,7 +290,6 @@
         <!--Fin Tabla-->
     </div>
 </div>
-
 <!--Modal Detalle Unidades-->
 <strong>
    <div class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
@@ -305,7 +302,9 @@
               <ul class="nav nav-tabs ">
                 <li ng-class="panels[0].className" ng-click="setActiveClass(panels[0])"><a href="#">{{panels[0].name}}</a></li>
                 <li ng-class="panels[1].className" ng-click="setActiveClass(panels[1])"><a href="#">{{panels[1].name}}</a></li>
+                <li ng-class="panels[2].className" ng-click="setActiveClass(panels[2])"><a href="#">{{panels[2].name}}</a></li>
               </ul>
+              <!-- tabContent1 Ini-->
                <div ng-show="panels[0].active">
                     <div class="row">
                         <div class="col-xs-6 col-sm-4">
@@ -426,6 +425,10 @@
                     </div>
                 </div>
                 </div>
+
+                <!-- tabContent1 Fin-->
+
+                <!-- tabContent2 Ini-->
                 <div ng-show="panels[1].active">
                     <div class="wrapper wrapper-content">
                         <div class="row animated fadeInRight">
@@ -474,6 +477,41 @@
                     </div>
                 </div>
         </div>
+        <!-- tabContent2 Fin-->
+
+                <!-- tabContent3 Ini-->
+            <div ng-show="panels[2].active">
+
+                <div class="table-responsive">
+    <table id="tableMonthlyPayment" class="table table-striped table-bordered table-hover dataTables-example">
+        <thead>
+            <tr>
+                <th>financiera</th>                
+                <th>fecha</th>
+                <th>cargo</th>
+                <th>abono</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="payment in monthlyPayment">
+                <td>{{payment.financiera}}</td>                
+                <td>{{payment.fecha | date:'dd/MM/yyyy'}}</td>
+                <td>{{payment.cargo| currency:"$":2}} </td>
+                <td>{{payment.abono| currency:"$":2}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+         
+
+            </div>
+            <!-- tabContent3 Fin-->
+
+
+
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
@@ -483,70 +521,68 @@
 </div>
 </strong>
 <!--Fin Modal-->
-
 <!--Detalle esquemas-->
 <div id="detallesEsquemas" class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-<div class="modal-dialog modal-lg">
-    <div class="modal-content animated flipInY">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <div class="modal-header" style="padding:4px 0px;">
-            <h2>Detalle Esquema - {{nombreEsquema}}</h2>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div>
-                    <h2><span class="glyphicon glyphicon-list-alt"></span> Información General</h2>
-                    <label>Nombre Esquema: </label> {{detalleEsquema[0].nombre}}
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content animated flipInY">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <div class="modal-header" style="padding:4px 0px;">
+                <h2>Detalle Esquema - {{nombreEsquema}}</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div>
+                        <h2><span class="glyphicon glyphicon-list-alt"></span> Información General</h2>
+                        <label>Nombre Esquema: </label> {{detalleEsquema[0].nombre}}
+                        <br/>
+                        <label>Días de Gracia: </label> {{detalleEsquema[0].diasGracia}}
+                        <br/>
+                        <label>Plazo: </label> {{detalleEsquema[0].plazo}}
+                        <br/>
+                        <label>Descripción: </label> {{detalleEsquema[0].descripcion}}
+                    </div>
+                </div>
+                <div class="row">
+                    <h2><span class="glyphicon glyphicon-list"></span> Detalles Esquema</h2>
                     <br/>
-                    <label>Días de Gracia: </label> {{detalleEsquema[0].diasGracia}}
-                    <br/>
-                    <label>Plazo: </label> {{detalleEsquema[0].plazo}}
-                    <br/>
-                    <label>Descripción: </label> {{detalleEsquema[0].descripcion}}
+                    <div class="table-responsive">
+                        <table id="detallesEsquema" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
+                            <thead>
+                                <tr>
+                                    <th>Taza de Interés</th>
+                                    <th ng-show="tasaFecha.show">Fecha Inicio</th>
+                                    <th ng-show="tasaFecha.show">Fecha Fin</th>
+                                    <th ng-show="tasaFecha.show">Tiie</th>
+                                    <th ng-show="tasaFecha.show">Porcentaje de Penetración</th>
+                                    <th ng-show="tasaRango.show">Rango Días</th>
+                                    <th ng-show="tasaRango.show">Precedencia</th>
+                                    <th ng-show="tasaRango.show">Tipo Tiie</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="esquema in detalleEsquema">
+                                    <td>{{esquema.tasaInteres | number:2}}%</td>
+                                    <td ng-show="tasaFecha.show">{{esquema.fechaInicio | date:'dd-MM-yyyy'}}</td>
+                                    <td ng-show="tasaFecha.show">{{esquema.fechaFin | date:'dd-MM-yyyy'}}</td>
+                                    <td ng-show="tasaFecha.show">{{esquema.tiie | number:2}}%</td>
+                                    <td ng-show="tasaFecha.show">{{esquema.porcentajePenetracion | number:2}}%</td>
+                                    <td ng-show="tasaRango.show">{{esquema.rango}}</td>
+                                    <td ng-show="tasaRango.show">{{esquema.precedencia}}</td>
+                                    <td ng-show="tasaRango.show">{{getStringTipoTiie(esquema.idTiieTipo)}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="col-xs-11"></div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <h2><span class="glyphicon glyphicon-list"></span> Detalles Esquema</h2>
-                <br/>
-                <div class="table-responsive">
-                    <table id="detallesEsquema" class="table table-striped table-bordered table-hover dataTables-example" cg-busy="{promise:promise,message:message}">
-                        <thead>
-                            <tr>
-                                <th>Taza de Interés</th>
-                                <th ng-show="tasaFecha.show">Fecha Inicio</th>
-                                <th ng-show="tasaFecha.show">Fecha Fin</th>
-                                <th ng-show="tasaFecha.show">Tiie</th>
-                                <th ng-show="tasaFecha.show">Porcentaje de Penetración</th>
-                                <th ng-show="tasaRango.show">Rango Días</th>
-                                <th ng-show="tasaRango.show">Precedencia</th>
-                                <th ng-show="tasaRango.show">Tipo Tiie</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="esquema in detalleEsquema">
-                                <td>{{esquema.tasaInteres | number:2}}%</td>
-                                <td ng-show="tasaFecha.show">{{esquema.fechaInicio | date:'dd-MM-yyyy'}}</td>
-                                <td ng-show="tasaFecha.show">{{esquema.fechaFin | date:'dd-MM-yyyy'}}</td>
-                                <td ng-show="tasaFecha.show">{{esquema.tiie | number:2}}%</td>
-                                <td ng-show="tasaFecha.show">{{esquema.porcentajePenetracion | number:2}}%</td>
-                                <td ng-show="tasaRango.show">{{esquema.rango}}</td>
-                                <td ng-show="tasaRango.show">{{esquema.precedencia}}</td>
-                                <td ng-show="tasaRango.show">{{getStringTipoTiie(esquema.idTiieTipo)}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-xs-11"></div>
-                </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
         </div>
     </div>
 </div>
-</div>
 <!-- Fin detalle de esquema-->
-
 <!--Modal Cambio de esquema-->
 <strong>
 <div class="modal inmodal fade " id="transpasoCambioEsquema" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static"><div class="modal-dialog
@@ -634,7 +670,6 @@
             </div>
 </strong>
 <!--Fin Modal-->
-
 <!--Modal Transpaso Financiera-->
 <strong>
 <div class="modal inmodal fade " id="traspasoFinanciero" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static"><div class="modal-dialog
@@ -726,8 +761,3 @@
             </div>
 </strong>
 <!--Fin Modal-->
-
-
-
-
-

@@ -1,8 +1,8 @@
-registrationModule.controller('schemeController', function($scope, $rootScope,alertFactory, schemeRepository,localStorageService) {
+registrationModule.controller('schemeController', function($scope, $rootScope, alertFactory, schemeRepository, localStorageService) {
 
     $scope.message = 'Buscando...';
     $scope.userData = localStorageService.get('userData');
-    $rootScope.empleadoNombre="";
+    $rootScope.empleadoNombre = "";
     $scope.tasaFecha = '';
     $scope.tasaRango = '';
     $scope.esquema = [];
@@ -22,40 +22,38 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         $scope.getEsquemaFinanciera.show = false;
         //getEmpleado();
     };
-    
-    $scope.getEmpleados = function(){
-        if(!($('#lgnUser').val().indexOf('[') > -1)){
+
+    $scope.getEmpleados = function() {
+        if (!($('#lgnUser').val().indexOf('[') > -1)) {
             localStorageService.set('lgnUser', $('#lgnUser').val());
             //$scope.getEmpleado();
-        }
-        else{
-            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
-                if(getParameterByName('employee') != ''){
+        } else {
+            if (($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')) {
+                if (getParameterByName('employee') != '') {
                     $rootScope.currentEmployee = getParameterByName('employee');
                     return;
-                     $scope.getUsuario();
+                    $scope.getUsuario();
                     console.log('pasoaquidos')
-                }
-                else{
-                    if($scope.userData == null){
-                          alert('Inicie sesión desde panel de aplicaciones .');
-                    //window.close(); 
-                    location.href = '/';
-                        
-                    }else{
+                } else {
+                    if ($scope.userData == null) {
+                        alert('Inicie sesión desde panel de aplicaciones .');
+                        //window.close(); 
+                        location.href = '/';
+
+                    } else {
                         console.log('pasoaqui')
                         $rootScope.empleadoNombre = $scope.userData[0].nombre;
-                 
+
                     }
                 }
-                
+
             }
         }
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
     };
-    
-    
+
+
     // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
     $scope.seleccionarFinanciera = function(idFinanciera, nombreFinanciera) {
         $scope.idFinanciera = idFinanciera;
@@ -224,7 +222,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
                 rango: $scope.detalleEsquema[i].rango,
                 porcentajePenetracion: $scope.detalleEsquema[i].porcentajePenetracion,
                 tiie: $scope.detalleEsquema[i].tiie,
-                idTiieTipo: $scope.selectedOption.value,                
+                idTiieTipo: $scope.selectedOption.value,
                 esPrecarga: true,
                 idTipo: $scope.detalleEsquema[i].idTipo
             }
@@ -241,7 +239,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
             $scope.esquema.nombre = $scope.detalleEsquema[0].nombre;
             $scope.esquema.descripcion = $scope.detalleEsquema[0].descripcion;
             $scope.esquema.porcentajePagoCapital = $scope.detalleEsquema[0].porcentajePagoCapital;
-            $scope.esquema.interesMoratorio = $scope.detalleEsquema[0].interesMoratorio;            
+            $scope.esquema.interesMoratorio = $scope.detalleEsquema[0].interesMoratorio;
         }
 
 
@@ -265,7 +263,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
                 fechaInicio: $scope.detalleEsquema[i].fechaInicio,
                 fechaFin: $scope.detalleEsquema[i].fechaFin,
                 tiie: $scope.detalleEsquema[i].tiie,
-                idTiieTipo: $scope.selectedOption.value,                
+                idTiieTipo: $scope.selectedOption.value,
                 esPrecarga: true,
                 idTipo: $scope.detalleEsquema[i].idTipo
             }
@@ -280,7 +278,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
             $scope.esquema.nombre = $scope.detalleEsquema[0].nombre;
             $scope.esquema.descripcion = $scope.detalleEsquema[0].descripcion;
             $scope.esquema.porcentajePagoCapital = $scope.detalleEsquema[0].porcentajePagoCapital;
-            $scope.esquema.interesMoratorio = $scope.detalleEsquema[0].interesMoratorio;            
+            $scope.esquema.interesMoratorio = $scope.detalleEsquema[0].interesMoratorio;
         }
 
         $scope.sortResults('idTipo', true);
@@ -389,7 +387,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         $scope.esquema.porcentajePagoCapital = null;
         $scope.esquema.interesMoratorio = null;
         $scope.esquema.idTipo = null;
-        
+
     };
 
     $scope.clearControls = function() {
@@ -417,10 +415,10 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
             return;
         }
 
-        var idTipo =0;
+        var idTipo = 0;
 
-        if($scope.checkedAmpliar){
-            idTipo =1;
+        if ($scope.checkedAmpliar) {
+            idTipo = 1;
         }
 
 
@@ -493,10 +491,10 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
             return;
         }
 
-        var idTipo =0;
+        var idTipo = 0;
 
-        if($scope.checkedAmpliar){
-            idTipo =1;
+        if ($scope.checkedAmpliar) {
+            idTipo = 1;
         }
 
         var scheme = {
@@ -589,7 +587,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         $scope.esquema.idFinanciera = $scope.idFinanciera;
         $scope.esquema.esFijo = !$scope.checked;
 
-       // console.log($scope.esquema);
+        // console.log($scope.esquema);
 
         schemeRepository.insertEsquema($scope.esquema).then(function(result) {
 
@@ -611,7 +609,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
         });
     };
 
-    $scope.insertEsquemaFecha = function(idEsquema) {        
+    $scope.insertEsquemaFecha = function(idEsquema) {
 
         for (var i = 0; i < $scope.lstDateScheme.length; i++) {
 
@@ -635,14 +633,14 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
 
         $scope.lstDateScheme = [];
         $scope.indexDate = 1;
-    
+
     };
 
     $scope.insertEsquemaRango = function(idEsquema) {
 
         //console.log($scope.lstRangeScheme) ;
 
-        
+
         for (var i = 0; i < $scope.lstRangeScheme.length; i++) {
 
             if ($scope.lstRangeScheme[i].esPrecarga == true) {
@@ -761,47 +759,47 @@ registrationModule.controller('schemeController', function($scope, $rootScope,al
 
     $scope.setClass = function(objeto) {
 
-        
+
         switch (objeto.idTipo) {
-        case 0:
-            return 'lazur-bg';
-        case 1:
-            return 'yellow-bg';
-        case 2:
-            return 'red-bg';       
-        default:
-            return 'blue-bg';
-        }  
+            case 0:
+                return 'lazur-bg';
+            case 1:
+                return 'yellow-bg';
+            case 2:
+                return 'red-bg';
+            default:
+                return 'blue-bg';
+        }
     };
 
 
     $scope.setTitle = function(objeto) {
 
-        
+
         switch (objeto.idTipo) {
-        case 0:
-            return 'Normal';
-        case 1:
-            return 'Ampliación';
-        case 2:
-            return 'Moratorio';       
-        default:
-            return 'NA';
-        }  
+            case 0:
+                return 'Normal';
+            case 1:
+                return 'Ampliación';
+            case 2:
+                return 'Moratorio';
+            default:
+                return 'NA';
+        }
     };
 
 
 
-$scope.sortResults =function (prop, asc) {
-    $scope.lstDateScheme = $scope.lstDateScheme.sort(function(a, b) {
-        if (asc) {
-            return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
-        } else {
-            return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
-        }
-    });
-   // showResults();
-}
+    $scope.sortResults = function(prop, asc) {
+        $scope.lstDateScheme = $scope.lstDateScheme.sort(function(a, b) {
+            if (asc) {
+                return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+            } else {
+                return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+            }
+        });
+        // showResults();
+    }
 
 
 

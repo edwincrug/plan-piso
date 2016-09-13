@@ -1,3 +1,9 @@
+    
+    .redText {        
+        color: #ed5565;
+           font-weight: bold;
+    }
+
     .gridFontGreen {
         background-color: #1ab394;
         color: white;

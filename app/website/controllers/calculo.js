@@ -863,5 +863,21 @@ Calculo.prototype.post_updateDate = function(req, res, next) {
 };
 
 
+// Muestra  los movimientos Mensuales de las unidades
+Calculo.prototype.get_movimientomensual = function(req, res, next) {
+
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [{ name: 'idUnidad', value: req.query.idUnidad, type: self.model.types.INT }];
+
+    this.model.query('SEL_MOVIMIENTO_MENSUAL', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
 
 module.exports = Calculo;
