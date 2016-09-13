@@ -331,21 +331,21 @@
                         <br/> Factura:
                         <label>{{detailsUnit[0].vehNofactplan}}</label>
                         <br/> Situación:
-                        <label>{{detailsUnit[0].situacion}}</label>
-                        <br/>
+                        <label>{{detailsUnit[0].situacion}}</label>                        
+                        <br/> Días Inventario:
+                        <label>{{detailsUnit[0].diasInventario}}</label>
                     </div>
                         <div class="col-xs-6 col-sm-4">
                         <h2><span class="glyphicon glyphicon-eye-open"></span> Datos Plan Piso</h2>
-                        <br/> Fecha Ingreso:
-                        <label>{{detailsUnit[0].vehFecrecibo}}</label>
+                        <br/> Fecha Efectiva:
+                        <label>{{detailsUnit[0].fechaCalculo}}</label>
                         <br/> Nombre Esquema:
                         <label>{{detailsUnit[0].nombre}}</label>
                         <br/> Días Gracia:
                         <label>{{detailsUnit[0].diasGracia}}</label>
                         <br/>Descripción:
                         <label>{{detailsUnit[0].descripcion}}</label>
-                        <br/> Días Inventario:
-                        <label>{{detailsUnit[0].diasInventario}}</label>
+                        
 
                     </div>
                     </div>
@@ -358,13 +358,17 @@
                         <br/> Nombre:
                         <label>{{detailsUnit[0].nombre}}</label>
                         <br/>Días de Financiamiento:
-                        <label>{{ detailsUnit[0].plazo - detailsUnit[0].diasGracia}}</label>
+                        <label>{{detailsUnit[0].diasInteres}}</label>
+                        </br>Días de Ampliación:
+                        <label>{{detailsUnit[0].diasAmpliacion}}</label>
                         <br/> Plazo:
-                        <label>{{detailsUnit[0].plazo}}</label>
+                        <label>{{detailsUnit[0].diasAmpliacion + detailsUnit[0].diasInteres}}</label>
                         <br/> Intéres Moratorio:
                         <label>{{detailsUnit[0].porcentajePagoCapital | number:2}}%</label>
                         <br/> Descripción:
                         <label>{{detailsUnit[0].descripcion}}</label>
+
+                          
                         
                     </div>
                     <div class="col-xs-7 col-sm-8" ng-show="ocultarEquemaFechas.show">

@@ -1433,7 +1433,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
             className: ""
         },        
         {
-            name: 'Interes Mensual',
+            name: 'Interés Mensual',
             active: false,
             className: ""
         }
@@ -1558,7 +1558,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                         }, 1000);
              
             } else {
-                alertFactory.info("No se encontraron Esquemas");
+                //alertFactory.info("No se encontraron Esquemas");
             }
         }, function (error) {
             alertFactory.error("Error al cargar Esquemas");
