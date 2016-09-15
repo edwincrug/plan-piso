@@ -2,7 +2,7 @@
     <input id="max" name="max" type="hidden">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-           <h2>Unidades sin esquema</h2>
+            <h2>Unidades sin esquema</h2>
             <ol class="breadcrumb">
                 <li>
                     <a href="/interest" ng-click="reloadPage()">Home</a>
@@ -40,7 +40,7 @@
             </ul>
         </div>
     </div>
-        <div class="row"  ng-show="getSucursal.show">
+    <div class="row" ng-show="getSucursal.show">
         <div class="col-md-10">
         </div>
         <div class="col-md-2">
@@ -57,13 +57,12 @@
             </div>
         </div>
     </div>
-    
     <div class="wrapper wrapper-content" ng-show="getSucursal.show">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <div class="table-responsive" >
+                        <div class="table-responsive">
                             <table id="newUnits" class="table table-striped">
                                 <thead>
                                     <tr>
@@ -73,7 +72,9 @@
                                         <th>Modelo</th>
                                         <th>Precio compra</th>
                                         <th>Precio venta</th>
-                                        <th ng-show="valorCheckBoxTabla.show"></th>
+
+                                                                             
+                                        <th ng-show="valorCheckBoxTabla.show"></th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,6 +85,15 @@
                                         <td>{{intereses.modelo}}</td>
                                         <td>{{intereses.valorInventario | currency}}</td>
                                         <td>{{intereses.precioLista | currency}}</td>
+                                        
+
+
+
+
+
+
+
+                                        
                                         <td ng-show="valorCheckBoxTabla.show">
                                             <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses.idUnidad)">
                                             <label for="{{intereses.vehNumserie}}" class="css-label"></label>
@@ -94,22 +104,21 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-10">
-                                <button class="btn btn-warning" ng-show="transpasoFinanciera.show"  ng-click="selectFinancial()">Asignar esquema</button>
+                                <button class="btn btn-warning" ng-show="transpasoFinanciera.show" ng-click="selectFinancial()">Asignar esquema</button>
                             </div>
                             <div class="col-xs-10">
-                                <button class="btn btn-danger"  ng-show="modalCambioFinanciera.show" ng-click="cancelFinancial()">Cancelar asignación esquema</button>
+                                <button class="btn btn-danger" ng-show="modalCambioFinanciera.show" ng-click="cancelFinancial()">Cancelar asignación esquema</button>
                             </div>
                             <div class="col-xs-2">
-                                <button class="btn btn-warning" ng-show="modalCambioFinanciera.show" ng-click="modalCambioFinanciera()" >Continuar asignación esquema</button>
+                                <button class="btn btn-warning" ng-show="modalCambioFinanciera.show" ng-click="modalCambioFinanciera()">Continuar asignación esquema</button>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-
 <!--Modal Cambio de esquema-->
 <strong>
 <div class="modal inmodal fade " id="traspasoFinanciero" href="" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">

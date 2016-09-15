@@ -6,6 +6,11 @@ registrationModule.controller('loginController', function ($scope, alertFactory,
     
     // Función que inicia al cargar la vista   
     $scope.init = function () {
+
+        localStorageService.set('glbInterestEmpresa',null) ;
+        localStorageService.set('glbSchemeFinanciera',null) ;
+        localStorageService.set('glbNewUnitsEmpresa',null) ;
+
         $(".dropdown").remove(".dropdown");
         $(".botonCerrar").remove(".botonCerrar");
 	    $(".blanco").remove(".blanco");

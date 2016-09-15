@@ -21,6 +21,12 @@ registrationModule.controller('schemeController', function($scope, $rootScope, a
         $scope.getFinanciera();
         $scope.getEsquemaFinanciera.show = false;
         //getEmpleado();
+
+        if(localStorageService.get('glbSchemeFinanciera') != null)
+        {
+            $scope.seleccionarFinanciera( localStorageService.get('glbSchemeFinanciera'),localStorageService.get('glbSchemeNombre'));                    
+        };
+
     };
 
     $scope.getEmpleados = function() {
@@ -55,11 +61,14 @@ registrationModule.controller('schemeController', function($scope, $rootScope, a
 
 
     // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
-    $scope.seleccionarFinanciera = function(idFinanciera, nombreFinanciera) {
+    $scope.seleccionarFinanciera = function(idFinanciera, nombreFinanciera) {           
         $scope.idFinanciera = idFinanciera;
         $scope.nombreFinanciera = nombreFinanciera;
         $scope.getEsquemaFinanciera();
         $scope.getEsquemaFinanciera.show = true;
+
+        localStorageService.set('glbSchemeFinanciera',$scope.idFinanciera);                        
+        localStorageService.set('glbSchemeNombre',$scope.nombreFinanciera);
     };
 
     // Función para mostrar las financieras disponibles
@@ -148,6 +157,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope, a
                 }, 1000);
                 alertFactory.success("Esquemas cargados");
             } else {
+                $scope.esquemas=[];
                 alertFactory.info("No se encontraron Esquemas");
             }
         }, function(error) {

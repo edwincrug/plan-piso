@@ -41,6 +41,17 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.transpasoFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
         $scope.getInterestCompanySucursal.show = false;
+
+        if(localStorageService.get('glbInterestEmpresa') != null)
+        {
+            $scope.idEmpresa = localStorageService.get('glbInterestEmpresa');
+            $scope.nombreEmpresa =  localStorageService.get('glbInterestNombreEmpresa');
+            $scope.getInterest();
+            return;
+        };
+
+
+
     };
 
     $scope.getEmpleados = function(){
@@ -77,6 +88,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     
     // Función para filtrar por empresa
     $scope.seleccionarEmpresa = function (idEmpresa, nombreEmpresa) {
+    
         $scope.seleccionarSucursal.show = false;
         $scope.idEmpresa = idEmpresa;
         $scope.getInterest.show = false;
@@ -91,11 +103,14 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.getInterestCompanySucursal.show = false;
         $scope.modalCambioFinanciera.show = false;
 
+        localStorageService.set('glbInterestNombreEmpresa',nombreEmpresa);
+
     };
 
     // Función para filtrar por sucursal
-    $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {
-        $scope.idSucursal = idSucursal;
+    $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {                
+        
+        $scope.idSucursal = idSucursal;        
         $scope.nombreSucursal = nombreSucursal;
         $scope.modalCambioFinanciera.show = false;
         $scope.modalTraspasoFinanciera.show = false;
@@ -106,7 +121,9 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     // Muestra los detalles de la financiera
     $scope.seleccionarFinanciera = function (idFinanciera, nombreFinanciera) {
-        $scope.idFinanciera = idFinanciera;
+
+        
+        $scope.idFinanciera = idFinanciera;        
         $scope.nombreFinanciera = nombreFinanciera;
         $scope.seleccionarSucursal.show = true;
         $scope.getInterestFinanciera();
@@ -117,6 +134,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     };
 
     $scope.seleccionarSucursalDetalle = function (idSucursal, nombreSucursal) {
+        
         $scope.idSucursal = idSucursal;
         $scope.nombreSucursal = nombreSucursal;
         $scope.getInterestCompanySucursal();
@@ -138,6 +156,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     // Función para trar las financieras por empresa
     $scope.getFinancial = function () {
+        
         $scope.totalUnidades = 0;
         $scope.totalInteres = 0;
         $scope.totalAdeudo = 0;
@@ -162,6 +181,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     // Función para obtener las sucursales por empresa
     $scope.getSucursal = function (idEmpresa) {
+        
         $scope.promise = interestsRepository.getSucursal($scope.idEmpresa).then(function (result) {
             if (result.data.length > 0) {
                 $scope.sucursales = result.data;
@@ -176,6 +196,9 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     // Función para mostrar intereses por empresa
     $scope.getInterest = function () {
+
+        localStorageService.set('glbInterestEmpresa',$scope.idEmpresa);
+
         $('#interestTable').DataTable().destroy();
         $scope.interes = {};
         $scope.promise =
@@ -260,6 +283,8 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     // Función para mostrar intereses por financiera
     $scope.getInterestFinanciera = function () {
+
+        console.log('dghdfhdfdg');
         $('#interestTable').DataTable().destroy();
         $scope.interes = {};
         $scope.promise =
@@ -524,9 +549,9 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         var margen = object.precioVenta - (object.interesAcumuladoActual + object.interesAcumulado + object.precioCompra);
 
         if (margen <= 0) {
-            return 'redText';
+            return 'gridFontRed';
         } else {
-            return '';
+            return 'gridFontGreen';
         }
     };  
 

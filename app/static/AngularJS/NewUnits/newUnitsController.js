@@ -12,10 +12,12 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.userData = localStorageService.get('userData');
     $rootScope.empleadoNombre="";
     
+    $scope.editControl = true;
+    $scope.disableControl = false;
 
     
     $scope.init = function(){
-        console.log($scope.userData);
+        //console.log($scope.userData);
         $rootScope.empleadoNombre="";
         $scope.getEmpleados();  
         //$scope.getUsuario();
@@ -30,6 +32,14 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0; 
         $scope.nombreFinancieraCambio = "";
+
+      if(localStorageService.get('glbNewUnitsEmpresa') != null)
+        {
+            $scope.seleccionarEmpresa( localStorageService.get('glbNewUnitsEmpresa'),localStorageService.get('glbNewUnitsNombreEmpresa')); 
+
+        };
+
+
     };
     
     // Función para mostrar el nombre de usuario
@@ -90,8 +100,12 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.getNewUnitsCompany();
         $scope.transpasoFinanciera.show = true;
         $scope.modalCambioFinanciera.show = false;
+
+        localStorageService.set('glbNewUnitsEmpresa',idEmpresa);
+        localStorageService.set('glbNewUnitsNombreEmpresa',nombreEmpresa);
         
-    };
+        
+    };  
 
     // Función para filtrar por sucursal
     $scope.seleccionarSucursal = function (idSucursal, nombreSucursal) {
@@ -596,5 +610,22 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             return 'gridFontGreen';
         }
     };
+
+
+
+    $scope.calendario = function() {
+        $('#calendar .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: true,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
+    }
+
+
+    
       
 });
