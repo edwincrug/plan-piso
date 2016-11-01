@@ -22,9 +22,8 @@ registrationModule.controller('schemeController', function($scope, $rootScope, a
         $scope.getEsquemaFinanciera.show = false;
         //getEmpleado();
 
-        if(localStorageService.get('glbSchemeFinanciera') != null)
-        {
-            $scope.seleccionarFinanciera( localStorageService.get('glbSchemeFinanciera'),localStorageService.get('glbSchemeNombre'));                    
+        if (localStorageService.get('glbSchemeFinanciera') != null) {
+            $scope.seleccionarFinanciera(localStorageService.get('glbSchemeFinanciera'), localStorageService.get('glbSchemeNombre'));
         };
 
     };
@@ -61,14 +60,14 @@ registrationModule.controller('schemeController', function($scope, $rootScope, a
 
 
     // Función para seleccionar las financieras y mostrar la tabla con los esquemas 
-    $scope.seleccionarFinanciera = function(idFinanciera, nombreFinanciera) {           
+    $scope.seleccionarFinanciera = function(idFinanciera, nombreFinanciera) {
         $scope.idFinanciera = idFinanciera;
         $scope.nombreFinanciera = nombreFinanciera;
         $scope.getEsquemaFinanciera();
         $scope.getEsquemaFinanciera.show = true;
 
-        localStorageService.set('glbSchemeFinanciera',$scope.idFinanciera);                        
-        localStorageService.set('glbSchemeNombre',$scope.nombreFinanciera);
+        localStorageService.set('glbSchemeFinanciera', $scope.idFinanciera);
+        localStorageService.set('glbSchemeNombre', $scope.nombreFinanciera);
     };
 
     // Función para mostrar las financieras disponibles
@@ -157,7 +156,7 @@ registrationModule.controller('schemeController', function($scope, $rootScope, a
                 }, 1000);
                 alertFactory.success("Esquemas cargados");
             } else {
-                $scope.esquemas=[];
+                $scope.esquemas = [];
                 alertFactory.info("No se encontraron Esquemas");
             }
         }, function(error) {
@@ -564,7 +563,10 @@ registrationModule.controller('schemeController', function($scope, $rootScope, a
         if ($scope.isAddMode) {
             if (!$scope.formIsValid($scope.getControlMain())) return;
             var r = confirm("¿Estas seguro que deseas guardar?");
-            if (r == true) $scope.insertEsquema();
+            if (r == true) {
+                $scope.insertEsquema();
+                $('#agregarNuevoEsquema').modal('toggle');
+            }
         } else {
             var r = confirm("¿Estas seguro que deseas guardar?");
             if (r == true) {

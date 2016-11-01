@@ -1,153 +1,225 @@
-// -- =============================================
-// -- Author:      Vladimir Juárez
-// -- Create date: 18/03/2016
-// -- Description: example controller
-// -- Modificó: 
-// -- Fecha: 
-// -- =============================================
-registrationModule.controller('exampleController', function ($scope, alertFactory) {
-    //this is the first method executed in the view
-    $scope.init = function () {
-        $scope.grafica();
-    }
-    // Pintar Grafica   
-    $scope.grafica = function () {
-        var data2 = [
-                    [gd(2012, 1, 1), 7], [gd(2012, 1, 2), 6], [gd(2012, 1, 3), 4], [gd(2012, 1, 4), 8]
-
-                                                            
-            , [gd(2012, 1, 5), 9], [gd(2012, 1, 6), 7], [gd(2012, 1, 7), 5], [gd(2012, 1, 8), 4]
-
-                                                            
-            , [gd(2012, 1, 9), 7], [gd(2012, 1, 10), 8], [gd(2012, 1, 11), 9], [gd(2012, 1, 12), 6]
-
-                                                            
-            , [gd(2012, 1, 13), 4], [gd(2012, 1, 14), 5], [gd(2012, 1, 15), 11], [gd(2012, 1, 16), 8]
-
-                                                            
-            , [gd(2012, 1, 17), 8], [gd(2012, 1, 18), 11], [gd(2012, 1, 19), 11], [gd(2012, 1, 20), 6]
-
-                                                            
-            , [gd(2012, 1, 21), 6], [gd(2012, 1, 22), 8], [gd(2012, 1, 23), 11], [gd(2012, 1, 24), 13]
-
-                                                            
-            , [gd(2012, 1, 25), 7], [gd(2012, 1, 26), 9], [gd(2012, 1, 27), 9], [gd(2012, 1, 28), 8]
-
-                                                            
-            , [gd(2012, 1, 29), 5], [gd(2012, 1, 30), 8], [gd(2012, 1, 31), 25]
-                ];
-
-        var data3 = [
-                    [gd(2012, 1, 1), 800], [gd(2012, 1, 2), 500], [gd(2012, 1, 3), 600], [gd(2012, 1, 4), 700]
-
-                                                            
-            , [gd(2012, 1, 5), 500], [gd(2012, 1, 6), 456], [gd(2012, 1, 7), 800], [gd(2012, 1, 8), 589]
-
-                                                            
-            , [gd(2012, 1, 9), 467], [gd(2012, 1, 10), 876], [gd(2012, 1, 11), 689], [gd(2012, 1, 12), 700]
-
-                                                            
-            , [gd(2012, 1, 13), 500], [gd(2012, 1, 14), 600], [gd(2012, 1, 15), 700], [gd(2012, 1, 16), 786]
-
-                                                            
-            , [gd(2012, 1, 17), 345], [gd(2012, 1, 18), 888], [gd(2012, 1, 19), 888], [gd(2012, 1, 20), 888]
-
-                                                            
-            , [gd(2012, 1, 21), 987], [gd(2012, 1, 22), 444], [gd(2012, 1, 23), 999], [gd(2012, 1, 24), 567]
-
-                                                            
-            , [gd(2012, 1, 25), 786], [gd(2012, 1, 26), 666], [gd(2012, 1, 27), 888], [gd(2012, 1, 28), 900]
-
-                                                            
-            , [gd(2012, 1, 29), 178], [gd(2012, 1, 30), 555], [gd(2012, 1, 31), 993]
-                ];
+registrationModule.controller('exampleController', function($scope, exampleRepository, interestsRepository, schemeRepository, $rootScope, $location, alertFactory, localStorageService) {
 
 
-        var dataset = [
-            {
-                label: "Number of orders"
-                , data: data3
-                , color: "#1ab394"
-                , bars: {
-                    show: true
-                    , align: "center"
-                    , barWidth: 24 * 60 * 60 * 600
-                    , lineWidth: 0
-                }
+    $scope.arrUnidades = [];
+    $scope.arrUnidadesSeleccionadas = [];
 
-                    }, {
-                label: "Payments"
-                , data: data2
-                , yaxis: 2
-                , color: "#1C84C6"
-                , lines: {
-                    lineWidth: 1
-                    , show: true
-                    , fill: true
-                    , fillColor: {
-                        colors: [{
-                            opacity: 0.2
-                                }, {
-                            opacity: 0.4
-                                }]
-                    }
-                }
-                , splines: {
-                    show: false
-                    , tension: 0.6
-                    , lineWidth: 1
-                    , fill: 0.1
-                }
-            , }
-                ];
+    $scope.arrEmpresa = [];
+    $scope.arrSucursal = [];
+    $scope.arrFinanciera = [];
 
 
-        var options = {
-            xaxis: {
-                mode: "time"
-                , tickSize: [3, "day"]
-                , tickLength: 0
-                , axisLabel: "Date"
-                , axisLabelUseCanvas: true
-                , axisLabelFontSizePixels: 12
-                , axisLabelFontFamily: 'Arial'
-                , axisLabelPadding: 10
-                , color: "#d5d5d5"
-            }
-            , yaxes: [{
-                    position: "left"
-                    , max: 1070
-                    , color: "#d5d5d5"
-                    , axisLabelUseCanvas: true
-                    , axisLabelFontSizePixels: 12
-                    , axisLabelFontFamily: 'Arial'
-                    , axisLabelPadding: 3
-                    }, {
-                    position: "right"
-                    , clolor: "#d5d5d5"
-                    , axisLabelUseCanvas: true
-                    , axisLabelFontSizePixels: 12
-                    , axisLabelFontFamily: ' Arial'
-                    , axisLabelPadding: 67
-                    }
-                    ]
-            , legend: {
-                noColumns: 1
-                , labelBoxBorderColor: "#000000"
-                , position: "nw"
-            }
-            , grid: {
-                hoverable: false
-                , borderWidth: 0
-            }
-        };
+    $scope.idCompaniaActual = 0;
+    $scope.idSucursalActual = 0;
+    $scope.idFinancieraActual = 0;
+    $scope.unidadesTotales = 0;
 
-        function gd(year, month, day) {
-            return new Date(year, month - 1, day).getTime();
+
+    $scope.showWizzard = false;
+    
+    $scope.wizardPanels = [
+        { tabIndex: 0, name: 'Seleccionar Unidades', active: true, className: 'current', previous: 'disabled', next: '' },
+        { tabIndex: 1, name: 'Seleccionar Esquema', active: false, className: 'done', previous: '', next: '' },
+        { tabIndex: 2, name: 'Asignar Esquema', active: false, className: 'done', previous: '', next: 'disabled' }
+    ];
+
+    $scope.btnDisabled = [{ previous: 'disabled', next: '' }];
+    $scope.tabIndex = 0;
+
+    $scope.setNext = function(index) {
+
+        $scope.tabIndex = parseInt(index) + 1;
+
+        if ($scope.tabIndex >= $scope.wizardPanels.length) {
+            $scope.tabIndex -= 1;
+            return;
         }
-        var previousPoint = null
-            , previousLabel = null;
 
-        $.plot($("#flot-dashboard-chart"), dataset, options);
+        $scope.setActiveClass($scope.wizardPanels[$scope.tabIndex]);
+
     };
+
+
+    $scope.setBack = function(index) {
+
+        $scope.tabIndex = parseInt(index) - 1;
+
+        if ($scope.tabIndex < 0) {
+            $scope.tabIndex += 1;
+            return;
+        }
+
+        $scope.setActiveClass($scope.wizardPanels[$scope.tabIndex]);
+    };
+
+    $scope.setActiveClass = function(currentTab) {
+
+        for (var i = 0; i < $scope.wizardPanels.length; i++) {
+            $scope.wizardPanels[i].active = false;
+            $scope.wizardPanels[i].className = "done";
+        }
+
+        currentTab.active = true;
+        currentTab.className = "current";
+
+        $scope.btnDisabled[0].previous = currentTab.previous;
+        $scope.btnDisabled[0].next = currentTab.next;
+        $scope.tabIndex = currentTab.tabIndex;
+        window.scrollTo(0, 0);
+    };
+
+
+
+    $scope.init = function() {
+
+
+        $scope.getNewUnits();
+        $scope.getCompany();
+        // $scope.getFinanciera();
+
+
+    };
+
+    $scope.fillSucursal = function(objEmpresa) {
+
+        $scope.getSucursal(objEmpresa.idEmpresa);
+
+    };
+
+
+    $scope.getNewUnits = function() {
+        $scope.promise = exampleRepository.getNewUnits().then(function(result) {
+            if (result.data.length > 0) {
+                $scope.arrUnidades = result.data;
+                $scope.unidadesTotales = $scope.arrUnidades.length;                        
+                setTimeout(function() { $scope.setTablePaging('tblNewUnits'); }, 1);
+            } else {
+                alertFactory.info("No se encontraron detalles");
+            }
+        }, function(error) {
+            alertFactory.error("Error al cargar detalles");
+        });
+    };
+
+
+
+    $scope.getFinanciera = function() {
+        $scope.promise = schemeRepository.getFinanciera().then(function(result) {
+            if (result.data.length > 0) {
+                $scope.arrFinanciera = result.data;
+            } else {
+                alertFactory.info("No se encontraron financieras");
+            }
+        }, function(error) {
+            alertFactory.error("Error al cargar financieras");
+        });
+    };
+
+    $scope.getCompany = function() {
+        $scope.promise = interestsRepository.getCompany().then(function(result) {
+            if (result.data.length > 0) {
+                $scope.arrEmpresa = result.data;
+            } else {
+                alertFactory.info("No se encontraron Empresas");
+            }
+        }, function(error) {
+            alertFactory.error("Error al cargar Empresas");
+        });
+    };
+
+    $scope.getSucursal = function(idEmpresa) {
+        $scope.promise = interestsRepository.getSucursal(idEmpresa).then(function(result) {
+            if (result.data.length > 0) {
+                $scope.arrSucursal = result.data;
+                console.log($scope.arrSucursal);
+            } else {
+                alertFactory.info("No se encontraron Sucursales");
+            }
+        }, function(error) {
+            alertFactory.error("Error al cargar Sucursales");
+        });
+    };
+
+
+    $scope.setUnidad = function(objRow) {
+
+        if ($scope.arrUnidadesSeleccionadas.length == 0 || !$scope.rowExist(objRow.idUnidad, $scope.arrUnidadesSeleccionadas)) {
+            $scope.arrUnidadesSeleccionadas.push(objRow);
+        } else {
+            $scope.removeRow(objRow.idUnidad, $scope.arrUnidadesSeleccionadas);
+        }
+
+    };
+
+
+    $scope.rowExist = function(value, objRow) {
+
+        for (var i = 0; i < objRow.length; i++) {
+            if (objRow[i].idUnidad == value) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+
+    $scope.removeRow = function(value, objRow) {
+
+        var index = -1;
+        var dataArr = eval(objRow);
+
+        for (var i = 0; i < dataArr.length; i++) {
+            if (dataArr[i].idUnidad === value) {
+                index = i;
+                break;
+            }
+        }
+        if (index === -1) {
+            alert("No hay registros");
+        }
+
+        objRow.splice(index, 1);
+    };
+
+    $scope.setFinancial = function(modal) {
+        //$('#mdlChangeFinancial').appendTo("body").modal('show');      
+        $scope.showWizzard = true;
+    };
+
+
+
+    $scope.setTablePaging = function(idTable) {
+        $('#' + idTable).DataTable({
+            dom: '<"html5buttons"B>lTfgitp',
+            // iDisplayLength: 5,
+            buttons: [{
+                extend: 'copy'
+            }, {
+                extend: 'csv'
+            }, {
+                extend: 'excel',
+                title: 'ExampleFile'
+            }, {
+                extend: 'pdf',
+                title: 'ExampleFile'
+            }, {
+                extend: 'print',
+                customize: function(win) {
+                    $(win.document.body).addClass('white-bg');
+                    $(win.document.body).css('font-size', '10px');
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                }
+            }]
+        });
+
+    };
+
+
+
+
+
+
+
 });

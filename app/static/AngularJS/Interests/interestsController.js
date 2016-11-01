@@ -1557,6 +1557,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                             $('#tableMonthlyPayment').DataTable({
                                 dom: '<"html5buttons"B>lTfgitp',
                                 iDisplayLength: 5,
+                                order: [ 0, 'desc' ],
                                 buttons: [{
                                         extend: 'copy'
                             }, {

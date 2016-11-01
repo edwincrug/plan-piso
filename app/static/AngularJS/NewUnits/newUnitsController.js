@@ -15,6 +15,8 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     $scope.editControl = true;
     $scope.disableControl = false;
 
+    $scope.editDate = false;
+
     
     $scope.init = function(){
         //console.log($scope.userData);
@@ -36,7 +38,6 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
       if(localStorageService.get('glbNewUnitsEmpresa') != null)
         {
             $scope.seleccionarEmpresa( localStorageService.get('glbNewUnitsEmpresa'),localStorageService.get('glbNewUnitsNombreEmpresa')); 
-
         };
 
 
@@ -103,6 +104,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
 
         localStorageService.set('glbNewUnitsEmpresa',idEmpresa);
         localStorageService.set('glbNewUnitsNombreEmpresa',nombreEmpresa);
+
         
         
     };  
@@ -181,7 +183,10 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                             }
                         ]
                         });
+
+
                     }, 1000);
+
                 } else {
                     alertFactory.info("No se encontraron Empresas");
                 }
@@ -227,6 +232,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                         ]
                         });
                     }, 1000);
+
                 } else {
                     alertFactory.info("No se encontraron Empresas");
                 }
@@ -614,6 +620,9 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
 
 
     $scope.calendario = function() {
+
+        console.log('se asigna calendario');
+
         $('#calendar .input-group.date').datepicker({
             todayBtn: "linked",
             keyboardNavigation: true,

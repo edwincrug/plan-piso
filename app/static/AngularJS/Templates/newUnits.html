@@ -57,6 +57,7 @@
             </div>
         </div>
     </div>
+
     <div class="wrapper wrapper-content" ng-show="getSucursal.show">
         <div class="row">
             <div class="col-lg-12">
@@ -72,9 +73,10 @@
                                         <th>Modelo</th>
                                         <th>Precio compra</th>
                                         <th>Precio venta</th>
-
-                                                                             
-                                        <th ng-show="valorCheckBoxTabla.show"></th> 
+                                        <th>Fecha Cálculo</th>
+                                        <th style="display:none;">Fecha Calculo</th>
+                                        <th>Editar</th>
+                                        <th ng-show="valorCheckBoxTabla.show"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,15 +87,23 @@
                                         <td>{{intereses.modelo}}</td>
                                         <td>{{intereses.valorInventario | currency}}</td>
                                         <td>{{intereses.precioLista | currency}}</td>
-                                        
-
-
-
-
-
-
-
-                                        
+                                        <td ng-hide="editDate">{{intereses.fechaCalculo | date:'dd-MM-yyyy'}} &nbsp;</td>
+                                        <td ng-show="editDate">
+                                            <div class="form-group pull-left" id="calendar">
+                                                <div class="input-group date">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input type="text" class="form-control" id="fInicio" ng-model="intereses.fechaCalculo" placeholder="dd/mm/yyyy">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn .btn-default" ng-hide="editDate" ng-click="editDate = true; calendario();">
+                                                <span class="glyphicon glyphicon-calendar"> </span>
+                                            </button>
+                                            <button class="btn .btn-default" ng-show="editDate" ng-click="editDate = false">
+                                                <span class="glyphicon glyphicon-ok"> </span>
+                                            </button>
+                                        </td>
                                         <td ng-show="valorCheckBoxTabla.show">
                                             <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses.idUnidad)">
                                             <label for="{{intereses.vehNumserie}}" class="css-label"></label>
