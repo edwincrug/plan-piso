@@ -1,40 +1,53 @@
 var newUnitstsURL = global_settings.urlCORS + 'api/calculo/';
 
 
-registrationModule.factory('newUnitsRepository', function ($http) {
-     return {
+registrationModule.factory('newUnitsRepository', function($http) {
+    return {
         getNewUnits: function() {
             return $http({
                 url: newUnitstsURL + 'newUnits/',
                 method: "GET"
             });
         },
-        getNewUnitsCompany: function (idEmpresa) {
+        getNewUnitsCompany: function(idEmpresa) {
             return $http({
                 url: newUnitstsURL + 'newUnitsCompany/',
                 method: "GET",
                 params: {
                     idEmpresa: idEmpresa
-                },  
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        getNewUnitsSucursal: function (idEmpresa, idSucursal) {
+        getNewUnitsSucursal: function(idEmpresa, idSucursal) {
             return $http({
                 url: newUnitstsURL + 'newUnitsSucursal/',
                 method: "GET",
                 params: {
                     idEmpresa: idEmpresa,
                     idSucursal: idSucursal
-                },  
+                },
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         },
-        updateSchemeNews: function (idEsquema,vehNumserie) {
+        updateFechaCalculo: function(idUnidad, fechaCalculo) {
+            return $http({
+                url: newUnitstsURL + 'uptCalcDate/',
+                method: "POST",
+                data: {
+                    idUnidad: idUnidad,
+                    fechaCalculo: fechaCalculo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        updateSchemeNews: function(idEsquema, vehNumserie) {
             return $http({
                 url: newUnitstsURL + 'updateschemenews/',
                 method: "POST",
@@ -47,23 +60,22 @@ registrationModule.factory('newUnitsRepository', function ($http) {
                 }
             });
         },
-        insertMovementScheme: function (idUnidad,idFinanciera,fecha,cargo,abono) {
+        insertMovementScheme: function(idUnidad, idFinanciera, fecha, cargo, abono) {
             return $http({
                 url: newUnitstsURL + 'insertmovementscheme/',
                 method: "POST",
                 data: {
-                        idUnidad : idUnidad,
-                        idFinanciera : idFinanciera,
-                        fecha : fecha,
-                        cargo : cargo,
-                        abono : abono
+                    idUnidad: idUnidad,
+                    idFinanciera: idFinanciera,
+                    fecha: fecha,
+                    cargo: cargo,
+                    abono: abono
                 },
                 headers: {
                     'Content-Type': 'application/json'
                 }
 
             });
-        } 
-     }
+        }
+    }
 });
-

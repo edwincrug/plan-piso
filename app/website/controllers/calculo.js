@@ -626,6 +626,26 @@ Calculo.prototype.get_interestcompanysucursal = function(req, res, next) {
     });
 };
 
+
+// Se muestran las unidades nuevas que no tienen un esquema asignado
+Calculo.prototype.post_uptCalcDate = function(req, res, next) {
+
+    var self = this;
+    //asignación de valores mediante parámetros del request
+    var params = [{ name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT },
+    { name: 'fechaCalculo', value: req.body.fechaCalculo, type: self.model.types.STRING }];
+
+
+    this.model.post('UPD_FECHA_CALCULO', params, function(error, result) {
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+    });
+};
+
+
+
 // Se muestran las unidades nuevas que no tienen un esquema asignado
 Calculo.prototype.get_newUnits = function(req, res, next) {
 
