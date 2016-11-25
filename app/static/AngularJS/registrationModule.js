@@ -5,7 +5,7 @@
 // -- Modificó: 
 // -- Fecha: 
 // -- =============================================
-var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy","ui.bootstrap","LocalStorageModule"])
+var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy","ui.bootstrap","LocalStorageModule","ngFileUpload"])
     .config(function($routeProvider, $locationProvider) {
 
         /*cheange the routes*/
@@ -24,6 +24,9 @@ var registrationModule = angular.module("registrationModule", ["ngRoute","cgBusy
         }).when('/agencia',{
             templateUrl: 'AngularJS/Templates/agencia.html',
             controller: 'agenciaController'
+        }).when('/conciliacion',{
+            templateUrl: 'AngularJS/Templates/conciliation.html',
+            controller: 'ConciliationController'
         }).when('/tiie',{
             templateUrl: 'AngularJS/Templates/tiie.html',
             controller: 'tiieController'

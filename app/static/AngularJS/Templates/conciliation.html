@@ -1,0 +1,169 @@
+<div ng-init="init()" cg-busy="{promise:promise,message:message}">
+    <div>
+        <div id="page-title">
+            <h2 class="page-header text-overflow ng-binding"> Conciliación Plan Piso <span ng-show="idEmpresa != null" class="ng-binding ng-hide">/ {{nombreEmpresa}}  </span><span ng-show="idFinanciera != null" class="ng-binding ng-hide">/ {{nombreFinanciera}} </span></h2>
+        </div>
+        <div class="col-sm-12" style="height:90px">
+            <div class="col-sm-2">
+                <div class="input-group-btn">
+                    <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Empresa <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="empresa in empresas">
+                            <a href="#" ng-click="seleccionarEmpresa(empresa.idEmpresa, empresa.nombre)">{{empresa.nombre}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group-btn">
+                    <button id="btnSucursal" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-loading-text="Obteniendo intereses..." autocomplete="off">Selecciona Financiera <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="empresa in financieras">
+                            <a href="#" ng-click="seleccionarFinanciera(empresa.idFinanciera , empresa.nombre)">{{empresa.nombre}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <form id="upload_form" ng-show="subirDocumento">
+                    <div class="input-group">
+                        <label class="btn btn-default">
+                            <span class="fa fa-search"></span>
+                            <input type="file" ngf-select ng-model="file" name="file" accept=".xls,.xlsx" ngf-max-size="20MB" />
+                        </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="submit" ng-click="upload(this.file)" class="btn btn-warning"><span class="fa fa-upload"><h4> Conciliar</h4></span></button>
+                    </div>
+                    <!--                                                                        <p>{{progress}}</p>-->
+                </form>
+            </div>
+<!--             <div class="col-sm-2">
+                <button ng-click="hacerValidacione()" ng-show="mostrarConci" class="btn btn-warning btn-block" type="button" name="button">Conciliar</button>
+            </div> -->
+        </div>
+        <br/>
+        <br/>
+        <div class="col-sm-12" ng-show="mostrarConcif">
+            <div class="col-lg-3">
+                <div class="widget style1 lazur-bg pointer count-info" id="set30days" ng-click="set30days()" style="padding: 5px 5px">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-automobile fa-3x"></i>
+                        </div>
+                        <div class="col-xs-7 text-center">
+                            Unidades en Financiera
+                            <h2 class="font-bold">{{totalDatosDocumento}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget style1 lazur-bg pointer count-info" id="set30days" ng-click="set30days()" style="padding: 5px 5px">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="glyphicon glyphicon-usd fa-3x"></i>
+                        </div>
+                        <div class="col-xs-7 text-center">
+                            Adeudo Financiero
+                            <h2 class="font-bold">{{AdeudoDocumento | currency}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget style1 yellow-bg pointer count-info" id="set30days" ng-click="set30days()" style="padding: 5px 5px">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-automobile fa-3x"></i>
+                        </div>
+                        <div class="col-xs-7 text-center">
+                            Unidades en Plan Piso
+                            <h2 class="font-bold">{{TotalUnidades}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget style1 yellow-bg pointer count-info" id="set30days" ng-click="set30days()" style="padding: 5px 5px">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="glyphicon glyphicon-usd fa-3x"></i>
+                        </div>
+                        <div class="col-xs-7 text-center">
+                            Adeudo Plan Piso
+                            <h2 class="font-bold">{{AdeudoPlanPiso | currency}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12" ng-show="mostrarConcif">
+            <div class="col-lg-3">
+                <div class="widget style1 lazur-bg pointer count-info" id="set30days" ng-click="set30days()" style="padding: 5px 5px">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-automobile fa-3x"></i>
+                        </div>
+                        <div class="col-xs-7 text-center">
+                            Unidades Fuera Financiera
+                            <h2 class="font-bold">{{totalDatosDocumento - TotalUnidades}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-3">
+                <div class="widget style1 yellow-bg pointer count-info" id="set30days" ng-click="set30days()" style="padding: 5px 5px">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-automobile fa-3x"></i>
+                        </div>
+                        <div class="col-xs-7 text-center">
+                            Unidades Fuera Plan Piso
+                            <h2 class="font-bold">{{sumaPP}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12" ng-show="mostrarConcif">
+            <br/>
+            <br/>
+            <br/>
+            <h3>Resumen de Conciliación</h3>
+            <div class="ibox float-e-margins" cg-busy="{promise:promise,message:message}">
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table id="interestTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Modelo</th>
+                                    <th>Marca</th>
+                                    <th>Esquema</th>
+                                    <th>VIN Plan Piso</th>
+                                    <th>VIN Financiera</th>
+                                    <th>Total Plan Piso</th>
+                                    <th>Total Financiera</th>
+                                    <th>Diferencia</th>
+                                    <th>Fecha Efectiva</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="lstVinUsuario in VinValidados">
+                                    <td>{{lstVinUsuario.descModelo}}</td>
+                                    <td>{{lstVinUsuario.marca}}</td>
+                                    <td>{{lstVinUsuario.esquema}}</td>
+                                    <td>{{lstVinUsuario.vinPlanPiso}}</td>
+                                    <td>{{lstVinUsuario.vinFinanciera}}</td>
+                                    <td>{{lstVinUsuario.totalFinanciera | currency}}</td>
+                                    <td>{{lstVinUsuario.totalDocumento | currency}}</td>
+                                    <td ng-class="setClassMargen(lstVinUsuario)">{{lstVinUsuario.totalFinanciera - lstVinUsuario.totalDocumento | currency}}</td>
+                                    <td>{{lstVinUsuario.fechaEfectiva | date:'dd-MM-yyyy'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
