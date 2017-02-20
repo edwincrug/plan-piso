@@ -447,7 +447,15 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     };
 
     // Función para hacer validación de que unidades se les puede asignar un nuevo esquema
-    $scope.hacerCambioEsquemaTraspaso = function() {
+    $scope.hacerCambioEsquemaTraspaso = function(object) {
+        console.log(object)
+        angular.forEach(object, function(value, key) {
+            if (value.check == true) {
+                $scope.idESquemaNueva = value.idEsquema;
+                $scope.nombreEsquemaNueva = value.nombre;
+            }
+        });
+         console.log($scope.idESquemaNueva+' :financiera '+$scope.nombreEsquemaNueva + ' nombre')
         $scope.validationSchemaChange();
         $('input[type=checkbox]').attr('checked', false);
         $scope.valorCheckBoxTabla.show = false;

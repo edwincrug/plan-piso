@@ -170,9 +170,8 @@
                                                 <td>{{esquema.plazo}} Días</td>
                                                 <!--td>{{}}</td-->
                                                 <td>{{getStringTasaFija(esquema.esFijo)}}</td> 
-                                                <td>            
-                                                  <input type="checkbox"  ng-attr-id="'{{esquema.idEsquema}}1'" ng-model="ck.Esquema" ng-true-value="'{{esquema.idEsquema}}'" class="css-checkbox" ng-click="idEsquemaNuevoTraspaso(ck.Esquema,esquema.nombre)">
-                                                  <label for="'{{esquema.idEsquema}}1'" class="css-label"></label>             
+                                                <td style="text-align: center;">
+                                                    <input type="checkbox" ng-model="esquema.check" ng-checked="{{esquema.check}}">
                                                 </td>
                                                     <!--td><button type="submit" class="btn  btn-default pull-left" ng-click="seleccionarEsquema(esquema.idEsquema,esquema.esFijo, esquema.nombre )"><span class="glyphicon glyphicon-info-sign"></span></button>
                                                 </td-->
@@ -213,7 +212,7 @@
                                         <button type="submit" class="btn  btn-danger pull-left" data-dismiss="modal" ng-click="cancelarCambioFinancieraTraspaso()"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
                                     </div>
                                     <div class="col-xs-2">
-                                        <button class="btn btn-primary" ng-show="idEsquemaNuevoTraspaso.show" ng-click="hacerCambioEsquemaTraspaso()">Siguiente</button>
+                                        <button class="btn btn-primary" ng-show="idEsquemaNuevoTraspaso.show" ng-click="hacerCambioEsquemaTraspaso(esquemas)">Siguiente</button>
                                     </div>
                                     <div class="col-xs-2">
                                         <button class="btn btn-primary" data-dismiss="modal" ng-show="hacerCambioEsquemaTraspaso.show" ng-click="regresarInteresesTraspaso()">Terminar</button>

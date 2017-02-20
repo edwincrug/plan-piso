@@ -752,16 +752,6 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         });
     };
 
-    // Función para guardar el valor de un checkbox en un array
-    // $scope.valorCheckBoxTabla = function (idUnidad,idu) {
-    //     if (idUnidad == false || idUnidad == undefined) {} else {
-    //         $scope.updateEsquemaUnidad.push({
-    //             vehNumserie: idUnidad,
-    //             idUnidad: idu
-    //         });
-    //     }
-    // };
-
     $scope.valorCheckBoxTabla = function (idUnidad,object) {
         if (idUnidad == false || idUnidad == undefined) {} else {
             $scope.updateEsquemaUnidad.push({
@@ -785,9 +775,15 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     };
 
     // Función para guardar el idEsquema nuevo 
-    $scope.idEsquemaNuevo = function (idEsquema, nombre) {
-        $scope.idESquemaNueva = idEsquema;
-        $scope.nombreEsquemaNueva = nombre;
+    $scope.idEsquemaNuevo = function (esquema) {
+        console.log(esquema)
+        angular.forEach(esquema, function(value, key) {
+            if (value.check == true) {
+                $scope.idESquemaNueva = value.idEsquema;
+                $scope.nombreEsquemaNueva = value.nombre;
+            }
+        });
+        console.log($scope.idESquemaNueva+' :financiera '+$scope.nombreEsquemaNueva + ' nombre')
     };
 
     $scope.idNuevaEsquema = function (idEsquemaFinanciera, nombreFinanciera) {
@@ -864,7 +860,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     };
 
     // Se agrego nueva función para generar pago de intereses
-     $scope.pagoDeIntereses = function () {
+    $scope.pagoDeIntereses = function () {
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = true;
         $scope.transpasoFinanciera.show = false;
@@ -915,13 +911,6 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $('#esquemasFinancieraNuevo').DataTable().destroy();
     };
 
-    // Función para marcar todos los checkbox
-    $scope.marcarTodosCheckbox = function (id) {
-        $('input[type=checkbox]').attr('checked', true);
-        
-            //$scope.valorCheckBoxTabla();
-    };
-
     // oculta los botones para transpaso de financiera
     $scope.cancelarTranspasoModal = function () {
         $scope.nombreFinancieraCambio = "";
@@ -969,10 +958,9 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                         ]
                 });
             }, 1000);
-            
 
+    };
 
-        };
         // Función para seleccionar nueva financiera
     $scope.seleccionarFinancieraNueva = function (idFinanciera, nombre) {
         $('#esquemasFinancieraNuevo').DataTable().destroy();
@@ -1006,9 +994,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                             }
                         ]
             });
-        }, 1000);
-        
-        
+        }, 1000);    
     };
 
     // Funanción para hacer la actualización del esquema
@@ -1310,9 +1296,15 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     };
 
     // Función para guardar el idEsquema nuevo y el nombre
-    $scope.idEsquemaNuevoTraspaso = function (idEsquema, nombre) {
-        $scope.idESquemaNueva = idEsquema;
-        $scope.nombreEsquemaNueva = nombre;
+    $scope.idEsquemaNuevoTraspaso = function (esquema) {
+     console.log(esquema)
+        angular.forEach(esquema, function(value, key) {
+            if (value.check == true) {
+                $scope.idESquemaNueva = value.idEsquema;
+                $scope.nombreEsquemaNueva = value.nombre;
+            }
+        });
+        console.log($scope.idESquemaNueva+' :financiera '+$scope.nombreEsquemaNueva + ' nombre')
     };
 
     // Función para cancelar el traspaso financiera y limpiar todas las variables 
@@ -1335,7 +1327,15 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     };
     
     // Función para mostrar las unidades con sus detalles para el traspaso financiero
-    $scope.hacerCambioEsquemaTraspaso = function () {
+    $scope.hacerCambioEsquemaTraspaso = function (object) {
+        console.log(object)
+        angular.forEach(object, function(value, key) {
+            if (value.check == true) {
+                $scope.idESquemaNueva = value.idEsquema;
+                $scope.nombreEsquemaNueva = value.nombre;
+            }
+        });
+         console.log($scope.idESquemaNueva+' :financiera '+$scope.nombreEsquemaNueva + ' nombre')
         $scope.UnitChangeFinancialDetails();
         $('input[type=checkbox]').attr('checked', false);
         $scope.idEsquemaNuevoTraspaso.show = false;        
@@ -1386,16 +1386,19 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.seleccionarFinanciera.show = false;
         $scope.getInterest.show = false;
         //$scope.checkbox();
+        $scope.updateEsquemaUnidad = [];
+        $scope.idESquemaNueva = 0;
+        $scope.nombreFinancieraCambio = "";
+        $scope.listaUnidadesConValidacion=[];
         $scope.transpasoFinanciera.show = false;
         $scope.modalCambioFinanciera.show = false;
         $scope.ocultarSucursal.show = false;
+
         $scope.getFinanciera();
         $scope.getInterestCompanySucursal.show = false;
         $('#traspasoFinancieroTabla').DataTable().destroy();
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
-        $scope.updateEsquemaUnidad = [];
-        $scope.idESquemaNueva = 0;
-        $scope.nombreFinancieraCambio = "";
+
     };
 
     // Función para agregar los detalles de las unidades a cambiar de financiera
@@ -1483,15 +1486,14 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         });
     };
     
-    $scope.updateDate = function(){
-        
+    $scope.updateDate = function(){      
             $scope.listaUnidadesConValidacion.forEach(function (updateEsquemaUnidad) {
                 interestsRepository.updateDate(updateEsquemaUnidad.idUnidad,$scope.fechaHoy).then(function (cambio) {
                     if (cambio.data.length > 0) {
                         
                     }else{}
                     });
-        });
+            });
     };
 
     $scope.panels = [
@@ -1585,10 +1587,6 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
             return 'fa fa-bank';
         }  
     };
-
-
-
-
     
     $scope.monthlyPayment = [];
 
@@ -1638,11 +1636,4 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
             alertFactory.error("Error al cargar Esquemas");
         });
     };
-
-
-
-
-
-
-
 });
