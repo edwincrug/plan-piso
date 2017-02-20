@@ -896,7 +896,14 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                     });
                 });
             }
+            $('input[type=checkbox]').attr('checked', false);
+            $scope.updateEsquemaUnidad = [];
+            $scope.pagoDeIntereses.show = false;
+        $scope.transpasoFinanciera.show = true;
+            $scope.listaUnidadesConValidacion = [];
+            $scope.valorCheckBoxTabla.show = false;
     });
+        alertFactory.success("Se genero lote de pago");
     }
 
     // Función para mostrar botones de modal de transpasos
