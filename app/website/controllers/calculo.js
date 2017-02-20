@@ -898,6 +898,53 @@ Calculo.prototype.get_movimientomensual = function(req, res, next) {
     });
 };
 
+Calculo.prototype.post_insertarLotePago = function(req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+
+    var params = [{ name: 'tipo', value: req.body.tipo, type: self.model.types.INT }];
+    this.model.post('INS_LOTE_PAGO_INTERMEDIO_SP', params, function(error, result) {
+        //Callback
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+    });
+};
+
+Calculo.prototype.post_insertarLotePagoDetalle = function(req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+
+    var params = [{ name: 'idLotePago', value: req.body.idLotePago, type: self.model.types.INT },
+                    { name: 'idUnidad', value: req.body.idUnidad    , type: self.model.types.INT },
+                    { name: 'idFinanciera', value: req.body.idFinanciera, type: self.model.types.INT },
+                    { name: 'InteresActual', value: req.body.InteresActual, type: self.model.types.DECIMAL }];
+    this.model.post('INS_LOTE_PAGO_INTERMEDIO_DETALLE_SP', params, function(error, result) {
+        //Callback
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+    });
+};
+
 
 
 module.exports = Calculo;

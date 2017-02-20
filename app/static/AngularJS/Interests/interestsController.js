@@ -283,8 +283,6 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
 
     // Función para mostrar intereses por financiera
     $scope.getInterestFinanciera = function () {
-
-        console.log('dghdfhdfdg');
         $('#interestTable').DataTable().destroy();
         $scope.interes = {};
         $scope.promise =
@@ -755,12 +753,23 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
     };
 
     // Función para guardar el valor de un checkbox en un array
-    $scope.valorCheckBoxTabla = function (idUnidad,idu) {
+    // $scope.valorCheckBoxTabla = function (idUnidad,idu) {
+    //     if (idUnidad == false || idUnidad == undefined) {} else {
+    //         $scope.updateEsquemaUnidad.push({
+    //             vehNumserie: idUnidad,
+    //             idUnidad: idu
+    //         });
+    //     }
+    // };
+
+    $scope.valorCheckBoxTabla = function (idUnidad,object) {
         if (idUnidad == false || idUnidad == undefined) {} else {
             $scope.updateEsquemaUnidad.push({
                 vehNumserie: idUnidad,
-                idUnidad: idu
+                idUnidad: object.idUnidad,
+                interesActual: object.interesAcumuladoActual
             });
+            console.log($scope.updateEsquemaUnidad)
         }
     };
 
@@ -841,8 +850,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.modalTraspasoFinanciera.show = false;
         $scope.valorCheckBoxTabla.show = false;
         $scope.transpasoFinanciera.show = true;
-        
-        
+             
     };
 
     // Función para mostrar la modal del wizard de transpaso de financiera
@@ -854,6 +862,46 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
     };
+
+    // Se agrego nueva función para generar pago de intereses
+     $scope.pagoDeIntereses = function () {
+        $scope.modalTraspasoFinanciera.show = false;
+        $scope.valorCheckBoxTabla.show = true;
+        $scope.transpasoFinanciera.show = false;
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.idESquemaNueva = 0;
+        $scope.pagoDeIntereses.show = true;
+    };
+
+    // Se agrega función para cancelar los pagos de intereses
+    $scope.cancelarPagoIntereses = function(){
+        $scope.pagoDeIntereses.show = false;
+        $scope.transpasoFinanciera.show = true;
+        $('input[type=checkbox]').attr('checked', false);
+        $scope.updateEsquemaUnidad = [];
+        $scope.listaUnidadesConValidacion = [];
+        $scope.valorCheckBoxTabla.show = false;
+    }
+
+    // Se crea función para insertar un nuevo lote de pago
+    $scope.generarPagoIntereses = function(){
+        console.log('entro a  de pago intereses')
+        $scope.promise = interestsRepository.InsertarLotePago(1).then(function (result) {
+            if(result.data.length > 0){
+                $scope.idLotePago = result.data[0].idLotePago
+                console.log($scope.idLotePago)
+                console.log($scope.updateEsquemaUnidad)
+               $scope.updateEsquemaUnidad.forEach(function (updateEsquemaUnidad) {
+                     interestsRepository.InsertarLotePagoDetalle($scope.idLotePago,updateEsquemaUnidad.idUnidad,$scope.idFinanciera,updateEsquemaUnidad.interesActual).then(function (resultado) {
+                        if(resultado.data.length >0){
+                            console.log('Agrego detalles de pago intereses')
+                        }
+                    });
+                });
+            }
+    });
+    }
 
     // Función para mostrar botones de modal de transpasos
     $scope.modalTraspasoFinanciera = function (modal) {
@@ -1370,7 +1418,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                                     idFinancieraNueva : $scope.idFinancieraCambio,
                                     nombreFinanciera: result.data[0].nombreF,
                                     idFinanciera : result.data[0].idFinanciera,
-                                    deuda: result.data[0].saldo,
+                                    deuda: result.data[0].valorInventario,
                                     fecha: new Date()
                                 });
                                 $scope.fechaIngresoInvetario = 0;
@@ -1386,7 +1434,7 @@ registrationModule.controller('interestsController', function ($scope, $rootScop
                                     idFinancieraNueva : $scope.idFinancieraCambio,
                                     nombreFinanciera: result.data[0].nombreF,
                                     idFinanciera : result.data[0].idFinanciera,
-                                    deuda: result.data[0].saldo,
+                                    deuda: result.data[0].valorInventario,
                                     fecha: new Date()
                                 });
                             }

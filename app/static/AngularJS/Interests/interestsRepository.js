@@ -224,6 +224,35 @@ registrationModule.factory('interestsRepository', function ($http) {
                     'Content-Type': 'application/json'
                 }
             });
+        },
+        InsertarLotePago: function (tipo) {
+            return $http({
+                url: interestsURL + 'insertarLotePago/',
+                method: "POST",
+                data: {
+                        tipo : tipo
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+        InsertarLotePagoDetalle: function (idLotePago,idUnidad,idFinanciera,InteresActual) {
+            return $http({
+                url: interestsURL + 'insertarLotePagoDetalle/',
+                method: "POST",
+                data: {
+                       idLotePago : idLotePago,
+                       idUnidad :  idUnidad,
+                        idFinanciera : idFinanciera,
+                       InteresActual :  InteresActual
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
         }
     };
 });

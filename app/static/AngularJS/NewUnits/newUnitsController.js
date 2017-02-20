@@ -409,6 +409,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
 
     // Función para actualizar el esquema por unidad
     $scope.updateSchemeNews = function() {
+        console.log($scope.unidadesAcambiarEsquema)
         $scope.unidadesAcambiarEsquema.forEach(function(updateEsquemaUnidad) {
             newUnitsRepository.updateSchemeNews($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function(result) {
                 if (result.data.length > 0) {
