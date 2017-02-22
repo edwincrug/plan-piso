@@ -105,7 +105,7 @@
                                             </button>
                                         </td>
                                         <td ng-show="valorCheckBoxTabla.show">
-                                            <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses.idUnidad)">
+                                            <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses.idUnidad,intereses.valorInventario)">
                                             <label for="{{intereses.vehNumserie}}" class="css-label"></label>
                                         </td>
                                     </tr>
@@ -194,7 +194,7 @@
                                                </tr>
                                             </thead>   
                                                 <tbody>
-                                                    <tr ng-repeat="unidad in listaUnidadesConValidacion">
+                                                    <tr ng-repeat="unidad in updateEsquemaUnidad">
                                                         <td  ng-class="setClass(unidad.status)">{{unidad.vehNumserie}}</td>
                                                         <td>{{nombreFinancieraCambio}}</td>
                                                         <td>{{nombreEsquemaNueva}}</td> 
