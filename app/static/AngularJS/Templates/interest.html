@@ -230,8 +230,8 @@
                                             <th>Precio venta</th>
                                             <th>Interés al corte (Pagado)</th>
                                             <th>Interés mes actual</th>
-                                            <th>Interés acumulado</th>
-                                            <th>Utilidad</th>
+                                            <th>Interés acumulado Financiera</th>
+                                            <th>Interés acumulado Total</th>
                                             <th ng-show="valorCheckBoxTabla.show"></th>
                                             <th></th>
                                         </tr>
@@ -249,7 +249,8 @@
                                             <td>{{intereses.interesAcumulado | currency}}</td>
                                             <td ng-model="interes.interesActal">{{intereses.interesAcumuladoActual | currency}}</td>
                                             <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual | currency}}</td>
-                                            <td ng-class="setClassMargen(intereses)" ng-model="inter.margen">{{intereses.precioVenta - (intereses.interesAcumuladoActual + intereses.interesAcumulado + intereses.precioCompra) | currency}}</td>
+                                            <!-- <td ng-class="setClassMargen(intereses)" ng-model="inter.margen">{{intereses.precioVenta - (intereses.interesAcumuladoActual + intereses.interesAcumulado + intereses.precioCompra) | currency}}</td> -->
+                                            <td>{{intereses.intAcumulado | currency}}</td>
                                             <td ng-show="valorCheckBoxTabla.show">
                                                 <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses)">
                                                 <label for="{{intereses.vehNumserie}}" class="css-label"></label>
