@@ -101,9 +101,6 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
 
         localStorageService.set('glbNewUnitsEmpresa', idEmpresa);
         localStorageService.set('glbNewUnitsNombreEmpresa', nombreEmpresa);
-
-
-
     };
 
     // Función para filtrar por sucursal
@@ -519,16 +516,18 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         return $scope.lstTiie[value - 1].text;
     };
 
-    $scope.lstTiie = [{
-        value: 1,
-        text: 'TIIE Actual'
-    }, {
-        value: 2,
-        text: 'TIIE Promedio'
-    }, {
-        value: 3,
-        text: 'TIIE Fija'
-    }];
+    $scope.lstTiie = [
+        {
+            value: 1,
+            text: 'TIIE Actual'
+        }, {
+            value: 2,
+            text: 'TIIE Promedio'
+        }, {
+            value: 3,
+            text: 'TIIE Fija'
+        }
+    ];
 
     // Validación para mostrar las unidades que pueden cambiar el esquema
     $scope.validationSchemaChange = function() {
@@ -585,23 +584,6 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
        // });
 
 
-    // $scope.unidadesAutorizadas = function() {
-    //     $scope.unidadesAcambiarEsquema = [];
-    //     $scope.listaUnidadesConValidacion.forEach(function(listaUnidadesConValidacion) {
-    //         if (listaUnidadesConValidacion.status == "OK") {
-    //             $scope.unidadesAcambiarEsquema.push({
-    //                 vehNumserie: listaUnidadesConValidacion.vehNumserie,
-    //                 idUnidad: listaUnidadesConValidacion.idUnidad,
-    //                 idFinanciera: listaUnidadesConValidacion.idFinanciera,
-    //                 idCostoInventario: listaUnidadesConValidacion.idCostoInventario,
-    //                 fecha: $scope.fechaHoy
-    //             });
-    //         } else {
-    //             //console.log('Unidad No validad', listaUnidadesConValidacion.vehNumserie)
-    //         }
-    //     });
-    // };
-
     $scope.setClass = function(status) {
         switch (status) {
             case 'OK':
@@ -648,9 +630,4 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         });
 
     }
-
-
-
-
-
 });

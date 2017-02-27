@@ -253,6 +253,23 @@ registrationModule.factory('interestsRepository', function ($http) {
                 }
 
             });
+        },
+         Insertartraspasocxp: function (idLotePago,idAccion,leyenda,idFinancieraOrigen,idFinancieraDestino) {
+            return $http({
+                url: interestsURL + 'insertartraspasocxp/',
+                method: "POST",
+                data: {
+                       idLotePago : idLotePago,
+                       idAccion :  idAccion,
+                        leyenda : leyenda,
+                       idFinancieraOrigen :  idFinancieraOrigen,
+                       idFinancieraDestino: idFinancieraDestino
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
         }
     };
 });

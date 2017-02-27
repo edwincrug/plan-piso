@@ -945,6 +945,31 @@ Calculo.prototype.post_insertarLotePagoDetalle = function(req, res, next) {
     });
 };
 
+Calculo.prototype.post_insertartraspasocxp = function(req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+
+    var params = [{ name: 'loteID', value: req.body.idLotePago, type: self.model.types.INT },
+                    { name: 'idAccion', value: req.body.idAccion    , type: self.model.types.INT },
+                    { name: 'leyenda', value: req.body.leyenda, type: self.model.types.STRING },
+                    { name: 'idFinancieraOrigen', value: req.body.idFinancieraOrigen, type: self.model.types.INT },
+                    { name: 'idFinancieraDestino', value: req.body.idFinancieraDestino, type: self.model.types.INT }];
+    this.model.post('INS_TRASPASO_FINANCIERO_CXP', params, function(error, result) {
+        //Callback
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+    });
+};
 
 
 module.exports = Calculo;
