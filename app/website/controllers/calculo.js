@@ -604,6 +604,38 @@ Calculo.prototype.post_updateusrpayment = function(req, res, next) {
 
 
 
+// Actualiza los pagos modificados por el ususario 
+Calculo.prototype.post_insertPolizaCXP = function(req, res, next) {
+    //Objeto que almacena la respuesta
+    var object = {};
+
+    var params = {};
+    //Referencia a la clase para callback
+    var self = this;
+    //Objeto que envía los parámetros
+    //Asigno a params el valor de mis variables
+
+    var params = [
+        { name: 'loteID', value: req.body.loteID, type: self.model.types.INT },
+        { name: 'idAccion', value: req.body.idAccion, type: self.model.types.INT },
+        { name: 'leyenda', value: req.body.leyenda, type: self.model.types.STRING }
+    ];
+
+
+    this.model.post('INS_LOTE_POLIZA_CXP', params, function(error, result) {
+        //Callback
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+    });
+};
+
+
+
+
 
 // Se obtine los intereses de las unidades por empresa y sucursal
 Calculo.prototype.get_interestcompanysucursal = function(req, res, next) {

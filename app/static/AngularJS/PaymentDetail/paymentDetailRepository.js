@@ -6,16 +6,29 @@ registrationModule.factory('paymentDetailRepository', function($http) {
     return {
 
 
-
-
-      //  updateScheme: function (idEsquema,vehNumserie) {
-        updateUsrPayment: function (idDetallePago,monto) {
+        //  updateScheme: function (idEsquema,vehNumserie) {
+        updateUsrPayment: function(idDetallePago, monto) {
             return $http({
                 url: interestsURL + 'updateusrpayment/',
                 method: "POST",
                 data: {
                     idDetallePago: idDetallePago,
                     monto: monto
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        },
+        insertPolizaCXP: function(loteID,idAccion,leyenda) {
+
+            return $http({                
+                url: interestsURL + 'insertPolizaCXP/',
+                method: "POST",
+                data: {
+                        loteID :loteID,
+                        idAccion :idAccion,
+                        leyenda :leyenda
                 },
                 headers: {
                     'Content-Type': 'application/json'

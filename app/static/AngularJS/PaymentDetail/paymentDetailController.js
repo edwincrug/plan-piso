@@ -13,10 +13,13 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
     $scope.showbtnConfirm = false;
     $scope.showbtnSend = false;
 
+    $scope.currentLote = 0;
+
 
     $scope.init = function() {
 
         $scope.showDetail($routeParams.id);
+        $scope.currentLote = $routeParams.id;
         $scope.setButtons($routeParams.lotStatus);
 
         if ($routeParams.mode == 'review') {
@@ -87,13 +90,28 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
                 alertFactory.info("Rechazado");
                 break;
             case $scope.mdlAction.aprobar:
-                $location.path('/payment/');
+                $scope.insertLoteCXP($scope.currentLote);
                 alertFactory.info("Aprobado");
+                // $location.path('/payment/');                            
                 break;
             default:
                 $scope.mdlMessage = "";
         }
         $scope.mdlCurrent = 0;
+    };
+
+    $scope.insertLoteCXP = function(idLote) {
+
+        $scope.promise = paymentDetailRepository.insertPolizaCXP(idLote, 1, 'Interes Plan Piso').then(function(result) {
+            if (result.data.length > 0) {
+                alertFactory.success("Lote de pago insertado y actualizado");
+            } else {
+                alertFactory.info("No se pudo insertar el lote");
+            }
+        }, function(error) {
+            alertFactory.error("Ocurrio un error al insertar");
+        });
+
     };
 
 
