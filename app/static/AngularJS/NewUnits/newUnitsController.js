@@ -153,6 +153,9 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 setTimeout(function() {
                     $('#newUnits').DataTable({
                         dom: '<"html5buttons"B>lTfgitp',
+                        order: [
+                            [0, 'desc']
+                        ],
                         buttons: [{
                                 extend: 'copy'
                             }, {
@@ -201,6 +204,9 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 setTimeout(function() {
                     $('#newUnits').DataTable({
                         dom: '<"html5buttons"B>lTfgitp',
+                        order: [
+                            [0, 'desc']
+                        ],
                         buttons: [{
                                 extend: 'copy'
                             }, {
@@ -247,6 +253,9 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 setTimeout(function() {
                     $('#newUnits').DataTable({
                         dom: '<"html5buttons"B>lTfgitp',
+                        order: [
+                            [0, 'desc']
+                        ],
                         buttons: [{
                                 extend: 'copy'
                             }, {
@@ -386,13 +395,23 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
     };
 
     // Función para guardar en una lista los id de unidades para asignación de esquema
-    $scope.valorCheckBoxTabla = function(idUnidad, idu,valorInventario) {
+    $scope.valorCheckBoxTabla = function(idUnidad, currentRow) {
+
+        console.log(idUnidad);
+
+        if (currentRow.vehNumserie == '0') {
+            idUnidad = false;
+            alertFactory.info("La unidad con vin 0 no se asignara");
+            return;
+        }
+
+
         if (idUnidad == false || idUnidad == undefined) {} else {
             $scope.updateEsquemaUnidad.push({
-                vehNumserie: idUnidad,
-                idUnidad: idu,
+                vehNumserie: currentRow.vehNumserie,
+                idUnidad: currentRow.idUnidad,
                 fecha: new Date(),
-                idCostoInventario:valorInventario
+                idCostoInventario: currentRow.valorInventario
             });
             // console.log($scope.updateEsquemaUnidad)
         }
@@ -454,7 +473,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
                 $scope.nombreEsquemaNueva = value.nombre;
             }
         });
-         console.log($scope.idESquemaNueva+' :financiera '+$scope.nombreEsquemaNueva + ' nombre')
+        console.log($scope.idESquemaNueva + ' :financiera ' + $scope.nombreEsquemaNueva + ' nombre')
         $scope.validationSchemaChange();
         $('input[type=checkbox]').attr('checked', false);
         $scope.valorCheckBoxTabla.show = false;
@@ -505,6 +524,8 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         $scope.listaUnidadesConValidacion = [];
         $scope.idESquemaNueva = 0;
         $scope.nombreFinancieraCambio = "";
+        window.scrollTo(0,0);
+        alertFactory.info("Asignacion finalizada.");
     };
 
     $scope.getStringTasaFija = function(value) {
@@ -516,72 +537,70 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         return $scope.lstTiie[value - 1].text;
     };
 
-    $scope.lstTiie = [
-        {
-            value: 1,
-            text: 'TIIE Actual'
-        }, {
-            value: 2,
-            text: 'TIIE Promedio'
-        }, {
-            value: 3,
-            text: 'TIIE Fija'
-        }
-    ];
+    $scope.lstTiie = [{
+        value: 1,
+        text: 'TIIE Actual'
+    }, {
+        value: 2,
+        text: 'TIIE Promedio'
+    }, {
+        value: 3,
+        text: 'TIIE Fija'
+    }];
 
     // Validación para mostrar las unidades que pueden cambiar el esquema
     $scope.validationSchemaChange = function() {
-        //$('#unidadesCambioEsquemaNuevos').DataTable().destroy();
-        // $scope.listaUnidadesConValidacion = [];
-        // $scope.updateEsquemaUnidad.forEach(function(updateEsquemaUnidad) {
-        //     $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function(result) {
-        //         if (result.data.length > 0) {
-        //             interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function(esquemaNuevo) {
-        //                 if (esquemaNuevo.data.length > 0) {
-        //                     if (esquemaNuevo.data[0].esFijo == 1) {
-        //                         $scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
-        //                         $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
-        //                         if ($scope.fechaEsquemaNuevo <= $scope.fechaIngresoInvetario) {
-        //                             $scope.listaUnidadesConValidacion.push({
-        //                                 vehNumserie: updateEsquemaUnidad.vehNumserie,
-        //                                 observaciones: "Esta Unidad se puede transferir a esquema de fechas",
-        //                                 status: "OK",
-        //                                 idUnidad: updateEsquemaUnidad.idUnidad,
-        //                                 idFinanciera: $scope.idESquemaNueva,
-        //                                 idCostoInventario: result.data[0].valorInventario
-        //                             });
-        //                             $scope.fechaIngresoInvetario = 0;
-        //                         } else {
-        //                             $scope.listaUnidadesConValidacion.push({
-        //                                 vehNumserie: updateEsquemaUnidad.vehNumserie,
-        //                                 observaciones: "Esta Unidad no se puede transferir, tiene un excedente de días",
-        //                                 status: "EXCEEDED",
-        //                                 idUnidad: updateEsquemaUnidad.idUnidad,
-        //                                 idFinanciera: $scope.idESquemaNueva,
-        //                                 idCostoInventario: result.data[0].valorInventario
-        //                             });
-        //                             $scope.fechaIngresoInvetario = 0;
-        //                         }
-        //                     } else {
-        //                         $scope.listaUnidadesConValidacion.push({
-        //                             vehNumserie: updateEsquemaUnidad.vehNumserie,
-        //                             observaciones: "Esta Unidad se puede transferir",
-        //                             status: "OK",
-        //                             idUnidad: updateEsquemaUnidad.idUnidad,
-        //                             idFinanciera: $scope.idESquemaNueva,
-        //                             idCostoInventario: result.data[0].valorInventario
-        //                         });
-        //                     }
-                            //$scope.unidadesAutorizadas();
+            //$('#unidadesCambioEsquemaNuevos').DataTable().destroy();
+            // $scope.listaUnidadesConValidacion = [];
+            // $scope.updateEsquemaUnidad.forEach(function(updateEsquemaUnidad) {
+            //     $scope.promise = interestsRepository.getDetalleUnidadEsquema(updateEsquemaUnidad.vehNumserie).then(function(result) {
+            //         if (result.data.length > 0) {
+            //             interestsRepository.getDetalleEsquemaUnidad($scope.idESquemaNueva).then(function(esquemaNuevo) {
+            //                 if (esquemaNuevo.data.length > 0) {
+            //                     if (esquemaNuevo.data[0].esFijo == 1) {
+            //                         $scope.fechaIngresoInvetario = result.data[0].vehFecremisions;
+            //                         $scope.fechaEsquemaNuevo = esquemaNuevo.data[0].fechaInicio;
+            //                         if ($scope.fechaEsquemaNuevo <= $scope.fechaIngresoInvetario) {
+            //                             $scope.listaUnidadesConValidacion.push({
+            //                                 vehNumserie: updateEsquemaUnidad.vehNumserie,
+            //                                 observaciones: "Esta Unidad se puede transferir a esquema de fechas",
+            //                                 status: "OK",
+            //                                 idUnidad: updateEsquemaUnidad.idUnidad,
+            //                                 idFinanciera: $scope.idESquemaNueva,
+            //                                 idCostoInventario: result.data[0].valorInventario
+            //                             });
+            //                             $scope.fechaIngresoInvetario = 0;
+            //                         } else {
+            //                             $scope.listaUnidadesConValidacion.push({
+            //                                 vehNumserie: updateEsquemaUnidad.vehNumserie,
+            //                                 observaciones: "Esta Unidad no se puede transferir, tiene un excedente de días",
+            //                                 status: "EXCEEDED",
+            //                                 idUnidad: updateEsquemaUnidad.idUnidad,
+            //                                 idFinanciera: $scope.idESquemaNueva,
+            //                                 idCostoInventario: result.data[0].valorInventario
+            //                             });
+            //                             $scope.fechaIngresoInvetario = 0;
+            //                         }
+            //                     } else {
+            //                         $scope.listaUnidadesConValidacion.push({
+            //                             vehNumserie: updateEsquemaUnidad.vehNumserie,
+            //                             observaciones: "Esta Unidad se puede transferir",
+            //                             status: "OK",
+            //                             idUnidad: updateEsquemaUnidad.idUnidad,
+            //                             idFinanciera: $scope.idESquemaNueva,
+            //                             idCostoInventario: result.data[0].valorInventario
+            //                         });
+            //                     }
+            //$scope.unidadesAutorizadas();
         }
-                    //});
-            //     } else {
-            //         alertFactory.info("Esquema no cambiado");
-            //     }
-            // }, function(error) {
-            //     alertFactory.error("Error al cambiar Esquema");
-            // });
-       // });
+        //});
+        //     } else {
+        //         alertFactory.info("Esquema no cambiado");
+        //     }
+        // }, function(error) {
+        //     alertFactory.error("Error al cambiar Esquema");
+        // });
+        // });
 
 
     $scope.setClass = function(status) {
@@ -601,7 +620,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
 
     $scope.calendario = function() {
 
-        console.log('se asigna calendario');
+        
 
         $('#calendar .input-group.date').datepicker({
             todayBtn: "linked",
@@ -618,10 +637,10 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
 
     $scope.saveCalcDate = function(obj) {
 
-        newUnitsRepository.updateFechaCalculo(obj.idUnidad ,obj.fechaCalculo).then(function(result) {
+        newUnitsRepository.updateFechaCalculo(obj.idUnidad, obj.fechaCalculo).then(function(result) {
             if (result.data.length > 0) {
                 alertFactory.info("Actualización de fecha Correcto");
-                console.log(result.data);
+                
             } else {
                 alertFactory.info("No se pudo cambiar la fecha");
             }
