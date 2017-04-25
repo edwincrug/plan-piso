@@ -400,7 +400,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
         console.log(idUnidad);
 
         if (currentRow.vehNumserie == '0') {
-            idUnidad = false;
+            
             alertFactory.info("La unidad con vin 0 no se asignara");
             return;
         }

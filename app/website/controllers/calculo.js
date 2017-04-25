@@ -520,6 +520,25 @@ Calculo.prototype.post_insertesquemafecha = function(req, res, next) {
     });
 };
 
+
+// Agrega una nueva financiera
+Calculo.prototype.post_deleteSchema = function(req, res, next) {
+
+    var self = this;
+
+    var params = [{ name: 'idEsquema', value: req.body.idEsquema, type: self.model.types.INT }];
+
+    this.model.post('DEL_SCHEMA', params, function(error, result) {
+        //Callback
+
+        self.view.expositor(res, {
+            error: error,
+            result: result
+        });
+
+    });
+}
+
 // Agrega una nueva financiera
 Calculo.prototype.post_newfinancial = function(req, res, next) {
     //Objeto que almacena la respuesta

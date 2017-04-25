@@ -811,7 +811,36 @@ registrationModule.controller('schemeController', function($scope, $rootScope, a
             }
         });
         // showResults();
-    }
+    };
+
+    $scope.deleteSchema = function(idEsquema) {
+
+        console.log("cdesf:" + idEsquema);
+
+        schemeRepository.deleteSchema(idEsquema).then(function(result) {
+            if (result.data.length > 0) {
+                alertFactory.success("Se elimino el esquema");
+                $scope.init();
+            } else {
+                alertFactory.info("No se pudo eliminar");
+            }
+        }, function(error) {
+            alertFactory.error("Error al eliminar Esquema");
+        });
+
+    };
+
+    $scope.alertDeleteSchema = function (idEsquema){
+
+        var r = confirm("¿Estas seguro que deseas eliminar el esquema?");
+
+        if (r === true) {
+            $scope.deleteSchema(idEsquema);
+        } else {
+            alertFactory.warning("Cancelado");
+        }
+
+    };
 
 
 

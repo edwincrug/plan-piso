@@ -62,6 +62,21 @@ registrationModule.factory('schemeRepository', function ($http) {
             });
         },
 
+
+        deleteSchema: function (idEsquema) {
+            return $http({
+                url: schemeURL + 'deleteSchema/',
+                method: "POST",
+                data: {
+                    idEsquema: idEsquema
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            });
+        },
+
         newFinancial: function (nombre) {
             return $http({
                 url: schemeURL + 'newfinancial/',

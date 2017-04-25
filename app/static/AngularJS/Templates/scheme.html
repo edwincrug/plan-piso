@@ -26,7 +26,7 @@
                     <a href="#" ng-click="seleccionarFinanciera(financiera.idFinanciera, financiera.nombre)">{{financiera.nombre}}</a>
                 </li>
             </ul>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="abrirModalFinanciera()" style="background:#23C6C8; color:#fff">Nueva Financiera</button>
+            <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="abrirModalFinanciera()" style="background:#23C6C8; color:#fff">Nueva Financiera</button> -->
         </div>
     </div>
     <div class="wrapper wrapper-content" ng-show="getEsquemaFinanciera.show ">
@@ -61,6 +61,11 @@
                                             <button type="button" class="btn btn-default" ng-click="nuevoEsquema(esquema.idEsquema,esquema.esFijo)">
                                                 <span class="glyphicon glyphicon-edit"> </span>
                                             </button>
+
+                                            <button type="button" class="btn btn-default" ng-disabled="esquema.numAsignado > 0" ng-click="alertDeleteSchema(esquema.idEsquema)" >
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+
                                         </td>
                                     </tr>
                                 </tbody>
