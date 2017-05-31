@@ -887,13 +887,31 @@ registrationModule.controller('interestsController', function($scope, $rootScope
     }
 
     // Se crea función para insertar un nuevo lote de pago
-    $scope.generarPagoIntereses = function() {
-        console.log('entro a  de pago intereses')
-        $scope.promise = interestsRepository.InsertarLotePago(1).then(function(result) {
+    $scope.generarPagoIntereses = function(obj) {
+
+        angular.forEach(obj, function(value, key) {
+            if (value.check == true) {
+                $scope.updateEsquemaUnidad.push({
+                    vehNumserie: value.vehNumserie,
+                    idUnidad: value.idUnidad,
+                    interesActual: value.interesAcumuladoActual,
+                    saldo: value.interesAcumuladoActual + value.precioCompra,
+                    idFinanciera: value.idfinanciera
+                });
+                $scope.lstNuevaUnidades.push({
+                    vehNumserie: value.vehNumserie,
+                    idUnidad: value.idUnidad,
+                    interesActual: value.interesAcumuladoActual,
+                    saldo: value.interesAcumuladoActual + value.precioCompra,
+                    idFinanciera: value.idfinanciera
+                })
+            }
+        });
+
+
+        $scope.promise = interestsRepository.InsertarLotePago(2).then(function(result) {
             if (result.data.length > 0) {
                 $scope.idLotePago = result.data[0].idLotePago
-                console.log($scope.idLotePago)
-                console.log($scope.updateEsquemaUnidad)
                 $scope.updateEsquemaUnidad.forEach(function(updateEsquemaUnidad) {
                     interestsRepository.InsertarLotePagoDetalle($scope.idLotePago, updateEsquemaUnidad.idUnidad, $scope.idFinanciera, updateEsquemaUnidad.interesActual).then(function(resultado) {
                         if (resultado.data.length > 0) {
@@ -909,6 +927,8 @@ registrationModule.controller('interestsController', function($scope, $rootScope
             $scope.listaUnidadesConValidacion = [];
             $scope.valorCheckBoxTabla.show = false;
         });
+
+
         alertFactory.success("Se genero lote de pago");
     }
 
@@ -1253,12 +1273,32 @@ registrationModule.controller('interestsController', function($scope, $rootScope
     };
 
     // Función para abrir la modal de traspaso financiero
-    $scope.modalCambioFinanciera = function(modal) {
+    $scope.modalCambioFinanciera = function(obj) {
+
+        angular.forEach(obj, function(value, key) {
+            if (value.check == true) {
+                $scope.updateEsquemaUnidad.push({
+                    vehNumserie: value.vehNumserie,
+                    idUnidad: value.idUnidad,
+                    interesActual: value.interesAcumuladoActual,
+                    saldo: value.interesAcumuladoActual + value.precioCompra,
+                    idFinanciera: value.idfinanciera
+                });
+                $scope.lstNuevaUnidades.push({
+                    vehNumserie: value.vehNumserie,
+                    idUnidad: value.idUnidad,
+                    interesActual: value.interesAcumuladoActual,
+                    saldo: value.interesAcumuladoActual + value.precioCompra,
+                    idFinanciera: value.idfinanciera
+                })
+            }
+        });
+
         $scope.hacerCambioEsquemaTraspaso.show = false;
         $('#traspasoFinanciero').appendTo("body").modal('show');
         $scope.idEsquemaNuevoTraspaso.show = true;
         $scope.idESquemaNueva = 0;
-        $scope.modal = modal;
+        //$scope.modal = modal;
         $scope.esquemas = {};
         $('#esquemasFinancieraNuevoTraspaso').DataTable().destroy();
     };
@@ -1401,6 +1441,26 @@ registrationModule.controller('interestsController', function($scope, $rootScope
 
     };
 
+
+    $scope.insertLoteCXP = function(idLote) {
+
+        $scope.promise = paymentDetailRepository.insertPolizaCXP(idLote, 1, 'Interes Plan Piso').then(function(result) {
+            if (result.data.length > 0) {
+                $scope.showbtnConfirm = false;
+                alertFactory.success("Lote de pago insertado y actualizado");
+
+
+            } else {
+                alertFactory.info("No se pudo insertar el lote");
+            }
+        }, function(error) {
+            alertFactory.error("Ocurrio un error al insertar");
+        });
+
+    };
+
+
+
     // Función para agregar los detalles de las unidades a cambiar de financiera
     $scope.UnitChangeFinancialDetails = function() {
         $('#traspasoFinancieroTabla').DataTable().destroy();
@@ -1468,29 +1528,29 @@ registrationModule.controller('interestsController', function($scope, $rootScope
     };
 
     $scope.InsertarLotePagoTraspaso = function() {
-        $scope.promise = interestsRepository.InsertarLotePago(1).then(function(result) {
+        $scope.promise = interestsRepository.InsertarLotePago(2).then(function(result) {
             if (result.data.length > 0) {
                 $scope.idLotePago = result.data[0].idLotePago
-                $scope.idfinancieraorigen =  $scope.lstNuevaUnidades[0].idFinanciera
-                //console.log($scope.lstNuevaUnidades.idFinanciera)
+                $scope.idfinancieraorigen = $scope.lstNuevaUnidades[0].idFinanciera
+                    //console.log($scope.lstNuevaUnidades.idFinanciera)
                 $scope.lstNuevaUnidades.forEach(function(updateEsquemaUnidad) {
                     interestsRepository.InsertarLotePagoDetalle($scope.idLotePago, updateEsquemaUnidad.idUnidad, updateEsquemaUnidad.idFinanciera, updateEsquemaUnidad.saldo).then(function(resultado) {
                         if (resultado.data.length > 0) {
-                    
+
                         }
                     });
                 });
-                $scope.Insertartraspasocxp($scope.idLotePago,$scope.idfinancieraorigen);
+                $scope.Insertartraspasocxp($scope.idLotePago, $scope.idfinancieraorigen);
             }
         });
-        
+
         //$scope.lstNuevaUnidades = [];
     }
 
-    $scope.Insertartraspasocxp = function(idlotepago,idfinancieraorigen) {
-        interestsRepository.Insertartraspasocxp(idlotepago,1, 'Traspaso Financiero', idfinancieraorigen,$scope.idFinancieraCambio).then(function(resultado) {
+    $scope.Insertartraspasocxp = function(idlotepago, idfinancieraorigen) {
+        interestsRepository.Insertartraspasocxp(idlotepago, 1, 'Traspaso Financiero', idfinancieraorigen, $scope.idFinancieraCambio).then(function(resultado) {
             if (resultado.data.length > 0) {
-                 alertFactory.info("Se realizó con éxito traspaso financiero");
+                alertFactory.info("Se realizó con éxito traspaso financiero");
             }
         });
         $scope.lstNuevaUnidades = [];

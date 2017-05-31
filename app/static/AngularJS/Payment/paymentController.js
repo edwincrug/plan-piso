@@ -1,7 +1,7 @@
-registrationModule.controller('paymentController', function($scope, $rootScope,$location, alertFactory, paymentRepository,localStorageService) {
+registrationModule.controller('paymentController', function($scope, $rootScope, $location, alertFactory, paymentRepository, localStorageService) {
 
     $scope.userData = localStorageService.get('userData');
-    $rootScope.empleadoNombre="";
+    $rootScope.empleadoNombre = "";
     $scope.loteNoAplicado = [];
     $scope.loteAplicado = [];
 
@@ -17,38 +17,36 @@ registrationModule.controller('paymentController', function($scope, $rootScope,$
         $scope.getEmpleados();
     };
 
-    $scope.getEmpleados = function(){
-        if(!($('#lgnUser').val().indexOf('[') > -1)){
+    $scope.getEmpleados = function() {
+        if (!($('#lgnUser').val().indexOf('[') > -1)) {
             localStorageService.set('lgnUser', $('#lgnUser').val());
             //$scope.getEmpleado();
-        }
-        else{
-            if(($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')){
-                if(getParameterByName('employee') != ''){
+        } else {
+            if (($('#lgnUser').val().indexOf('[') > -1) && !localStorageService.get('lgnUser')) {
+                if (getParameterByName('employee') != '') {
                     $rootScope.currentEmployee = getParameterByName('employee');
                     return;
-                     $scope.getUsuario();
+                    $scope.getUsuario();
                     console.log('pasoaquidos')
-                }
-                else{
-                    if($scope.userData == null){
-                          alert('Inicie sesión desde panel de aplicaciones .');
-                    //window.close(); 
-                    location.href = '/';
-                        
-                    }else{
+                } else {
+                    if ($scope.userData == null) {
+                        alert('Inicie sesión desde panel de aplicaciones .');
+                        //window.close(); 
+                        location.href = '/';
+
+                    } else {
                         console.log('pasoaqui')
                         $rootScope.empleadoNombre = $scope.userData[0].nombre;
-                 
+
                     }
                 }
-                
+
             }
         }
         //Obtengo el empleado logueado
         $rootScope.currentEmployee = localStorageService.get('lgnUser');
     };
-    
+
     $scope.getNoPaymentReport = function(idStatus) {
 
         $scope.promise = paymentRepository.getPaymentReport(idStatus).then(function(result) {
@@ -83,19 +81,29 @@ registrationModule.controller('paymentController', function($scope, $rootScope,$
 
     $scope.allowEdit = function(idLote, idStatus) {
 
-        switch (idStatus) {
-            case 4:
-                $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/edit');
-                break;
-            case 2:
-            case 3:
-            case 1:
-            case 5:
-                $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/review');
-                break;
-            default:
-                $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/review');
-        }
+
+        if (idStatus == 5)
+            $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/review');
+        else
+            $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/edit');
+
+
+        /*  deshabilitado temporal
+                switch (idStatus) {
+                    case 4:
+                        $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/edit');
+                        break;
+                    case 2:
+                    case 3:
+                    case 1:
+                    case 5:
+                        $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/review');
+                        break;
+                    default:
+                        $location.path('/paymentdetail/' + idLote + '/' + idStatus + '/review');
+                }
+                */
+
 
     };
 

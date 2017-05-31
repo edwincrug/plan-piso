@@ -31,6 +31,15 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
 
     $scope.setButtons = function(idStatus) {
 
+
+        if (idStatus == 5)
+            $scope.showbtnConfirm = false;
+        else
+            $scope.showbtnConfirm = true;
+
+
+        /*
+
         switch (parseInt(idStatus)) {
             case 4:
                 $scope.showbtnConfirm = false;
@@ -44,6 +53,8 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
                 $scope.showbtnConfirm = false;
                 $scope.showbtnSend = false;
         }
+
+        */
 
     };
 
@@ -80,6 +91,11 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
 
     $scope.execActionConfirmBox = function() {
 
+
+        $scope.insertLoteCXP($scope.currentLote);
+
+        /*
+
         switch ($scope.mdlCurrent) {
             case $scope.mdlAction.enviar:
                 $location.path('/payment/');
@@ -98,13 +114,17 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
                 $scope.mdlMessage = "";
         }
         $scope.mdlCurrent = 0;
+        */
     };
 
     $scope.insertLoteCXP = function(idLote) {
 
         $scope.promise = paymentDetailRepository.insertPolizaCXP(idLote, 1, 'Interes Plan Piso').then(function(result) {
             if (result.data.length > 0) {
+                $scope.showbtnConfirm = false;
                 alertFactory.success("Lote de pago insertado y actualizado");
+                
+
             } else {
                 alertFactory.info("No se pudo insertar el lote");
             }
@@ -117,26 +137,32 @@ registrationModule.controller('paymentDetailController', function($scope, $locat
 
     $scope.showconfirmBox = function(type) {
 
-        $scope.mdlMessage = "";
-        $scope.mdlCurrent = 0;
+        $scope.mdlCurrent = $scope.mdlAction.aprobar;
+        $scope.mdlMessage = "¿Esta seguro de Aprobar el lote?";
 
-        switch (type) {
-            case $scope.mdlAction.enviar:
-                $scope.mdlCurrent = $scope.mdlAction.enviar;
-                $scope.mdlMessage = "El lote será enviado para aprobación. \n ¿Desea continuar?";
-                break;
-            case $scope.mdlAction.rechazar:
-                $scope.mdlCurrent = $scope.mdlAction.rechazar;
-                $scope.mdlMessage = "¿Esta seguro de rechazar el lote?";
-                break;
-            case $scope.mdlAction.aprobar:
-                $scope.mdlCurrent = $scope.mdlAction.aprobar;
-                $scope.mdlMessage = "¿Esta seguro de Aprobar el lote?";
-                break;
-            default:
-                $scope.mdlCurrent = 0;
+
+        /*
                 $scope.mdlMessage = "";
-        }
+                $scope.mdlCurrent = 0;
+
+                switch (type) {
+                    case $scope.mdlAction.enviar:
+                        $scope.mdlCurrent = $scope.mdlAction.enviar;
+                        $scope.mdlMessage = "El lote será enviado para aprobación. \n ¿Desea continuar?";
+                        break;
+                    case $scope.mdlAction.rechazar:
+                        $scope.mdlCurrent = $scope.mdlAction.rechazar;
+                        $scope.mdlMessage = "¿Esta seguro de rechazar el lote?";
+                        break;
+                    case $scope.mdlAction.aprobar:
+                        $scope.mdlCurrent = $scope.mdlAction.aprobar;
+                        $scope.mdlMessage = "¿Esta seguro de Aprobar el lote?";
+                        break;
+                    default:
+                        $scope.mdlCurrent = 0;
+                        $scope.mdlMessage = "";
+                }
+                */
 
         $('#mldConfirmBox').appendTo("body").modal('show');
     };

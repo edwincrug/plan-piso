@@ -226,8 +226,8 @@
                                             <th>Nombre esquema</th>
                                             <th>Días con Interés </th>
                                             <th>Días restantes </th>
-                                            <th>Precio compra</th>
-                                            <th>Precio venta</th>
+                                            <th>Importe</th>
+                                            <th>Saldo</th>
                                             <th>Interés al corte (Pagado)</th>
                                             <th>Interés mes actual</th>
                                             <th>Interés acumulado Financiera</th>
@@ -243,17 +243,16 @@
                                             <td>{{intereses.modelo}}</td>
                                             <td ng-model="interes.nombreEsquemaActual">{{intereses.esquema}}</td>
                                             <td ng-class="setClassDias(intereses)">{{intereses.diasPlanPiso}}</td>
-                                            <td>{{ intereses.plazo - intereses.diasGracia - intereses.diasPlanPiso}}</td>
-                                            <td ng-model="interes.deuda">{{intereses.precioCompra | currency}}</td>
-                                            <td>{{intereses.precioVenta | currency}}</td>
+                                            <td>{{ intereses.plazo - intereses.diasGracia - intereses.diasPlanPiso > 0 ? intereses.plazo - intereses.diasGracia - intereses.diasPlanPiso : 0 }}</td>
+                                            <td ng-model="interes.deuda">{{intereses.precioVenta | currency}}</td>
+                                            <td>{{intereses.precioCompra | currency}}</td>
                                             <td>{{intereses.interesAcumulado | currency}}</td>
                                             <td ng-model="interes.interesActal">{{intereses.interesAcumuladoActual | currency}}</td>
                                             <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual | currency}}</td>
                                             <!-- <td ng-class="setClassMargen(intereses)" ng-model="inter.margen">{{intereses.precioVenta - (intereses.interesAcumuladoActual + intereses.interesAcumulado + intereses.precioCompra) | currency}}</td> -->
-                                            <td>{{intereses.intAcumulado | currency}}</td>
+                                            <td>{{intereses.interesAcumulado + intereses.interesAcumuladoActual | currency}}</td>
                                             <td ng-show="valorCheckBoxTabla.show">
-                                                <input type="checkbox" ng-attr-id="{{intereses.vehNumserie}}" ng-model="ck.id" ng-true-value="'{{intereses.vehNumserie}}'" class=" css-checkbox" ng-click="valorCheckBoxTabla(ck.id,intereses)">
-                                                <label for="{{intereses.vehNumserie}}" class="css-label"></label>
+                                                <input type="checkbox" ng-model="intereses.check" ng-checked="{{intereses.check}}">
                                             </td>
                                             <td>
                                                 <button type="submit" class="btn btn-info" ng-click="inicia(intereses.vehNumserie, intereses.idUnidad)"><span class="glyphicon glyphicon-th-list"> </span></button>
@@ -275,25 +274,23 @@
                                     <button class="btn btn-warning" ng-show="transpasoFinanciera.show" ng-click="selectFinancial()">Traspaso Financiero</button>
                                 </div>
                                 <!-- Termina primera linea de botones -->
-
-                                 <!-- Inicia segunda linea  de botones -->
+                                <!-- Inicia segunda linea  de botones -->
                                 <div class="col-xs-10">
                                     <button class="btn btn-danger" ng-show="modalCambioFinanciera.show" ng-click="cancelFinancial()">Cancelar Traspaso Financiero</button>
                                 </div>
                                 <div class="col-xs-2">
-                                    <button class="btn btn-warning" ng-show="modalCambioFinanciera.show" ng-click="modalCambioFinanciera()">Continuar Traspaso Financiero</button>
+                                    <button class="btn btn-warning" ng-show="modalCambioFinanciera.show" ng-click="modalCambioFinanciera(interes)">Continuar Traspaso Financiero</button>
                                 </div>
-                                 <!-- Termina segunda linea  de botones -->
-                                 <!-- Inicia segunda linea  de botones -->
+                                <!-- Termina segunda linea  de botones -->
+                                <!-- Inicia segunda linea  de botones -->
                                 <div class="col-xs-10">
                                     <button class="btn btn-danger" ng-show="pagoDeIntereses.show" ng-click="cancelarPagoIntereses()">Cancelar Pago de Intereses</button>
                                 </div>
                                 <div class="col-xs-2">
-                                    <button class="btn btn-warning" ng-show="pagoDeIntereses.show" ng-click="generarPagoIntereses()">Continuar Pago de Intereses</button>
+                                    <button class="btn btn-warning" ng-show="pagoDeIntereses.show" ng-click="generarPagoIntereses(interes)">Continuar Pago de Intereses</button>
                                 </div>
-                                 <!-- Termina segunda linea  de botones -->
-
-                                  <!-- Inicia tercera linea  de botones -->
+                                <!-- Termina segunda linea  de botones -->
+                                <!-- Inicia tercera linea  de botones -->
                                 <div class="col-xs-10">
                                     <button class="btn btn-danger" ng-show="modalTraspasoFinanciera.show" ng-click="cancelarTranspasoModal()">Cancelar Cambio de Agencia</button>
                                 </div>
@@ -311,12 +308,6 @@
         <!--Fin Tabla-->
     </div>
 </div>
-
-
-
-
-
-
 <!--Modal Detalle Unidades-->
 <strong>
    <div class="modal inmodal fade " id="DetallesUnidadModal" href="detailsUnit" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
