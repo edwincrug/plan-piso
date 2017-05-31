@@ -1540,7 +1540,7 @@ registrationModule.controller('interestsController', function($scope, $rootScope
                         }
                     });
                 });
-                $scope.Insertartraspasocxp($scope.idLotePago, $scope.idfinancieraorigen);
+                $scope.Insertartraspasocxp($scope.idLotePago,0);
             }
         });
 
@@ -1548,7 +1548,7 @@ registrationModule.controller('interestsController', function($scope, $rootScope
     }
 
     $scope.Insertartraspasocxp = function(idlotepago, idfinancieraorigen) {
-        interestsRepository.Insertartraspasocxp(idlotepago, 1, 'Traspaso Financiero', idfinancieraorigen, $scope.idFinancieraCambio).then(function(resultado) {
+        interestsRepository.Insertartraspasocxp(idlotepago, 2, 'Traspaso Financiero', idfinancieraorigen, $scope.idFinancieraCambio).then(function(resultado) {
             if (resultado.data.length > 0) {
                 alertFactory.info("Se realizó con éxito traspaso financiero");
             }
