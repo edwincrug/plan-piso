@@ -403,7 +403,7 @@ Calculo.prototype.post_updatescheme = function(req, res, next) {
     //Asigno a params el valor de mis variables
 
     var params = [{ name: 'idEsquema', value: req.body.idEsquema, type: self.model.types.INT },
-        { name: 'vehNumserie', value: req.body.vehNumserie, type: self.model.types.STRING }
+        { name: 'idUnidad', value: req.body.idUnidad, type: self.model.types.INT }
     ];
     this.model.post('UPD_ESQUENA_UNIDAD_SP', params, function(error, result) {
         //Callback

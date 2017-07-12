@@ -1516,7 +1516,7 @@ registrationModule.controller('interestsController', function($scope, $rootScope
     $scope.updateSchemeFinancial = function() {
         console.log($scope.listaUnidadesConValidacion)
         $scope.listaUnidadesConValidacion.forEach(function(updateEsquemaUnidad) {
-            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.vehNumserie).then(function(result) {
+            interestsRepository.updateScheme($scope.idESquemaNueva, updateEsquemaUnidad.idUnidad).then(function(result) {
                 if (result.data.length > 0) {} else {
 
                 }
