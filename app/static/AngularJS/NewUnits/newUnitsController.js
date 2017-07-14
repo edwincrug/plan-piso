@@ -631,7 +631,7 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             todayHighlight: true,
             format: "dd/mm/yyyy"
         });
-    }
+    };
 
 
 
@@ -648,5 +648,5 @@ registrationModule.controller('newUnitsController', function($scope, alertFactor
             alertFactory.error("No se pudo cambiar la fecha");
         });
 
-    }
+    };
 });
